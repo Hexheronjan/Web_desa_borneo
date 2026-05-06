@@ -42,6 +42,7 @@ interface ModulPageTemplateProps {
   batches: BatchItem[];
   rwrts: RwRtItem[];
   customCenterPanel?: React.ReactNode;
+  rightElement?: React.ReactNode;
 }
 
 export function ModulPageTemplate({
@@ -55,10 +56,11 @@ export function ModulPageTemplate({
   batches,
   rwrts,
   customCenterPanel,
+  rightElement,
 }: ModulPageTemplateProps) {
   return (
     <div className="h-full flex flex-col gap-4 p-3 md:p-5">
-      <PageTitle fitur={fitur} modul={modul} color={color} />
+      <PageTitle fitur={fitur} modul={modul} color={color} rightElement={rightElement} />
 
       {/* Stat Cards - Optimized for Mobile */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
