@@ -45,12 +45,13 @@ export function AppHeader() {
           </AvatarFallback>
         </Avatar>
         <button 
-          onClick={() => signOut({ callbackUrl: "/login" })}
-          className="ml-2 p-1.5 rounded-md hover:bg-white/10 transition-colors"
-          title="Keluar (Logout)"
+          onClick={() => signOut({ redirect: true, callbackUrl: "/login" })}
+          className="ml-2 p-2 rounded-lg hover:bg-white/20 transition-all flex items-center justify-center group"
+          title="Keluar dari Sistem"
         >
-          <LogOut size={18} className="text-white/80 hover:text-white" />
+          <LogOut size={20} className="text-white/80 group-hover:text-white" />
         </button>
+
       </div>
     </header>
   );
