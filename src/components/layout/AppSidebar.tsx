@@ -108,9 +108,11 @@ export function AppSidebar({ onClose }: { onClose?: () => void }) {
 
       {/* Footer */}
       <div className="px-4 py-3 border-t border-slate-100 bg-slate-50">
-        <p className="text-[10px] text-slate-400">Desa Adat Borneo</p>
+        <p className="text-[10px] text-slate-400 leading-tight font-medium">
+          BINUS University × ASIIN 2023–2029
+        </p>
+        <p className="text-[10px] text-slate-400">SLV Prototype v1.0</p>
       </div>
-
     </aside>
   );
 }

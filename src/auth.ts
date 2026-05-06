@@ -22,22 +22,14 @@ export const authConfig = {
         session.user.role = token.role as string;
         (session.user as any).id = token.id as string;
         (session.user as any).wargaId = token.wargaId as string;
-      } else if (!token) {
-        // Force session to null if no token exists
-        return null as any;
       }
       return session;
     },
-
-    async jwt({ token, user, trigger, session }) {
+    async jwt({ token, user }) {
       if (user) {
         token.role = (user as any).role;
         token.id = user.id;
         token.wargaId = (user as any).wargaId;
-      }
-      // Handle session update if needed
-      if (trigger === "update" && session) {
-        return { ...token, ...session };
       }
       return token;
     },

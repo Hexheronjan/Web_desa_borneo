@@ -47,7 +47,15 @@ export function TelemedicineClient({ initialData, stats, rwrts, batches, wargaId
   };
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="h-full flex flex-col relative">
+      <div className="absolute top-0 right-0 z-10 p-4">
+        {isWarga && (
+          <Button onClick={() => setIsModalOpen(true)} className="bg-[#E07B2A] hover:bg-[#c26721] text-white">
+            + Daftar Konsultasi
+          </Button>
+        )}
+      </div>
+
       <ModulPageTemplate
         fitur={FITUR}
         modul={MODUL}
@@ -58,17 +66,6 @@ export function TelemedicineClient({ initialData, stats, rwrts, batches, wargaId
         stats={stats}
         batches={batches}
         rwrts={rwrts}
-        rightElement={
-          isWarga && (
-            <Button 
-              onClick={() => setIsModalOpen(true)} 
-              className="bg-[#E07B2A] hover:bg-[#c26721] text-white shadow-md w-full sm:w-auto"
-            >
-              + Daftar Konsultasi
-            </Button>
-          )
-        }
-
         customCenterPanel={
           <div className="bg-white rounded-xl border border-slate-200 shadow-sm h-full flex flex-col">
             <div className="px-5 py-3 border-b border-slate-100">
