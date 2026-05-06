@@ -9,16 +9,13 @@ export default auth((req) => {
   const { pathname } = req.nextUrl;
 
   if (pathname === "/login" && isLoggedIn) {
-    const url = req.nextUrl.clone();
-    url.pathname = "/";
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
   if (!isLoggedIn && pathname !== "/login") {
-    const url = req.nextUrl.clone();
-    url.pathname = "/login";
-    return NextResponse.redirect(url);
+    return NextResponse.redirect(new URL("/login", req.url));
   }
+
 
   // ── Role-Based Access Control (RBAC) ──
   const role = req.auth?.user?.role;
