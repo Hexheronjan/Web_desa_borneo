@@ -7,8 +7,9 @@ import { useSession } from "next-auth/react";
 export function RoleTabs() {
   const pathname = usePathname();
   const modul = getModulFromPath(pathname);
-  const { data: session } = useSession();
-  const userRole = session?.user?.role || "guest";
+  const { data: session, status } = useSession();
+  const userRole = session?.user?.role || (status === "loading" ? "..." : "guest");
+
 
   // Mapping role database ke label UI yang rapi
   const roleLabels: Record<string, string> = {
