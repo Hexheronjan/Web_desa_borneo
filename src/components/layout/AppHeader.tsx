@@ -5,6 +5,8 @@ import { useSession, signOut } from "next-auth/react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Bell, LogOut } from "lucide-react";
 import { getModulFromPath, getFiturFromPath } from "@/lib/modul-config";
+import { handleLogout } from "@/actions/auth";
+
 
 export function AppHeader() {
   const pathname = usePathname();
@@ -44,15 +46,16 @@ export function AppHeader() {
             {userName.slice(0, 2).toUpperCase()}
           </AvatarFallback>
         </Avatar>
-        <button 
-          onClick={async () => {
-            await signOut({ redirect: true, callbackUrl: "/login" });
-          }}
-          className="ml-2 p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all flex items-center justify-center border border-white/20 shadow-sm"
-        >
-          <LogOut size={20} className="text-white" />
-          <span className="sr-only">Keluar</span>
-        </button>
+        <form action={handleLogout}>
+          <button 
+            type="submit"
+            className="ml-2 p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-all flex items-center justify-center border border-white/20 shadow-sm"
+          >
+            <LogOut size={20} className="text-white" />
+            <span className="sr-only">Keluar</span>
+          </button>
+        </form>
+
 
 
       </div>
