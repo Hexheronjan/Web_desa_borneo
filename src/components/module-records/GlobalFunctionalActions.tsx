@@ -63,8 +63,8 @@ function downloadCsv(filename: string) {
   const rows = Array.from(document.querySelectorAll("main table tr")).map((row) =>
     Array.from(row.querySelectorAll("th,td")).map((cell) => `"${(cell.textContent || "").replace(/\s+/g, " ").trim().replace(/"/g, '""')}"`).join(",")
   );
-  const csv = rows.filter(Boolean).join("\n") || '"Tidak ada tabel untuk diekspor"';
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+  const csv = "sep=,\n" + rows.filter(Boolean).join("\n");
+  const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
@@ -114,6 +114,14 @@ export function GlobalFunctionalActions() {
   const [description, setDescription] = useState("");
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
+  const [notification, setNotification] = useState<{ message: string; type: "success" | "error" } | null>(null);
+
+  const triggerNotification = useCallback((msg: string, type: "success" | "error" = "success") => {
+    setNotification({ message: msg, type });
+    setTimeout(() => {
+      setNotification(null);
+    }, 3500);
+  }, []);
 
   const saveAction = useCallback(async (actionMode: ActionMode, actionTitle: string, actionDescription: string, status = "Selesai") => {
     const res = await fetch("/api/module-records", {
@@ -196,7 +204,9 @@ export function GlobalFunctionalActions() {
       if (nextMode === "Export") {
         event.preventDefault();
         downloadCsv(`${moduleName.replace(/\s+/g, "_")}_${new Date().toISOString().slice(0, 10)}.csv`);
-        saveAction("Export", label || "Export Data", "File CSV dibuat dari tabel yang sedang tampil.", "Selesai");
+        saveAction("Export", label || "Export Data", "File CSV dibuat dari tabel yang sedang tampil.", "Selesai")
+          .then(() => triggerNotification("Berhasil! Data berhasil diekspor ke Excel."))
+          .catch(() => triggerNotification("Gagal mengekspor data.", "error"));
         return;
       }
 
@@ -214,7 +224,7 @@ export function GlobalFunctionalActions() {
 
     document.addEventListener("click", handleClick, true);
     return () => document.removeEventListener("click", handleClick, true);
-  }, [moduleName, pathname, saveAction]);
+  }, [moduleName, pathname, saveAction, triggerNotification]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -228,15 +238,19 @@ export function GlobalFunctionalActions() {
     setSaving(true);
     setMessage("");
     try {
-      await saveAction(mode, title, description, mode === "Hapus" ? "Dihapus" : "Selesai");
+      const isHapus = mode === "Hapus";
+      const isEdit = mode === "Edit";
+      await saveAction(mode, title, description, isHapus ? "Dihapus" : "Selesai");
       setMessage("Aksi berhasil diproses dan tersimpan ke database.");
-      if (mode === "Hapus") {
+      if (isHapus) {
         findRowsByContext(rowContext).forEach((row) => row.setAttribute("style", "display:none"));
       }
       await applySavedActions();
+      triggerNotification(isHapus ? "Berhasil! Data berhasil dihapus." : isEdit ? "Berhasil! Data berhasil diperbarui." : "Berhasil! Data berhasil ditambahkan.");
       setTimeout(() => setOpen(false), 700);
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Aksi gagal diproses");
+      triggerNotification(err instanceof Error ? err.message : "Gagal memproses aksi.", "error");
     } finally {
       setSaving(false);
     }
@@ -290,6 +304,16 @@ export function GlobalFunctionalActions() {
           </form>
         </DialogContent>
       </Dialog>
+      {notification && (
+        <div className="fixed bottom-5 right-5 z-[9999] flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-xl border bg-white text-xs font-bold transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
+             style={{
+               borderColor: notification.type === "success" ? "#bbf7d0" : "#fecaca",
+               color: notification.type === "success" ? "#15803d" : "#b91c1c",
+             }}>
+          <CheckCircle2 size={16} className={notification.type === "success" ? "text-green-600" : "text-red-600"} />
+          <span>{notification.message}</span>
+        </div>
+      )}
     </div>
   );
 }

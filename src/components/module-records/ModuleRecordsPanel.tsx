@@ -27,6 +27,7 @@ export function ModuleRecordsPanel() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [editingId, setEditingId] = useState("");
+  const [notification, setNotification] = useState<{ message: string; type: "success" | "error" } | null>(null);
   const [form, setForm] = useState({
     title: "",
     category: "",
@@ -34,6 +35,13 @@ export function ModuleRecordsPanel() {
     description: "",
     status: "Baru",
   });
+
+  const triggerNotification = (message: string, type: "success" | "error" = "success") => {
+    setNotification({ message, type });
+    setTimeout(() => {
+      setNotification(null);
+    }, 3500);
+  };
 
   const loadRecords = useCallback(async () => {
     setLoading(true);
@@ -62,6 +70,7 @@ export function ModuleRecordsPanel() {
     setError("");
     try {
       const method = editingId ? "PATCH" : "POST";
+      const isEdit = !!editingId;
       const res = await fetch("/api/module-records", {
         method,
         headers: { "Content-Type": "application/json" },
@@ -77,8 +86,10 @@ export function ModuleRecordsPanel() {
       setForm({ title: "", category: "", valueText: "", description: "", status: "Baru" });
       setEditingId("");
       await loadRecords();
+      triggerNotification(isEdit ? "Berhasil! Data berhasil diperbarui." : "Berhasil! Data berhasil ditambahkan.");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Gagal menyimpan data modul");
+      triggerNotification(err instanceof Error ? err.message : "Gagal menyimpan data", "error");
     } finally {
       setSaving(false);
     }
@@ -122,9 +133,11 @@ export function ModuleRecordsPanel() {
     if (!res.ok) {
       const data = await res.json();
       setError(data.error || "Gagal mengubah status");
+      triggerNotification(data.error || "Gagal mengubah status", "error");
       return;
     }
     await loadRecords();
+    triggerNotification("Berhasil! Status data berhasil diubah.");
   }
 
   async function deleteRecord(record: ModuleRecord) {
@@ -135,9 +148,11 @@ export function ModuleRecordsPanel() {
     if (!res.ok) {
       const data = await res.json();
       setError(data.error || "Gagal menghapus data");
+      triggerNotification(data.error || "Gagal menghapus data", "error");
       return;
     }
     await loadRecords();
+    triggerNotification("Berhasil! Data berhasil dihapus.");
   }
 
   return (
@@ -290,6 +305,16 @@ export function ModuleRecordsPanel() {
           )}
         </div>
       </div>
+      {notification && (
+        <div className="fixed bottom-5 right-5 z-[9999] flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-xl border bg-white text-xs font-bold transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
+             style={{
+               borderColor: notification.type === "success" ? "#bbf7d0" : "#fecaca",
+               color: notification.type === "success" ? "#15803d" : "#b91c1c",
+             }}>
+          <CheckCircle2 size={16} className={notification.type === "success" ? "text-green-600" : "text-red-600"} />
+          <span>{notification.message}</span>
+        </div>
+      )}
     </section>
   );
 }
