@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ShieldCheck, Leaf, Users, Map, BookOpen, Eye, EyeOff, Lock, Mail } from "lucide-react";
+import { ShieldCheck, Leaf, Users, Map, Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -148,54 +148,101 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          {/* PANDUAN AKSES CEPAT (DEMO) */}
-          <div className="mt-8 rounded-3xl border-2 border-emerald-100 bg-emerald-50/30 p-6 shadow-sm">
+                   <div className="mt-8 rounded-3xl border-2 border-emerald-100 bg-emerald-50/30 p-6 shadow-sm">
             <div className="flex items-center gap-2 mb-4">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <h3 className="text-sm font-bold text-emerald-900 uppercase tracking-widest">Akses Akun Demo (Live Data)</h3>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* WARGA */}
-              <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-emerald-100 shadow-sm hover:border-emerald-300 transition-all">
-                <div className="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-lg text-[10px] font-black uppercase w-16 text-center shrink-0">WARGA</div>
-                <div className="flex-1 text-[10px] font-mono text-slate-600 font-bold">warga@borneo.id</div>
-                <div className="px-2 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-bold shrink-0">password123</div>
+            <div className="grid grid-cols-2 gap-2">
+              {/* SUPER ADMIN */}
+              <div className="flex flex-col p-2 bg-white rounded-lg border border-blue-100 shadow-sm hover:border-blue-300 transition-all text-[10px]">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded font-black text-[9px]">ADMIN</span>
+                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
+                </div>
+                <span className="font-mono text-slate-600 font-bold truncate">admin@borneo.id</span>
               </div>
 
-              {/* ADMIN */}
-              <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-blue-100 shadow-sm hover:border-blue-300 transition-all">
-                <div className="px-2 py-1 bg-blue-100 text-blue-700 rounded-lg text-[10px] font-black uppercase w-16 text-center shrink-0">ADMIN</div>
-                <div className="flex-1 text-[10px] font-mono text-slate-600 font-bold">admin@borneo.id</div>
-                <div className="px-2 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-bold shrink-0">password123</div>
+              {/* OPERATOR SID */}
+              <div className="flex flex-col p-2 bg-white rounded-lg border border-teal-100 shadow-sm hover:border-teal-300 transition-all text-[10px]">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="px-1.5 py-0.5 bg-teal-100 text-teal-700 rounded font-black text-[9px]">OPERATOR</span>
+                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
+                </div>
+                <span className="font-mono text-slate-600 font-bold truncate">operator@borneo.id</span>
               </div>
 
-              {/* NAKES */}
-              <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-orange-100 shadow-sm hover:border-orange-300 transition-all">
-                <div className="px-2 py-1 bg-orange-100 text-orange-700 rounded-lg text-[10px] font-black uppercase w-16 text-center shrink-0">NAKES</div>
-                <div className="flex-1 text-[10px] font-mono text-slate-600 font-bold">nakes@borneo.id</div>
-                <div className="px-2 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-bold shrink-0">password123</div>
+              {/* PEMDES */}
+              <div className="flex flex-col p-2 bg-white rounded-lg border border-indigo-100 shadow-sm hover:border-indigo-300 transition-all text-[10px]">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="px-1.5 py-0.5 bg-indigo-100 text-indigo-700 rounded font-black text-[9px]">PEMDES</span>
+                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
+                </div>
+                <span className="font-mono text-slate-600 font-bold truncate">pemdes@borneo.id</span>
+              </div>
+
+              {/* BPD */}
+              <div className="flex flex-col p-2 bg-white rounded-lg border border-violet-100 shadow-sm hover:border-violet-300 transition-all text-[10px]">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="px-1.5 py-0.5 bg-violet-100 text-violet-700 rounded font-black text-[9px]">BPD</span>
+                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
+                </div>
+                <span className="font-mono text-slate-600 font-bold truncate">bpd@borneo.id</span>
+              </div>
+
+              {/* LEMBAGA ADAT */}
+              <div className="flex flex-col p-2 bg-white rounded-lg border border-emerald-100 shadow-sm hover:border-emerald-300 transition-all text-[10px]">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded font-black text-[9px]">ADAT</span>
+                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
+                </div>
+                <span className="font-mono text-slate-600 font-bold truncate">adat@borneo.id</span>
               </div>
 
               {/* GURU */}
-              <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-purple-100 shadow-sm hover:border-purple-300 transition-all">
-                <div className="px-2 py-1 bg-purple-100 text-purple-700 rounded-lg text-[10px] font-black uppercase w-16 text-center shrink-0">GURU</div>
-                <div className="flex-1 text-[10px] font-mono text-slate-600 font-bold">guru@borneo.id</div>
-                <div className="px-2 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-bold shrink-0">password123</div>
+              <div className="flex flex-col p-2 bg-white rounded-lg border border-purple-100 shadow-sm hover:border-purple-300 transition-all text-[10px]">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded font-black text-[9px]">GURU</span>
+                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
+                </div>
+                <span className="font-mono text-slate-600 font-bold truncate">guru@borneo.id</span>
               </div>
 
-              {/* PEMERINTAH */}
-              <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-indigo-100 shadow-sm hover:border-indigo-300 transition-all">
-                <div className="px-2 py-1 bg-indigo-100 text-indigo-700 rounded-lg text-[10px] font-black uppercase w-16 text-center shrink-0">PEMDES</div>
-                <div className="flex-1 text-[10px] font-mono text-slate-600 font-bold">pemdes@borneo.id</div>
-                <div className="px-2 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-bold shrink-0">password123</div>
+              {/* NAKES */}
+              <div className="flex flex-col p-2 bg-white rounded-lg border border-orange-100 shadow-sm hover:border-orange-300 transition-all text-[10px]">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 rounded font-black text-[9px]">NAKES</span>
+                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
+                </div>
+                <span className="font-mono text-slate-600 font-bold truncate">nakes@borneo.id</span>
               </div>
 
-              {/* ADAT */}
-              <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-slate-200 shadow-sm hover:border-slate-400 transition-all">
-                <div className="px-2 py-1 bg-slate-200 text-slate-700 rounded-lg text-[10px] font-black uppercase w-16 text-center shrink-0">ADAT</div>
-                <div className="flex-1 text-[10px] font-mono text-slate-600 font-bold">adat@borneo.id</div>
-                <div className="px-2 py-1 bg-slate-100 text-slate-500 rounded-lg text-[10px] font-bold shrink-0">password123</div>
+              {/* WARGA */}
+              <div className="flex flex-col p-2 bg-white rounded-lg border border-pink-100 shadow-sm hover:border-pink-300 transition-all text-[10px]">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="px-1.5 py-0.5 bg-pink-100 text-pink-700 rounded font-black text-[9px]">WARGA</span>
+                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
+                </div>
+                <span className="font-mono text-slate-600 font-bold truncate">warga@borneo.id</span>
+              </div>
+
+              {/* DINAS PMD */}
+              <div className="flex flex-col p-2 bg-white rounded-lg border border-sky-100 shadow-sm hover:border-sky-300 transition-all text-[10px]">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="px-1.5 py-0.5 bg-sky-100 text-sky-700 rounded font-black text-[9px]">DINAS PMD</span>
+                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
+                </div>
+                <span className="font-mono text-slate-600 font-bold truncate">dinaspmd@borneo.id</span>
+              </div>
+
+              {/* PENELITI */}
+              <div className="flex flex-col p-2 bg-white rounded-lg border border-slate-200 shadow-sm hover:border-slate-300 transition-all text-[10px]">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="px-1.5 py-0.5 bg-slate-100 text-slate-700 rounded font-black text-[9px]">PENELITI</span>
+                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
+                </div>
+                <span className="font-mono text-slate-600 font-bold truncate">peneliti@borneo.id</span>
               </div>
             </div>
 

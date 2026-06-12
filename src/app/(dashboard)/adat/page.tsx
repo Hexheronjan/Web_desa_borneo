@@ -1,38 +1,168 @@
-import { PageTitle } from "@/components/shared/PageTitle";
-import { StatCard } from "@/components/shared/StatCard";
+'use client';
 
-const COLOR = "#2E7D32";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { PageTitle } from '@/components/shared/PageTitle';
+import { StatCard } from '@/components/shared/StatCard';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Legend,
+  AreaChart, Area,
+} from 'recharts';
+import { Landmark, Users, Calendar, BookOpen } from 'lucide-react';
+import Link from 'next/link';
+
+const COLOR = '#4a148c';
+
+const kegiatanBulanan = [
+  { bln: 'Jan', kegiatan: 2 }, { bln: 'Feb', kegiatan: 3 },
+  { bln: 'Mar', kegiatan: 4 }, { bln: 'Apr', kegiatan: 3 },
+  { bln: 'Mei', kegiatan: 5 }, { bln: 'Jun', kegiatan: 6 },
+  { bln: 'Jul', kegiatan: 4 }, { bln: 'Agu', kegiatan: 7 },
+  { bln: 'Sep', kegiatan: 5 }, { bln: 'Okt', kegiatan: 6 },
+  { bln: 'Nov', kegiatan: 8 }, { bln: 'Des', kegiatan: 5 },
+];
+
+const kelembagaanRadar = [
+  { aspek: 'Struktur Org.', nilai: 80 },
+  { aspek: 'Musyawarah', nilai: 85 },
+  { aspek: 'Dokumentasi', nilai: 70 },
+  { aspek: 'Hukum Adat', nilai: 90 },
+  { aspek: 'Huma Betang', nilai: 88 },
+];
+
+const anggotaData = [
+  { jabatan: 'Damang Kepala Adat', nama: 'H. Tjilik Riwut', masa: '2022–2027', status: 'Aktif' },
+  { jabatan: 'Mantir Adat I', nama: 'Yansen Tambun', masa: '2022–2027', status: 'Aktif' },
+  { jabatan: 'Mantir Adat II', nama: 'Mariati Luha', masa: '2022–2027', status: 'Aktif' },
+  { jabatan: 'Sekretaris Adat', nama: 'Beno Sintha', masa: '2022–2027', status: 'Aktif' },
+];
 
 export default function AdatDashboardPage() {
   return (
-    <div>
-      <PageTitle fitur="Dashboard Modul" modul="Smart Lembaga Adat" color={COLOR} />
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <StatCard label="Pengurus" value={17} satuan="aktif di lembaga" barColor="green" progress={85} />
-        <StatCard label="Arsip Digital" value={1248} satuan="dokumen tersimpan" barColor="teal" progress={95} />
-        <StatCard label="Peta Wilayah" value={12} satuan="layer aktif" barColor="blue" progress={70} />
-        <StatCard label="Kasus Hukum" value={14} satuan="dalam proses" barColor="orange" progress={45} />
+    <div className="flex flex-col gap-5">
+      <PageTitle fitur="Dashboard Budaya Adat" modul="Lembaga Adat Dayak Borneo" color={COLOR} />
+
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard label="Smart Living Index" value="80%" satuan="nilai adat" barColor="purple" progress={80} sparkData={[70,72,74,76,78,80]} trend="up" />
+        <StatCard label="Kelembagaan Aktif" value={12} satuan="lembaga" barColor="blue" progress={80} />
+        <StatCard label="Musyawarah" value={5} satuan="agenda" barColor="orange" progress={50} />
+        <StatCard label="Didokumentasikan" value={28} satuan="arsip adat" barColor="green" progress={70} />
       </div>
-      <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
-        <h3 className="font-bold text-slate-800 mb-4">Ringkasan Fitur Modul Smart Lembaga Adat</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[
-            { fitur: "Sistem Informasi Kelembagaan Adat", data: "17 pengurus · 12 program", path: "/adat/kelembagaan" },
-            { fitur: "Arsip Digital Adat & Budaya", data: "1248 arsip · 9 kategori", path: "/adat/arsip" },
-            { fitur: "Musyawarah Adat Online", data: "9 jadwal · 146 peserta", path: "/adat/musyawarah" },
-            { fitur: "Digital Mapping Wilayah Adat", data: "12 layer · 84 titik", path: "/adat/mapping" },
-            { fitur: "Portal Hukum Adat & Resolusi Konflik", data: "48 aturan · 14 kasus", path: "/adat/hukum-adat" },
-          ].map((item, i) => (
-            <a key={i} href={item.path} className="p-4 rounded-lg border border-slate-200 hover:border-[#2E7D32] hover:shadow-md transition-all">
-              <p className="font-semibold text-slate-800 text-sm mb-2">{item.fitur}</p>
-              <p className="text-xs text-slate-500">{item.data}</p>
-              <div className="mt-3 h-1.5 bg-slate-100 rounded-full">
-                <div className="h-full rounded-full" style={{ width: "65%", backgroundColor: COLOR }} />
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        {/* Kegiatan adat bulanan */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+                <Calendar size={16} /> Kegiatan Adat per Bulan
+              </CardTitle>
+              <Link href="/adat/kalender-adat" className="text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+                Detail →
+              </Link>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={200}>
+              <AreaChart data={kegiatanBulanan} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="gradPurple" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#4a148c" stopOpacity={0.4} />
+                    <stop offset="95%" stopColor="#4a148c" stopOpacity={0.02} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f5f3ff" />
+                <XAxis dataKey="bln" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: number) => [v, 'Kegiatan']} />
+                <Area type="monotone" dataKey="kegiatan" name="Kegiatan Adat" stroke="#4a148c" strokeWidth={2.5} fill="url(#gradPurple)" dot={{ r: 3, fill: '#4a148c' }} />
+              </AreaChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Radar Kelembagaan */}
+        <Card>
+          <CardHeader>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+                <Landmark size={16} /> Profil Kelembagaan Adat
+              </CardTitle>
+              <Link href="/adat/kelembagaan-adat" className="text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+                Detail →
+              </Link>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={200}>
+              <RadarChart data={kelembagaanRadar}>
+                <PolarGrid stroke="#ede9fe" />
+                <PolarAngleAxis dataKey="aspek" tick={{ fontSize: 10, fill: '#64748b' }} />
+                <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fontSize: 8, fill: '#94a3b8' }} />
+                <Radar name="Nilai" dataKey="nilai" stroke="#4a148c" fill="#4a148c" fillOpacity={0.3} strokeWidth={2} />
+              </RadarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Anggota Lembaga Adat */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+              <Users size={16} /> Struktur Lembaga Adat
+            </CardTitle>
+            <Link href="/adat/kelembagaan-adat" className="text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+              Lihat Detail →
+            </Link>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {anggotaData.map((a, i) => (
+              <div key={i} className="p-3 border rounded-xl flex items-center gap-3" style={{ borderLeftWidth: 4, borderLeftColor: COLOR }}>
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white font-black text-sm flex-shrink-0" style={{ backgroundColor: COLOR }}>
+                  {a.nama.charAt(0)}
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-bold text-slate-500 uppercase tracking-wider">{a.jabatan}</p>
+                  <p className="text-sm font-bold text-slate-800">{a.nama}</p>
+                  <p className="text-[10px] text-slate-400">{a.masa} · <span className="text-green-600 font-semibold">{a.status}</span></p>
+                </div>
               </div>
-            </a>
-          ))}
-        </div>
-      </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Info Huma Betang */}
+      <Card>
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+              <BookOpen size={16} /> Filosofi Huma Betang & Kearifan Lokal
+            </CardTitle>
+            <Link href="/adat/huma-betang" className="text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+              Eksplorasi →
+            </Link>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {[
+              { title: '🏠 Huma Betang', desc: 'Rumah Betang sebagai simbol kebersamaan, kesetaraan, dan persatuan masyarakat Dayak Borneo dalam kehidupan kolektif.', color: '#4a148c' },
+              { title: '⚖️ Hukum Adat', desc: 'Aturan tidak tertulis yang mengatur kehidupan sosial, kepemilikan tanah ulayat, dan penyelesaian konflik secara damai.', color: '#1565c0' },
+              { title: '🌿 Handep Hapakat', desc: 'Nilai gotong royong murni tanpa pamrih dalam membangun desa, menjaga alam, dan merayakan kehidupan bersama.', color: '#2E7D32' },
+            ].map((item, i) => (
+              <div key={i} className="p-4 rounded-xl border" style={{ backgroundColor: `${item.color}08`, borderColor: `${item.color}25` }}>
+                <p className="text-sm font-bold mb-2" style={{ color: item.color }}>{item.title}</p>
+                <p className="text-xs text-slate-600 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

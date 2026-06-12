@@ -18,6 +18,10 @@ enum Role {
   nakes_posyandu
   guru_fasilitator
   admin_super
+  operator_sid
+  bpd
+  dinas_pmd
+  peneliti
 }
 
 enum StatusWarga {

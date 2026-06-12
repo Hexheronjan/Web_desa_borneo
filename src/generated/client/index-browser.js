@@ -408,7 +408,11 @@ exports.Role = exports.$Enums.Role = {
   lembaga_adat: 'lembaga_adat',
   nakes_posyandu: 'nakes_posyandu',
   guru_fasilitator: 'guru_fasilitator',
-  admin_super: 'admin_super'
+  admin_super: 'admin_super',
+  operator_sid: 'operator_sid',
+  bpd: 'bpd',
+  dinas_pmd: 'dinas_pmd',
+  peneliti: 'peneliti'
 };
 
 exports.JenisKelamin = exports.$Enums.JenisKelamin = {

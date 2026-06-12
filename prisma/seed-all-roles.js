@@ -12,12 +12,16 @@ async function main() {
   }
 
   const roles = [
-    { name: "Super Admin", email: "admin@borneo.id", role: "admin_super" },
-    { name: "Pemerintah Desa", email: "pemdes@borneo.id", role: "pemerintah_desa" },
-    { name: "Lembaga Adat", email: "adat@borneo.id", role: "lembaga_adat" },
-    { name: "Nakes Posyandu", email: "nakes@borneo.id", role: "nakes_posyandu" },
-    { name: "Guru Fasilitator", email: "guru@borneo.id", role: "guru_fasilitator" },
-    { name: "Warga Borneo", email: "warga@borneo.id", role: "warga" },
+    { name: "Super Admin",        email: "admin@borneo.id",     role: "admin_super" },
+    { name: "Pemerintah Desa",    email: "pemdes@borneo.id",    role: "pemerintah_desa" },
+    { name: "BPD",                email: "bpd@borneo.id",       role: "bpd" },
+    { name: "Operator SID",       email: "operator@borneo.id",  role: "operator_sid" },
+    { name: "Lembaga Adat",       email: "adat@borneo.id",      role: "lembaga_adat" },
+    { name: "Nakes Posyandu",     email: "nakes@borneo.id",     role: "nakes_posyandu" },
+    { name: "Guru Fasilitator",   email: "guru@borneo.id",      role: "guru_fasilitator" },
+    { name: "Warga Borneo",       email: "warga@borneo.id",     role: "warga" },
+    { name: "Dinas PMD",          email: "dinaspmd@borneo.id",  role: "dinas_pmd" },
+    { name: "Peneliti",           email: "peneliti@borneo.id",  role: "peneliti" },
   ];
 
   for (const r of roles) {

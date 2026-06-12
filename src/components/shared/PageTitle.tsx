@@ -1,24 +1,41 @@
-// PageTitle — bullet warna modul + judul besar + sub-deskripsi
+// PageTitle — Vivid gradient strip + judul + sub-deskripsi
 
 interface PageTitleProps {
-  fitur: string;  // "E-Learning Budaya Lokal"
-  modul: string;  // "Smart Belajar Adat"
-  color: string;  // hex
+  fitur: string;
+  modul: string;
+  color: string;
 }
 
 export function PageTitle({ fitur, modul, color }: PageTitleProps) {
   return (
-    <div className="mb-6">
-      <div className="flex items-center gap-3">
-        <div
-          className="w-3 h-3 rounded-full flex-shrink-0"
-          style={{ backgroundColor: color }}
-        />
-        <h2 className="text-2xl font-extrabold text-slate-800 leading-tight">{fitur}</h2>
+    <div
+      className="rounded-xl px-5 py-4 mb-2 border flex items-center gap-4"
+      style={{
+        background: `linear-gradient(135deg, ${color}15 0%, ${color}05 100%)`,
+        borderColor: `${color}30`,
+      }}
+    >
+      <div
+        className="w-1 self-stretch rounded-full flex-shrink-0 min-h-[40px]"
+        style={{ backgroundColor: color }}
+      />
+      <div className="flex-1 min-w-0">
+        <h2
+          className="text-xl md:text-2xl font-extrabold leading-tight truncate"
+          style={{ color }}
+        >
+          {fitur}
+        </h2>
+        <p className="text-xs text-slate-500 mt-0.5">
+          Modul: <span className="font-semibold text-slate-600">{modul}</span>
+        </p>
       </div>
-      <p className="text-sm text-slate-500 mt-1.5 ml-6">
-        Tampilan operasional fitur <span className="font-medium text-slate-700">{fitur}</span> pada modul <span className="font-medium text-slate-700">{modul}</span>.
-      </p>
+      <div
+        className="hidden md:flex items-center justify-center w-10 h-10 rounded-lg text-white text-lg font-black flex-shrink-0"
+        style={{ backgroundColor: color }}
+      >
+        {fitur.charAt(0).toUpperCase()}
+      </div>
     </div>
   );
 }
