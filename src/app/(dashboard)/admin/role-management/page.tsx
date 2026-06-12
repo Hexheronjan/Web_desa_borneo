@@ -228,7 +228,35 @@ export default function RoleManagementPage() {
                     <td className="py-2.5">
                       <div className="flex items-center gap-1">
                         <button
-                          onClick={() => {
+                          onClick={async () => {
+                            try {
+                              // Create/update via API for better tracking
+                              const res = await fetch('/api/module-records', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({
+                                  modulePath: '/admin/role-management',
+                                  moduleName: 'Role Management',
+                                  title: r.role,
+                                  category: 'Edit',
+                                  valueText: r.kode,
+                                  description: `${r.deskripsi} | Hak Akses: ${r.hakAkses} modul`,
+                                  status: 'Selesai',
+                                }),
+                              });
+
+                              if (res.ok) {
+                                await loadDatabaseRoles();
+                                triggerToast(`✏️ Edit role "${r.role}" berhasil dicatat.`);
+                              } else {
+                                triggerToast('Gagal mencatat perubahan role.', 'error');
+                              }
+                            } catch (error) {
+                              console.error('Edit error:', error);
+                              triggerToast('Gagal mencatat edit role.', 'error');
+                            }
+
+                            // Also scroll to panel for manual edit if needed
                             document.querySelector('[data-module-records-panel]')?.scrollIntoView({ behavior: 'smooth' });
                             const titleInput = document.querySelector('input[placeholder*="Judul data"]') as HTMLInputElement;
                             if (titleInput) {
