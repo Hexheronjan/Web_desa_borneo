@@ -21,10 +21,11 @@ export async function POST(request: Request) {
     const body = await request.json();
     
     const id = `pengaduan_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
+    const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
     
     await prisma.$executeRawUnsafe(`
-      INSERT INTO ModuleRecord (id, modulePath, moduleName, title, category, description, valueText, status, createdBy)
-      VALUES ('${id}', '/warga/pengaduan', 'Pengaduan Warga', '${body.title}', '${body.category}', '${body.description}', NULL, '${body.status}', '${body.createdBy}')
+      INSERT INTO ModuleRecord (id, modulePath, moduleName, title, category, description, valueText, status, createdBy, createdAt, updatedAt)
+      VALUES ('${id}', '/warga/pengaduan', 'Pengaduan Warga', '${body.title}', '${body.category}', '${body.description}', NULL, '${body.status}', '${body.createdBy}', '${now}', '${now}')
     `);
     
     return NextResponse.json({ success: true, data: { id } });
