@@ -247,8 +247,7 @@ export default function DataPendudukPage() {
         <div key="modal-form" className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
           <div className="bg-white w-full max-w-lg rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in duration-200">
             <div className="bg-[#00695c] px-6 py-4 text-white">
-              <h2 className="font-bold text-lg">{editingWarga ? "Edit Data Penduduk" : "Tambah Data Penduduk Baru"}</h2>
-              <p className="text-teal-100 text-xs opacity-90">{editingWarga ? "Perbarui data penduduk yang ada" : "Masukkan data penduduk baru"}</p>
+              <h2 className="font-bold text-lg">{editingWarga ? "Edit Data Penduduk" : "Tambah Data Penduduk"}</h2>
             </div>
 
             <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
