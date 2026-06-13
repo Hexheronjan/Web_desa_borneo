@@ -4,37 +4,78 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
 import { AlertCircle, Plus, Send } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const COLOR = '#6a1b9a';
 
-const initialComplaints = [
-  { id: 'ADU01', tanggal: '11 Jun 2026', kategori: 'Infrastruktur', judul: 'Tiang Listrik RT 02 Roboh', status: 'Ditindaklanjuti' },
-  { id: 'ADU02', tanggal: '05 Jun 2026', kategori: 'Utilitas Air', judul: 'Kebocoran Pipa Saluran Utama Huma', status: 'Selesai' }
-];
+interface Pengaduan {
+  id: string;
+  title: string;
+  category: string;
+  description: string;
+  status: string;
+  createdAt: string;
+}
 
 export default function PengaduanPage() {
-  const [complaints, setComplaints] = useState(initialComplaints);
+  const [complaints, setComplaints] = useState<Pengaduan[]>([]);
+  const [loading, setLoading] = useState(true);
   const [judul, setJudul] = useState('');
   const [kategori, setKategori] = useState('Infrastruktur');
   const [deskripsi, setDeskripsi] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    loadComplaints();
+  }, []);
+
+  const loadComplaints = async () => {
+    try {
+      const res = await fetch('/api/module-records?path=/warga/pengaduan');
+      const data = await res.json();
+      if (data.records) {
+        setComplaints(data.records.map((r: any) => ({
+          id: r.id,
+          title: r.title,
+          category: r.category,
+          description: r.description,
+          status: r.status,
+          createdAt: new Date(r.createdAt).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })
+        })));
+      }
+    } catch (error) {
+      console.error('Error loading complaints:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!judul || !deskripsi) return;
 
-    const now = new Date();
-    const pad = (n: number) => String(n).padStart(2, '0');
-    const newComplaint = {
-      id: `ADU${String(complaints.length + 1).padStart(2, '0')}`,
-      tanggal: `${pad(now.getDate())} Jun 2026`,
-      kategori,
-      judul,
-      status: 'Diterima'
-    };
-    setComplaints([newComplaint, ...complaints]);
-    setJudul('');
-    setDeskripsi('');
+    try {
+      const res = await fetch('/api/module-records', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          modulePath: '/warga/pengaduan',
+          moduleName: 'Pengaduan Warga',
+          title: judul,
+          category: kategori,
+          description: deskripsi,
+          status: 'Diterima'
+        })
+      });
+      if (res.ok) {
+        setJudul('');
+        setDeskripsi('');
+        loadComplaints();
+      } else {
+        alert('Gagal mengirim laporan aduan');
+      }
+    } catch (error) {
+      alert('Terjadi kesalahan');
+    }
   };
 
   return (
@@ -109,20 +150,26 @@ export default function PengaduanPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {complaints.map((c, i) => (
-              <div key={i} className="p-3 border rounded-xl bg-white flex justify-between items-center hover:shadow-sm transition-all">
-                <div>
-                  <p className="text-xs font-bold text-slate-700 leading-normal">{c.judul}</p>
-                  <span className="text-[10px] text-indigo-700 font-mono font-bold block mt-0.5">{c.id} • {c.tanggal} • {c.kategori}</span>
+            {loading ? (
+              <p className="text-xs text-slate-500 text-center py-4">Memuat data...</p>
+            ) : complaints.length === 0 ? (
+              <p className="text-xs text-slate-500 text-center py-4">Belum ada laporan aduan</p>
+            ) : (
+              complaints.map((c, i) => (
+                <div key={i} className="p-3 border rounded-xl bg-white flex justify-between items-center hover:shadow-sm transition-all">
+                  <div>
+                    <p className="text-xs font-bold text-slate-700 leading-normal">{c.title}</p>
+                    <span className="text-[10px] text-indigo-700 font-mono font-bold block mt-0.5">{c.id} • {c.createdAt} • {c.category}</span>
+                  </div>
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                    c.status === 'Selesai' ? 'bg-green-100 text-green-700' :
+                    c.status === 'Ditindaklanjuti' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'
+                  }`}>
+                    {c.status}
+                  </span>
                 </div>
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                  c.status === 'Selesai' ? 'bg-green-100 text-green-700' :
-                  c.status === 'Ditindaklanjuti' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'
-                }`}>
-                  {c.status}
-                </span>
-              </div>
-            ))}
+              ))
+            )}
           </CardContent>
         </Card>
       </div>
