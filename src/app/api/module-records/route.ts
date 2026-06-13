@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { auth } from "@/auth";
 import prisma from "@/lib/prisma";
 
 type ModuleRecordRow = {
@@ -45,9 +44,6 @@ function makeId() {
 }
 
 export async function GET(req: NextRequest) {
-  const session = await auth();
-  if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
   const modulePath = req.nextUrl.searchParams.get("path") || "";
   if (!modulePath.startsWith("/")) {
     return NextResponse.json({ error: "Path modul tidak valid" }, { status: 400 });
@@ -67,9 +63,6 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const session = await auth();
-  if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
   const body = await req.json();
   const id = makeId();
   const modulePath = cleanText(body.modulePath).slice(0, 191);
@@ -79,7 +72,7 @@ export async function POST(req: NextRequest) {
   const description = cleanText(body.description);
   const valueText = cleanText(body.valueText).slice(0, 191) || null;
   const status = cleanText(body.status, "Baru").slice(0, 64);
-  const createdBy = cleanText(session.user.email || session.user.name || "user").slice(0, 191);
+  const createdBy = cleanText(body.createdBy || "user").slice(0, 191);
 
   if (!modulePath.startsWith("/") || title.length < 3) {
     return NextResponse.json({ error: "Path modul dan judul wajib diisi" }, { status: 400 });
@@ -96,9 +89,6 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  const session = await auth();
-  if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
   const body = await req.json();
   const id = cleanText(body.id).slice(0, 191);
   const modulePath = cleanText(body.modulePath).slice(0, 191);
@@ -128,9 +118,6 @@ export async function PATCH(req: NextRequest) {
 }
 
 export async function DELETE(req: NextRequest) {
-  const session = await auth();
-  if (!session?.user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-
   const id = cleanText(req.nextUrl.searchParams.get("id")).slice(0, 191);
   const modulePath = cleanText(req.nextUrl.searchParams.get("path")).slice(0, 191);
 

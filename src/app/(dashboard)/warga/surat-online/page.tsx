@@ -59,7 +59,8 @@ export default function SuratOnlinePage() {
           title: type,
           category: 'Pengajuan Surat',
           description: `Pengajuan surat ${type}`,
-          status: 'Proses Validasi'
+          status: 'Proses Validasi',
+          createdBy: 'Warga'
         })
       });
       if (res.ok) {

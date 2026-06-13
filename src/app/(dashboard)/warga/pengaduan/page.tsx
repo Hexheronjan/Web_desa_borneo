@@ -63,18 +63,20 @@ export default function PengaduanPage() {
           title: judul,
           category: kategori,
           description: deskripsi,
-          status: 'Diterima'
+          status: 'Diterima',
+          createdBy: 'Warga'
         })
       });
+      const result = await res.json();
       if (res.ok) {
         setJudul('');
         setDeskripsi('');
         loadComplaints();
       } else {
-        alert('Gagal mengirim laporan aduan');
+        alert('Gagal mengirim laporan aduan: ' + (result.error || 'Unknown error'));
       }
     } catch (error) {
-      alert('Terjadi kesalahan');
+      alert('Terjadi kesalahan: ' + (error as Error).message);
     }
   };
 
