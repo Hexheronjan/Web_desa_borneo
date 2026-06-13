@@ -6,6 +6,15 @@ import { revalidatePath } from "next/cache";
 
 export async function createWarga(data: any) {
   try {
+    // Check if NIK already exists
+    const existing = await prisma.warga.findFirst({
+      where: { nik: data.nik }
+    });
+
+    if (existing) {
+      return { success: false, error: "NIK sudah terdaftar" };
+    }
+
     // Get first desa and rwRt as defaults
     const desa = await prisma.desa.findFirst();
     const rwRt = await prisma.rwRt.findFirst();

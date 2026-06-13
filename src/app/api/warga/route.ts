@@ -5,8 +5,12 @@ export async function GET() {
   try {
     const result = await getWargaList();
     if (result.success && result.data) {
-      // Transform data to match the expected interface
-      const transformedData = result.data.map((w: any) => ({
+      // Transform data to match the expected interface and remove duplicates
+      const uniqueData = new Map();
+      result.data.forEach((w: any) => {
+        uniqueData.set(w.id, w);
+      });
+      const transformedData = Array.from(uniqueData.values()).map((w: any) => ({
         id: w.id,
         nik: w.nik,
         nama: w.nama,
