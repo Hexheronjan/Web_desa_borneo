@@ -66,6 +66,7 @@ export const roleConfig: Record<RoleKey, RoleConfig> = {
       { label: "Data Infrastruktur", path: "/operator-sid/data-infrastruktur", group: "SISTEM INFORMASI DESA" },
       { label: "Data Budaya", path: "/operator-sid/data-budaya", group: "SISTEM INFORMASI DESA" },
       { label: "Validasi Data", path: "/operator-sid/validasi-data", group: "SISTEM INFORMASI DESA" },
+      { label: "Validasi Surat", path: "/operator-sid/validasi-surat", group: "LAYANAN WARGA" },
     ],
   },
 
