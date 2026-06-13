@@ -37,9 +37,10 @@ export default function DashboardLayout({
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         {/* MOBILE HEADER TOGGLE */}
         <div className="lg:hidden flex items-center p-3 bg-white border-b border-slate-100 shadow-sm sticky top-0 z-30">
-          <button 
+          <button
             onClick={() => setIsSidebarOpen(true)}
             className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+            data-mobile-menu-toggle="true"
           >
             <Menu size={24} />
           </button>

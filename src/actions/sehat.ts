@@ -154,6 +154,26 @@ export async function deletePosyandu(id: string) {
   }
 }
 
+export async function updatePosyandu(id: string, data: any) {
+  try {
+    const record = await prisma.posyandu.update({
+      where: { id },
+      data: {
+        tanggal: new Date(data.tanggal),
+        lokasi: data.lokasi,
+        jumlahBalita: data.jumlahBalita || 0,
+        jumlahImunisasi: data.jumlahImunisasi || 0,
+        catatan: data.catatan,
+      }
+    });
+    revalidatePath("/sehat/posyandu");
+    revalidatePath("/sehat/laporan-kesehatan");
+    return { success: true, data: record };
+  } catch (error: any) {
+    return { success: false, error: error.message };
+  }
+}
+
 // ALERT & SHIFT
 export async function broadcastKesehatanAlert(judul: string, pesan: string) {
   try {

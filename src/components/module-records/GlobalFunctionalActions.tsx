@@ -188,6 +188,8 @@ export function GlobalFunctionalActions() {
       if (button.closest('[role="dialog"]')) return;
       if (button.closest("form") && (button.type === "submit" || !button.type)) return;
       if (button.closest("aside") || button.closest("header")) return;
+      // Exclude mobile menu toggle button
+      if (button.getAttribute("data-mobile-menu-toggle") === "true") return;
 
       const label = [
         button.innerText,

@@ -5,6 +5,8 @@ import { PageTitle } from "@/components/shared/PageTitle";
 import { StatCard } from "@/components/shared/StatCard";
 import NakesSehatActions from "../NakesSehatActions";
 import { PosyanduActions } from "./PosyanduActions";
+import { deletePosyandu, updatePosyandu } from "@/actions/sehat";
+import { Edit, Trash2 } from "lucide-react";
 
 const COLOR = "#E07B2A";
 
@@ -77,9 +79,50 @@ export default async function PosyanduPage() {
               <div className="space-y-3 max-h-80 overflow-y-auto">
                 {posyandu.map((p) => (
                   <div key={p.id} className="p-3 border rounded-lg">
-                    <div className="flex justify-between">
-                      <p className="font-semibold text-sm">{p.lokasi}</p>
-                      <p className="text-xs text-slate-500">{new Date(p.tanggal).toLocaleDateString("id-ID")}</p>
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <p className="font-semibold text-sm">{p.lokasi}</p>
+                        <p className="text-xs text-slate-500">{new Date(p.tanggal).toLocaleDateString("id-ID")}</p>
+                      </div>
+                      <div className="flex gap-1">
+                        <button
+                          onClick={() => {
+                            const newLokasi = prompt("Edit Lokasi:", p.lokasi);
+                            if (newLokasi) {
+                              updatePosyandu(p.id, { ...p, lokasi: newLokasi }).then(res => {
+                                if (res.success) {
+                                  alert("Data berhasil diperbarui");
+                                  window.location.reload();
+                                } else {
+                                  alert("Gagal: " + res.error);
+                                }
+                              });
+                            }
+                          }}
+                          className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                          title="Edit"
+                        >
+                          <Edit size={14} />
+                        </button>
+                        <button
+                          onClick={() => {
+                            if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
+                              deletePosyandu(p.id).then(res => {
+                                if (res.success) {
+                                  alert("Data berhasil dihapus");
+                                  window.location.reload();
+                                } else {
+                                  alert("Gagal: " + res.error);
+                                }
+                              });
+                            }
+                          }}
+                          className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          title="Hapus"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
                     </div>
                     <div className="flex gap-4 mt-2 text-xs text-slate-600">
                       <span>👶 {p.jumlahBalita} balita</span>
