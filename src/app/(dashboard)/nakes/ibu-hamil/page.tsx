@@ -1,38 +1,121 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
-import { Heart, Search, Filter } from 'lucide-react';
-import { useState } from 'react';
+import { Heart, Search, Plus, Edit, Trash2 } from 'lucide-react';
 
 const COLOR = '#e65100';
 
-const initialIbu = [
-  { no: 1, nama: 'Ibu Fatimah Zahra', usia: '4 Bulan', riwayat: 'Anak Ke-2, Persalinan Normal', risiko: 'Risiko Rendah' },
-  { no: 2, nama: 'Ibu Kartini Sari', usia: '8 Bulan', riwayat: 'Anak Ke-1, Riwayat Anemia', risiko: 'Risiko Tinggi' },
-  { no: 3, nama: 'Ibu Clara Lestari', usia: '6 Bulan', riwayat: 'Anak Ke-3, Persalinan Normal', risiko: 'Risiko Rendah' },
-  { no: 4, nama: 'Ibu Dewi Budi', usia: '2 Bulan', riwayat: 'Anak Ke-1', risiko: 'Risiko Rendah' },
-  { no: 5, nama: 'Ibu Nyahu Mandau', usia: '9 Bulan', riwayat: 'Anak Ke-2, Riwayat Hipertensi', risiko: 'Risiko Tinggi' }
-];
+interface Monitoring {
+  id: string;
+  wargaId: string;
+  tanggal: Date;
+  beratBadan?: number;
+  tinggiBadan?: number;
+  tensiSistolik?: number;
+  tensiDiastolik?: number;
+  suhu?: number;
+  alert: boolean;
+  warga?: {
+    id: string;
+    nik: string;
+    nama: string;
+  };
+}
 
 export default function IbuHamilPage() {
   const [search, setSearch] = useState('');
+  const [dataIbu, setDataIbu] = useState<Monitoring[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingData, setEditingData] = useState<Monitoring | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState<any>({});
 
-  const filtered = initialIbu.filter(i =>
-    i.nama.toLowerCase().includes(search.toLowerCase()) ||
-    i.risiko.toLowerCase().includes(search.toLowerCase())
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/monitoring');
+      const result = await res.json();
+      if (result.success) setDataIbu(result.data);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAdd = () => {
+    setEditingData(null);
+    setFormData({});
+    setIsModalOpen(true);
+  };
+
+  const handleEdit = (data: Monitoring) => {
+    setEditingData(data);
+    setFormData(data);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+      const res = await fetch(`/api/monitoring?id=${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        alert('Data berhasil dihapus');
+        loadData();
+      } else {
+        alert('Gagal menghapus data');
+      }
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const method = editingData ? 'PUT' : 'POST';
+    
+    try {
+      const res = await fetch('/api/monitoring', {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editingData ? { ...formData, id: editingData.id } : formData),
+      });
+      const result = await res.json();
+      if (result.success) {
+        alert(editingData ? 'Data berhasil diperbarui' : 'Data berhasil ditambahkan');
+        setIsModalOpen(false);
+        loadData();
+      } else {
+        alert('Gagal: ' + result.error);
+      }
+    } catch (error) {
+      alert('Terjadi kesalahan');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const filtered = dataIbu.filter(i =>
+    i.warga?.nama?.toLowerCase().includes(search.toLowerCase())
   );
+
+  const alertCount = filtered.filter(i => i.alert).length;
 
   return (
     <div className="flex flex-col gap-5">
       <PageTitle fitur="Pantauan Ibu Hamil" modul="Nakes / Kader Posyandu" color={COLOR} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Ibu Hamil Terdaftar" value={25} satuan="ibu" barColor="orange" progress={80} />
-        <StatCard label="Risiko Rendah" value={21} satuan="ibu" barColor="green" progress={84} />
-        <StatCard label="Risiko Tinggi" value={4} satuan="pantauan intensif" barColor="red" progress={16} />
-        <StatCard label="Melahirkan Bulan Ini" value={2} satuan="estimasi lahir" barColor="blue" progress={50} />
+        <StatCard label="Ibu Hamil Terdaftar" value={filtered.length} satuan="ibu" barColor="orange" progress={80} />
+        <StatCard label="Normal" value={filtered.length - alertCount} satuan="ibu" barColor="green" progress={filtered.length > 0 ? ((filtered.length - alertCount) / filtered.length) * 100 : 0} />
+        <StatCard label="Risiko Tinggi" value={alertCount} satuan="pantauan intensif" barColor="red" progress={filtered.length > 0 ? (alertCount / filtered.length) * 100 : 0} />
+        <StatCard label="Monitoring Bulan Ini" value={filtered.length} satuan="catatan" barColor="blue" progress={50} />
       </div>
 
       <div className="grid grid-cols-1 gap-5">
@@ -53,43 +136,183 @@ export default function IbuHamilPage() {
                     className="pl-9 pr-3 py-1.5 text-xs border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300 w-48"
                   />
                 </div>
+                <button
+                  onClick={handleAdd}
+                  className="px-3 py-1.5 text-xs bg-orange-600 text-white rounded-lg hover:bg-orange-700 flex items-center gap-1"
+                >
+                  <Plus size={12} /> Tambah Data
+                </button>
               </div>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-left text-xs text-slate-500 uppercase tracking-wider border-b">
-                    <th className="pb-2 pr-4 text-center">No</th>
-                    <th className="pb-2 pr-4">Nama Ibu</th>
-                    <th className="pb-2 pr-4">Usia Kehamilan</th>
-                    <th className="pb-2 pr-4">Riwayat Persalinan / Catatan Medis</th>
-                    <th className="pb-2">Risiko Kehamilan</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((item, i) => (
-                    <tr key={item.no} className={`border-b last:border-0 ${i % 2 === 0 ? 'bg-slate-50/50' : ''}`}>
-                      <td className="py-2.5 pr-4 text-center text-slate-400 font-mono text-xs">{item.no}</td>
-                      <td className="py-2.5 pr-4 font-semibold text-slate-700">{item.nama}</td>
-                      <td className="py-2.5 pr-4 text-xs font-mono font-bold text-slate-600">{item.usia}</td>
-                      <td className="py-2.5 pr-4 text-xs text-slate-600 leading-normal">{item.riwayat}</td>
-                      <td className="py-2.5">
-                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
-                          item.risiko === 'Risiko Rendah' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                        }`}>
-                          {item.risiko}
-                        </span>
-                      </td>
+            {loading ? (
+              <div className="text-center py-8 text-slate-400">Memuat data...</div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="text-left text-xs text-slate-500 uppercase tracking-wider border-b">
+                      <th className="pb-2 pr-4 text-center">No</th>
+                      <th className="pb-2 pr-4">Nama Ibu</th>
+                      <th className="pb-2 pr-4">Tanggal</th>
+                      <th className="pb-2 pr-4">BB/TB</th>
+                      <th className="pb-2 pr-4">Tensi</th>
+                      <th className="pb-2 pr-4">Suhu</th>
+                      <th className="pb-2">Aksi</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {filtered.map((item, i) => (
+                      <tr key={item.id} className={`border-b last:border-0 ${i % 2 === 0 ? 'bg-slate-50/50' : ''}`}>
+                        <td className="py-2.5 pr-4 text-center text-slate-400 font-mono text-xs">{i + 1}</td>
+                        <td className="py-2.5 pr-4 font-semibold text-slate-700">{item.warga?.nama || '-'}</td>
+                        <td className="py-2.5 pr-4 text-slate-600 text-xs">
+                          {new Date(item.tanggal).toLocaleDateString('id-ID')}
+                        </td>
+                        <td className="py-2.5 pr-4 text-slate-600 text-xs">
+                          {item.beratBadan && item.tinggiBadan ? `${item.beratBadan}kg / ${item.tinggiBadan}cm` : '-'}
+                        </td>
+                        <td className="py-2.5 pr-4 text-slate-600 text-xs">
+                          {item.tensiSistolik && item.tensiDiastolik ? `${item.tensiSistolik}/${item.tensiDiastolik}` : '-'}
+                        </td>
+                        <td className="py-2.5 pr-4 text-slate-600 text-xs">
+                          {item.suhu ? `${item.suhu}°C` : '-'}
+                        </td>
+                        <td className="py-2.5 pr-4">
+                          <div className="flex gap-1">
+                            <button
+                              onClick={() => handleEdit(item)}
+                              className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                              title="Edit"
+                            >
+                              <Edit size={14} />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(item.id)}
+                              className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                              title="Hapus"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                    {filtered.length === 0 && (
+                      <tr>
+                        <td colSpan={7} className="py-8 text-center text-slate-400 text-sm">Data tidak ditemukan</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
+
+      {/* MODAL FORM */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-lg rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="bg-[#e65100] px-6 py-4 text-white">
+              <h2 className="font-bold text-lg">{editingData ? 'Edit Data Ibu Hamil' : 'Tambah Data Ibu Hamil'}</h2>
+            </div>
+            <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">NIK Ibu *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.wargaId || ''}
+                  onChange={e => setFormData({ ...formData, wargaId: e.target.value })}
+                  placeholder="Masukkan NIK ibu hamil"
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tanggal</label>
+                <input
+                  type="date"
+                  value={formData.tanggal ? new Date(formData.tanggal).toISOString().split('T')[0] : ''}
+                  onChange={e => setFormData({ ...formData, tanggal: e.target.value })}
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Berat Badan (kg)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={formData.beratBadan || ''}
+                    onChange={e => setFormData({ ...formData, beratBadan: parseFloat(e.target.value) })}
+                    className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tinggi Badan (cm)</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    value={formData.tinggiBadan || ''}
+                    onChange={e => setFormData({ ...formData, tinggiBadan: parseFloat(e.target.value) })}
+                    className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tensi Sistolik</label>
+                  <input
+                    type="number"
+                    value={formData.tensiSistolik || ''}
+                    onChange={e => setFormData({ ...formData, tensiSistolik: parseInt(e.target.value) })}
+                    className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tensi Diastolik</label>
+                  <input
+                    type="number"
+                    value={formData.tensiDiastolik || ''}
+                    onChange={e => setFormData({ ...formData, tensiDiastolik: parseInt(e.target.value) })}
+                    className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Suhu (°C)</label>
+                <input
+                  type="number"
+                  step="0.1"
+                  value={formData.suhu || ''}
+                  onChange={e => setFormData({ ...formData, suhu: parseFloat(e.target.value) })}
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+              <div className="flex justify-end gap-3 pt-6 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  disabled={isSubmitting}
+                  className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-6 py-2 text-sm bg-[#e65100] hover:bg-[#bf360c] text-white rounded-lg transition-colors disabled:opacity-50"
+                >
+                  {isSubmitting ? 'Menyimpan...' : 'Simpan'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

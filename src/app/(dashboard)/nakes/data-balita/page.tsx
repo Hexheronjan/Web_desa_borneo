@@ -1,38 +1,126 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
-import { Heart, Search, Plus, Download } from 'lucide-react';
-import { useState } from 'react';
+import { Heart, Search, Plus, Edit, Trash2 } from 'lucide-react';
 
 const COLOR = '#e65100';
 
-const initialBalita = [
-  { no: 1, nama: 'Muhammad Alif', ttl: 'Borneo, 12 Feb 2024', bb: '10.5 kg', tb: '82 cm', gizi: 'Normal', imun: 'Lengkap' },
-  { no: 2, nama: 'Clara Dayak', ttl: 'Borneo, 05 Mei 2023', bb: '9.2 kg', tb: '76 cm', gizi: 'Stunting', imun: 'Belum Lengkap' },
-  { no: 3, nama: 'Budi Hartono', ttl: 'Borneo, 28 Jan 2024', bb: '11.0 kg', tb: '85 cm', gizi: 'Normal', imun: 'Lengkap' },
-  { no: 4, nama: 'Dewi Lestari', ttl: 'Borneo, 14 Nov 2023', bb: '9.8 kg', tb: '79 cm', gizi: 'Gizi Kurang', imun: 'Lengkap' },
-  { no: 5, nama: 'Rudi Hartono', ttl: 'Borneo, 02 Des 2024', bb: '8.4 kg', tb: '69 cm', gizi: 'Normal', imun: 'Belum Lengkap' }
-];
+interface Stunting {
+  id: string;
+  wargaId: string;
+  tanggal: Date;
+  bb: number;
+  tb: number;
+  umurBulan: number;
+  zScore: number;
+  kategori: string;
+  rekomendasi?: string;
+  warga?: {
+    id: string;
+    nik: string;
+    nama: string;
+    tempatLahir: string;
+    tanggalLahir: Date;
+  };
+}
 
 export default function DataBalitaPage() {
   const [search, setSearch] = useState('');
+  const [dataBalita, setDataBalita] = useState<Stunting[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingData, setEditingData] = useState<Stunting | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState<any>({});
 
-  const filtered = initialBalita.filter(b =>
-    b.nama.toLowerCase().includes(search.toLowerCase()) ||
-    b.gizi.toLowerCase().includes(search.toLowerCase())
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/stunting');
+      const result = await res.json();
+      if (result.success) setDataBalita(result.data);
+    } catch (error) {
+      console.error('Error loading data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleAdd = () => {
+    setEditingData(null);
+    setFormData({});
+    setIsModalOpen(true);
+  };
+
+  const handleEdit = (data: Stunting) => {
+    setEditingData(data);
+    setFormData(data);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+      const res = await fetch(`/api/stunting?id=${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        alert('Data berhasil dihapus');
+        loadData();
+      } else {
+        alert('Gagal menghapus data');
+      }
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const method = editingData ? 'PUT' : 'POST';
+    
+    try {
+      const res = await fetch('/api/stunting', {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editingData ? { ...formData, id: editingData.id } : formData),
+      });
+      const result = await res.json();
+      if (result.success) {
+        alert(editingData ? 'Data berhasil diperbarui' : 'Data berhasil ditambahkan');
+        setIsModalOpen(false);
+        loadData();
+      } else {
+        alert('Gagal: ' + result.error);
+      }
+    } catch (error) {
+      alert('Terjadi kesalahan');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const filtered = dataBalita.filter(b =>
+    b.warga?.nama?.toLowerCase().includes(search.toLowerCase()) ||
+    b.kategori?.toLowerCase().includes(search.toLowerCase())
   );
+
+  const normalCount = filtered.filter(b => b.kategori === 'Normal').length;
+  const stuntingCount = filtered.filter(b => b.kategori === 'RisikoTinggi').length;
+  const riskCount = filtered.filter(b => b.kategori === 'RisikoSedang').length;
 
   return (
     <div className="flex flex-col gap-5">
       <PageTitle fitur="Data Balita" modul="Nakes / Kader Posyandu" color={COLOR} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Balita Terdaftar" value={120} satuan="anak" barColor="orange" progress={90} />
-        <StatCard label="Kondisi Normal" value={103} satuan="anak" barColor="green" progress={86} />
-        <StatCard label="Risiko Stunting" value={17} satuan="anak" barColor="red" progress={14} />
-        <StatCard label="Imunisasi Lengkap" value={110} satuan="anak" barColor="green" progress={92} />
+        <StatCard label="Balita Terdaftar" value={filtered.length} satuan="anak" barColor="orange" progress={90} />
+        <StatCard label="Kondisi Normal" value={normalCount} satuan="anak" barColor="green" progress={filtered.length > 0 ? (normalCount / filtered.length) * 100 : 0} />
+        <StatCard label="Risiko Stunting" value={stuntingCount} satuan="anak" barColor="red" progress={filtered.length > 0 ? (stuntingCount / filtered.length) * 100 : 0} />
+        <StatCard label="Risiko Sedang" value={riskCount} satuan="anak" barColor="yellow" progress={filtered.length > 0 ? (riskCount / filtered.length) * 100 : 0} />
       </div>
 
       <div className="grid grid-cols-1 gap-5">
@@ -53,54 +141,201 @@ export default function DataBalitaPage() {
                     className="pl-9 pr-3 py-1.5 text-xs border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300 w-48"
                   />
                 </div>
+                <button
+                  onClick={handleAdd}
+                  className="px-3 py-1.5 text-xs bg-orange-600 text-white rounded-lg hover:bg-orange-700 flex items-center gap-1"
+                >
+                  <Plus size={12} /> Tambah Data
+                </button>
               </div>
             </div>
           </CardHeader>
           <CardContent>
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="text-left text-xs text-slate-500 uppercase tracking-wider border-b">
-                    <th className="pb-2 pr-4 text-center">No</th>
-                    <th className="pb-2 pr-4">Nama Lengkap</th>
-                    <th className="pb-2 pr-4">Tempat, Tanggal Lahir</th>
-                    <th className="pb-2 pr-4">Berat Badan</th>
-                    <th className="pb-2 pr-4">Tinggi Badan</th>
-                    <th className="pb-2 pr-4">Status Gizi</th>
-                    <th className="pb-2">Imunisasi</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filtered.map((b, i) => (
-                    <tr key={b.no} className={`border-b last:border-0 ${i % 2 === 0 ? 'bg-slate-50/50' : ''}`}>
-                      <td className="py-2.5 pr-4 text-center text-slate-400 font-mono text-xs">{b.no}</td>
-                      <td className="py-2.5 pr-4 font-semibold text-slate-700">{b.nama}</td>
-                      <td className="py-2.5 pr-4 text-xs text-slate-500 font-mono">{b.ttl}</td>
-                      <td className="py-2.5 pr-4 text-xs font-mono font-bold text-slate-600">{b.bb}</td>
-                      <td className="py-2.5 pr-4 text-xs font-mono font-bold text-slate-600">{b.tb}</td>
-                      <td className="py-2.5 pr-4">
-                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                          b.gizi === 'Normal' ? 'bg-green-100 text-green-700' :
-                          b.gizi === 'Stunting' ? 'bg-red-100 text-red-700' : 'bg-amber-100 text-amber-700'
-                        }`}>
-                          {b.gizi}
-                        </span>
-                      </td>
-                      <td className="py-2.5">
-                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                          b.imun === 'Lengkap' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
-                        }`}>
-                          {b.imun}
-                        </span>
-                      </td>
+            {loading ? (
+              <div className="text-center py-8 text-slate-400">Memuat data...</div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="text-left text-xs text-slate-500 uppercase tracking-wider border-b">
+                      <th className="pb-2 pr-4 text-center">No</th>
+                      <th className="pb-2 pr-4">Nama Lengkap</th>
+                      <th className="pb-2 pr-4">Tempat, Tanggal Lahir</th>
+                      <th className="pb-2 pr-4">Berat Badan</th>
+                      <th className="pb-2 pr-4">Tinggi Badan</th>
+                      <th className="pb-2 pr-4">Umur</th>
+                      <th className="pb-2 pr-4">Status Gizi</th>
+                      <th className="pb-2">Aksi</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {filtered.map((b, i) => (
+                      <tr key={b.id} className={`border-b last:border-0 ${i % 2 === 0 ? 'bg-slate-50/50' : ''}`}>
+                        <td className="py-2.5 pr-4 text-center text-slate-400 font-mono text-xs">{i + 1}</td>
+                        <td className="py-2.5 pr-4 font-semibold text-slate-700">{b.warga?.nama || '-'}</td>
+                        <td className="py-2.5 pr-4 text-xs text-slate-500 font-mono">
+                          {b.warga?.tempatLahir || '-'}, {b.warga?.tanggalLahir ? new Date(b.warga.tanggalLahir).toLocaleDateString('id-ID') : '-'}
+                        </td>
+                        <td className="py-2.5 pr-4 text-xs font-mono font-bold text-slate-600">{b.bb} kg</td>
+                        <td className="py-2.5 pr-4 text-xs font-mono font-bold text-slate-600">{b.tb} cm</td>
+                        <td className="py-2.5 pr-4 text-xs font-mono text-slate-600">{b.umurBulan} bulan</td>
+                        <td className="py-2.5 pr-4">
+                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                            b.kategori === 'Normal' ? 'bg-green-100 text-green-700' :
+                            b.kategori === 'RisikoTinggi' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700'
+                          }`}>
+                            {b.kategori === 'RisikoTinggi' ? 'Stunting' : b.kategori === 'RisikoSedang' ? 'Risiko Sedang' : 'Normal'}
+                          </span>
+                        </td>
+                        <td className="py-2.5 pr-4">
+                          <div className="flex gap-1">
+                            <button
+                              onClick={() => handleEdit(b)}
+                              className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                              title="Edit"
+                            >
+                              <Edit size={14} />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(b.id)}
+                              className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                              title="Hapus"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                    {filtered.length === 0 && (
+                      <tr>
+                        <td colSpan={8} className="py-8 text-center text-slate-400 text-sm">Data tidak ditemukan</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
+
+      {/* MODAL FORM */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-lg rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="bg-[#e65100] px-6 py-4 text-white">
+              <h2 className="font-bold text-lg">{editingData ? 'Edit Data Balita' : 'Tambah Data Balita'}</h2>
+            </div>
+            <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">NIK Balita *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.wargaId || ''}
+                  onChange={e => setFormData({ ...formData, wargaId: e.target.value })}
+                  placeholder="Masukkan NIK balita"
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tanggal</label>
+                <input
+                  type="date"
+                  value={formData.tanggal ? new Date(formData.tanggal).toISOString().split('T')[0] : ''}
+                  onChange={e => setFormData({ ...formData, tanggal: e.target.value })}
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Berat Badan (kg) *</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    required
+                    value={formData.bb || ''}
+                    onChange={e => setFormData({ ...formData, bb: parseFloat(e.target.value) })}
+                    className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tinggi Badan (cm) *</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    required
+                    value={formData.tb || ''}
+                    onChange={e => setFormData({ ...formData, tb: parseFloat(e.target.value) })}
+                    className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Umur (bulan) *</label>
+                  <input
+                    type="number"
+                    required
+                    value={formData.umurBulan || ''}
+                    onChange={e => setFormData({ ...formData, umurBulan: parseInt(e.target.value) })}
+                    className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Z-Score</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={formData.zScore || ''}
+                    onChange={e => setFormData({ ...formData, zScore: parseFloat(e.target.value) })}
+                    className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Kategori</label>
+                <select
+                  value={formData.kategori || 'Normal'}
+                  onChange={e => setFormData({ ...formData, kategori: e.target.value })}
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                >
+                  <option value="Normal">Normal</option>
+                  <option value="RisikoSedang">Risiko Sedang</option>
+                  <option value="RisikoTinggi">Risiko Tinggi (Stunting)</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Rekomendasi</label>
+                <textarea
+                  value={formData.rekomendasi || ''}
+                  onChange={e => setFormData({ ...formData, rekomendasi: e.target.value })}
+                  placeholder="Rekomendasi tindak lanjut"
+                  className="w-full border rounded-lg p-2.5 text-sm h-20 focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+              <div className="flex justify-end gap-3 pt-6 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  disabled={isSubmitting}
+                  className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-6 py-2 text-sm bg-[#e65100] hover:bg-[#bf360c] text-white rounded-lg transition-colors disabled:opacity-50"
+                >
+                  {isSubmitting ? 'Menyimpan...' : 'Simpan'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
