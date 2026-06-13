@@ -30,10 +30,10 @@ export default function PengaduanPage() {
 
   const loadComplaints = async () => {
     try {
-      const res = await fetch('/api/module-records?path=/warga/pengaduan');
+      const res = await fetch('/api/pengaduan');
       const data = await res.json();
-      if (data.records) {
-        setComplaints(data.records.map((r: any) => ({
+      if (data.success) {
+        setComplaints(data.data.map((r: any) => ({
           id: r.id,
           title: r.title,
           category: r.category,
@@ -54,12 +54,10 @@ export default function PengaduanPage() {
     if (!judul || !deskripsi) return;
 
     try {
-      const res = await fetch('/api/module-records', {
+      const res = await fetch('/api/pengaduan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          modulePath: '/warga/pengaduan',
-          moduleName: 'Pengaduan Warga',
           title: judul,
           category: kategori,
           description: deskripsi,
@@ -68,7 +66,7 @@ export default function PengaduanPage() {
         })
       });
       const result = await res.json();
-      if (res.ok) {
+      if (result.success) {
         setJudul('');
         setDeskripsi('');
         loadComplaints();

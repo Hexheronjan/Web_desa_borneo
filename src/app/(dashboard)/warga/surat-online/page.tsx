@@ -31,10 +31,10 @@ export default function SuratOnlinePage() {
 
   const loadApplications = async () => {
     try {
-      const res = await fetch('/api/module-records?path=/warga/surat-online');
+      const res = await fetch('/api/surat-online');
       const data = await res.json();
-      if (data.records) {
-        setApps(data.records.map((r: any) => ({
+      if (data.success) {
+        setApps(data.data.map((r: any) => ({
           id: r.id,
           title: r.title,
           status: r.status,
@@ -50,12 +50,10 @@ export default function SuratOnlinePage() {
 
   const handleApply = async (type: string) => {
     try {
-      const res = await fetch('/api/module-records', {
+      const res = await fetch('/api/surat-online', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          modulePath: '/warga/surat-online',
-          moduleName: 'Surat Online',
           title: type,
           category: 'Pengajuan Surat',
           description: `Pengajuan surat ${type}`,
@@ -63,13 +61,14 @@ export default function SuratOnlinePage() {
           createdBy: 'Warga'
         })
       });
-      if (res.ok) {
+      const result = await res.json();
+      if (result.success) {
         loadApplications();
       } else {
-        alert('Gagal mengajukan surat');
+        alert('Gagal mengajukan surat: ' + (result.error || 'Unknown error'));
       }
     } catch (error) {
-      alert('Terjadi kesalahan');
+      alert('Terjadi kesalahan: ' + (error as Error).message);
     }
   };
 
