@@ -64,7 +64,12 @@ export default function DataPendudukPage() {
       const res = await fetch("/api/warga");
       const result = await res.json();
       if (result.success) {
-        setDataWarga(result.data);
+        // Deduplicate data at client level
+        const uniqueData = new Map();
+        result.data.forEach((w: Warga) => {
+          uniqueData.set(w.id, w);
+        });
+        setDataWarga(Array.from(uniqueData.values()));
       }
     } catch (error) {
       console.error("Error loading data:", error);
