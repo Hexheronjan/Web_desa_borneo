@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageTitle } from "@/components/shared/PageTitle";
-import { StatCard } from "@/components/shared/StatCard";
-import { Users, Search, Filter, Download, UserCheck, UserX, UserPlus, Edit, Trash2 } from "lucide-react";
+import { Users, Search, Filter, Download, UserPlus, Edit, Trash2 } from "lucide-react";
 import { createWarga, updateWarga, deleteWarga, updateWargaStatus } from "@/actions/data-desa";
 
 const COLOR = "#00695c";
@@ -144,85 +143,6 @@ export default function DataPendudukPage() {
   return (
     <div className="flex flex-col gap-5">
       <PageTitle fitur="Data Penduduk" modul="Operator SID" color={COLOR} />
-
-      {/* STAT CARDS */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Total Penduduk" value={dataWarga.length.toString()} satuan="jiwa" barColor="teal" progress={100} />
-        <StatCard label="Penduduk Aktif" value={dataWarga.filter(w => w.status === "Aktif").length.toString()} satuan="jiwa" barColor="green" progress={93} />
-        <StatCard label="Pindah / Keluar" value={dataWarga.filter(w => w.status === "Pindah").length.toString()} satuan="jiwa" barColor="orange" progress={5} />
-        <StatCard label="Meninggal" value={dataWarga.filter(w => w.status === "Meninggal").length.toString()} satuan="jiwa" barColor="red" progress={2} />
-      </div>
-
-      {/* DEMOGRAFI */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Users size={16} /> Distribusi Usia
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {[
-                { label: "0–5 tahun (Balita)", value: 120, persen: 5 },
-                { label: "6–17 tahun (Anak/Remaja)", value: 480, persen: 20 },
-                { label: "18–40 tahun (Dewasa Muda)", value: 890, persen: 38 },
-                { label: "41–60 tahun (Dewasa)", value: 610, persen: 26 },
-                { label: ">60 tahun (Lansia)", value: 245, persen: 11 },
-              ].map((d, i) => (
-                <div key={i}>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-slate-600">{d.label}</span>
-                    <span className="font-bold text-slate-800">{d.value} ({d.persen}%)</span>
-                  </div>
-                  <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                    <div
-                      className="h-full rounded-full"
-                      style={{ width: `${d.persen}%`, backgroundColor: COLOR }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Users size={16} /> Jenis Kelamin & KK
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex gap-4">
-              <div className="flex-1 p-3 rounded-lg bg-teal-50 border border-teal-200 text-center">
-                <p className="text-2xl font-black text-teal-700">1.198</p>
-                <p className="text-xs text-teal-600 font-medium">Laki-laki</p>
-              </div>
-              <div className="flex-1 p-3 rounded-lg bg-rose-50 border border-rose-200 text-center">
-                <p className="text-2xl font-black text-rose-700">1.147</p>
-                <p className="text-xs text-rose-600 font-medium">Perempuan</p>
-              </div>
-            </div>
-            <div className="p-3 rounded-lg bg-slate-50 border text-center">
-              <p className="text-2xl font-black text-slate-800">587</p>
-              <p className="text-xs text-slate-500 font-medium">Jumlah Kartu Keluarga</p>
-            </div>
-            <div className="grid grid-cols-3 gap-2 text-center">
-              {[
-                { label: "RW 01", value: 520 },
-                { label: "RW 02", value: 680 },
-                { label: "RW 03", value: 450 },
-              ].map((rw, i) => (
-                <div key={i} className="p-2 border rounded-lg bg-white">
-                  <p className="text-lg font-black" style={{ color: COLOR }}>{rw.value}</p>
-                  <p className="text-[10px] text-slate-400">{rw.label}</p>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
 
       {/* SEARCH & FILTER + TABLE */}
       <Card>
