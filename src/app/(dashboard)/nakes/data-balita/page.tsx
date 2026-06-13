@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
-import { Heart, Search } from 'lucide-react';
+import { Heart, Search, Plus, Edit, Trash2 } from 'lucide-react';
 
 const COLOR = '#e65100';
 
@@ -31,6 +31,10 @@ export default function DataBalitaPage() {
   const [search, setSearch] = useState('');
   const [dataBalita, setDataBalita] = useState<Stunting[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingData, setEditingData] = useState<Stunting | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState<any>({});
 
   useEffect(() => {
     loadData();
@@ -46,6 +50,56 @@ export default function DataBalitaPage() {
       console.error('Error loading data:', error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleAdd = () => {
+    setEditingData(null);
+    setFormData({});
+    setIsModalOpen(true);
+  };
+
+  const handleEdit = (data: Stunting) => {
+    setEditingData(data);
+    setFormData(data);
+    setIsModalOpen(true);
+  };
+
+  const handleDelete = async (id: string) => {
+    if (confirm('Apakah Anda yakin ingin menghapus data ini?')) {
+      const res = await fetch(`/api/stunting?id=${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        alert('Data berhasil dihapus');
+        loadData();
+      } else {
+        alert('Gagal menghapus data');
+      }
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    const method = editingData ? 'PUT' : 'POST';
+    
+    try {
+      const res = await fetch('/api/stunting', {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editingData ? { ...formData, id: editingData.id } : formData),
+      });
+      const result = await res.json();
+      if (result.success) {
+        alert(editingData ? 'Data berhasil diperbarui' : 'Data berhasil ditambahkan');
+        setIsModalOpen(false);
+        loadData();
+      } else {
+        alert('Gagal: ' + result.error);
+      }
+    } catch (error) {
+      alert('Terjadi kesalahan');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -87,6 +141,12 @@ export default function DataBalitaPage() {
                     className="pl-9 pr-3 py-1.5 text-xs border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-300 w-48"
                   />
                 </div>
+                <button
+                  onClick={handleAdd}
+                  className="px-3 py-1.5 text-xs bg-orange-600 text-white rounded-lg hover:bg-orange-700 flex items-center gap-1"
+                >
+                  <Plus size={12} /> Tambah Data
+                </button>
               </div>
             </div>
           </CardHeader>
@@ -105,6 +165,7 @@ export default function DataBalitaPage() {
                       <th className="pb-2 pr-4">Tinggi Badan</th>
                       <th className="pb-2 pr-4">Umur</th>
                       <th className="pb-2 pr-4">Status Gizi</th>
+                      <th className="pb-2">Aksi</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -126,11 +187,29 @@ export default function DataBalitaPage() {
                             {b.kategori === 'RisikoTinggi' ? 'Stunting' : b.kategori === 'RisikoSedang' ? 'Risiko Sedang' : 'Normal'}
                           </span>
                         </td>
+                        <td className="py-2.5 pr-4">
+                          <div className="flex gap-1">
+                            <button
+                              onClick={() => handleEdit(b)}
+                              className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                              title="Edit"
+                            >
+                              <Edit size={14} />
+                            </button>
+                            <button
+                              onClick={() => handleDelete(b.id)}
+                              className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                              title="Hapus"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        </td>
                       </tr>
                     ))}
                     {filtered.length === 0 && (
                       <tr>
-                        <td colSpan={7} className="py-8 text-center text-slate-400 text-sm">Data tidak ditemukan</td>
+                        <td colSpan={8} className="py-8 text-center text-slate-400 text-sm">Data tidak ditemukan</td>
                       </tr>
                     )}
                   </tbody>
@@ -140,6 +219,123 @@ export default function DataBalitaPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* MODAL FORM */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-lg rounded-xl shadow-xl overflow-hidden animate-in fade-in zoom-in duration-200">
+            <div className="bg-[#e65100] px-6 py-4 text-white">
+              <h2 className="font-bold text-lg">{editingData ? 'Edit Data Balita' : 'Tambah Data Balita'}</h2>
+            </div>
+            <form onSubmit={handleSubmit} className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">NIK Balita *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.wargaId || ''}
+                  onChange={e => setFormData({ ...formData, wargaId: e.target.value })}
+                  placeholder="Masukkan NIK balita"
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tanggal</label>
+                <input
+                  type="date"
+                  value={formData.tanggal ? new Date(formData.tanggal).toISOString().split('T')[0] : ''}
+                  onChange={e => setFormData({ ...formData, tanggal: e.target.value })}
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Berat Badan (kg) *</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    required
+                    value={formData.bb || ''}
+                    onChange={e => setFormData({ ...formData, bb: parseFloat(e.target.value) })}
+                    className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tinggi Badan (cm) *</label>
+                  <input
+                    type="number"
+                    step="0.1"
+                    required
+                    value={formData.tb || ''}
+                    onChange={e => setFormData({ ...formData, tb: parseFloat(e.target.value) })}
+                    className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  />
+                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Umur (bulan) *</label>
+                  <input
+                    type="number"
+                    required
+                    value={formData.umurBulan || ''}
+                    onChange={e => setFormData({ ...formData, umurBulan: parseInt(e.target.value) })}
+                    className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Z-Score</label>
+                  <input
+                    type="number"
+                    step="0.01"
+                    value={formData.zScore || ''}
+                    onChange={e => setFormData({ ...formData, zScore: parseFloat(e.target.value) })}
+                    className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Kategori</label>
+                <select
+                  value={formData.kategori || 'Normal'}
+                  onChange={e => setFormData({ ...formData, kategori: e.target.value })}
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                >
+                  <option value="Normal">Normal</option>
+                  <option value="RisikoSedang">Risiko Sedang</option>
+                  <option value="RisikoTinggi">Risiko Tinggi (Stunting)</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Rekomendasi</label>
+                <textarea
+                  value={formData.rekomendasi || ''}
+                  onChange={e => setFormData({ ...formData, rekomendasi: e.target.value })}
+                  placeholder="Rekomendasi tindak lanjut"
+                  className="w-full border rounded-lg p-2.5 text-sm h-20 focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+              <div className="flex justify-end gap-3 pt-6 border-t border-slate-100">
+                <button
+                  type="button"
+                  onClick={() => setIsModalOpen(false)}
+                  disabled={isSubmitting}
+                  className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-6 py-2 text-sm bg-[#e65100] hover:bg-[#bf360c] text-white rounded-lg transition-colors disabled:opacity-50"
+                >
+                  {isSubmitting ? 'Menyimpan...' : 'Simpan'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -4,7 +4,6 @@ import { AppHeader } from "@/components/layout/AppHeader";
 import { AppSidebar } from "@/components/layout/AppSidebar";
 import { RoleTabs } from "@/components/layout/RoleTabs";
 import { SearchBar } from "@/components/layout/SearchBar";
-import { GlobalFunctionalActions } from "@/components/module-records/GlobalFunctionalActions";
 import { Menu } from "lucide-react";
 
 export default function DashboardLayout({
@@ -47,7 +46,6 @@ export default function DashboardLayout({
         </div>
 
         <div className="flex-1 flex flex-col overflow-y-auto">
-          <GlobalFunctionalActions />
           <AppHeader />
           <div className="hidden md:block">
             <RoleTabs />
