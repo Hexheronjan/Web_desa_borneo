@@ -20,12 +20,45 @@ export async function POST(request: Request) {
     const body = await request.json();
     
     // Find warga by NIK
-    const warga = await prisma.warga.findUnique({
+    let warga = await prisma.warga.findUnique({
       where: { nik: body.wargaId }
     });
     
+    // If warga doesn't exist, create it
     if (!warga) {
-      return NextResponse.json({ success: false, error: "NIK tidak ditemukan di database" }, { status: 400 });
+      // Get desa and rwRt
+      const desa = await prisma.desa.findFirst();
+      if (!desa) {
+        return NextResponse.json({ success: false, error: "Data desa tidak ditemukan. Silakan hubungi admin." }, { status: 400 });
+      }
+      
+      let rwRt = await prisma.rwRt.findFirst({ where: { desaId: desa.id } });
+      if (!rwRt) {
+        rwRt = await prisma.rwRt.create({
+          data: {
+            desaId: desa.id,
+            rw: '01',
+            rt: '01',
+            jumlahWarga: 0,
+          }
+        });
+      }
+      
+      // Create new warga with provided details or defaults
+      warga = await prisma.warga.create({
+        data: {
+          desaId: desa.id,
+          rwRtId: rwRt.id,
+          nik: body.wargaId,
+          nama: body.nama || 'Warga Baru',
+          tempatLahir: body.tempatLahir || '-',
+          tanggalLahir: body.tanggalLahir ? new Date(body.tanggalLahir) : new Date(),
+          jenisKelamin: body.jenisKelamin || 'P',
+          alamat: body.alamat || '-',
+          noHp: body.noHp || null,
+          status: 'Aktif',
+        }
+      });
     }
     
     const record = await prisma.monitoringKesehatan.create({

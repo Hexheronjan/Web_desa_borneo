@@ -247,13 +247,54 @@ export default function StuntingPage() {
                   required
                   value={formData.wargaId || ''}
                   onChange={e => setFormData({ ...formData, wargaId: e.target.value })}
-                  placeholder="Masukkan NIK (harus ada di Data Penduduk)"
+                  placeholder="Masukkan NIK (16 digit)"
                   className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
                 />
-                <p className="text-[10px] text-slate-400 mt-1">NIK harus terdaftar di menu Data Penduduk</p>
+                <p className="text-[10px] text-slate-400 mt-1">Jika NIK belum terdaftar, data warga akan dibuat otomatis</p>
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tanggal</label>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Nama Balita *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.nama || ''}
+                  onChange={e => setFormData({ ...formData, nama: e.target.value })}
+                  placeholder="Nama lengkap balita"
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tempat Lahir</label>
+                <input
+                  type="text"
+                  value={formData.tempatLahir || ''}
+                  onChange={e => setFormData({ ...formData, tempatLahir: e.target.value })}
+                  placeholder="Kota kelahiran"
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tanggal Lahir</label>
+                <input
+                  type="date"
+                  value={formData.tanggalLahir ? new Date(formData.tanggalLahir).toISOString().split('T')[0] : ''}
+                  onChange={e => setFormData({ ...formData, tanggalLahir: e.target.value })}
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Jenis Kelamin</label>
+                <select
+                  value={formData.jenisKelamin || 'L'}
+                  onChange={e => setFormData({ ...formData, jenisKelamin: e.target.value })}
+                  className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
+                >
+                  <option value="L">Laki-laki</option>
+                  <option value="P">Perempuan</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tanggal Pemeriksaan</label>
                 <input
                   type="date"
                   value={formData.tanggal ? new Date(formData.tanggal).toISOString().split('T')[0] : ''}
