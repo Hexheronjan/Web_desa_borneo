@@ -140,6 +140,7 @@ model Warga {
   monitoring   MonitoringKesehatan[]
   stunting     Stunting[]
   pesertaKelas PesertaKelas[]
+  aspirasi     Aspirasi[]
   user         User?
 }
 
@@ -374,4 +375,71 @@ model ShiftNakes {
   jamSelesai String
   status     String   @default("Aktif")
   createdAt  DateTime @default(now())
+}
+
+// ── ASPIRASI & PENGADUAN ─────────────────────────────
+model Aspirasi {
+  id        String   @id @default(cuid())
+  desaId    String
+  wargaId   String?
+  warga     Warga?   @relation(fields: [wargaId], references: [id])
+  kategori  String
+  judul     String
+  isi       String   @db.Text
+  status    String   @default("Diterima")
+  createdAt DateTime @default(now())
+}
+
+// ── DATA SISWA ───────────────────────────────────────
+model Siswa {
+  id           String   @id @default(cuid())
+  desaId       String
+  nisn         String   @unique
+  nama         String
+  kelas        String
+  jenjang      String
+  status       String   @default("Aktif")
+  createdAt    DateTime @default(now())
+}
+
+// ── MONITORING MULTI DESA ───────────────────────────
+model MonitoringDesa {
+  id         String   @id @default(cuid())
+  namaDesa   String
+  kecamatan  String
+  index      Float
+  readiness  Float
+  maturity   Float
+  status     String
+  createdAt  DateTime @default(now())
+}
+
+// ── MASTER DESA RECORD ─────────────────────────────
+model MasterDesaRecord {
+  id        String   @id @default(cuid())
+  kodeDesa  String   @unique
+  nama      String
+  kecamatan String
+  kabupaten String
+  provinsi  String
+  status    String   @default("Berkembang")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ── MODULE RECORD ───────────────────────────────────
+model ModuleRecord {
+  id          String   @id @default(cuid())
+  modulePath  String
+  moduleName  String
+  title       String
+  category    String?
+  description String?  @db.Text
+  valueText   String?
+  status      String   @default("Baru")
+  createdBy   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([modulePath, createdAt])
 }

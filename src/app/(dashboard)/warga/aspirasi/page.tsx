@@ -4,37 +4,70 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
 import { Send, Search, ListOrdered, CheckCircle2 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const COLOR = '#6a1b9a';
 
-const initialAspirasi = [
-  { no: 1, tanggal: '11 Jun 2026', kategori: 'Infrastruktur', judul: 'Penggantian Kayu Ulin Jembatan RT 03', status: 'Ditindaklanjuti' },
-  { no: 2, tanggal: '08 Jun 2026', kategori: 'Kebudayaan', judul: 'Pelatihan Seni Musik Kecapi Dayak untuk Pemuda', status: 'Diterima' }
-];
+interface Aspirasi {
+  id: string;
+  kategori: string;
+  judul: string;
+  isi: string;
+  status: string;
+  createdAt: string;
+}
 
 export default function WargaAspirasiPage() {
-  const [aspirations, setAspirations] = useState(initialAspirasi);
+  const [aspirations, setAspirations] = useState<Aspirasi[]>([]);
+  const [loading, setLoading] = useState(true);
   const [judul, setJudul] = useState('');
   const [kategori, setKategori] = useState('Infrastruktur');
   const [isi, setIsi] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const res = await fetch('/api/aspirasi');
+      const result = await res.json();
+      if (result.success) {
+        setAspirations(result.data);
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!judul || !isi) return;
 
-    const now = new Date();
-    const pad = (n: number) => String(n).padStart(2, '0');
-    const newAsp = {
-      no: aspirations.length + 1,
-      tanggal: `${pad(now.getDate())} Jun 2026`,
-      kategori,
-      judul,
-      status: 'Diterima'
-    };
-    setAspirations([newAsp, ...aspirations]);
-    setJudul('');
-    setIsi('');
+    setIsSubmitting(true);
+    try {
+      const res = await fetch('/api/aspirasi', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ kategori, judul, isi }),
+      });
+      const result = await res.json();
+      if (result.success) {
+        alert('Aspirasi berhasil dikirim');
+        setJudul('');
+        setIsi('');
+        loadData();
+      } else {
+        alert('Gagal: ' + result.error);
+      }
+    } catch (error) {
+      alert('Terjadi kesalahan');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -93,9 +126,10 @@ export default function WargaAspirasiPage() {
               </div>
               <button
                 type="submit"
-                className="w-full py-2.5 bg-purple-700 hover:bg-purple-800 text-white rounded-lg font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm"
+                disabled={isSubmitting}
+                className="w-full py-2.5 bg-purple-700 hover:bg-purple-800 text-white rounded-lg font-bold text-xs transition-all flex items-center justify-center gap-1.5 shadow-sm disabled:opacity-50"
               >
-                <Send size={12} /> Kirim Usulan
+                <Send size={12} /> {isSubmitting ? 'Mengirim...' : 'Kirim Usulan'}
               </button>
             </form>
           </CardContent>
@@ -109,19 +143,27 @@ export default function WargaAspirasiPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {aspirations.map((a, i) => (
-              <div key={i} className="p-3 border rounded-xl bg-white flex justify-between items-center hover:shadow-sm transition-all">
-                <div>
-                  <p className="text-xs font-bold text-slate-700 leading-normal">{a.judul}</p>
-                  <span className="text-[10px] text-indigo-700 font-mono font-bold block mt-0.5">{a.tanggal} • {a.kategori}</span>
+            {loading ? (
+              <p className="text-xs text-slate-500 text-center py-4">Memuat data...</p>
+            ) : aspirations.length === 0 ? (
+              <p className="text-xs text-slate-500 text-center py-4">Belum ada aspirasi</p>
+            ) : (
+              aspirations.map((a) => (
+                <div key={a.id} className="p-3 border rounded-xl bg-white flex justify-between items-center hover:shadow-sm transition-all">
+                  <div>
+                    <p className="text-xs font-bold text-slate-700 leading-normal">{a.judul}</p>
+                    <span className="text-[10px] text-indigo-700 font-mono font-bold block mt-0.5">
+                      {new Date(a.createdAt).toLocaleDateString('id-ID')} • {a.kategori}
+                    </span>
+                  </div>
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                    a.status === 'Ditindaklanjuti' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
+                  }`}>
+                    {a.status}
+                  </span>
                 </div>
-                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                  a.status === 'Ditindaklanjuti' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
-                }`}>
-                  {a.status}
-                </span>
-              </div>
-            ))}
+              ))
+            )}
           </CardContent>
         </Card>
       </div>

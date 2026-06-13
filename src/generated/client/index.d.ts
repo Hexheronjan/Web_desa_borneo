@@ -133,6 +133,31 @@ export type Diskusi = $Result.DefaultSelection<Prisma.$DiskusiPayload>
  * 
  */
 export type ShiftNakes = $Result.DefaultSelection<Prisma.$ShiftNakesPayload>
+/**
+ * Model Aspirasi
+ * 
+ */
+export type Aspirasi = $Result.DefaultSelection<Prisma.$AspirasiPayload>
+/**
+ * Model Siswa
+ * 
+ */
+export type Siswa = $Result.DefaultSelection<Prisma.$SiswaPayload>
+/**
+ * Model MonitoringDesa
+ * 
+ */
+export type MonitoringDesa = $Result.DefaultSelection<Prisma.$MonitoringDesaPayload>
+/**
+ * Model MasterDesaRecord
+ * 
+ */
+export type MasterDesaRecord = $Result.DefaultSelection<Prisma.$MasterDesaRecordPayload>
+/**
+ * Model ModuleRecord
+ * 
+ */
+export type ModuleRecord = $Result.DefaultSelection<Prisma.$ModuleRecordPayload>
 
 /**
  * Enums
@@ -640,6 +665,56 @@ export class PrismaClient<
     * ```
     */
   get shiftNakes(): Prisma.ShiftNakesDelegate<ExtArgs>;
+
+  /**
+   * `prisma.aspirasi`: Exposes CRUD operations for the **Aspirasi** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Aspirasis
+    * const aspirasis = await prisma.aspirasi.findMany()
+    * ```
+    */
+  get aspirasi(): Prisma.AspirasiDelegate<ExtArgs>;
+
+  /**
+   * `prisma.siswa`: Exposes CRUD operations for the **Siswa** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Siswas
+    * const siswas = await prisma.siswa.findMany()
+    * ```
+    */
+  get siswa(): Prisma.SiswaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.monitoringDesa`: Exposes CRUD operations for the **MonitoringDesa** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MonitoringDesas
+    * const monitoringDesas = await prisma.monitoringDesa.findMany()
+    * ```
+    */
+  get monitoringDesa(): Prisma.MonitoringDesaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.masterDesaRecord`: Exposes CRUD operations for the **MasterDesaRecord** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MasterDesaRecords
+    * const masterDesaRecords = await prisma.masterDesaRecord.findMany()
+    * ```
+    */
+  get masterDesaRecord(): Prisma.MasterDesaRecordDelegate<ExtArgs>;
+
+  /**
+   * `prisma.moduleRecord`: Exposes CRUD operations for the **ModuleRecord** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ModuleRecords
+    * const moduleRecords = await prisma.moduleRecord.findMany()
+    * ```
+    */
+  get moduleRecord(): Prisma.ModuleRecordDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1104,7 +1179,12 @@ export namespace Prisma {
     Laporan: 'Laporan',
     Forum: 'Forum',
     Diskusi: 'Diskusi',
-    ShiftNakes: 'ShiftNakes'
+    ShiftNakes: 'ShiftNakes',
+    Aspirasi: 'Aspirasi',
+    Siswa: 'Siswa',
+    MonitoringDesa: 'MonitoringDesa',
+    MasterDesaRecord: 'MasterDesaRecord',
+    ModuleRecord: 'ModuleRecord'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1120,7 +1200,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "desa" | "rwRt" | "warga" | "kelas" | "materi" | "pesertaKelas" | "tugas" | "rekamMedis" | "telemedicine" | "monitoringKesehatan" | "posyandu" | "stunting" | "pengurus" | "arsipAdat" | "musyawarah" | "wilayahAdat" | "hukumAdat" | "auditTrail" | "notifikasi" | "laporan" | "forum" | "diskusi" | "shiftNakes"
+      modelProps: "user" | "desa" | "rwRt" | "warga" | "kelas" | "materi" | "pesertaKelas" | "tugas" | "rekamMedis" | "telemedicine" | "monitoringKesehatan" | "posyandu" | "stunting" | "pengurus" | "arsipAdat" | "musyawarah" | "wilayahAdat" | "hukumAdat" | "auditTrail" | "notifikasi" | "laporan" | "forum" | "diskusi" | "shiftNakes" | "aspirasi" | "siswa" | "monitoringDesa" | "masterDesaRecord" | "moduleRecord"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2708,6 +2788,336 @@ export namespace Prisma {
           }
         }
       }
+      Aspirasi: {
+        payload: Prisma.$AspirasiPayload<ExtArgs>
+        fields: Prisma.AspirasiFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AspirasiFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspirasiPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AspirasiFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspirasiPayload>
+          }
+          findFirst: {
+            args: Prisma.AspirasiFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspirasiPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AspirasiFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspirasiPayload>
+          }
+          findMany: {
+            args: Prisma.AspirasiFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspirasiPayload>[]
+          }
+          create: {
+            args: Prisma.AspirasiCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspirasiPayload>
+          }
+          createMany: {
+            args: Prisma.AspirasiCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.AspirasiDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspirasiPayload>
+          }
+          update: {
+            args: Prisma.AspirasiUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspirasiPayload>
+          }
+          deleteMany: {
+            args: Prisma.AspirasiDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AspirasiUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.AspirasiUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AspirasiPayload>
+          }
+          aggregate: {
+            args: Prisma.AspirasiAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAspirasi>
+          }
+          groupBy: {
+            args: Prisma.AspirasiGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AspirasiGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AspirasiCountArgs<ExtArgs>
+            result: $Utils.Optional<AspirasiCountAggregateOutputType> | number
+          }
+        }
+      }
+      Siswa: {
+        payload: Prisma.$SiswaPayload<ExtArgs>
+        fields: Prisma.SiswaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SiswaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiswaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SiswaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiswaPayload>
+          }
+          findFirst: {
+            args: Prisma.SiswaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiswaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SiswaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiswaPayload>
+          }
+          findMany: {
+            args: Prisma.SiswaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiswaPayload>[]
+          }
+          create: {
+            args: Prisma.SiswaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiswaPayload>
+          }
+          createMany: {
+            args: Prisma.SiswaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.SiswaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiswaPayload>
+          }
+          update: {
+            args: Prisma.SiswaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiswaPayload>
+          }
+          deleteMany: {
+            args: Prisma.SiswaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SiswaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.SiswaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SiswaPayload>
+          }
+          aggregate: {
+            args: Prisma.SiswaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSiswa>
+          }
+          groupBy: {
+            args: Prisma.SiswaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SiswaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SiswaCountArgs<ExtArgs>
+            result: $Utils.Optional<SiswaCountAggregateOutputType> | number
+          }
+        }
+      }
+      MonitoringDesa: {
+        payload: Prisma.$MonitoringDesaPayload<ExtArgs>
+        fields: Prisma.MonitoringDesaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MonitoringDesaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonitoringDesaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MonitoringDesaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonitoringDesaPayload>
+          }
+          findFirst: {
+            args: Prisma.MonitoringDesaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonitoringDesaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MonitoringDesaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonitoringDesaPayload>
+          }
+          findMany: {
+            args: Prisma.MonitoringDesaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonitoringDesaPayload>[]
+          }
+          create: {
+            args: Prisma.MonitoringDesaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonitoringDesaPayload>
+          }
+          createMany: {
+            args: Prisma.MonitoringDesaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.MonitoringDesaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonitoringDesaPayload>
+          }
+          update: {
+            args: Prisma.MonitoringDesaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonitoringDesaPayload>
+          }
+          deleteMany: {
+            args: Prisma.MonitoringDesaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MonitoringDesaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.MonitoringDesaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MonitoringDesaPayload>
+          }
+          aggregate: {
+            args: Prisma.MonitoringDesaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMonitoringDesa>
+          }
+          groupBy: {
+            args: Prisma.MonitoringDesaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MonitoringDesaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MonitoringDesaCountArgs<ExtArgs>
+            result: $Utils.Optional<MonitoringDesaCountAggregateOutputType> | number
+          }
+        }
+      }
+      MasterDesaRecord: {
+        payload: Prisma.$MasterDesaRecordPayload<ExtArgs>
+        fields: Prisma.MasterDesaRecordFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MasterDesaRecordFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MasterDesaRecordPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MasterDesaRecordFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MasterDesaRecordPayload>
+          }
+          findFirst: {
+            args: Prisma.MasterDesaRecordFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MasterDesaRecordPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MasterDesaRecordFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MasterDesaRecordPayload>
+          }
+          findMany: {
+            args: Prisma.MasterDesaRecordFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MasterDesaRecordPayload>[]
+          }
+          create: {
+            args: Prisma.MasterDesaRecordCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MasterDesaRecordPayload>
+          }
+          createMany: {
+            args: Prisma.MasterDesaRecordCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.MasterDesaRecordDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MasterDesaRecordPayload>
+          }
+          update: {
+            args: Prisma.MasterDesaRecordUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MasterDesaRecordPayload>
+          }
+          deleteMany: {
+            args: Prisma.MasterDesaRecordDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MasterDesaRecordUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.MasterDesaRecordUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MasterDesaRecordPayload>
+          }
+          aggregate: {
+            args: Prisma.MasterDesaRecordAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMasterDesaRecord>
+          }
+          groupBy: {
+            args: Prisma.MasterDesaRecordGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MasterDesaRecordGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MasterDesaRecordCountArgs<ExtArgs>
+            result: $Utils.Optional<MasterDesaRecordCountAggregateOutputType> | number
+          }
+        }
+      }
+      ModuleRecord: {
+        payload: Prisma.$ModuleRecordPayload<ExtArgs>
+        fields: Prisma.ModuleRecordFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ModuleRecordFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleRecordPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ModuleRecordFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleRecordPayload>
+          }
+          findFirst: {
+            args: Prisma.ModuleRecordFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleRecordPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ModuleRecordFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleRecordPayload>
+          }
+          findMany: {
+            args: Prisma.ModuleRecordFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleRecordPayload>[]
+          }
+          create: {
+            args: Prisma.ModuleRecordCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleRecordPayload>
+          }
+          createMany: {
+            args: Prisma.ModuleRecordCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ModuleRecordDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleRecordPayload>
+          }
+          update: {
+            args: Prisma.ModuleRecordUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleRecordPayload>
+          }
+          deleteMany: {
+            args: Prisma.ModuleRecordDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ModuleRecordUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ModuleRecordUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ModuleRecordPayload>
+          }
+          aggregate: {
+            args: Prisma.ModuleRecordAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateModuleRecord>
+          }
+          groupBy: {
+            args: Prisma.ModuleRecordGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ModuleRecordGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ModuleRecordCountArgs<ExtArgs>
+            result: $Utils.Optional<ModuleRecordCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2954,6 +3364,7 @@ export namespace Prisma {
     monitoring: number
     stunting: number
     pesertaKelas: number
+    aspirasi: number
   }
 
   export type WargaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2962,6 +3373,7 @@ export namespace Prisma {
     monitoring?: boolean | WargaCountOutputTypeCountMonitoringArgs
     stunting?: boolean | WargaCountOutputTypeCountStuntingArgs
     pesertaKelas?: boolean | WargaCountOutputTypeCountPesertaKelasArgs
+    aspirasi?: boolean | WargaCountOutputTypeCountAspirasiArgs
   }
 
   // Custom InputTypes
@@ -3008,6 +3420,13 @@ export namespace Prisma {
    */
   export type WargaCountOutputTypeCountPesertaKelasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PesertaKelasWhereInput
+  }
+
+  /**
+   * WargaCountOutputType without action
+   */
+  export type WargaCountOutputTypeCountAspirasiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AspirasiWhereInput
   }
 
 
@@ -6236,6 +6655,7 @@ export namespace Prisma {
     monitoring?: boolean | Warga$monitoringArgs<ExtArgs>
     stunting?: boolean | Warga$stuntingArgs<ExtArgs>
     pesertaKelas?: boolean | Warga$pesertaKelasArgs<ExtArgs>
+    aspirasi?: boolean | Warga$aspirasiArgs<ExtArgs>
     user?: boolean | Warga$userArgs<ExtArgs>
     _count?: boolean | WargaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["warga"]>
@@ -6265,6 +6685,7 @@ export namespace Prisma {
     monitoring?: boolean | Warga$monitoringArgs<ExtArgs>
     stunting?: boolean | Warga$stuntingArgs<ExtArgs>
     pesertaKelas?: boolean | Warga$pesertaKelasArgs<ExtArgs>
+    aspirasi?: boolean | Warga$aspirasiArgs<ExtArgs>
     user?: boolean | Warga$userArgs<ExtArgs>
     _count?: boolean | WargaCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -6279,6 +6700,7 @@ export namespace Prisma {
       monitoring: Prisma.$MonitoringKesehatanPayload<ExtArgs>[]
       stunting: Prisma.$StuntingPayload<ExtArgs>[]
       pesertaKelas: Prisma.$PesertaKelasPayload<ExtArgs>[]
+      aspirasi: Prisma.$AspirasiPayload<ExtArgs>[]
       user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -6642,6 +7064,7 @@ export namespace Prisma {
     monitoring<T extends Warga$monitoringArgs<ExtArgs> = {}>(args?: Subset<T, Warga$monitoringArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonitoringKesehatanPayload<ExtArgs>, T, "findMany"> | Null>
     stunting<T extends Warga$stuntingArgs<ExtArgs> = {}>(args?: Subset<T, Warga$stuntingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StuntingPayload<ExtArgs>, T, "findMany"> | Null>
     pesertaKelas<T extends Warga$pesertaKelasArgs<ExtArgs> = {}>(args?: Subset<T, Warga$pesertaKelasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PesertaKelasPayload<ExtArgs>, T, "findMany"> | Null>
+    aspirasi<T extends Warga$aspirasiArgs<ExtArgs> = {}>(args?: Subset<T, Warga$aspirasiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AspirasiPayload<ExtArgs>, T, "findMany"> | Null>
     user<T extends Warga$userArgs<ExtArgs> = {}>(args?: Subset<T, Warga$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -7081,6 +7504,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PesertaKelasScalarFieldEnum | PesertaKelasScalarFieldEnum[]
+  }
+
+  /**
+   * Warga.aspirasi
+   */
+  export type Warga$aspirasiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aspirasi
+     */
+    select?: AspirasiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspirasiInclude<ExtArgs> | null
+    where?: AspirasiWhereInput
+    orderBy?: AspirasiOrderByWithRelationInput | AspirasiOrderByWithRelationInput[]
+    cursor?: AspirasiWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AspirasiScalarFieldEnum | AspirasiScalarFieldEnum[]
   }
 
   /**
@@ -25140,6 +25583,4479 @@ export namespace Prisma {
 
 
   /**
+   * Model Aspirasi
+   */
+
+  export type AggregateAspirasi = {
+    _count: AspirasiCountAggregateOutputType | null
+    _min: AspirasiMinAggregateOutputType | null
+    _max: AspirasiMaxAggregateOutputType | null
+  }
+
+  export type AspirasiMinAggregateOutputType = {
+    id: string | null
+    desaId: string | null
+    wargaId: string | null
+    kategori: string | null
+    judul: string | null
+    isi: string | null
+    status: string | null
+    createdAt: Date | null
+  }
+
+  export type AspirasiMaxAggregateOutputType = {
+    id: string | null
+    desaId: string | null
+    wargaId: string | null
+    kategori: string | null
+    judul: string | null
+    isi: string | null
+    status: string | null
+    createdAt: Date | null
+  }
+
+  export type AspirasiCountAggregateOutputType = {
+    id: number
+    desaId: number
+    wargaId: number
+    kategori: number
+    judul: number
+    isi: number
+    status: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type AspirasiMinAggregateInputType = {
+    id?: true
+    desaId?: true
+    wargaId?: true
+    kategori?: true
+    judul?: true
+    isi?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type AspirasiMaxAggregateInputType = {
+    id?: true
+    desaId?: true
+    wargaId?: true
+    kategori?: true
+    judul?: true
+    isi?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type AspirasiCountAggregateInputType = {
+    id?: true
+    desaId?: true
+    wargaId?: true
+    kategori?: true
+    judul?: true
+    isi?: true
+    status?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type AspirasiAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Aspirasi to aggregate.
+     */
+    where?: AspirasiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Aspirasis to fetch.
+     */
+    orderBy?: AspirasiOrderByWithRelationInput | AspirasiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AspirasiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Aspirasis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Aspirasis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Aspirasis
+    **/
+    _count?: true | AspirasiCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AspirasiMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AspirasiMaxAggregateInputType
+  }
+
+  export type GetAspirasiAggregateType<T extends AspirasiAggregateArgs> = {
+        [P in keyof T & keyof AggregateAspirasi]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAspirasi[P]>
+      : GetScalarType<T[P], AggregateAspirasi[P]>
+  }
+
+
+
+
+  export type AspirasiGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AspirasiWhereInput
+    orderBy?: AspirasiOrderByWithAggregationInput | AspirasiOrderByWithAggregationInput[]
+    by: AspirasiScalarFieldEnum[] | AspirasiScalarFieldEnum
+    having?: AspirasiScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AspirasiCountAggregateInputType | true
+    _min?: AspirasiMinAggregateInputType
+    _max?: AspirasiMaxAggregateInputType
+  }
+
+  export type AspirasiGroupByOutputType = {
+    id: string
+    desaId: string
+    wargaId: string | null
+    kategori: string
+    judul: string
+    isi: string
+    status: string
+    createdAt: Date
+    _count: AspirasiCountAggregateOutputType | null
+    _min: AspirasiMinAggregateOutputType | null
+    _max: AspirasiMaxAggregateOutputType | null
+  }
+
+  type GetAspirasiGroupByPayload<T extends AspirasiGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AspirasiGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AspirasiGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AspirasiGroupByOutputType[P]>
+            : GetScalarType<T[P], AspirasiGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AspirasiSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    desaId?: boolean
+    wargaId?: boolean
+    kategori?: boolean
+    judul?: boolean
+    isi?: boolean
+    status?: boolean
+    createdAt?: boolean
+    warga?: boolean | Aspirasi$wargaArgs<ExtArgs>
+  }, ExtArgs["result"]["aspirasi"]>
+
+
+  export type AspirasiSelectScalar = {
+    id?: boolean
+    desaId?: boolean
+    wargaId?: boolean
+    kategori?: boolean
+    judul?: boolean
+    isi?: boolean
+    status?: boolean
+    createdAt?: boolean
+  }
+
+  export type AspirasiInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    warga?: boolean | Aspirasi$wargaArgs<ExtArgs>
+  }
+
+  export type $AspirasiPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Aspirasi"
+    objects: {
+      warga: Prisma.$WargaPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      desaId: string
+      wargaId: string | null
+      kategori: string
+      judul: string
+      isi: string
+      status: string
+      createdAt: Date
+    }, ExtArgs["result"]["aspirasi"]>
+    composites: {}
+  }
+
+  type AspirasiGetPayload<S extends boolean | null | undefined | AspirasiDefaultArgs> = $Result.GetResult<Prisma.$AspirasiPayload, S>
+
+  type AspirasiCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<AspirasiFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: AspirasiCountAggregateInputType | true
+    }
+
+  export interface AspirasiDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Aspirasi'], meta: { name: 'Aspirasi' } }
+    /**
+     * Find zero or one Aspirasi that matches the filter.
+     * @param {AspirasiFindUniqueArgs} args - Arguments to find a Aspirasi
+     * @example
+     * // Get one Aspirasi
+     * const aspirasi = await prisma.aspirasi.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AspirasiFindUniqueArgs>(args: SelectSubset<T, AspirasiFindUniqueArgs<ExtArgs>>): Prisma__AspirasiClient<$Result.GetResult<Prisma.$AspirasiPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Aspirasi that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {AspirasiFindUniqueOrThrowArgs} args - Arguments to find a Aspirasi
+     * @example
+     * // Get one Aspirasi
+     * const aspirasi = await prisma.aspirasi.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AspirasiFindUniqueOrThrowArgs>(args: SelectSubset<T, AspirasiFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AspirasiClient<$Result.GetResult<Prisma.$AspirasiPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Aspirasi that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspirasiFindFirstArgs} args - Arguments to find a Aspirasi
+     * @example
+     * // Get one Aspirasi
+     * const aspirasi = await prisma.aspirasi.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AspirasiFindFirstArgs>(args?: SelectSubset<T, AspirasiFindFirstArgs<ExtArgs>>): Prisma__AspirasiClient<$Result.GetResult<Prisma.$AspirasiPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Aspirasi that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspirasiFindFirstOrThrowArgs} args - Arguments to find a Aspirasi
+     * @example
+     * // Get one Aspirasi
+     * const aspirasi = await prisma.aspirasi.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AspirasiFindFirstOrThrowArgs>(args?: SelectSubset<T, AspirasiFindFirstOrThrowArgs<ExtArgs>>): Prisma__AspirasiClient<$Result.GetResult<Prisma.$AspirasiPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Aspirasis that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspirasiFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Aspirasis
+     * const aspirasis = await prisma.aspirasi.findMany()
+     * 
+     * // Get first 10 Aspirasis
+     * const aspirasis = await prisma.aspirasi.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const aspirasiWithIdOnly = await prisma.aspirasi.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AspirasiFindManyArgs>(args?: SelectSubset<T, AspirasiFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AspirasiPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Aspirasi.
+     * @param {AspirasiCreateArgs} args - Arguments to create a Aspirasi.
+     * @example
+     * // Create one Aspirasi
+     * const Aspirasi = await prisma.aspirasi.create({
+     *   data: {
+     *     // ... data to create a Aspirasi
+     *   }
+     * })
+     * 
+     */
+    create<T extends AspirasiCreateArgs>(args: SelectSubset<T, AspirasiCreateArgs<ExtArgs>>): Prisma__AspirasiClient<$Result.GetResult<Prisma.$AspirasiPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Aspirasis.
+     * @param {AspirasiCreateManyArgs} args - Arguments to create many Aspirasis.
+     * @example
+     * // Create many Aspirasis
+     * const aspirasi = await prisma.aspirasi.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AspirasiCreateManyArgs>(args?: SelectSubset<T, AspirasiCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Aspirasi.
+     * @param {AspirasiDeleteArgs} args - Arguments to delete one Aspirasi.
+     * @example
+     * // Delete one Aspirasi
+     * const Aspirasi = await prisma.aspirasi.delete({
+     *   where: {
+     *     // ... filter to delete one Aspirasi
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AspirasiDeleteArgs>(args: SelectSubset<T, AspirasiDeleteArgs<ExtArgs>>): Prisma__AspirasiClient<$Result.GetResult<Prisma.$AspirasiPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Aspirasi.
+     * @param {AspirasiUpdateArgs} args - Arguments to update one Aspirasi.
+     * @example
+     * // Update one Aspirasi
+     * const aspirasi = await prisma.aspirasi.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AspirasiUpdateArgs>(args: SelectSubset<T, AspirasiUpdateArgs<ExtArgs>>): Prisma__AspirasiClient<$Result.GetResult<Prisma.$AspirasiPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Aspirasis.
+     * @param {AspirasiDeleteManyArgs} args - Arguments to filter Aspirasis to delete.
+     * @example
+     * // Delete a few Aspirasis
+     * const { count } = await prisma.aspirasi.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AspirasiDeleteManyArgs>(args?: SelectSubset<T, AspirasiDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Aspirasis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspirasiUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Aspirasis
+     * const aspirasi = await prisma.aspirasi.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AspirasiUpdateManyArgs>(args: SelectSubset<T, AspirasiUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Aspirasi.
+     * @param {AspirasiUpsertArgs} args - Arguments to update or create a Aspirasi.
+     * @example
+     * // Update or create a Aspirasi
+     * const aspirasi = await prisma.aspirasi.upsert({
+     *   create: {
+     *     // ... data to create a Aspirasi
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Aspirasi we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AspirasiUpsertArgs>(args: SelectSubset<T, AspirasiUpsertArgs<ExtArgs>>): Prisma__AspirasiClient<$Result.GetResult<Prisma.$AspirasiPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Aspirasis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspirasiCountArgs} args - Arguments to filter Aspirasis to count.
+     * @example
+     * // Count the number of Aspirasis
+     * const count = await prisma.aspirasi.count({
+     *   where: {
+     *     // ... the filter for the Aspirasis we want to count
+     *   }
+     * })
+    **/
+    count<T extends AspirasiCountArgs>(
+      args?: Subset<T, AspirasiCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AspirasiCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Aspirasi.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspirasiAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AspirasiAggregateArgs>(args: Subset<T, AspirasiAggregateArgs>): Prisma.PrismaPromise<GetAspirasiAggregateType<T>>
+
+    /**
+     * Group by Aspirasi.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AspirasiGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AspirasiGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AspirasiGroupByArgs['orderBy'] }
+        : { orderBy?: AspirasiGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AspirasiGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAspirasiGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Aspirasi model
+   */
+  readonly fields: AspirasiFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Aspirasi.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AspirasiClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    warga<T extends Aspirasi$wargaArgs<ExtArgs> = {}>(args?: Subset<T, Aspirasi$wargaArgs<ExtArgs>>): Prisma__WargaClient<$Result.GetResult<Prisma.$WargaPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Aspirasi model
+   */ 
+  interface AspirasiFieldRefs {
+    readonly id: FieldRef<"Aspirasi", 'String'>
+    readonly desaId: FieldRef<"Aspirasi", 'String'>
+    readonly wargaId: FieldRef<"Aspirasi", 'String'>
+    readonly kategori: FieldRef<"Aspirasi", 'String'>
+    readonly judul: FieldRef<"Aspirasi", 'String'>
+    readonly isi: FieldRef<"Aspirasi", 'String'>
+    readonly status: FieldRef<"Aspirasi", 'String'>
+    readonly createdAt: FieldRef<"Aspirasi", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Aspirasi findUnique
+   */
+  export type AspirasiFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aspirasi
+     */
+    select?: AspirasiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspirasiInclude<ExtArgs> | null
+    /**
+     * Filter, which Aspirasi to fetch.
+     */
+    where: AspirasiWhereUniqueInput
+  }
+
+  /**
+   * Aspirasi findUniqueOrThrow
+   */
+  export type AspirasiFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aspirasi
+     */
+    select?: AspirasiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspirasiInclude<ExtArgs> | null
+    /**
+     * Filter, which Aspirasi to fetch.
+     */
+    where: AspirasiWhereUniqueInput
+  }
+
+  /**
+   * Aspirasi findFirst
+   */
+  export type AspirasiFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aspirasi
+     */
+    select?: AspirasiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspirasiInclude<ExtArgs> | null
+    /**
+     * Filter, which Aspirasi to fetch.
+     */
+    where?: AspirasiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Aspirasis to fetch.
+     */
+    orderBy?: AspirasiOrderByWithRelationInput | AspirasiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Aspirasis.
+     */
+    cursor?: AspirasiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Aspirasis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Aspirasis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Aspirasis.
+     */
+    distinct?: AspirasiScalarFieldEnum | AspirasiScalarFieldEnum[]
+  }
+
+  /**
+   * Aspirasi findFirstOrThrow
+   */
+  export type AspirasiFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aspirasi
+     */
+    select?: AspirasiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspirasiInclude<ExtArgs> | null
+    /**
+     * Filter, which Aspirasi to fetch.
+     */
+    where?: AspirasiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Aspirasis to fetch.
+     */
+    orderBy?: AspirasiOrderByWithRelationInput | AspirasiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Aspirasis.
+     */
+    cursor?: AspirasiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Aspirasis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Aspirasis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Aspirasis.
+     */
+    distinct?: AspirasiScalarFieldEnum | AspirasiScalarFieldEnum[]
+  }
+
+  /**
+   * Aspirasi findMany
+   */
+  export type AspirasiFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aspirasi
+     */
+    select?: AspirasiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspirasiInclude<ExtArgs> | null
+    /**
+     * Filter, which Aspirasis to fetch.
+     */
+    where?: AspirasiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Aspirasis to fetch.
+     */
+    orderBy?: AspirasiOrderByWithRelationInput | AspirasiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Aspirasis.
+     */
+    cursor?: AspirasiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Aspirasis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Aspirasis.
+     */
+    skip?: number
+    distinct?: AspirasiScalarFieldEnum | AspirasiScalarFieldEnum[]
+  }
+
+  /**
+   * Aspirasi create
+   */
+  export type AspirasiCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aspirasi
+     */
+    select?: AspirasiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspirasiInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Aspirasi.
+     */
+    data: XOR<AspirasiCreateInput, AspirasiUncheckedCreateInput>
+  }
+
+  /**
+   * Aspirasi createMany
+   */
+  export type AspirasiCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Aspirasis.
+     */
+    data: AspirasiCreateManyInput | AspirasiCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Aspirasi update
+   */
+  export type AspirasiUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aspirasi
+     */
+    select?: AspirasiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspirasiInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Aspirasi.
+     */
+    data: XOR<AspirasiUpdateInput, AspirasiUncheckedUpdateInput>
+    /**
+     * Choose, which Aspirasi to update.
+     */
+    where: AspirasiWhereUniqueInput
+  }
+
+  /**
+   * Aspirasi updateMany
+   */
+  export type AspirasiUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Aspirasis.
+     */
+    data: XOR<AspirasiUpdateManyMutationInput, AspirasiUncheckedUpdateManyInput>
+    /**
+     * Filter which Aspirasis to update
+     */
+    where?: AspirasiWhereInput
+  }
+
+  /**
+   * Aspirasi upsert
+   */
+  export type AspirasiUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aspirasi
+     */
+    select?: AspirasiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspirasiInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Aspirasi to update in case it exists.
+     */
+    where: AspirasiWhereUniqueInput
+    /**
+     * In case the Aspirasi found by the `where` argument doesn't exist, create a new Aspirasi with this data.
+     */
+    create: XOR<AspirasiCreateInput, AspirasiUncheckedCreateInput>
+    /**
+     * In case the Aspirasi was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AspirasiUpdateInput, AspirasiUncheckedUpdateInput>
+  }
+
+  /**
+   * Aspirasi delete
+   */
+  export type AspirasiDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aspirasi
+     */
+    select?: AspirasiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspirasiInclude<ExtArgs> | null
+    /**
+     * Filter which Aspirasi to delete.
+     */
+    where: AspirasiWhereUniqueInput
+  }
+
+  /**
+   * Aspirasi deleteMany
+   */
+  export type AspirasiDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Aspirasis to delete
+     */
+    where?: AspirasiWhereInput
+  }
+
+  /**
+   * Aspirasi.warga
+   */
+  export type Aspirasi$wargaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Warga
+     */
+    select?: WargaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WargaInclude<ExtArgs> | null
+    where?: WargaWhereInput
+  }
+
+  /**
+   * Aspirasi without action
+   */
+  export type AspirasiDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Aspirasi
+     */
+    select?: AspirasiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AspirasiInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Siswa
+   */
+
+  export type AggregateSiswa = {
+    _count: SiswaCountAggregateOutputType | null
+    _min: SiswaMinAggregateOutputType | null
+    _max: SiswaMaxAggregateOutputType | null
+  }
+
+  export type SiswaMinAggregateOutputType = {
+    id: string | null
+    desaId: string | null
+    nisn: string | null
+    nama: string | null
+    kelas: string | null
+    jenjang: string | null
+    status: string | null
+    createdAt: Date | null
+  }
+
+  export type SiswaMaxAggregateOutputType = {
+    id: string | null
+    desaId: string | null
+    nisn: string | null
+    nama: string | null
+    kelas: string | null
+    jenjang: string | null
+    status: string | null
+    createdAt: Date | null
+  }
+
+  export type SiswaCountAggregateOutputType = {
+    id: number
+    desaId: number
+    nisn: number
+    nama: number
+    kelas: number
+    jenjang: number
+    status: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type SiswaMinAggregateInputType = {
+    id?: true
+    desaId?: true
+    nisn?: true
+    nama?: true
+    kelas?: true
+    jenjang?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type SiswaMaxAggregateInputType = {
+    id?: true
+    desaId?: true
+    nisn?: true
+    nama?: true
+    kelas?: true
+    jenjang?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type SiswaCountAggregateInputType = {
+    id?: true
+    desaId?: true
+    nisn?: true
+    nama?: true
+    kelas?: true
+    jenjang?: true
+    status?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type SiswaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Siswa to aggregate.
+     */
+    where?: SiswaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Siswas to fetch.
+     */
+    orderBy?: SiswaOrderByWithRelationInput | SiswaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SiswaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Siswas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Siswas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Siswas
+    **/
+    _count?: true | SiswaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SiswaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SiswaMaxAggregateInputType
+  }
+
+  export type GetSiswaAggregateType<T extends SiswaAggregateArgs> = {
+        [P in keyof T & keyof AggregateSiswa]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSiswa[P]>
+      : GetScalarType<T[P], AggregateSiswa[P]>
+  }
+
+
+
+
+  export type SiswaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SiswaWhereInput
+    orderBy?: SiswaOrderByWithAggregationInput | SiswaOrderByWithAggregationInput[]
+    by: SiswaScalarFieldEnum[] | SiswaScalarFieldEnum
+    having?: SiswaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SiswaCountAggregateInputType | true
+    _min?: SiswaMinAggregateInputType
+    _max?: SiswaMaxAggregateInputType
+  }
+
+  export type SiswaGroupByOutputType = {
+    id: string
+    desaId: string
+    nisn: string
+    nama: string
+    kelas: string
+    jenjang: string
+    status: string
+    createdAt: Date
+    _count: SiswaCountAggregateOutputType | null
+    _min: SiswaMinAggregateOutputType | null
+    _max: SiswaMaxAggregateOutputType | null
+  }
+
+  type GetSiswaGroupByPayload<T extends SiswaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SiswaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SiswaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SiswaGroupByOutputType[P]>
+            : GetScalarType<T[P], SiswaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SiswaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    desaId?: boolean
+    nisn?: boolean
+    nama?: boolean
+    kelas?: boolean
+    jenjang?: boolean
+    status?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["siswa"]>
+
+
+  export type SiswaSelectScalar = {
+    id?: boolean
+    desaId?: boolean
+    nisn?: boolean
+    nama?: boolean
+    kelas?: boolean
+    jenjang?: boolean
+    status?: boolean
+    createdAt?: boolean
+  }
+
+
+  export type $SiswaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Siswa"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      desaId: string
+      nisn: string
+      nama: string
+      kelas: string
+      jenjang: string
+      status: string
+      createdAt: Date
+    }, ExtArgs["result"]["siswa"]>
+    composites: {}
+  }
+
+  type SiswaGetPayload<S extends boolean | null | undefined | SiswaDefaultArgs> = $Result.GetResult<Prisma.$SiswaPayload, S>
+
+  type SiswaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<SiswaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: SiswaCountAggregateInputType | true
+    }
+
+  export interface SiswaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Siswa'], meta: { name: 'Siswa' } }
+    /**
+     * Find zero or one Siswa that matches the filter.
+     * @param {SiswaFindUniqueArgs} args - Arguments to find a Siswa
+     * @example
+     * // Get one Siswa
+     * const siswa = await prisma.siswa.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SiswaFindUniqueArgs>(args: SelectSubset<T, SiswaFindUniqueArgs<ExtArgs>>): Prisma__SiswaClient<$Result.GetResult<Prisma.$SiswaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Siswa that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {SiswaFindUniqueOrThrowArgs} args - Arguments to find a Siswa
+     * @example
+     * // Get one Siswa
+     * const siswa = await prisma.siswa.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SiswaFindUniqueOrThrowArgs>(args: SelectSubset<T, SiswaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SiswaClient<$Result.GetResult<Prisma.$SiswaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Siswa that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiswaFindFirstArgs} args - Arguments to find a Siswa
+     * @example
+     * // Get one Siswa
+     * const siswa = await prisma.siswa.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SiswaFindFirstArgs>(args?: SelectSubset<T, SiswaFindFirstArgs<ExtArgs>>): Prisma__SiswaClient<$Result.GetResult<Prisma.$SiswaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Siswa that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiswaFindFirstOrThrowArgs} args - Arguments to find a Siswa
+     * @example
+     * // Get one Siswa
+     * const siswa = await prisma.siswa.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SiswaFindFirstOrThrowArgs>(args?: SelectSubset<T, SiswaFindFirstOrThrowArgs<ExtArgs>>): Prisma__SiswaClient<$Result.GetResult<Prisma.$SiswaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Siswas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiswaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Siswas
+     * const siswas = await prisma.siswa.findMany()
+     * 
+     * // Get first 10 Siswas
+     * const siswas = await prisma.siswa.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const siswaWithIdOnly = await prisma.siswa.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SiswaFindManyArgs>(args?: SelectSubset<T, SiswaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SiswaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Siswa.
+     * @param {SiswaCreateArgs} args - Arguments to create a Siswa.
+     * @example
+     * // Create one Siswa
+     * const Siswa = await prisma.siswa.create({
+     *   data: {
+     *     // ... data to create a Siswa
+     *   }
+     * })
+     * 
+     */
+    create<T extends SiswaCreateArgs>(args: SelectSubset<T, SiswaCreateArgs<ExtArgs>>): Prisma__SiswaClient<$Result.GetResult<Prisma.$SiswaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Siswas.
+     * @param {SiswaCreateManyArgs} args - Arguments to create many Siswas.
+     * @example
+     * // Create many Siswas
+     * const siswa = await prisma.siswa.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SiswaCreateManyArgs>(args?: SelectSubset<T, SiswaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Siswa.
+     * @param {SiswaDeleteArgs} args - Arguments to delete one Siswa.
+     * @example
+     * // Delete one Siswa
+     * const Siswa = await prisma.siswa.delete({
+     *   where: {
+     *     // ... filter to delete one Siswa
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SiswaDeleteArgs>(args: SelectSubset<T, SiswaDeleteArgs<ExtArgs>>): Prisma__SiswaClient<$Result.GetResult<Prisma.$SiswaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Siswa.
+     * @param {SiswaUpdateArgs} args - Arguments to update one Siswa.
+     * @example
+     * // Update one Siswa
+     * const siswa = await prisma.siswa.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SiswaUpdateArgs>(args: SelectSubset<T, SiswaUpdateArgs<ExtArgs>>): Prisma__SiswaClient<$Result.GetResult<Prisma.$SiswaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Siswas.
+     * @param {SiswaDeleteManyArgs} args - Arguments to filter Siswas to delete.
+     * @example
+     * // Delete a few Siswas
+     * const { count } = await prisma.siswa.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SiswaDeleteManyArgs>(args?: SelectSubset<T, SiswaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Siswas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiswaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Siswas
+     * const siswa = await prisma.siswa.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SiswaUpdateManyArgs>(args: SelectSubset<T, SiswaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Siswa.
+     * @param {SiswaUpsertArgs} args - Arguments to update or create a Siswa.
+     * @example
+     * // Update or create a Siswa
+     * const siswa = await prisma.siswa.upsert({
+     *   create: {
+     *     // ... data to create a Siswa
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Siswa we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SiswaUpsertArgs>(args: SelectSubset<T, SiswaUpsertArgs<ExtArgs>>): Prisma__SiswaClient<$Result.GetResult<Prisma.$SiswaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Siswas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiswaCountArgs} args - Arguments to filter Siswas to count.
+     * @example
+     * // Count the number of Siswas
+     * const count = await prisma.siswa.count({
+     *   where: {
+     *     // ... the filter for the Siswas we want to count
+     *   }
+     * })
+    **/
+    count<T extends SiswaCountArgs>(
+      args?: Subset<T, SiswaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SiswaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Siswa.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiswaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SiswaAggregateArgs>(args: Subset<T, SiswaAggregateArgs>): Prisma.PrismaPromise<GetSiswaAggregateType<T>>
+
+    /**
+     * Group by Siswa.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SiswaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SiswaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SiswaGroupByArgs['orderBy'] }
+        : { orderBy?: SiswaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SiswaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSiswaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Siswa model
+   */
+  readonly fields: SiswaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Siswa.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SiswaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Siswa model
+   */ 
+  interface SiswaFieldRefs {
+    readonly id: FieldRef<"Siswa", 'String'>
+    readonly desaId: FieldRef<"Siswa", 'String'>
+    readonly nisn: FieldRef<"Siswa", 'String'>
+    readonly nama: FieldRef<"Siswa", 'String'>
+    readonly kelas: FieldRef<"Siswa", 'String'>
+    readonly jenjang: FieldRef<"Siswa", 'String'>
+    readonly status: FieldRef<"Siswa", 'String'>
+    readonly createdAt: FieldRef<"Siswa", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Siswa findUnique
+   */
+  export type SiswaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Siswa
+     */
+    select?: SiswaSelect<ExtArgs> | null
+    /**
+     * Filter, which Siswa to fetch.
+     */
+    where: SiswaWhereUniqueInput
+  }
+
+  /**
+   * Siswa findUniqueOrThrow
+   */
+  export type SiswaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Siswa
+     */
+    select?: SiswaSelect<ExtArgs> | null
+    /**
+     * Filter, which Siswa to fetch.
+     */
+    where: SiswaWhereUniqueInput
+  }
+
+  /**
+   * Siswa findFirst
+   */
+  export type SiswaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Siswa
+     */
+    select?: SiswaSelect<ExtArgs> | null
+    /**
+     * Filter, which Siswa to fetch.
+     */
+    where?: SiswaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Siswas to fetch.
+     */
+    orderBy?: SiswaOrderByWithRelationInput | SiswaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Siswas.
+     */
+    cursor?: SiswaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Siswas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Siswas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Siswas.
+     */
+    distinct?: SiswaScalarFieldEnum | SiswaScalarFieldEnum[]
+  }
+
+  /**
+   * Siswa findFirstOrThrow
+   */
+  export type SiswaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Siswa
+     */
+    select?: SiswaSelect<ExtArgs> | null
+    /**
+     * Filter, which Siswa to fetch.
+     */
+    where?: SiswaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Siswas to fetch.
+     */
+    orderBy?: SiswaOrderByWithRelationInput | SiswaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Siswas.
+     */
+    cursor?: SiswaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Siswas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Siswas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Siswas.
+     */
+    distinct?: SiswaScalarFieldEnum | SiswaScalarFieldEnum[]
+  }
+
+  /**
+   * Siswa findMany
+   */
+  export type SiswaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Siswa
+     */
+    select?: SiswaSelect<ExtArgs> | null
+    /**
+     * Filter, which Siswas to fetch.
+     */
+    where?: SiswaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Siswas to fetch.
+     */
+    orderBy?: SiswaOrderByWithRelationInput | SiswaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Siswas.
+     */
+    cursor?: SiswaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Siswas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Siswas.
+     */
+    skip?: number
+    distinct?: SiswaScalarFieldEnum | SiswaScalarFieldEnum[]
+  }
+
+  /**
+   * Siswa create
+   */
+  export type SiswaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Siswa
+     */
+    select?: SiswaSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Siswa.
+     */
+    data: XOR<SiswaCreateInput, SiswaUncheckedCreateInput>
+  }
+
+  /**
+   * Siswa createMany
+   */
+  export type SiswaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Siswas.
+     */
+    data: SiswaCreateManyInput | SiswaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Siswa update
+   */
+  export type SiswaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Siswa
+     */
+    select?: SiswaSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Siswa.
+     */
+    data: XOR<SiswaUpdateInput, SiswaUncheckedUpdateInput>
+    /**
+     * Choose, which Siswa to update.
+     */
+    where: SiswaWhereUniqueInput
+  }
+
+  /**
+   * Siswa updateMany
+   */
+  export type SiswaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Siswas.
+     */
+    data: XOR<SiswaUpdateManyMutationInput, SiswaUncheckedUpdateManyInput>
+    /**
+     * Filter which Siswas to update
+     */
+    where?: SiswaWhereInput
+  }
+
+  /**
+   * Siswa upsert
+   */
+  export type SiswaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Siswa
+     */
+    select?: SiswaSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Siswa to update in case it exists.
+     */
+    where: SiswaWhereUniqueInput
+    /**
+     * In case the Siswa found by the `where` argument doesn't exist, create a new Siswa with this data.
+     */
+    create: XOR<SiswaCreateInput, SiswaUncheckedCreateInput>
+    /**
+     * In case the Siswa was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SiswaUpdateInput, SiswaUncheckedUpdateInput>
+  }
+
+  /**
+   * Siswa delete
+   */
+  export type SiswaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Siswa
+     */
+    select?: SiswaSelect<ExtArgs> | null
+    /**
+     * Filter which Siswa to delete.
+     */
+    where: SiswaWhereUniqueInput
+  }
+
+  /**
+   * Siswa deleteMany
+   */
+  export type SiswaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Siswas to delete
+     */
+    where?: SiswaWhereInput
+  }
+
+  /**
+   * Siswa without action
+   */
+  export type SiswaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Siswa
+     */
+    select?: SiswaSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MonitoringDesa
+   */
+
+  export type AggregateMonitoringDesa = {
+    _count: MonitoringDesaCountAggregateOutputType | null
+    _avg: MonitoringDesaAvgAggregateOutputType | null
+    _sum: MonitoringDesaSumAggregateOutputType | null
+    _min: MonitoringDesaMinAggregateOutputType | null
+    _max: MonitoringDesaMaxAggregateOutputType | null
+  }
+
+  export type MonitoringDesaAvgAggregateOutputType = {
+    index: number | null
+    readiness: number | null
+    maturity: number | null
+  }
+
+  export type MonitoringDesaSumAggregateOutputType = {
+    index: number | null
+    readiness: number | null
+    maturity: number | null
+  }
+
+  export type MonitoringDesaMinAggregateOutputType = {
+    id: string | null
+    namaDesa: string | null
+    kecamatan: string | null
+    index: number | null
+    readiness: number | null
+    maturity: number | null
+    status: string | null
+    createdAt: Date | null
+  }
+
+  export type MonitoringDesaMaxAggregateOutputType = {
+    id: string | null
+    namaDesa: string | null
+    kecamatan: string | null
+    index: number | null
+    readiness: number | null
+    maturity: number | null
+    status: string | null
+    createdAt: Date | null
+  }
+
+  export type MonitoringDesaCountAggregateOutputType = {
+    id: number
+    namaDesa: number
+    kecamatan: number
+    index: number
+    readiness: number
+    maturity: number
+    status: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type MonitoringDesaAvgAggregateInputType = {
+    index?: true
+    readiness?: true
+    maturity?: true
+  }
+
+  export type MonitoringDesaSumAggregateInputType = {
+    index?: true
+    readiness?: true
+    maturity?: true
+  }
+
+  export type MonitoringDesaMinAggregateInputType = {
+    id?: true
+    namaDesa?: true
+    kecamatan?: true
+    index?: true
+    readiness?: true
+    maturity?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type MonitoringDesaMaxAggregateInputType = {
+    id?: true
+    namaDesa?: true
+    kecamatan?: true
+    index?: true
+    readiness?: true
+    maturity?: true
+    status?: true
+    createdAt?: true
+  }
+
+  export type MonitoringDesaCountAggregateInputType = {
+    id?: true
+    namaDesa?: true
+    kecamatan?: true
+    index?: true
+    readiness?: true
+    maturity?: true
+    status?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type MonitoringDesaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MonitoringDesa to aggregate.
+     */
+    where?: MonitoringDesaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MonitoringDesas to fetch.
+     */
+    orderBy?: MonitoringDesaOrderByWithRelationInput | MonitoringDesaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MonitoringDesaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MonitoringDesas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MonitoringDesas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MonitoringDesas
+    **/
+    _count?: true | MonitoringDesaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MonitoringDesaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MonitoringDesaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MonitoringDesaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MonitoringDesaMaxAggregateInputType
+  }
+
+  export type GetMonitoringDesaAggregateType<T extends MonitoringDesaAggregateArgs> = {
+        [P in keyof T & keyof AggregateMonitoringDesa]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMonitoringDesa[P]>
+      : GetScalarType<T[P], AggregateMonitoringDesa[P]>
+  }
+
+
+
+
+  export type MonitoringDesaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MonitoringDesaWhereInput
+    orderBy?: MonitoringDesaOrderByWithAggregationInput | MonitoringDesaOrderByWithAggregationInput[]
+    by: MonitoringDesaScalarFieldEnum[] | MonitoringDesaScalarFieldEnum
+    having?: MonitoringDesaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MonitoringDesaCountAggregateInputType | true
+    _avg?: MonitoringDesaAvgAggregateInputType
+    _sum?: MonitoringDesaSumAggregateInputType
+    _min?: MonitoringDesaMinAggregateInputType
+    _max?: MonitoringDesaMaxAggregateInputType
+  }
+
+  export type MonitoringDesaGroupByOutputType = {
+    id: string
+    namaDesa: string
+    kecamatan: string
+    index: number
+    readiness: number
+    maturity: number
+    status: string
+    createdAt: Date
+    _count: MonitoringDesaCountAggregateOutputType | null
+    _avg: MonitoringDesaAvgAggregateOutputType | null
+    _sum: MonitoringDesaSumAggregateOutputType | null
+    _min: MonitoringDesaMinAggregateOutputType | null
+    _max: MonitoringDesaMaxAggregateOutputType | null
+  }
+
+  type GetMonitoringDesaGroupByPayload<T extends MonitoringDesaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MonitoringDesaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MonitoringDesaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MonitoringDesaGroupByOutputType[P]>
+            : GetScalarType<T[P], MonitoringDesaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MonitoringDesaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    namaDesa?: boolean
+    kecamatan?: boolean
+    index?: boolean
+    readiness?: boolean
+    maturity?: boolean
+    status?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["monitoringDesa"]>
+
+
+  export type MonitoringDesaSelectScalar = {
+    id?: boolean
+    namaDesa?: boolean
+    kecamatan?: boolean
+    index?: boolean
+    readiness?: boolean
+    maturity?: boolean
+    status?: boolean
+    createdAt?: boolean
+  }
+
+
+  export type $MonitoringDesaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MonitoringDesa"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      namaDesa: string
+      kecamatan: string
+      index: number
+      readiness: number
+      maturity: number
+      status: string
+      createdAt: Date
+    }, ExtArgs["result"]["monitoringDesa"]>
+    composites: {}
+  }
+
+  type MonitoringDesaGetPayload<S extends boolean | null | undefined | MonitoringDesaDefaultArgs> = $Result.GetResult<Prisma.$MonitoringDesaPayload, S>
+
+  type MonitoringDesaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<MonitoringDesaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: MonitoringDesaCountAggregateInputType | true
+    }
+
+  export interface MonitoringDesaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MonitoringDesa'], meta: { name: 'MonitoringDesa' } }
+    /**
+     * Find zero or one MonitoringDesa that matches the filter.
+     * @param {MonitoringDesaFindUniqueArgs} args - Arguments to find a MonitoringDesa
+     * @example
+     * // Get one MonitoringDesa
+     * const monitoringDesa = await prisma.monitoringDesa.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MonitoringDesaFindUniqueArgs>(args: SelectSubset<T, MonitoringDesaFindUniqueArgs<ExtArgs>>): Prisma__MonitoringDesaClient<$Result.GetResult<Prisma.$MonitoringDesaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one MonitoringDesa that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {MonitoringDesaFindUniqueOrThrowArgs} args - Arguments to find a MonitoringDesa
+     * @example
+     * // Get one MonitoringDesa
+     * const monitoringDesa = await prisma.monitoringDesa.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MonitoringDesaFindUniqueOrThrowArgs>(args: SelectSubset<T, MonitoringDesaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MonitoringDesaClient<$Result.GetResult<Prisma.$MonitoringDesaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first MonitoringDesa that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonitoringDesaFindFirstArgs} args - Arguments to find a MonitoringDesa
+     * @example
+     * // Get one MonitoringDesa
+     * const monitoringDesa = await prisma.monitoringDesa.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MonitoringDesaFindFirstArgs>(args?: SelectSubset<T, MonitoringDesaFindFirstArgs<ExtArgs>>): Prisma__MonitoringDesaClient<$Result.GetResult<Prisma.$MonitoringDesaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first MonitoringDesa that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonitoringDesaFindFirstOrThrowArgs} args - Arguments to find a MonitoringDesa
+     * @example
+     * // Get one MonitoringDesa
+     * const monitoringDesa = await prisma.monitoringDesa.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MonitoringDesaFindFirstOrThrowArgs>(args?: SelectSubset<T, MonitoringDesaFindFirstOrThrowArgs<ExtArgs>>): Prisma__MonitoringDesaClient<$Result.GetResult<Prisma.$MonitoringDesaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more MonitoringDesas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonitoringDesaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MonitoringDesas
+     * const monitoringDesas = await prisma.monitoringDesa.findMany()
+     * 
+     * // Get first 10 MonitoringDesas
+     * const monitoringDesas = await prisma.monitoringDesa.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const monitoringDesaWithIdOnly = await prisma.monitoringDesa.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MonitoringDesaFindManyArgs>(args?: SelectSubset<T, MonitoringDesaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonitoringDesaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a MonitoringDesa.
+     * @param {MonitoringDesaCreateArgs} args - Arguments to create a MonitoringDesa.
+     * @example
+     * // Create one MonitoringDesa
+     * const MonitoringDesa = await prisma.monitoringDesa.create({
+     *   data: {
+     *     // ... data to create a MonitoringDesa
+     *   }
+     * })
+     * 
+     */
+    create<T extends MonitoringDesaCreateArgs>(args: SelectSubset<T, MonitoringDesaCreateArgs<ExtArgs>>): Prisma__MonitoringDesaClient<$Result.GetResult<Prisma.$MonitoringDesaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many MonitoringDesas.
+     * @param {MonitoringDesaCreateManyArgs} args - Arguments to create many MonitoringDesas.
+     * @example
+     * // Create many MonitoringDesas
+     * const monitoringDesa = await prisma.monitoringDesa.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MonitoringDesaCreateManyArgs>(args?: SelectSubset<T, MonitoringDesaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a MonitoringDesa.
+     * @param {MonitoringDesaDeleteArgs} args - Arguments to delete one MonitoringDesa.
+     * @example
+     * // Delete one MonitoringDesa
+     * const MonitoringDesa = await prisma.monitoringDesa.delete({
+     *   where: {
+     *     // ... filter to delete one MonitoringDesa
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MonitoringDesaDeleteArgs>(args: SelectSubset<T, MonitoringDesaDeleteArgs<ExtArgs>>): Prisma__MonitoringDesaClient<$Result.GetResult<Prisma.$MonitoringDesaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one MonitoringDesa.
+     * @param {MonitoringDesaUpdateArgs} args - Arguments to update one MonitoringDesa.
+     * @example
+     * // Update one MonitoringDesa
+     * const monitoringDesa = await prisma.monitoringDesa.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MonitoringDesaUpdateArgs>(args: SelectSubset<T, MonitoringDesaUpdateArgs<ExtArgs>>): Prisma__MonitoringDesaClient<$Result.GetResult<Prisma.$MonitoringDesaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more MonitoringDesas.
+     * @param {MonitoringDesaDeleteManyArgs} args - Arguments to filter MonitoringDesas to delete.
+     * @example
+     * // Delete a few MonitoringDesas
+     * const { count } = await prisma.monitoringDesa.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MonitoringDesaDeleteManyArgs>(args?: SelectSubset<T, MonitoringDesaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MonitoringDesas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonitoringDesaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MonitoringDesas
+     * const monitoringDesa = await prisma.monitoringDesa.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MonitoringDesaUpdateManyArgs>(args: SelectSubset<T, MonitoringDesaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MonitoringDesa.
+     * @param {MonitoringDesaUpsertArgs} args - Arguments to update or create a MonitoringDesa.
+     * @example
+     * // Update or create a MonitoringDesa
+     * const monitoringDesa = await prisma.monitoringDesa.upsert({
+     *   create: {
+     *     // ... data to create a MonitoringDesa
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MonitoringDesa we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MonitoringDesaUpsertArgs>(args: SelectSubset<T, MonitoringDesaUpsertArgs<ExtArgs>>): Prisma__MonitoringDesaClient<$Result.GetResult<Prisma.$MonitoringDesaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of MonitoringDesas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonitoringDesaCountArgs} args - Arguments to filter MonitoringDesas to count.
+     * @example
+     * // Count the number of MonitoringDesas
+     * const count = await prisma.monitoringDesa.count({
+     *   where: {
+     *     // ... the filter for the MonitoringDesas we want to count
+     *   }
+     * })
+    **/
+    count<T extends MonitoringDesaCountArgs>(
+      args?: Subset<T, MonitoringDesaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MonitoringDesaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MonitoringDesa.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonitoringDesaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MonitoringDesaAggregateArgs>(args: Subset<T, MonitoringDesaAggregateArgs>): Prisma.PrismaPromise<GetMonitoringDesaAggregateType<T>>
+
+    /**
+     * Group by MonitoringDesa.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MonitoringDesaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MonitoringDesaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MonitoringDesaGroupByArgs['orderBy'] }
+        : { orderBy?: MonitoringDesaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MonitoringDesaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMonitoringDesaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MonitoringDesa model
+   */
+  readonly fields: MonitoringDesaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MonitoringDesa.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MonitoringDesaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MonitoringDesa model
+   */ 
+  interface MonitoringDesaFieldRefs {
+    readonly id: FieldRef<"MonitoringDesa", 'String'>
+    readonly namaDesa: FieldRef<"MonitoringDesa", 'String'>
+    readonly kecamatan: FieldRef<"MonitoringDesa", 'String'>
+    readonly index: FieldRef<"MonitoringDesa", 'Float'>
+    readonly readiness: FieldRef<"MonitoringDesa", 'Float'>
+    readonly maturity: FieldRef<"MonitoringDesa", 'Float'>
+    readonly status: FieldRef<"MonitoringDesa", 'String'>
+    readonly createdAt: FieldRef<"MonitoringDesa", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MonitoringDesa findUnique
+   */
+  export type MonitoringDesaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonitoringDesa
+     */
+    select?: MonitoringDesaSelect<ExtArgs> | null
+    /**
+     * Filter, which MonitoringDesa to fetch.
+     */
+    where: MonitoringDesaWhereUniqueInput
+  }
+
+  /**
+   * MonitoringDesa findUniqueOrThrow
+   */
+  export type MonitoringDesaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonitoringDesa
+     */
+    select?: MonitoringDesaSelect<ExtArgs> | null
+    /**
+     * Filter, which MonitoringDesa to fetch.
+     */
+    where: MonitoringDesaWhereUniqueInput
+  }
+
+  /**
+   * MonitoringDesa findFirst
+   */
+  export type MonitoringDesaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonitoringDesa
+     */
+    select?: MonitoringDesaSelect<ExtArgs> | null
+    /**
+     * Filter, which MonitoringDesa to fetch.
+     */
+    where?: MonitoringDesaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MonitoringDesas to fetch.
+     */
+    orderBy?: MonitoringDesaOrderByWithRelationInput | MonitoringDesaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MonitoringDesas.
+     */
+    cursor?: MonitoringDesaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MonitoringDesas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MonitoringDesas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MonitoringDesas.
+     */
+    distinct?: MonitoringDesaScalarFieldEnum | MonitoringDesaScalarFieldEnum[]
+  }
+
+  /**
+   * MonitoringDesa findFirstOrThrow
+   */
+  export type MonitoringDesaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonitoringDesa
+     */
+    select?: MonitoringDesaSelect<ExtArgs> | null
+    /**
+     * Filter, which MonitoringDesa to fetch.
+     */
+    where?: MonitoringDesaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MonitoringDesas to fetch.
+     */
+    orderBy?: MonitoringDesaOrderByWithRelationInput | MonitoringDesaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MonitoringDesas.
+     */
+    cursor?: MonitoringDesaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MonitoringDesas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MonitoringDesas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MonitoringDesas.
+     */
+    distinct?: MonitoringDesaScalarFieldEnum | MonitoringDesaScalarFieldEnum[]
+  }
+
+  /**
+   * MonitoringDesa findMany
+   */
+  export type MonitoringDesaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonitoringDesa
+     */
+    select?: MonitoringDesaSelect<ExtArgs> | null
+    /**
+     * Filter, which MonitoringDesas to fetch.
+     */
+    where?: MonitoringDesaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MonitoringDesas to fetch.
+     */
+    orderBy?: MonitoringDesaOrderByWithRelationInput | MonitoringDesaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MonitoringDesas.
+     */
+    cursor?: MonitoringDesaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MonitoringDesas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MonitoringDesas.
+     */
+    skip?: number
+    distinct?: MonitoringDesaScalarFieldEnum | MonitoringDesaScalarFieldEnum[]
+  }
+
+  /**
+   * MonitoringDesa create
+   */
+  export type MonitoringDesaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonitoringDesa
+     */
+    select?: MonitoringDesaSelect<ExtArgs> | null
+    /**
+     * The data needed to create a MonitoringDesa.
+     */
+    data: XOR<MonitoringDesaCreateInput, MonitoringDesaUncheckedCreateInput>
+  }
+
+  /**
+   * MonitoringDesa createMany
+   */
+  export type MonitoringDesaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MonitoringDesas.
+     */
+    data: MonitoringDesaCreateManyInput | MonitoringDesaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MonitoringDesa update
+   */
+  export type MonitoringDesaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonitoringDesa
+     */
+    select?: MonitoringDesaSelect<ExtArgs> | null
+    /**
+     * The data needed to update a MonitoringDesa.
+     */
+    data: XOR<MonitoringDesaUpdateInput, MonitoringDesaUncheckedUpdateInput>
+    /**
+     * Choose, which MonitoringDesa to update.
+     */
+    where: MonitoringDesaWhereUniqueInput
+  }
+
+  /**
+   * MonitoringDesa updateMany
+   */
+  export type MonitoringDesaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MonitoringDesas.
+     */
+    data: XOR<MonitoringDesaUpdateManyMutationInput, MonitoringDesaUncheckedUpdateManyInput>
+    /**
+     * Filter which MonitoringDesas to update
+     */
+    where?: MonitoringDesaWhereInput
+  }
+
+  /**
+   * MonitoringDesa upsert
+   */
+  export type MonitoringDesaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonitoringDesa
+     */
+    select?: MonitoringDesaSelect<ExtArgs> | null
+    /**
+     * The filter to search for the MonitoringDesa to update in case it exists.
+     */
+    where: MonitoringDesaWhereUniqueInput
+    /**
+     * In case the MonitoringDesa found by the `where` argument doesn't exist, create a new MonitoringDesa with this data.
+     */
+    create: XOR<MonitoringDesaCreateInput, MonitoringDesaUncheckedCreateInput>
+    /**
+     * In case the MonitoringDesa was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MonitoringDesaUpdateInput, MonitoringDesaUncheckedUpdateInput>
+  }
+
+  /**
+   * MonitoringDesa delete
+   */
+  export type MonitoringDesaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonitoringDesa
+     */
+    select?: MonitoringDesaSelect<ExtArgs> | null
+    /**
+     * Filter which MonitoringDesa to delete.
+     */
+    where: MonitoringDesaWhereUniqueInput
+  }
+
+  /**
+   * MonitoringDesa deleteMany
+   */
+  export type MonitoringDesaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MonitoringDesas to delete
+     */
+    where?: MonitoringDesaWhereInput
+  }
+
+  /**
+   * MonitoringDesa without action
+   */
+  export type MonitoringDesaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MonitoringDesa
+     */
+    select?: MonitoringDesaSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MasterDesaRecord
+   */
+
+  export type AggregateMasterDesaRecord = {
+    _count: MasterDesaRecordCountAggregateOutputType | null
+    _min: MasterDesaRecordMinAggregateOutputType | null
+    _max: MasterDesaRecordMaxAggregateOutputType | null
+  }
+
+  export type MasterDesaRecordMinAggregateOutputType = {
+    id: string | null
+    kodeDesa: string | null
+    nama: string | null
+    kecamatan: string | null
+    kabupaten: string | null
+    provinsi: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MasterDesaRecordMaxAggregateOutputType = {
+    id: string | null
+    kodeDesa: string | null
+    nama: string | null
+    kecamatan: string | null
+    kabupaten: string | null
+    provinsi: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MasterDesaRecordCountAggregateOutputType = {
+    id: number
+    kodeDesa: number
+    nama: number
+    kecamatan: number
+    kabupaten: number
+    provinsi: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MasterDesaRecordMinAggregateInputType = {
+    id?: true
+    kodeDesa?: true
+    nama?: true
+    kecamatan?: true
+    kabupaten?: true
+    provinsi?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MasterDesaRecordMaxAggregateInputType = {
+    id?: true
+    kodeDesa?: true
+    nama?: true
+    kecamatan?: true
+    kabupaten?: true
+    provinsi?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MasterDesaRecordCountAggregateInputType = {
+    id?: true
+    kodeDesa?: true
+    nama?: true
+    kecamatan?: true
+    kabupaten?: true
+    provinsi?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MasterDesaRecordAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MasterDesaRecord to aggregate.
+     */
+    where?: MasterDesaRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MasterDesaRecords to fetch.
+     */
+    orderBy?: MasterDesaRecordOrderByWithRelationInput | MasterDesaRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MasterDesaRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MasterDesaRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MasterDesaRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MasterDesaRecords
+    **/
+    _count?: true | MasterDesaRecordCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MasterDesaRecordMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MasterDesaRecordMaxAggregateInputType
+  }
+
+  export type GetMasterDesaRecordAggregateType<T extends MasterDesaRecordAggregateArgs> = {
+        [P in keyof T & keyof AggregateMasterDesaRecord]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMasterDesaRecord[P]>
+      : GetScalarType<T[P], AggregateMasterDesaRecord[P]>
+  }
+
+
+
+
+  export type MasterDesaRecordGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MasterDesaRecordWhereInput
+    orderBy?: MasterDesaRecordOrderByWithAggregationInput | MasterDesaRecordOrderByWithAggregationInput[]
+    by: MasterDesaRecordScalarFieldEnum[] | MasterDesaRecordScalarFieldEnum
+    having?: MasterDesaRecordScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MasterDesaRecordCountAggregateInputType | true
+    _min?: MasterDesaRecordMinAggregateInputType
+    _max?: MasterDesaRecordMaxAggregateInputType
+  }
+
+  export type MasterDesaRecordGroupByOutputType = {
+    id: string
+    kodeDesa: string
+    nama: string
+    kecamatan: string
+    kabupaten: string
+    provinsi: string
+    status: string
+    createdAt: Date
+    updatedAt: Date
+    _count: MasterDesaRecordCountAggregateOutputType | null
+    _min: MasterDesaRecordMinAggregateOutputType | null
+    _max: MasterDesaRecordMaxAggregateOutputType | null
+  }
+
+  type GetMasterDesaRecordGroupByPayload<T extends MasterDesaRecordGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MasterDesaRecordGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MasterDesaRecordGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MasterDesaRecordGroupByOutputType[P]>
+            : GetScalarType<T[P], MasterDesaRecordGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MasterDesaRecordSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    kodeDesa?: boolean
+    nama?: boolean
+    kecamatan?: boolean
+    kabupaten?: boolean
+    provinsi?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["masterDesaRecord"]>
+
+
+  export type MasterDesaRecordSelectScalar = {
+    id?: boolean
+    kodeDesa?: boolean
+    nama?: boolean
+    kecamatan?: boolean
+    kabupaten?: boolean
+    provinsi?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $MasterDesaRecordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MasterDesaRecord"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      kodeDesa: string
+      nama: string
+      kecamatan: string
+      kabupaten: string
+      provinsi: string
+      status: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["masterDesaRecord"]>
+    composites: {}
+  }
+
+  type MasterDesaRecordGetPayload<S extends boolean | null | undefined | MasterDesaRecordDefaultArgs> = $Result.GetResult<Prisma.$MasterDesaRecordPayload, S>
+
+  type MasterDesaRecordCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<MasterDesaRecordFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: MasterDesaRecordCountAggregateInputType | true
+    }
+
+  export interface MasterDesaRecordDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MasterDesaRecord'], meta: { name: 'MasterDesaRecord' } }
+    /**
+     * Find zero or one MasterDesaRecord that matches the filter.
+     * @param {MasterDesaRecordFindUniqueArgs} args - Arguments to find a MasterDesaRecord
+     * @example
+     * // Get one MasterDesaRecord
+     * const masterDesaRecord = await prisma.masterDesaRecord.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MasterDesaRecordFindUniqueArgs>(args: SelectSubset<T, MasterDesaRecordFindUniqueArgs<ExtArgs>>): Prisma__MasterDesaRecordClient<$Result.GetResult<Prisma.$MasterDesaRecordPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one MasterDesaRecord that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {MasterDesaRecordFindUniqueOrThrowArgs} args - Arguments to find a MasterDesaRecord
+     * @example
+     * // Get one MasterDesaRecord
+     * const masterDesaRecord = await prisma.masterDesaRecord.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MasterDesaRecordFindUniqueOrThrowArgs>(args: SelectSubset<T, MasterDesaRecordFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MasterDesaRecordClient<$Result.GetResult<Prisma.$MasterDesaRecordPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first MasterDesaRecord that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MasterDesaRecordFindFirstArgs} args - Arguments to find a MasterDesaRecord
+     * @example
+     * // Get one MasterDesaRecord
+     * const masterDesaRecord = await prisma.masterDesaRecord.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MasterDesaRecordFindFirstArgs>(args?: SelectSubset<T, MasterDesaRecordFindFirstArgs<ExtArgs>>): Prisma__MasterDesaRecordClient<$Result.GetResult<Prisma.$MasterDesaRecordPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first MasterDesaRecord that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MasterDesaRecordFindFirstOrThrowArgs} args - Arguments to find a MasterDesaRecord
+     * @example
+     * // Get one MasterDesaRecord
+     * const masterDesaRecord = await prisma.masterDesaRecord.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MasterDesaRecordFindFirstOrThrowArgs>(args?: SelectSubset<T, MasterDesaRecordFindFirstOrThrowArgs<ExtArgs>>): Prisma__MasterDesaRecordClient<$Result.GetResult<Prisma.$MasterDesaRecordPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more MasterDesaRecords that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MasterDesaRecordFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MasterDesaRecords
+     * const masterDesaRecords = await prisma.masterDesaRecord.findMany()
+     * 
+     * // Get first 10 MasterDesaRecords
+     * const masterDesaRecords = await prisma.masterDesaRecord.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const masterDesaRecordWithIdOnly = await prisma.masterDesaRecord.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MasterDesaRecordFindManyArgs>(args?: SelectSubset<T, MasterDesaRecordFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MasterDesaRecordPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a MasterDesaRecord.
+     * @param {MasterDesaRecordCreateArgs} args - Arguments to create a MasterDesaRecord.
+     * @example
+     * // Create one MasterDesaRecord
+     * const MasterDesaRecord = await prisma.masterDesaRecord.create({
+     *   data: {
+     *     // ... data to create a MasterDesaRecord
+     *   }
+     * })
+     * 
+     */
+    create<T extends MasterDesaRecordCreateArgs>(args: SelectSubset<T, MasterDesaRecordCreateArgs<ExtArgs>>): Prisma__MasterDesaRecordClient<$Result.GetResult<Prisma.$MasterDesaRecordPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many MasterDesaRecords.
+     * @param {MasterDesaRecordCreateManyArgs} args - Arguments to create many MasterDesaRecords.
+     * @example
+     * // Create many MasterDesaRecords
+     * const masterDesaRecord = await prisma.masterDesaRecord.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MasterDesaRecordCreateManyArgs>(args?: SelectSubset<T, MasterDesaRecordCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a MasterDesaRecord.
+     * @param {MasterDesaRecordDeleteArgs} args - Arguments to delete one MasterDesaRecord.
+     * @example
+     * // Delete one MasterDesaRecord
+     * const MasterDesaRecord = await prisma.masterDesaRecord.delete({
+     *   where: {
+     *     // ... filter to delete one MasterDesaRecord
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MasterDesaRecordDeleteArgs>(args: SelectSubset<T, MasterDesaRecordDeleteArgs<ExtArgs>>): Prisma__MasterDesaRecordClient<$Result.GetResult<Prisma.$MasterDesaRecordPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one MasterDesaRecord.
+     * @param {MasterDesaRecordUpdateArgs} args - Arguments to update one MasterDesaRecord.
+     * @example
+     * // Update one MasterDesaRecord
+     * const masterDesaRecord = await prisma.masterDesaRecord.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MasterDesaRecordUpdateArgs>(args: SelectSubset<T, MasterDesaRecordUpdateArgs<ExtArgs>>): Prisma__MasterDesaRecordClient<$Result.GetResult<Prisma.$MasterDesaRecordPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more MasterDesaRecords.
+     * @param {MasterDesaRecordDeleteManyArgs} args - Arguments to filter MasterDesaRecords to delete.
+     * @example
+     * // Delete a few MasterDesaRecords
+     * const { count } = await prisma.masterDesaRecord.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MasterDesaRecordDeleteManyArgs>(args?: SelectSubset<T, MasterDesaRecordDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MasterDesaRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MasterDesaRecordUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MasterDesaRecords
+     * const masterDesaRecord = await prisma.masterDesaRecord.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MasterDesaRecordUpdateManyArgs>(args: SelectSubset<T, MasterDesaRecordUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one MasterDesaRecord.
+     * @param {MasterDesaRecordUpsertArgs} args - Arguments to update or create a MasterDesaRecord.
+     * @example
+     * // Update or create a MasterDesaRecord
+     * const masterDesaRecord = await prisma.masterDesaRecord.upsert({
+     *   create: {
+     *     // ... data to create a MasterDesaRecord
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MasterDesaRecord we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MasterDesaRecordUpsertArgs>(args: SelectSubset<T, MasterDesaRecordUpsertArgs<ExtArgs>>): Prisma__MasterDesaRecordClient<$Result.GetResult<Prisma.$MasterDesaRecordPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of MasterDesaRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MasterDesaRecordCountArgs} args - Arguments to filter MasterDesaRecords to count.
+     * @example
+     * // Count the number of MasterDesaRecords
+     * const count = await prisma.masterDesaRecord.count({
+     *   where: {
+     *     // ... the filter for the MasterDesaRecords we want to count
+     *   }
+     * })
+    **/
+    count<T extends MasterDesaRecordCountArgs>(
+      args?: Subset<T, MasterDesaRecordCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MasterDesaRecordCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MasterDesaRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MasterDesaRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MasterDesaRecordAggregateArgs>(args: Subset<T, MasterDesaRecordAggregateArgs>): Prisma.PrismaPromise<GetMasterDesaRecordAggregateType<T>>
+
+    /**
+     * Group by MasterDesaRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MasterDesaRecordGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MasterDesaRecordGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MasterDesaRecordGroupByArgs['orderBy'] }
+        : { orderBy?: MasterDesaRecordGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MasterDesaRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMasterDesaRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MasterDesaRecord model
+   */
+  readonly fields: MasterDesaRecordFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MasterDesaRecord.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MasterDesaRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MasterDesaRecord model
+   */ 
+  interface MasterDesaRecordFieldRefs {
+    readonly id: FieldRef<"MasterDesaRecord", 'String'>
+    readonly kodeDesa: FieldRef<"MasterDesaRecord", 'String'>
+    readonly nama: FieldRef<"MasterDesaRecord", 'String'>
+    readonly kecamatan: FieldRef<"MasterDesaRecord", 'String'>
+    readonly kabupaten: FieldRef<"MasterDesaRecord", 'String'>
+    readonly provinsi: FieldRef<"MasterDesaRecord", 'String'>
+    readonly status: FieldRef<"MasterDesaRecord", 'String'>
+    readonly createdAt: FieldRef<"MasterDesaRecord", 'DateTime'>
+    readonly updatedAt: FieldRef<"MasterDesaRecord", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MasterDesaRecord findUnique
+   */
+  export type MasterDesaRecordFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MasterDesaRecord
+     */
+    select?: MasterDesaRecordSelect<ExtArgs> | null
+    /**
+     * Filter, which MasterDesaRecord to fetch.
+     */
+    where: MasterDesaRecordWhereUniqueInput
+  }
+
+  /**
+   * MasterDesaRecord findUniqueOrThrow
+   */
+  export type MasterDesaRecordFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MasterDesaRecord
+     */
+    select?: MasterDesaRecordSelect<ExtArgs> | null
+    /**
+     * Filter, which MasterDesaRecord to fetch.
+     */
+    where: MasterDesaRecordWhereUniqueInput
+  }
+
+  /**
+   * MasterDesaRecord findFirst
+   */
+  export type MasterDesaRecordFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MasterDesaRecord
+     */
+    select?: MasterDesaRecordSelect<ExtArgs> | null
+    /**
+     * Filter, which MasterDesaRecord to fetch.
+     */
+    where?: MasterDesaRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MasterDesaRecords to fetch.
+     */
+    orderBy?: MasterDesaRecordOrderByWithRelationInput | MasterDesaRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MasterDesaRecords.
+     */
+    cursor?: MasterDesaRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MasterDesaRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MasterDesaRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MasterDesaRecords.
+     */
+    distinct?: MasterDesaRecordScalarFieldEnum | MasterDesaRecordScalarFieldEnum[]
+  }
+
+  /**
+   * MasterDesaRecord findFirstOrThrow
+   */
+  export type MasterDesaRecordFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MasterDesaRecord
+     */
+    select?: MasterDesaRecordSelect<ExtArgs> | null
+    /**
+     * Filter, which MasterDesaRecord to fetch.
+     */
+    where?: MasterDesaRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MasterDesaRecords to fetch.
+     */
+    orderBy?: MasterDesaRecordOrderByWithRelationInput | MasterDesaRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MasterDesaRecords.
+     */
+    cursor?: MasterDesaRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MasterDesaRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MasterDesaRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MasterDesaRecords.
+     */
+    distinct?: MasterDesaRecordScalarFieldEnum | MasterDesaRecordScalarFieldEnum[]
+  }
+
+  /**
+   * MasterDesaRecord findMany
+   */
+  export type MasterDesaRecordFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MasterDesaRecord
+     */
+    select?: MasterDesaRecordSelect<ExtArgs> | null
+    /**
+     * Filter, which MasterDesaRecords to fetch.
+     */
+    where?: MasterDesaRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MasterDesaRecords to fetch.
+     */
+    orderBy?: MasterDesaRecordOrderByWithRelationInput | MasterDesaRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MasterDesaRecords.
+     */
+    cursor?: MasterDesaRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MasterDesaRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MasterDesaRecords.
+     */
+    skip?: number
+    distinct?: MasterDesaRecordScalarFieldEnum | MasterDesaRecordScalarFieldEnum[]
+  }
+
+  /**
+   * MasterDesaRecord create
+   */
+  export type MasterDesaRecordCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MasterDesaRecord
+     */
+    select?: MasterDesaRecordSelect<ExtArgs> | null
+    /**
+     * The data needed to create a MasterDesaRecord.
+     */
+    data: XOR<MasterDesaRecordCreateInput, MasterDesaRecordUncheckedCreateInput>
+  }
+
+  /**
+   * MasterDesaRecord createMany
+   */
+  export type MasterDesaRecordCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MasterDesaRecords.
+     */
+    data: MasterDesaRecordCreateManyInput | MasterDesaRecordCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MasterDesaRecord update
+   */
+  export type MasterDesaRecordUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MasterDesaRecord
+     */
+    select?: MasterDesaRecordSelect<ExtArgs> | null
+    /**
+     * The data needed to update a MasterDesaRecord.
+     */
+    data: XOR<MasterDesaRecordUpdateInput, MasterDesaRecordUncheckedUpdateInput>
+    /**
+     * Choose, which MasterDesaRecord to update.
+     */
+    where: MasterDesaRecordWhereUniqueInput
+  }
+
+  /**
+   * MasterDesaRecord updateMany
+   */
+  export type MasterDesaRecordUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MasterDesaRecords.
+     */
+    data: XOR<MasterDesaRecordUpdateManyMutationInput, MasterDesaRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which MasterDesaRecords to update
+     */
+    where?: MasterDesaRecordWhereInput
+  }
+
+  /**
+   * MasterDesaRecord upsert
+   */
+  export type MasterDesaRecordUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MasterDesaRecord
+     */
+    select?: MasterDesaRecordSelect<ExtArgs> | null
+    /**
+     * The filter to search for the MasterDesaRecord to update in case it exists.
+     */
+    where: MasterDesaRecordWhereUniqueInput
+    /**
+     * In case the MasterDesaRecord found by the `where` argument doesn't exist, create a new MasterDesaRecord with this data.
+     */
+    create: XOR<MasterDesaRecordCreateInput, MasterDesaRecordUncheckedCreateInput>
+    /**
+     * In case the MasterDesaRecord was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MasterDesaRecordUpdateInput, MasterDesaRecordUncheckedUpdateInput>
+  }
+
+  /**
+   * MasterDesaRecord delete
+   */
+  export type MasterDesaRecordDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MasterDesaRecord
+     */
+    select?: MasterDesaRecordSelect<ExtArgs> | null
+    /**
+     * Filter which MasterDesaRecord to delete.
+     */
+    where: MasterDesaRecordWhereUniqueInput
+  }
+
+  /**
+   * MasterDesaRecord deleteMany
+   */
+  export type MasterDesaRecordDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MasterDesaRecords to delete
+     */
+    where?: MasterDesaRecordWhereInput
+  }
+
+  /**
+   * MasterDesaRecord without action
+   */
+  export type MasterDesaRecordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MasterDesaRecord
+     */
+    select?: MasterDesaRecordSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ModuleRecord
+   */
+
+  export type AggregateModuleRecord = {
+    _count: ModuleRecordCountAggregateOutputType | null
+    _min: ModuleRecordMinAggregateOutputType | null
+    _max: ModuleRecordMaxAggregateOutputType | null
+  }
+
+  export type ModuleRecordMinAggregateOutputType = {
+    id: string | null
+    modulePath: string | null
+    moduleName: string | null
+    title: string | null
+    category: string | null
+    description: string | null
+    valueText: string | null
+    status: string | null
+    createdBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ModuleRecordMaxAggregateOutputType = {
+    id: string | null
+    modulePath: string | null
+    moduleName: string | null
+    title: string | null
+    category: string | null
+    description: string | null
+    valueText: string | null
+    status: string | null
+    createdBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ModuleRecordCountAggregateOutputType = {
+    id: number
+    modulePath: number
+    moduleName: number
+    title: number
+    category: number
+    description: number
+    valueText: number
+    status: number
+    createdBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ModuleRecordMinAggregateInputType = {
+    id?: true
+    modulePath?: true
+    moduleName?: true
+    title?: true
+    category?: true
+    description?: true
+    valueText?: true
+    status?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ModuleRecordMaxAggregateInputType = {
+    id?: true
+    modulePath?: true
+    moduleName?: true
+    title?: true
+    category?: true
+    description?: true
+    valueText?: true
+    status?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ModuleRecordCountAggregateInputType = {
+    id?: true
+    modulePath?: true
+    moduleName?: true
+    title?: true
+    category?: true
+    description?: true
+    valueText?: true
+    status?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ModuleRecordAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ModuleRecord to aggregate.
+     */
+    where?: ModuleRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ModuleRecords to fetch.
+     */
+    orderBy?: ModuleRecordOrderByWithRelationInput | ModuleRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ModuleRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ModuleRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ModuleRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ModuleRecords
+    **/
+    _count?: true | ModuleRecordCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ModuleRecordMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ModuleRecordMaxAggregateInputType
+  }
+
+  export type GetModuleRecordAggregateType<T extends ModuleRecordAggregateArgs> = {
+        [P in keyof T & keyof AggregateModuleRecord]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateModuleRecord[P]>
+      : GetScalarType<T[P], AggregateModuleRecord[P]>
+  }
+
+
+
+
+  export type ModuleRecordGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ModuleRecordWhereInput
+    orderBy?: ModuleRecordOrderByWithAggregationInput | ModuleRecordOrderByWithAggregationInput[]
+    by: ModuleRecordScalarFieldEnum[] | ModuleRecordScalarFieldEnum
+    having?: ModuleRecordScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ModuleRecordCountAggregateInputType | true
+    _min?: ModuleRecordMinAggregateInputType
+    _max?: ModuleRecordMaxAggregateInputType
+  }
+
+  export type ModuleRecordGroupByOutputType = {
+    id: string
+    modulePath: string
+    moduleName: string
+    title: string
+    category: string | null
+    description: string | null
+    valueText: string | null
+    status: string
+    createdBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ModuleRecordCountAggregateOutputType | null
+    _min: ModuleRecordMinAggregateOutputType | null
+    _max: ModuleRecordMaxAggregateOutputType | null
+  }
+
+  type GetModuleRecordGroupByPayload<T extends ModuleRecordGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ModuleRecordGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ModuleRecordGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ModuleRecordGroupByOutputType[P]>
+            : GetScalarType<T[P], ModuleRecordGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ModuleRecordSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    modulePath?: boolean
+    moduleName?: boolean
+    title?: boolean
+    category?: boolean
+    description?: boolean
+    valueText?: boolean
+    status?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["moduleRecord"]>
+
+
+  export type ModuleRecordSelectScalar = {
+    id?: boolean
+    modulePath?: boolean
+    moduleName?: boolean
+    title?: boolean
+    category?: boolean
+    description?: boolean
+    valueText?: boolean
+    status?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $ModuleRecordPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ModuleRecord"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      modulePath: string
+      moduleName: string
+      title: string
+      category: string | null
+      description: string | null
+      valueText: string | null
+      status: string
+      createdBy: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["moduleRecord"]>
+    composites: {}
+  }
+
+  type ModuleRecordGetPayload<S extends boolean | null | undefined | ModuleRecordDefaultArgs> = $Result.GetResult<Prisma.$ModuleRecordPayload, S>
+
+  type ModuleRecordCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ModuleRecordFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ModuleRecordCountAggregateInputType | true
+    }
+
+  export interface ModuleRecordDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ModuleRecord'], meta: { name: 'ModuleRecord' } }
+    /**
+     * Find zero or one ModuleRecord that matches the filter.
+     * @param {ModuleRecordFindUniqueArgs} args - Arguments to find a ModuleRecord
+     * @example
+     * // Get one ModuleRecord
+     * const moduleRecord = await prisma.moduleRecord.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ModuleRecordFindUniqueArgs>(args: SelectSubset<T, ModuleRecordFindUniqueArgs<ExtArgs>>): Prisma__ModuleRecordClient<$Result.GetResult<Prisma.$ModuleRecordPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ModuleRecord that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ModuleRecordFindUniqueOrThrowArgs} args - Arguments to find a ModuleRecord
+     * @example
+     * // Get one ModuleRecord
+     * const moduleRecord = await prisma.moduleRecord.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ModuleRecordFindUniqueOrThrowArgs>(args: SelectSubset<T, ModuleRecordFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ModuleRecordClient<$Result.GetResult<Prisma.$ModuleRecordPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ModuleRecord that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleRecordFindFirstArgs} args - Arguments to find a ModuleRecord
+     * @example
+     * // Get one ModuleRecord
+     * const moduleRecord = await prisma.moduleRecord.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ModuleRecordFindFirstArgs>(args?: SelectSubset<T, ModuleRecordFindFirstArgs<ExtArgs>>): Prisma__ModuleRecordClient<$Result.GetResult<Prisma.$ModuleRecordPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ModuleRecord that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleRecordFindFirstOrThrowArgs} args - Arguments to find a ModuleRecord
+     * @example
+     * // Get one ModuleRecord
+     * const moduleRecord = await prisma.moduleRecord.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ModuleRecordFindFirstOrThrowArgs>(args?: SelectSubset<T, ModuleRecordFindFirstOrThrowArgs<ExtArgs>>): Prisma__ModuleRecordClient<$Result.GetResult<Prisma.$ModuleRecordPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ModuleRecords that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleRecordFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ModuleRecords
+     * const moduleRecords = await prisma.moduleRecord.findMany()
+     * 
+     * // Get first 10 ModuleRecords
+     * const moduleRecords = await prisma.moduleRecord.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const moduleRecordWithIdOnly = await prisma.moduleRecord.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ModuleRecordFindManyArgs>(args?: SelectSubset<T, ModuleRecordFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ModuleRecordPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ModuleRecord.
+     * @param {ModuleRecordCreateArgs} args - Arguments to create a ModuleRecord.
+     * @example
+     * // Create one ModuleRecord
+     * const ModuleRecord = await prisma.moduleRecord.create({
+     *   data: {
+     *     // ... data to create a ModuleRecord
+     *   }
+     * })
+     * 
+     */
+    create<T extends ModuleRecordCreateArgs>(args: SelectSubset<T, ModuleRecordCreateArgs<ExtArgs>>): Prisma__ModuleRecordClient<$Result.GetResult<Prisma.$ModuleRecordPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ModuleRecords.
+     * @param {ModuleRecordCreateManyArgs} args - Arguments to create many ModuleRecords.
+     * @example
+     * // Create many ModuleRecords
+     * const moduleRecord = await prisma.moduleRecord.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ModuleRecordCreateManyArgs>(args?: SelectSubset<T, ModuleRecordCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ModuleRecord.
+     * @param {ModuleRecordDeleteArgs} args - Arguments to delete one ModuleRecord.
+     * @example
+     * // Delete one ModuleRecord
+     * const ModuleRecord = await prisma.moduleRecord.delete({
+     *   where: {
+     *     // ... filter to delete one ModuleRecord
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ModuleRecordDeleteArgs>(args: SelectSubset<T, ModuleRecordDeleteArgs<ExtArgs>>): Prisma__ModuleRecordClient<$Result.GetResult<Prisma.$ModuleRecordPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ModuleRecord.
+     * @param {ModuleRecordUpdateArgs} args - Arguments to update one ModuleRecord.
+     * @example
+     * // Update one ModuleRecord
+     * const moduleRecord = await prisma.moduleRecord.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ModuleRecordUpdateArgs>(args: SelectSubset<T, ModuleRecordUpdateArgs<ExtArgs>>): Prisma__ModuleRecordClient<$Result.GetResult<Prisma.$ModuleRecordPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ModuleRecords.
+     * @param {ModuleRecordDeleteManyArgs} args - Arguments to filter ModuleRecords to delete.
+     * @example
+     * // Delete a few ModuleRecords
+     * const { count } = await prisma.moduleRecord.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ModuleRecordDeleteManyArgs>(args?: SelectSubset<T, ModuleRecordDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ModuleRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleRecordUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ModuleRecords
+     * const moduleRecord = await prisma.moduleRecord.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ModuleRecordUpdateManyArgs>(args: SelectSubset<T, ModuleRecordUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ModuleRecord.
+     * @param {ModuleRecordUpsertArgs} args - Arguments to update or create a ModuleRecord.
+     * @example
+     * // Update or create a ModuleRecord
+     * const moduleRecord = await prisma.moduleRecord.upsert({
+     *   create: {
+     *     // ... data to create a ModuleRecord
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ModuleRecord we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ModuleRecordUpsertArgs>(args: SelectSubset<T, ModuleRecordUpsertArgs<ExtArgs>>): Prisma__ModuleRecordClient<$Result.GetResult<Prisma.$ModuleRecordPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ModuleRecords.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleRecordCountArgs} args - Arguments to filter ModuleRecords to count.
+     * @example
+     * // Count the number of ModuleRecords
+     * const count = await prisma.moduleRecord.count({
+     *   where: {
+     *     // ... the filter for the ModuleRecords we want to count
+     *   }
+     * })
+    **/
+    count<T extends ModuleRecordCountArgs>(
+      args?: Subset<T, ModuleRecordCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ModuleRecordCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ModuleRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleRecordAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ModuleRecordAggregateArgs>(args: Subset<T, ModuleRecordAggregateArgs>): Prisma.PrismaPromise<GetModuleRecordAggregateType<T>>
+
+    /**
+     * Group by ModuleRecord.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ModuleRecordGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ModuleRecordGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ModuleRecordGroupByArgs['orderBy'] }
+        : { orderBy?: ModuleRecordGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ModuleRecordGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetModuleRecordGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ModuleRecord model
+   */
+  readonly fields: ModuleRecordFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ModuleRecord.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ModuleRecordClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ModuleRecord model
+   */ 
+  interface ModuleRecordFieldRefs {
+    readonly id: FieldRef<"ModuleRecord", 'String'>
+    readonly modulePath: FieldRef<"ModuleRecord", 'String'>
+    readonly moduleName: FieldRef<"ModuleRecord", 'String'>
+    readonly title: FieldRef<"ModuleRecord", 'String'>
+    readonly category: FieldRef<"ModuleRecord", 'String'>
+    readonly description: FieldRef<"ModuleRecord", 'String'>
+    readonly valueText: FieldRef<"ModuleRecord", 'String'>
+    readonly status: FieldRef<"ModuleRecord", 'String'>
+    readonly createdBy: FieldRef<"ModuleRecord", 'String'>
+    readonly createdAt: FieldRef<"ModuleRecord", 'DateTime'>
+    readonly updatedAt: FieldRef<"ModuleRecord", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ModuleRecord findUnique
+   */
+  export type ModuleRecordFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleRecord
+     */
+    select?: ModuleRecordSelect<ExtArgs> | null
+    /**
+     * Filter, which ModuleRecord to fetch.
+     */
+    where: ModuleRecordWhereUniqueInput
+  }
+
+  /**
+   * ModuleRecord findUniqueOrThrow
+   */
+  export type ModuleRecordFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleRecord
+     */
+    select?: ModuleRecordSelect<ExtArgs> | null
+    /**
+     * Filter, which ModuleRecord to fetch.
+     */
+    where: ModuleRecordWhereUniqueInput
+  }
+
+  /**
+   * ModuleRecord findFirst
+   */
+  export type ModuleRecordFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleRecord
+     */
+    select?: ModuleRecordSelect<ExtArgs> | null
+    /**
+     * Filter, which ModuleRecord to fetch.
+     */
+    where?: ModuleRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ModuleRecords to fetch.
+     */
+    orderBy?: ModuleRecordOrderByWithRelationInput | ModuleRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ModuleRecords.
+     */
+    cursor?: ModuleRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ModuleRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ModuleRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ModuleRecords.
+     */
+    distinct?: ModuleRecordScalarFieldEnum | ModuleRecordScalarFieldEnum[]
+  }
+
+  /**
+   * ModuleRecord findFirstOrThrow
+   */
+  export type ModuleRecordFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleRecord
+     */
+    select?: ModuleRecordSelect<ExtArgs> | null
+    /**
+     * Filter, which ModuleRecord to fetch.
+     */
+    where?: ModuleRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ModuleRecords to fetch.
+     */
+    orderBy?: ModuleRecordOrderByWithRelationInput | ModuleRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ModuleRecords.
+     */
+    cursor?: ModuleRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ModuleRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ModuleRecords.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ModuleRecords.
+     */
+    distinct?: ModuleRecordScalarFieldEnum | ModuleRecordScalarFieldEnum[]
+  }
+
+  /**
+   * ModuleRecord findMany
+   */
+  export type ModuleRecordFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleRecord
+     */
+    select?: ModuleRecordSelect<ExtArgs> | null
+    /**
+     * Filter, which ModuleRecords to fetch.
+     */
+    where?: ModuleRecordWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ModuleRecords to fetch.
+     */
+    orderBy?: ModuleRecordOrderByWithRelationInput | ModuleRecordOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ModuleRecords.
+     */
+    cursor?: ModuleRecordWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ModuleRecords from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ModuleRecords.
+     */
+    skip?: number
+    distinct?: ModuleRecordScalarFieldEnum | ModuleRecordScalarFieldEnum[]
+  }
+
+  /**
+   * ModuleRecord create
+   */
+  export type ModuleRecordCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleRecord
+     */
+    select?: ModuleRecordSelect<ExtArgs> | null
+    /**
+     * The data needed to create a ModuleRecord.
+     */
+    data: XOR<ModuleRecordCreateInput, ModuleRecordUncheckedCreateInput>
+  }
+
+  /**
+   * ModuleRecord createMany
+   */
+  export type ModuleRecordCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ModuleRecords.
+     */
+    data: ModuleRecordCreateManyInput | ModuleRecordCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ModuleRecord update
+   */
+  export type ModuleRecordUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleRecord
+     */
+    select?: ModuleRecordSelect<ExtArgs> | null
+    /**
+     * The data needed to update a ModuleRecord.
+     */
+    data: XOR<ModuleRecordUpdateInput, ModuleRecordUncheckedUpdateInput>
+    /**
+     * Choose, which ModuleRecord to update.
+     */
+    where: ModuleRecordWhereUniqueInput
+  }
+
+  /**
+   * ModuleRecord updateMany
+   */
+  export type ModuleRecordUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ModuleRecords.
+     */
+    data: XOR<ModuleRecordUpdateManyMutationInput, ModuleRecordUncheckedUpdateManyInput>
+    /**
+     * Filter which ModuleRecords to update
+     */
+    where?: ModuleRecordWhereInput
+  }
+
+  /**
+   * ModuleRecord upsert
+   */
+  export type ModuleRecordUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleRecord
+     */
+    select?: ModuleRecordSelect<ExtArgs> | null
+    /**
+     * The filter to search for the ModuleRecord to update in case it exists.
+     */
+    where: ModuleRecordWhereUniqueInput
+    /**
+     * In case the ModuleRecord found by the `where` argument doesn't exist, create a new ModuleRecord with this data.
+     */
+    create: XOR<ModuleRecordCreateInput, ModuleRecordUncheckedCreateInput>
+    /**
+     * In case the ModuleRecord was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ModuleRecordUpdateInput, ModuleRecordUncheckedUpdateInput>
+  }
+
+  /**
+   * ModuleRecord delete
+   */
+  export type ModuleRecordDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleRecord
+     */
+    select?: ModuleRecordSelect<ExtArgs> | null
+    /**
+     * Filter which ModuleRecord to delete.
+     */
+    where: ModuleRecordWhereUniqueInput
+  }
+
+  /**
+   * ModuleRecord deleteMany
+   */
+  export type ModuleRecordDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ModuleRecords to delete
+     */
+    where?: ModuleRecordWhereInput
+  }
+
+  /**
+   * ModuleRecord without action
+   */
+  export type ModuleRecordDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ModuleRecord
+     */
+    select?: ModuleRecordSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -25484,6 +30400,80 @@ export namespace Prisma {
   };
 
   export type ShiftNakesScalarFieldEnum = (typeof ShiftNakesScalarFieldEnum)[keyof typeof ShiftNakesScalarFieldEnum]
+
+
+  export const AspirasiScalarFieldEnum: {
+    id: 'id',
+    desaId: 'desaId',
+    wargaId: 'wargaId',
+    kategori: 'kategori',
+    judul: 'judul',
+    isi: 'isi',
+    status: 'status',
+    createdAt: 'createdAt'
+  };
+
+  export type AspirasiScalarFieldEnum = (typeof AspirasiScalarFieldEnum)[keyof typeof AspirasiScalarFieldEnum]
+
+
+  export const SiswaScalarFieldEnum: {
+    id: 'id',
+    desaId: 'desaId',
+    nisn: 'nisn',
+    nama: 'nama',
+    kelas: 'kelas',
+    jenjang: 'jenjang',
+    status: 'status',
+    createdAt: 'createdAt'
+  };
+
+  export type SiswaScalarFieldEnum = (typeof SiswaScalarFieldEnum)[keyof typeof SiswaScalarFieldEnum]
+
+
+  export const MonitoringDesaScalarFieldEnum: {
+    id: 'id',
+    namaDesa: 'namaDesa',
+    kecamatan: 'kecamatan',
+    index: 'index',
+    readiness: 'readiness',
+    maturity: 'maturity',
+    status: 'status',
+    createdAt: 'createdAt'
+  };
+
+  export type MonitoringDesaScalarFieldEnum = (typeof MonitoringDesaScalarFieldEnum)[keyof typeof MonitoringDesaScalarFieldEnum]
+
+
+  export const MasterDesaRecordScalarFieldEnum: {
+    id: 'id',
+    kodeDesa: 'kodeDesa',
+    nama: 'nama',
+    kecamatan: 'kecamatan',
+    kabupaten: 'kabupaten',
+    provinsi: 'provinsi',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MasterDesaRecordScalarFieldEnum = (typeof MasterDesaRecordScalarFieldEnum)[keyof typeof MasterDesaRecordScalarFieldEnum]
+
+
+  export const ModuleRecordScalarFieldEnum: {
+    id: 'id',
+    modulePath: 'modulePath',
+    moduleName: 'moduleName',
+    title: 'title',
+    category: 'category',
+    description: 'description',
+    valueText: 'valueText',
+    status: 'status',
+    createdBy: 'createdBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ModuleRecordScalarFieldEnum = (typeof ModuleRecordScalarFieldEnum)[keyof typeof ModuleRecordScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -25878,6 +30868,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanListRelationFilter
     stunting?: StuntingListRelationFilter
     pesertaKelas?: PesertaKelasListRelationFilter
+    aspirasi?: AspirasiListRelationFilter
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
   }
 
@@ -25902,6 +30893,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanOrderByRelationAggregateInput
     stunting?: StuntingOrderByRelationAggregateInput
     pesertaKelas?: PesertaKelasOrderByRelationAggregateInput
+    aspirasi?: AspirasiOrderByRelationAggregateInput
     user?: UserOrderByWithRelationInput
   }
 
@@ -25929,6 +30921,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanListRelationFilter
     stunting?: StuntingListRelationFilter
     pesertaKelas?: PesertaKelasListRelationFilter
+    aspirasi?: AspirasiListRelationFilter
     user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
   }, "id" | "nik">
 
@@ -27335,6 +32328,366 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"ShiftNakes"> | Date | string
   }
 
+  export type AspirasiWhereInput = {
+    AND?: AspirasiWhereInput | AspirasiWhereInput[]
+    OR?: AspirasiWhereInput[]
+    NOT?: AspirasiWhereInput | AspirasiWhereInput[]
+    id?: StringFilter<"Aspirasi"> | string
+    desaId?: StringFilter<"Aspirasi"> | string
+    wargaId?: StringNullableFilter<"Aspirasi"> | string | null
+    kategori?: StringFilter<"Aspirasi"> | string
+    judul?: StringFilter<"Aspirasi"> | string
+    isi?: StringFilter<"Aspirasi"> | string
+    status?: StringFilter<"Aspirasi"> | string
+    createdAt?: DateTimeFilter<"Aspirasi"> | Date | string
+    warga?: XOR<WargaNullableRelationFilter, WargaWhereInput> | null
+  }
+
+  export type AspirasiOrderByWithRelationInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    wargaId?: SortOrderInput | SortOrder
+    kategori?: SortOrder
+    judul?: SortOrder
+    isi?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    warga?: WargaOrderByWithRelationInput
+  }
+
+  export type AspirasiWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AspirasiWhereInput | AspirasiWhereInput[]
+    OR?: AspirasiWhereInput[]
+    NOT?: AspirasiWhereInput | AspirasiWhereInput[]
+    desaId?: StringFilter<"Aspirasi"> | string
+    wargaId?: StringNullableFilter<"Aspirasi"> | string | null
+    kategori?: StringFilter<"Aspirasi"> | string
+    judul?: StringFilter<"Aspirasi"> | string
+    isi?: StringFilter<"Aspirasi"> | string
+    status?: StringFilter<"Aspirasi"> | string
+    createdAt?: DateTimeFilter<"Aspirasi"> | Date | string
+    warga?: XOR<WargaNullableRelationFilter, WargaWhereInput> | null
+  }, "id">
+
+  export type AspirasiOrderByWithAggregationInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    wargaId?: SortOrderInput | SortOrder
+    kategori?: SortOrder
+    judul?: SortOrder
+    isi?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    _count?: AspirasiCountOrderByAggregateInput
+    _max?: AspirasiMaxOrderByAggregateInput
+    _min?: AspirasiMinOrderByAggregateInput
+  }
+
+  export type AspirasiScalarWhereWithAggregatesInput = {
+    AND?: AspirasiScalarWhereWithAggregatesInput | AspirasiScalarWhereWithAggregatesInput[]
+    OR?: AspirasiScalarWhereWithAggregatesInput[]
+    NOT?: AspirasiScalarWhereWithAggregatesInput | AspirasiScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Aspirasi"> | string
+    desaId?: StringWithAggregatesFilter<"Aspirasi"> | string
+    wargaId?: StringNullableWithAggregatesFilter<"Aspirasi"> | string | null
+    kategori?: StringWithAggregatesFilter<"Aspirasi"> | string
+    judul?: StringWithAggregatesFilter<"Aspirasi"> | string
+    isi?: StringWithAggregatesFilter<"Aspirasi"> | string
+    status?: StringWithAggregatesFilter<"Aspirasi"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Aspirasi"> | Date | string
+  }
+
+  export type SiswaWhereInput = {
+    AND?: SiswaWhereInput | SiswaWhereInput[]
+    OR?: SiswaWhereInput[]
+    NOT?: SiswaWhereInput | SiswaWhereInput[]
+    id?: StringFilter<"Siswa"> | string
+    desaId?: StringFilter<"Siswa"> | string
+    nisn?: StringFilter<"Siswa"> | string
+    nama?: StringFilter<"Siswa"> | string
+    kelas?: StringFilter<"Siswa"> | string
+    jenjang?: StringFilter<"Siswa"> | string
+    status?: StringFilter<"Siswa"> | string
+    createdAt?: DateTimeFilter<"Siswa"> | Date | string
+  }
+
+  export type SiswaOrderByWithRelationInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    nisn?: SortOrder
+    nama?: SortOrder
+    kelas?: SortOrder
+    jenjang?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SiswaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    nisn?: string
+    AND?: SiswaWhereInput | SiswaWhereInput[]
+    OR?: SiswaWhereInput[]
+    NOT?: SiswaWhereInput | SiswaWhereInput[]
+    desaId?: StringFilter<"Siswa"> | string
+    nama?: StringFilter<"Siswa"> | string
+    kelas?: StringFilter<"Siswa"> | string
+    jenjang?: StringFilter<"Siswa"> | string
+    status?: StringFilter<"Siswa"> | string
+    createdAt?: DateTimeFilter<"Siswa"> | Date | string
+  }, "id" | "nisn">
+
+  export type SiswaOrderByWithAggregationInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    nisn?: SortOrder
+    nama?: SortOrder
+    kelas?: SortOrder
+    jenjang?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    _count?: SiswaCountOrderByAggregateInput
+    _max?: SiswaMaxOrderByAggregateInput
+    _min?: SiswaMinOrderByAggregateInput
+  }
+
+  export type SiswaScalarWhereWithAggregatesInput = {
+    AND?: SiswaScalarWhereWithAggregatesInput | SiswaScalarWhereWithAggregatesInput[]
+    OR?: SiswaScalarWhereWithAggregatesInput[]
+    NOT?: SiswaScalarWhereWithAggregatesInput | SiswaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Siswa"> | string
+    desaId?: StringWithAggregatesFilter<"Siswa"> | string
+    nisn?: StringWithAggregatesFilter<"Siswa"> | string
+    nama?: StringWithAggregatesFilter<"Siswa"> | string
+    kelas?: StringWithAggregatesFilter<"Siswa"> | string
+    jenjang?: StringWithAggregatesFilter<"Siswa"> | string
+    status?: StringWithAggregatesFilter<"Siswa"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Siswa"> | Date | string
+  }
+
+  export type MonitoringDesaWhereInput = {
+    AND?: MonitoringDesaWhereInput | MonitoringDesaWhereInput[]
+    OR?: MonitoringDesaWhereInput[]
+    NOT?: MonitoringDesaWhereInput | MonitoringDesaWhereInput[]
+    id?: StringFilter<"MonitoringDesa"> | string
+    namaDesa?: StringFilter<"MonitoringDesa"> | string
+    kecamatan?: StringFilter<"MonitoringDesa"> | string
+    index?: FloatFilter<"MonitoringDesa"> | number
+    readiness?: FloatFilter<"MonitoringDesa"> | number
+    maturity?: FloatFilter<"MonitoringDesa"> | number
+    status?: StringFilter<"MonitoringDesa"> | string
+    createdAt?: DateTimeFilter<"MonitoringDesa"> | Date | string
+  }
+
+  export type MonitoringDesaOrderByWithRelationInput = {
+    id?: SortOrder
+    namaDesa?: SortOrder
+    kecamatan?: SortOrder
+    index?: SortOrder
+    readiness?: SortOrder
+    maturity?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MonitoringDesaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MonitoringDesaWhereInput | MonitoringDesaWhereInput[]
+    OR?: MonitoringDesaWhereInput[]
+    NOT?: MonitoringDesaWhereInput | MonitoringDesaWhereInput[]
+    namaDesa?: StringFilter<"MonitoringDesa"> | string
+    kecamatan?: StringFilter<"MonitoringDesa"> | string
+    index?: FloatFilter<"MonitoringDesa"> | number
+    readiness?: FloatFilter<"MonitoringDesa"> | number
+    maturity?: FloatFilter<"MonitoringDesa"> | number
+    status?: StringFilter<"MonitoringDesa"> | string
+    createdAt?: DateTimeFilter<"MonitoringDesa"> | Date | string
+  }, "id">
+
+  export type MonitoringDesaOrderByWithAggregationInput = {
+    id?: SortOrder
+    namaDesa?: SortOrder
+    kecamatan?: SortOrder
+    index?: SortOrder
+    readiness?: SortOrder
+    maturity?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    _count?: MonitoringDesaCountOrderByAggregateInput
+    _avg?: MonitoringDesaAvgOrderByAggregateInput
+    _max?: MonitoringDesaMaxOrderByAggregateInput
+    _min?: MonitoringDesaMinOrderByAggregateInput
+    _sum?: MonitoringDesaSumOrderByAggregateInput
+  }
+
+  export type MonitoringDesaScalarWhereWithAggregatesInput = {
+    AND?: MonitoringDesaScalarWhereWithAggregatesInput | MonitoringDesaScalarWhereWithAggregatesInput[]
+    OR?: MonitoringDesaScalarWhereWithAggregatesInput[]
+    NOT?: MonitoringDesaScalarWhereWithAggregatesInput | MonitoringDesaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MonitoringDesa"> | string
+    namaDesa?: StringWithAggregatesFilter<"MonitoringDesa"> | string
+    kecamatan?: StringWithAggregatesFilter<"MonitoringDesa"> | string
+    index?: FloatWithAggregatesFilter<"MonitoringDesa"> | number
+    readiness?: FloatWithAggregatesFilter<"MonitoringDesa"> | number
+    maturity?: FloatWithAggregatesFilter<"MonitoringDesa"> | number
+    status?: StringWithAggregatesFilter<"MonitoringDesa"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"MonitoringDesa"> | Date | string
+  }
+
+  export type MasterDesaRecordWhereInput = {
+    AND?: MasterDesaRecordWhereInput | MasterDesaRecordWhereInput[]
+    OR?: MasterDesaRecordWhereInput[]
+    NOT?: MasterDesaRecordWhereInput | MasterDesaRecordWhereInput[]
+    id?: StringFilter<"MasterDesaRecord"> | string
+    kodeDesa?: StringFilter<"MasterDesaRecord"> | string
+    nama?: StringFilter<"MasterDesaRecord"> | string
+    kecamatan?: StringFilter<"MasterDesaRecord"> | string
+    kabupaten?: StringFilter<"MasterDesaRecord"> | string
+    provinsi?: StringFilter<"MasterDesaRecord"> | string
+    status?: StringFilter<"MasterDesaRecord"> | string
+    createdAt?: DateTimeFilter<"MasterDesaRecord"> | Date | string
+    updatedAt?: DateTimeFilter<"MasterDesaRecord"> | Date | string
+  }
+
+  export type MasterDesaRecordOrderByWithRelationInput = {
+    id?: SortOrder
+    kodeDesa?: SortOrder
+    nama?: SortOrder
+    kecamatan?: SortOrder
+    kabupaten?: SortOrder
+    provinsi?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MasterDesaRecordWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    kodeDesa?: string
+    AND?: MasterDesaRecordWhereInput | MasterDesaRecordWhereInput[]
+    OR?: MasterDesaRecordWhereInput[]
+    NOT?: MasterDesaRecordWhereInput | MasterDesaRecordWhereInput[]
+    nama?: StringFilter<"MasterDesaRecord"> | string
+    kecamatan?: StringFilter<"MasterDesaRecord"> | string
+    kabupaten?: StringFilter<"MasterDesaRecord"> | string
+    provinsi?: StringFilter<"MasterDesaRecord"> | string
+    status?: StringFilter<"MasterDesaRecord"> | string
+    createdAt?: DateTimeFilter<"MasterDesaRecord"> | Date | string
+    updatedAt?: DateTimeFilter<"MasterDesaRecord"> | Date | string
+  }, "id" | "kodeDesa">
+
+  export type MasterDesaRecordOrderByWithAggregationInput = {
+    id?: SortOrder
+    kodeDesa?: SortOrder
+    nama?: SortOrder
+    kecamatan?: SortOrder
+    kabupaten?: SortOrder
+    provinsi?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MasterDesaRecordCountOrderByAggregateInput
+    _max?: MasterDesaRecordMaxOrderByAggregateInput
+    _min?: MasterDesaRecordMinOrderByAggregateInput
+  }
+
+  export type MasterDesaRecordScalarWhereWithAggregatesInput = {
+    AND?: MasterDesaRecordScalarWhereWithAggregatesInput | MasterDesaRecordScalarWhereWithAggregatesInput[]
+    OR?: MasterDesaRecordScalarWhereWithAggregatesInput[]
+    NOT?: MasterDesaRecordScalarWhereWithAggregatesInput | MasterDesaRecordScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MasterDesaRecord"> | string
+    kodeDesa?: StringWithAggregatesFilter<"MasterDesaRecord"> | string
+    nama?: StringWithAggregatesFilter<"MasterDesaRecord"> | string
+    kecamatan?: StringWithAggregatesFilter<"MasterDesaRecord"> | string
+    kabupaten?: StringWithAggregatesFilter<"MasterDesaRecord"> | string
+    provinsi?: StringWithAggregatesFilter<"MasterDesaRecord"> | string
+    status?: StringWithAggregatesFilter<"MasterDesaRecord"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"MasterDesaRecord"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MasterDesaRecord"> | Date | string
+  }
+
+  export type ModuleRecordWhereInput = {
+    AND?: ModuleRecordWhereInput | ModuleRecordWhereInput[]
+    OR?: ModuleRecordWhereInput[]
+    NOT?: ModuleRecordWhereInput | ModuleRecordWhereInput[]
+    id?: StringFilter<"ModuleRecord"> | string
+    modulePath?: StringFilter<"ModuleRecord"> | string
+    moduleName?: StringFilter<"ModuleRecord"> | string
+    title?: StringFilter<"ModuleRecord"> | string
+    category?: StringNullableFilter<"ModuleRecord"> | string | null
+    description?: StringNullableFilter<"ModuleRecord"> | string | null
+    valueText?: StringNullableFilter<"ModuleRecord"> | string | null
+    status?: StringFilter<"ModuleRecord"> | string
+    createdBy?: StringNullableFilter<"ModuleRecord"> | string | null
+    createdAt?: DateTimeFilter<"ModuleRecord"> | Date | string
+    updatedAt?: DateTimeFilter<"ModuleRecord"> | Date | string
+  }
+
+  export type ModuleRecordOrderByWithRelationInput = {
+    id?: SortOrder
+    modulePath?: SortOrder
+    moduleName?: SortOrder
+    title?: SortOrder
+    category?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    valueText?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ModuleRecordWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ModuleRecordWhereInput | ModuleRecordWhereInput[]
+    OR?: ModuleRecordWhereInput[]
+    NOT?: ModuleRecordWhereInput | ModuleRecordWhereInput[]
+    modulePath?: StringFilter<"ModuleRecord"> | string
+    moduleName?: StringFilter<"ModuleRecord"> | string
+    title?: StringFilter<"ModuleRecord"> | string
+    category?: StringNullableFilter<"ModuleRecord"> | string | null
+    description?: StringNullableFilter<"ModuleRecord"> | string | null
+    valueText?: StringNullableFilter<"ModuleRecord"> | string | null
+    status?: StringFilter<"ModuleRecord"> | string
+    createdBy?: StringNullableFilter<"ModuleRecord"> | string | null
+    createdAt?: DateTimeFilter<"ModuleRecord"> | Date | string
+    updatedAt?: DateTimeFilter<"ModuleRecord"> | Date | string
+  }, "id">
+
+  export type ModuleRecordOrderByWithAggregationInput = {
+    id?: SortOrder
+    modulePath?: SortOrder
+    moduleName?: SortOrder
+    title?: SortOrder
+    category?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    valueText?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ModuleRecordCountOrderByAggregateInput
+    _max?: ModuleRecordMaxOrderByAggregateInput
+    _min?: ModuleRecordMinOrderByAggregateInput
+  }
+
+  export type ModuleRecordScalarWhereWithAggregatesInput = {
+    AND?: ModuleRecordScalarWhereWithAggregatesInput | ModuleRecordScalarWhereWithAggregatesInput[]
+    OR?: ModuleRecordScalarWhereWithAggregatesInput[]
+    NOT?: ModuleRecordScalarWhereWithAggregatesInput | ModuleRecordScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ModuleRecord"> | string
+    modulePath?: StringWithAggregatesFilter<"ModuleRecord"> | string
+    moduleName?: StringWithAggregatesFilter<"ModuleRecord"> | string
+    title?: StringWithAggregatesFilter<"ModuleRecord"> | string
+    category?: StringNullableWithAggregatesFilter<"ModuleRecord"> | string | null
+    description?: StringNullableWithAggregatesFilter<"ModuleRecord"> | string | null
+    valueText?: StringNullableWithAggregatesFilter<"ModuleRecord"> | string | null
+    status?: StringWithAggregatesFilter<"ModuleRecord"> | string
+    createdBy?: StringNullableWithAggregatesFilter<"ModuleRecord"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ModuleRecord"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ModuleRecord"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name: string
@@ -27584,6 +32937,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
     stunting?: StuntingCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
     user?: UserCreateNestedOneWithoutWargaInput
   }
 
@@ -27606,6 +32960,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
     stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -27628,6 +32983,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
     user?: UserUpdateOneWithoutWargaNestedInput
   }
 
@@ -27650,6 +33006,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -29207,6 +34564,418 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type AspirasiCreateInput = {
+    id?: string
+    desaId: string
+    kategori: string
+    judul: string
+    isi: string
+    status?: string
+    createdAt?: Date | string
+    warga?: WargaCreateNestedOneWithoutAspirasiInput
+  }
+
+  export type AspirasiUncheckedCreateInput = {
+    id?: string
+    desaId: string
+    wargaId?: string | null
+    kategori: string
+    judul: string
+    isi: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type AspirasiUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    kategori?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    isi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    warga?: WargaUpdateOneWithoutAspirasiNestedInput
+  }
+
+  export type AspirasiUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    wargaId?: NullableStringFieldUpdateOperationsInput | string | null
+    kategori?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    isi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AspirasiCreateManyInput = {
+    id?: string
+    desaId: string
+    wargaId?: string | null
+    kategori: string
+    judul: string
+    isi: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type AspirasiUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    kategori?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    isi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AspirasiUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    wargaId?: NullableStringFieldUpdateOperationsInput | string | null
+    kategori?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    isi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SiswaCreateInput = {
+    id?: string
+    desaId: string
+    nisn: string
+    nama: string
+    kelas: string
+    jenjang: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type SiswaUncheckedCreateInput = {
+    id?: string
+    desaId: string
+    nisn: string
+    nama: string
+    kelas: string
+    jenjang: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type SiswaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    nisn?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    kelas?: StringFieldUpdateOperationsInput | string
+    jenjang?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SiswaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    nisn?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    kelas?: StringFieldUpdateOperationsInput | string
+    jenjang?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SiswaCreateManyInput = {
+    id?: string
+    desaId: string
+    nisn: string
+    nama: string
+    kelas: string
+    jenjang: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type SiswaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    nisn?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    kelas?: StringFieldUpdateOperationsInput | string
+    jenjang?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SiswaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    nisn?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    kelas?: StringFieldUpdateOperationsInput | string
+    jenjang?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MonitoringDesaCreateInput = {
+    id?: string
+    namaDesa: string
+    kecamatan: string
+    index: number
+    readiness: number
+    maturity: number
+    status: string
+    createdAt?: Date | string
+  }
+
+  export type MonitoringDesaUncheckedCreateInput = {
+    id?: string
+    namaDesa: string
+    kecamatan: string
+    index: number
+    readiness: number
+    maturity: number
+    status: string
+    createdAt?: Date | string
+  }
+
+  export type MonitoringDesaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    namaDesa?: StringFieldUpdateOperationsInput | string
+    kecamatan?: StringFieldUpdateOperationsInput | string
+    index?: FloatFieldUpdateOperationsInput | number
+    readiness?: FloatFieldUpdateOperationsInput | number
+    maturity?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MonitoringDesaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    namaDesa?: StringFieldUpdateOperationsInput | string
+    kecamatan?: StringFieldUpdateOperationsInput | string
+    index?: FloatFieldUpdateOperationsInput | number
+    readiness?: FloatFieldUpdateOperationsInput | number
+    maturity?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MonitoringDesaCreateManyInput = {
+    id?: string
+    namaDesa: string
+    kecamatan: string
+    index: number
+    readiness: number
+    maturity: number
+    status: string
+    createdAt?: Date | string
+  }
+
+  export type MonitoringDesaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    namaDesa?: StringFieldUpdateOperationsInput | string
+    kecamatan?: StringFieldUpdateOperationsInput | string
+    index?: FloatFieldUpdateOperationsInput | number
+    readiness?: FloatFieldUpdateOperationsInput | number
+    maturity?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MonitoringDesaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    namaDesa?: StringFieldUpdateOperationsInput | string
+    kecamatan?: StringFieldUpdateOperationsInput | string
+    index?: FloatFieldUpdateOperationsInput | number
+    readiness?: FloatFieldUpdateOperationsInput | number
+    maturity?: FloatFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MasterDesaRecordCreateInput = {
+    id?: string
+    kodeDesa: string
+    nama: string
+    kecamatan: string
+    kabupaten: string
+    provinsi: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MasterDesaRecordUncheckedCreateInput = {
+    id?: string
+    kodeDesa: string
+    nama: string
+    kecamatan: string
+    kabupaten: string
+    provinsi: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MasterDesaRecordUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kodeDesa?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    kecamatan?: StringFieldUpdateOperationsInput | string
+    kabupaten?: StringFieldUpdateOperationsInput | string
+    provinsi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MasterDesaRecordUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kodeDesa?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    kecamatan?: StringFieldUpdateOperationsInput | string
+    kabupaten?: StringFieldUpdateOperationsInput | string
+    provinsi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MasterDesaRecordCreateManyInput = {
+    id?: string
+    kodeDesa: string
+    nama: string
+    kecamatan: string
+    kabupaten: string
+    provinsi: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MasterDesaRecordUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kodeDesa?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    kecamatan?: StringFieldUpdateOperationsInput | string
+    kabupaten?: StringFieldUpdateOperationsInput | string
+    provinsi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MasterDesaRecordUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kodeDesa?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    kecamatan?: StringFieldUpdateOperationsInput | string
+    kabupaten?: StringFieldUpdateOperationsInput | string
+    provinsi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ModuleRecordCreateInput = {
+    id?: string
+    modulePath: string
+    moduleName: string
+    title: string
+    category?: string | null
+    description?: string | null
+    valueText?: string | null
+    status?: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ModuleRecordUncheckedCreateInput = {
+    id?: string
+    modulePath: string
+    moduleName: string
+    title: string
+    category?: string | null
+    description?: string | null
+    valueText?: string | null
+    status?: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ModuleRecordUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    modulePath?: StringFieldUpdateOperationsInput | string
+    moduleName?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    valueText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ModuleRecordUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    modulePath?: StringFieldUpdateOperationsInput | string
+    moduleName?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    valueText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ModuleRecordCreateManyInput = {
+    id?: string
+    modulePath: string
+    moduleName: string
+    title: string
+    category?: string | null
+    description?: string | null
+    valueText?: string | null
+    status?: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ModuleRecordUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    modulePath?: StringFieldUpdateOperationsInput | string
+    moduleName?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    valueText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ModuleRecordUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    modulePath?: StringFieldUpdateOperationsInput | string
+    moduleName?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    valueText?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -29568,6 +35337,12 @@ export namespace Prisma {
     none?: PesertaKelasWhereInput
   }
 
+  export type AspirasiListRelationFilter = {
+    every?: AspirasiWhereInput
+    some?: AspirasiWhereInput
+    none?: AspirasiWhereInput
+  }
+
   export type UserNullableRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
@@ -29590,6 +35365,10 @@ export namespace Prisma {
   }
 
   export type PesertaKelasOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AspirasiOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -30670,6 +36449,195 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type AspirasiCountOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    wargaId?: SortOrder
+    kategori?: SortOrder
+    judul?: SortOrder
+    isi?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AspirasiMaxOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    wargaId?: SortOrder
+    kategori?: SortOrder
+    judul?: SortOrder
+    isi?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type AspirasiMinOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    wargaId?: SortOrder
+    kategori?: SortOrder
+    judul?: SortOrder
+    isi?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SiswaCountOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    nisn?: SortOrder
+    nama?: SortOrder
+    kelas?: SortOrder
+    jenjang?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SiswaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    nisn?: SortOrder
+    nama?: SortOrder
+    kelas?: SortOrder
+    jenjang?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SiswaMinOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    nisn?: SortOrder
+    nama?: SortOrder
+    kelas?: SortOrder
+    jenjang?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MonitoringDesaCountOrderByAggregateInput = {
+    id?: SortOrder
+    namaDesa?: SortOrder
+    kecamatan?: SortOrder
+    index?: SortOrder
+    readiness?: SortOrder
+    maturity?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MonitoringDesaAvgOrderByAggregateInput = {
+    index?: SortOrder
+    readiness?: SortOrder
+    maturity?: SortOrder
+  }
+
+  export type MonitoringDesaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    namaDesa?: SortOrder
+    kecamatan?: SortOrder
+    index?: SortOrder
+    readiness?: SortOrder
+    maturity?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MonitoringDesaMinOrderByAggregateInput = {
+    id?: SortOrder
+    namaDesa?: SortOrder
+    kecamatan?: SortOrder
+    index?: SortOrder
+    readiness?: SortOrder
+    maturity?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MonitoringDesaSumOrderByAggregateInput = {
+    index?: SortOrder
+    readiness?: SortOrder
+    maturity?: SortOrder
+  }
+
+  export type MasterDesaRecordCountOrderByAggregateInput = {
+    id?: SortOrder
+    kodeDesa?: SortOrder
+    nama?: SortOrder
+    kecamatan?: SortOrder
+    kabupaten?: SortOrder
+    provinsi?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MasterDesaRecordMaxOrderByAggregateInput = {
+    id?: SortOrder
+    kodeDesa?: SortOrder
+    nama?: SortOrder
+    kecamatan?: SortOrder
+    kabupaten?: SortOrder
+    provinsi?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MasterDesaRecordMinOrderByAggregateInput = {
+    id?: SortOrder
+    kodeDesa?: SortOrder
+    nama?: SortOrder
+    kecamatan?: SortOrder
+    kabupaten?: SortOrder
+    provinsi?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ModuleRecordCountOrderByAggregateInput = {
+    id?: SortOrder
+    modulePath?: SortOrder
+    moduleName?: SortOrder
+    title?: SortOrder
+    category?: SortOrder
+    description?: SortOrder
+    valueText?: SortOrder
+    status?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ModuleRecordMaxOrderByAggregateInput = {
+    id?: SortOrder
+    modulePath?: SortOrder
+    moduleName?: SortOrder
+    title?: SortOrder
+    category?: SortOrder
+    description?: SortOrder
+    valueText?: SortOrder
+    status?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ModuleRecordMinOrderByAggregateInput = {
+    id?: SortOrder
+    modulePath?: SortOrder
+    moduleName?: SortOrder
+    title?: SortOrder
+    category?: SortOrder
+    description?: SortOrder
+    valueText?: SortOrder
+    status?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type DesaCreateNestedOneWithoutUsersInput = {
     create?: XOR<DesaCreateWithoutUsersInput, DesaUncheckedCreateWithoutUsersInput>
     connectOrCreate?: DesaCreateOrConnectWithoutUsersInput
@@ -30961,6 +36929,13 @@ export namespace Prisma {
     connect?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
   }
 
+  export type AspirasiCreateNestedManyWithoutWargaInput = {
+    create?: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput> | AspirasiCreateWithoutWargaInput[] | AspirasiUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: AspirasiCreateOrConnectWithoutWargaInput | AspirasiCreateOrConnectWithoutWargaInput[]
+    createMany?: AspirasiCreateManyWargaInputEnvelope
+    connect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+  }
+
   export type UserCreateNestedOneWithoutWargaInput = {
     create?: XOR<UserCreateWithoutWargaInput, UserUncheckedCreateWithoutWargaInput>
     connectOrCreate?: UserCreateOrConnectWithoutWargaInput
@@ -31000,6 +36975,13 @@ export namespace Prisma {
     connectOrCreate?: PesertaKelasCreateOrConnectWithoutWargaInput | PesertaKelasCreateOrConnectWithoutWargaInput[]
     createMany?: PesertaKelasCreateManyWargaInputEnvelope
     connect?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
+  }
+
+  export type AspirasiUncheckedCreateNestedManyWithoutWargaInput = {
+    create?: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput> | AspirasiCreateWithoutWargaInput[] | AspirasiUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: AspirasiCreateOrConnectWithoutWargaInput | AspirasiCreateOrConnectWithoutWargaInput[]
+    createMany?: AspirasiCreateManyWargaInputEnvelope
+    connect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
   }
 
   export type UserUncheckedCreateNestedOneWithoutWargaInput = {
@@ -31102,6 +37084,20 @@ export namespace Prisma {
     deleteMany?: PesertaKelasScalarWhereInput | PesertaKelasScalarWhereInput[]
   }
 
+  export type AspirasiUpdateManyWithoutWargaNestedInput = {
+    create?: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput> | AspirasiCreateWithoutWargaInput[] | AspirasiUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: AspirasiCreateOrConnectWithoutWargaInput | AspirasiCreateOrConnectWithoutWargaInput[]
+    upsert?: AspirasiUpsertWithWhereUniqueWithoutWargaInput | AspirasiUpsertWithWhereUniqueWithoutWargaInput[]
+    createMany?: AspirasiCreateManyWargaInputEnvelope
+    set?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+    disconnect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+    delete?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+    connect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+    update?: AspirasiUpdateWithWhereUniqueWithoutWargaInput | AspirasiUpdateWithWhereUniqueWithoutWargaInput[]
+    updateMany?: AspirasiUpdateManyWithWhereWithoutWargaInput | AspirasiUpdateManyWithWhereWithoutWargaInput[]
+    deleteMany?: AspirasiScalarWhereInput | AspirasiScalarWhereInput[]
+  }
+
   export type UserUpdateOneWithoutWargaNestedInput = {
     create?: XOR<UserCreateWithoutWargaInput, UserUncheckedCreateWithoutWargaInput>
     connectOrCreate?: UserCreateOrConnectWithoutWargaInput
@@ -31180,6 +37176,20 @@ export namespace Prisma {
     update?: PesertaKelasUpdateWithWhereUniqueWithoutWargaInput | PesertaKelasUpdateWithWhereUniqueWithoutWargaInput[]
     updateMany?: PesertaKelasUpdateManyWithWhereWithoutWargaInput | PesertaKelasUpdateManyWithWhereWithoutWargaInput[]
     deleteMany?: PesertaKelasScalarWhereInput | PesertaKelasScalarWhereInput[]
+  }
+
+  export type AspirasiUncheckedUpdateManyWithoutWargaNestedInput = {
+    create?: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput> | AspirasiCreateWithoutWargaInput[] | AspirasiUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: AspirasiCreateOrConnectWithoutWargaInput | AspirasiCreateOrConnectWithoutWargaInput[]
+    upsert?: AspirasiUpsertWithWhereUniqueWithoutWargaInput | AspirasiUpsertWithWhereUniqueWithoutWargaInput[]
+    createMany?: AspirasiCreateManyWargaInputEnvelope
+    set?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+    disconnect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+    delete?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+    connect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+    update?: AspirasiUpdateWithWhereUniqueWithoutWargaInput | AspirasiUpdateWithWhereUniqueWithoutWargaInput[]
+    updateMany?: AspirasiUpdateManyWithWhereWithoutWargaInput | AspirasiUpdateManyWithWhereWithoutWargaInput[]
+    deleteMany?: AspirasiScalarWhereInput | AspirasiScalarWhereInput[]
   }
 
   export type UserUncheckedUpdateOneWithoutWargaNestedInput = {
@@ -31592,6 +37602,22 @@ export namespace Prisma {
     upsert?: ForumUpsertWithoutDiskusiInput
     connect?: ForumWhereUniqueInput
     update?: XOR<XOR<ForumUpdateToOneWithWhereWithoutDiskusiInput, ForumUpdateWithoutDiskusiInput>, ForumUncheckedUpdateWithoutDiskusiInput>
+  }
+
+  export type WargaCreateNestedOneWithoutAspirasiInput = {
+    create?: XOR<WargaCreateWithoutAspirasiInput, WargaUncheckedCreateWithoutAspirasiInput>
+    connectOrCreate?: WargaCreateOrConnectWithoutAspirasiInput
+    connect?: WargaWhereUniqueInput
+  }
+
+  export type WargaUpdateOneWithoutAspirasiNestedInput = {
+    create?: XOR<WargaCreateWithoutAspirasiInput, WargaUncheckedCreateWithoutAspirasiInput>
+    connectOrCreate?: WargaCreateOrConnectWithoutAspirasiInput
+    upsert?: WargaUpsertWithoutAspirasiInput
+    disconnect?: WargaWhereInput | boolean
+    delete?: WargaWhereInput | boolean
+    connect?: WargaWhereUniqueInput
+    update?: XOR<XOR<WargaUpdateToOneWithWhereWithoutAspirasiInput, WargaUpdateWithoutAspirasiInput>, WargaUncheckedUpdateWithoutAspirasiInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -32069,6 +38095,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
     stunting?: StuntingCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
   }
 
   export type WargaUncheckedCreateWithoutUserInput = {
@@ -32090,6 +38117,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
     stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
   }
 
   export type WargaCreateOrConnectWithoutUserInput = {
@@ -32164,6 +38192,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
   }
 
   export type WargaUncheckedUpdateWithoutUserInput = {
@@ -32185,6 +38214,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
   }
 
   export type UserCreateWithoutDesaInput = {
@@ -32263,6 +38293,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
     stunting?: StuntingCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
     user?: UserCreateNestedOneWithoutWargaInput
   }
 
@@ -32284,6 +38315,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
     stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -32439,6 +38471,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
     stunting?: StuntingCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
     user?: UserCreateNestedOneWithoutWargaInput
   }
 
@@ -32460,6 +38493,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
     stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -32734,6 +38768,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type AspirasiCreateWithoutWargaInput = {
+    id?: string
+    desaId: string
+    kategori: string
+    judul: string
+    isi: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type AspirasiUncheckedCreateWithoutWargaInput = {
+    id?: string
+    desaId: string
+    kategori: string
+    judul: string
+    isi: string
+    status?: string
+    createdAt?: Date | string
+  }
+
+  export type AspirasiCreateOrConnectWithoutWargaInput = {
+    where: AspirasiWhereUniqueInput
+    create: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput>
+  }
+
+  export type AspirasiCreateManyWargaInputEnvelope = {
+    data: AspirasiCreateManyWargaInput | AspirasiCreateManyWargaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserCreateWithoutWargaInput = {
     id?: string
     name: string
@@ -32976,6 +39040,36 @@ export namespace Prisma {
     nilai?: FloatNullableFilter<"PesertaKelas"> | number | null
     sertifikat?: StringNullableFilter<"PesertaKelas"> | string | null
     createdAt?: DateTimeFilter<"PesertaKelas"> | Date | string
+  }
+
+  export type AspirasiUpsertWithWhereUniqueWithoutWargaInput = {
+    where: AspirasiWhereUniqueInput
+    update: XOR<AspirasiUpdateWithoutWargaInput, AspirasiUncheckedUpdateWithoutWargaInput>
+    create: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput>
+  }
+
+  export type AspirasiUpdateWithWhereUniqueWithoutWargaInput = {
+    where: AspirasiWhereUniqueInput
+    data: XOR<AspirasiUpdateWithoutWargaInput, AspirasiUncheckedUpdateWithoutWargaInput>
+  }
+
+  export type AspirasiUpdateManyWithWhereWithoutWargaInput = {
+    where: AspirasiScalarWhereInput
+    data: XOR<AspirasiUpdateManyMutationInput, AspirasiUncheckedUpdateManyWithoutWargaInput>
+  }
+
+  export type AspirasiScalarWhereInput = {
+    AND?: AspirasiScalarWhereInput | AspirasiScalarWhereInput[]
+    OR?: AspirasiScalarWhereInput[]
+    NOT?: AspirasiScalarWhereInput | AspirasiScalarWhereInput[]
+    id?: StringFilter<"Aspirasi"> | string
+    desaId?: StringFilter<"Aspirasi"> | string
+    wargaId?: StringNullableFilter<"Aspirasi"> | string | null
+    kategori?: StringFilter<"Aspirasi"> | string
+    judul?: StringFilter<"Aspirasi"> | string
+    isi?: StringFilter<"Aspirasi"> | string
+    status?: StringFilter<"Aspirasi"> | string
+    createdAt?: DateTimeFilter<"Aspirasi"> | Date | string
   }
 
   export type UserUpsertWithoutWargaInput = {
@@ -33345,6 +39439,7 @@ export namespace Prisma {
     telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
     monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
     stunting?: StuntingCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
     user?: UserCreateNestedOneWithoutWargaInput
   }
 
@@ -33366,6 +39461,7 @@ export namespace Prisma {
     telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
     monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
     stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -33444,6 +39540,7 @@ export namespace Prisma {
     telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
     monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
     user?: UserUpdateOneWithoutWargaNestedInput
   }
 
@@ -33465,6 +39562,7 @@ export namespace Prisma {
     telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
     monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -33562,6 +39660,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
     stunting?: StuntingCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
     user?: UserCreateNestedOneWithoutWargaInput
   }
 
@@ -33583,6 +39682,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
     stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -33620,6 +39720,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
     user?: UserUpdateOneWithoutWargaNestedInput
   }
 
@@ -33641,6 +39742,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -33662,6 +39764,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
     stunting?: StuntingCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
     user?: UserCreateNestedOneWithoutWargaInput
   }
 
@@ -33683,6 +39786,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
     stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -33720,6 +39824,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
     user?: UserUpdateOneWithoutWargaNestedInput
   }
 
@@ -33741,6 +39846,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -33762,6 +39868,7 @@ export namespace Prisma {
     telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
     stunting?: StuntingCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
     user?: UserCreateNestedOneWithoutWargaInput
   }
 
@@ -33783,6 +39890,7 @@ export namespace Prisma {
     telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
     stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -33820,6 +39928,7 @@ export namespace Prisma {
     telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
     user?: UserUpdateOneWithoutWargaNestedInput
   }
 
@@ -33841,6 +39950,7 @@ export namespace Prisma {
     telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -33862,6 +39972,7 @@ export namespace Prisma {
     telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
     monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
     user?: UserCreateNestedOneWithoutWargaInput
   }
 
@@ -33883,6 +39994,7 @@ export namespace Prisma {
     telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
     monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -33920,6 +40032,7 @@ export namespace Prisma {
     telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
     monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
     user?: UserUpdateOneWithoutWargaNestedInput
   }
 
@@ -33941,6 +40054,7 @@ export namespace Prisma {
     telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
     monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -34115,6 +40229,110 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type WargaCreateWithoutAspirasiInput = {
+    id?: string
+    nik: string
+    nama: string
+    tempatLahir: string
+    tanggalLahir: Date | string
+    jenisKelamin: $Enums.JenisKelamin
+    alamat: string
+    noHp?: string | null
+    foto?: string | null
+    status?: $Enums.StatusWarga
+    createdAt?: Date | string
+    desa: DesaCreateNestedOneWithoutWargaInput
+    rwRt: RwRtCreateNestedOneWithoutWargaInput
+    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
+    stunting?: StuntingCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    user?: UserCreateNestedOneWithoutWargaInput
+  }
+
+  export type WargaUncheckedCreateWithoutAspirasiInput = {
+    id?: string
+    desaId: string
+    rwRtId: string
+    nik: string
+    nama: string
+    tempatLahir: string
+    tanggalLahir: Date | string
+    jenisKelamin: $Enums.JenisKelamin
+    alamat: string
+    noHp?: string | null
+    foto?: string | null
+    status?: $Enums.StatusWarga
+    createdAt?: Date | string
+    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
+    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    user?: UserUncheckedCreateNestedOneWithoutWargaInput
+  }
+
+  export type WargaCreateOrConnectWithoutAspirasiInput = {
+    where: WargaWhereUniqueInput
+    create: XOR<WargaCreateWithoutAspirasiInput, WargaUncheckedCreateWithoutAspirasiInput>
+  }
+
+  export type WargaUpsertWithoutAspirasiInput = {
+    update: XOR<WargaUpdateWithoutAspirasiInput, WargaUncheckedUpdateWithoutAspirasiInput>
+    create: XOR<WargaCreateWithoutAspirasiInput, WargaUncheckedCreateWithoutAspirasiInput>
+    where?: WargaWhereInput
+  }
+
+  export type WargaUpdateToOneWithWhereWithoutAspirasiInput = {
+    where?: WargaWhereInput
+    data: XOR<WargaUpdateWithoutAspirasiInput, WargaUncheckedUpdateWithoutAspirasiInput>
+  }
+
+  export type WargaUpdateWithoutAspirasiInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nik?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    tempatLahir?: StringFieldUpdateOperationsInput | string
+    tanggalLahir?: DateTimeFieldUpdateOperationsInput | Date | string
+    jenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
+    alamat?: StringFieldUpdateOperationsInput | string
+    noHp?: NullableStringFieldUpdateOperationsInput | string | null
+    foto?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    desa?: DesaUpdateOneRequiredWithoutWargaNestedInput
+    rwRt?: RwRtUpdateOneRequiredWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    user?: UserUpdateOneWithoutWargaNestedInput
+  }
+
+  export type WargaUncheckedUpdateWithoutAspirasiInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    rwRtId?: StringFieldUpdateOperationsInput | string
+    nik?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    tempatLahir?: StringFieldUpdateOperationsInput | string
+    tanggalLahir?: DateTimeFieldUpdateOperationsInput | Date | string
+    jenisKelamin?: EnumJenisKelaminFieldUpdateOperationsInput | $Enums.JenisKelamin
+    alamat?: StringFieldUpdateOperationsInput | string
+    noHp?: NullableStringFieldUpdateOperationsInput | string | null
+    foto?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    user?: UserUncheckedUpdateOneWithoutWargaNestedInput
+  }
+
   export type UserCreateManyDesaInput = {
     id?: string
     name: string
@@ -34222,6 +40440,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
     user?: UserUpdateOneWithoutWargaNestedInput
   }
 
@@ -34243,6 +40462,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -34294,6 +40514,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
     user?: UserUpdateOneWithoutWargaNestedInput
   }
 
@@ -34315,6 +40536,7 @@ export namespace Prisma {
     monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
     stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -34383,6 +40605,16 @@ export namespace Prisma {
     status?: $Enums.StatusWarga
     nilai?: number | null
     sertifikat?: string | null
+    createdAt?: Date | string
+  }
+
+  export type AspirasiCreateManyWargaInput = {
+    id?: string
+    desaId: string
+    kategori: string
+    judul: string
+    isi: string
+    status?: string
     createdAt?: Date | string
   }
 
@@ -34542,6 +40774,36 @@ export namespace Prisma {
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     nilai?: NullableFloatFieldUpdateOperationsInput | number | null
     sertifikat?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AspirasiUpdateWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    kategori?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    isi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AspirasiUncheckedUpdateWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    kategori?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    isi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AspirasiUncheckedUpdateManyWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    kategori?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    isi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -34824,6 +41086,26 @@ export namespace Prisma {
      * @deprecated Use ShiftNakesDefaultArgs instead
      */
     export type ShiftNakesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ShiftNakesDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use AspirasiDefaultArgs instead
+     */
+    export type AspirasiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = AspirasiDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use SiswaDefaultArgs instead
+     */
+    export type SiswaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = SiswaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MonitoringDesaDefaultArgs instead
+     */
+    export type MonitoringDesaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MonitoringDesaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use MasterDesaRecordDefaultArgs instead
+     */
+    export type MasterDesaRecordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = MasterDesaRecordDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ModuleRecordDefaultArgs instead
+     */
+    export type ModuleRecordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ModuleRecordDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

@@ -383,6 +383,65 @@ exports.Prisma.ShiftNakesScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.AspirasiScalarFieldEnum = {
+  id: 'id',
+  desaId: 'desaId',
+  wargaId: 'wargaId',
+  kategori: 'kategori',
+  judul: 'judul',
+  isi: 'isi',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.SiswaScalarFieldEnum = {
+  id: 'id',
+  desaId: 'desaId',
+  nisn: 'nisn',
+  nama: 'nama',
+  kelas: 'kelas',
+  jenjang: 'jenjang',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.MonitoringDesaScalarFieldEnum = {
+  id: 'id',
+  namaDesa: 'namaDesa',
+  kecamatan: 'kecamatan',
+  index: 'index',
+  readiness: 'readiness',
+  maturity: 'maturity',
+  status: 'status',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.MasterDesaRecordScalarFieldEnum = {
+  id: 'id',
+  kodeDesa: 'kodeDesa',
+  nama: 'nama',
+  kecamatan: 'kecamatan',
+  kabupaten: 'kabupaten',
+  provinsi: 'provinsi',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ModuleRecordScalarFieldEnum = {
+  id: 'id',
+  modulePath: 'modulePath',
+  moduleName: 'moduleName',
+  title: 'title',
+  category: 'category',
+  description: 'description',
+  valueText: 'valueText',
+  status: 'status',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -495,7 +554,12 @@ exports.Prisma.ModelName = {
   Laporan: 'Laporan',
   Forum: 'Forum',
   Diskusi: 'Diskusi',
-  ShiftNakes: 'ShiftNakes'
+  ShiftNakes: 'ShiftNakes',
+  Aspirasi: 'Aspirasi',
+  Siswa: 'Siswa',
+  MonitoringDesa: 'MonitoringDesa',
+  MasterDesaRecord: 'MasterDesaRecord',
+  ModuleRecord: 'ModuleRecord'
 };
 
 /**
