@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
-import { FileText, CheckCircle2, Clock, XCircle } from 'lucide-react';
+import { FileText, CheckCircle2, Clock, XCircle, Upload, Download } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const COLOR = '#00695c';
@@ -13,6 +13,7 @@ interface SuratSubmission {
   title: string;
   category: string;
   description: string;
+  valueText: string | null;
   status: string;
   createdBy: string;
   createdAt: string;
@@ -35,11 +36,12 @@ export default function ValidasiSuratPage() {
       if (data.success) {
         setSuratList(data.data.map((r: any) => ({
           id: r.id,
-          title: r.title,
-          category: r.category,
-          description: r.description,
-          status: r.status,
-          createdBy: r.createdBy,
+          title: r.title || 'Tanpa Judul',
+          category: r.category || 'Umum',
+          description: r.description || '',
+          valueText: r.valueText || null,
+          status: r.status || 'Proses Validasi',
+          createdBy: r.createdBy || 'Warga',
           createdAt: new Date(r.createdAt).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })
         })));
       }
@@ -65,6 +67,32 @@ export default function ValidasiSuratPage() {
         loadSurat();
       } else {
         alert('Gagal mengupdate status');
+      }
+    } catch (error) {
+      alert('Terjadi kesalahan');
+    }
+  };
+
+  const handlePdfUpload = async (id: string, file: File) => {
+    try {
+      // In a real implementation, you would upload to a storage service
+      // For now, we'll use a mock URL
+      const pdfUrl = `/pdf/${id}.pdf`;
+      
+      const res = await fetch('/api/surat-online', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id,
+          modulePath: '/warga/surat-online',
+          valueText: pdfUrl,
+          status: 'Selesai'
+        })
+      });
+      if (res.ok) {
+        loadSurat();
+      } else {
+        alert('Gagal mengupload PDF');
       }
     } catch (error) {
       alert('Terjadi kesalahan');
@@ -163,6 +191,26 @@ export default function ValidasiSuratPage() {
                           </div>
                         )}
                         {surat.status === 'Tervalidasi' && (
+                          <div className="flex gap-1">
+                            <input
+                              type="file"
+                              accept=".pdf"
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) handlePdfUpload(surat.id, file);
+                              }}
+                              className="hidden"
+                              id={`pdf-upload-${surat.id}`}
+                            />
+                            <label
+                              htmlFor={`pdf-upload-${surat.id}`}
+                              className="px-2 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center gap-1 cursor-pointer"
+                            >
+                              <Upload size={12} /> Upload PDF
+                            </label>
+                          </div>
+                        )}
+                        {surat.status === 'Selesai' && (
                           <span className="text-xs text-green-600 flex items-center gap-1">
                             <CheckCircle2 size={12} /> Selesai
                           </span>

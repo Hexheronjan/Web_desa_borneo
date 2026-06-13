@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 export async function GET() {
   try {
     const surat = await prisma.$queryRaw<any[]>`
-      SELECT id, title, category, description, status, createdBy, createdAt, updatedAt
+      SELECT id, title, category, description, valueText, status, createdBy, createdAt, updatedAt
       FROM ModuleRecord
       WHERE modulePath = '/warga/surat-online'
       ORDER BY createdAt DESC
@@ -39,12 +39,18 @@ export async function PUT(request: Request) {
     const body = await request.json();
     const { id, ...data } = body;
     
+    const updates = [];
+    if (data.title) updates.push(`title = '${data.title}'`);
+    if (data.category) updates.push(`category = '${data.category}'`);
+    if (data.description) updates.push(`description = '${data.description}'`);
+    if (data.status) updates.push(`status = '${data.status}'`);
+    if (data.valueText) updates.push(`valueText = '${data.valueText}'`);
+    
+    const setClause = updates.join(', ');
+    
     await prisma.$executeRawUnsafe(`
       UPDATE ModuleRecord
-      SET title = '${data.title}',
-          category = '${data.category}',
-          description = '${data.description}',
-          status = '${data.status}'
+      SET ${setClause}
       WHERE id = '${id}' AND modulePath = '/warga/surat-online'
     `);
     

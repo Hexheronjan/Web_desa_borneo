@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
-import { FileText, Plus, CheckCircle2 } from 'lucide-react';
+import { FileText, Plus, CheckCircle2, Download } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 const COLOR = '#6a1b9a';
@@ -18,6 +18,7 @@ interface SuratApplication {
   id: string;
   title: string;
   status: string;
+  valueText: string | null;
   createdAt: string;
 }
 
@@ -36,8 +37,9 @@ export default function SuratOnlinePage() {
       if (data.success) {
         setApps(data.data.map((r: any) => ({
           id: r.id,
-          title: r.title,
-          status: r.status,
+          title: r.title || 'Tanpa Judul',
+          status: r.status || 'Proses Validasi',
+          valueText: r.valueText || null,
           createdAt: new Date(r.createdAt).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })
         })));
       }
@@ -124,15 +126,26 @@ export default function SuratOnlinePage() {
             ) : (
               apps.map((a, i) => (
                 <div key={i} className="p-3 border rounded-xl bg-white flex justify-between items-center hover:shadow-sm transition-all">
-                  <div>
+                  <div className="flex-1">
                     <p className="text-xs font-bold text-slate-700 leading-normal">{a.title}</p>
                     <span className="text-[10px] text-indigo-700 font-mono font-bold block mt-0.5">{a.id} • {a.createdAt}</span>
                   </div>
-                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                    a.status === 'Tervalidasi' ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'
-                  }`}>
-                    {a.status}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {a.status === 'Selesai' && a.valueText && (
+                      <button
+                        onClick={() => window.open(a.valueText || '', '_blank')}
+                        className="px-2 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center gap-1"
+                      >
+                        <Download size={12} /> PDF
+                      </button>
+                    )}
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                      a.status === 'Selesai' ? 'bg-green-100 text-green-700' :
+                      a.status === 'Tervalidasi' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'
+                    }`}>
+                      {a.status}
+                    </span>
+                  </div>
                 </div>
               ))
             )}
