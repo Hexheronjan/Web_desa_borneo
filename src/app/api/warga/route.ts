@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getWargaList } from "@/actions/data-desa";
+import { getWargaList, createWarga, updateWarga, deleteWarga } from "@/actions/data-desa";
 
 export async function GET() {
   try {
@@ -25,6 +25,41 @@ export async function GET() {
     } else {
       return NextResponse.json({ success: false, error: result.error }, { status: 500 });
     }
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const result = await createWarga(body);
+    return NextResponse.json(result);
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  }
+}
+
+export async function PUT(request: Request) {
+  try {
+    const body = await request.json();
+    const { id, ...data } = body;
+    const result = await updateWarga(id, data);
+    return NextResponse.json(result);
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get('id');
+    if (!id) {
+      return NextResponse.json({ success: false, error: "ID is required" }, { status: 400 });
+    }
+    const result = await deleteWarga(id);
+    return NextResponse.json(result);
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }

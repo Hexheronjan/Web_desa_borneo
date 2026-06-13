@@ -5,7 +5,6 @@ import { AppSidebar } from "@/components/layout/AppSidebar";
 import { RoleTabs } from "@/components/layout/RoleTabs";
 import { SearchBar } from "@/components/layout/SearchBar";
 import { GlobalFunctionalActions } from "@/components/module-records/GlobalFunctionalActions";
-import { ModuleRecordsPanel } from "@/components/module-records/ModuleRecordsPanel";
 import { Menu } from "lucide-react";
 
 export default function DashboardLayout({
@@ -55,7 +54,6 @@ export default function DashboardLayout({
             <SearchBar />
           </div>
           <main className="flex-1 p-3 md:p-6 pb-20">
-            <ModuleRecordsPanel />
             {children}
           </main>
         </div>

@@ -45,6 +45,7 @@ export async function deleteWarga(id: string) {
   try {
     await prisma.warga.delete({ where: { id } });
     revalidatePath("/data-desa");
+    revalidatePath("/operator-sid/data-penduduk");
     return { success: true };
   } catch (error: any) {
     return { success: false, error: error.message };
@@ -67,6 +68,20 @@ export async function updateWargaStatus(id: string, status: string) {
 
 export async function updateWarga(id: string, data: any) {
   try {
+    // Check if NIK already exists (excluding current record)
+    if (data.nik) {
+      const existing = await prisma.warga.findFirst({
+        where: {
+          nik: data.nik,
+          id: { not: id }
+        }
+      });
+
+      if (existing) {
+        return { success: false, error: "NIK sudah terdaftar pada warga lain" };
+      }
+    }
+
     const record = await prisma.warga.update({
       where: { id },
       data: {

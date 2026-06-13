@@ -126,6 +126,33 @@ export default function DataPendudukPage() {
     }
   };
 
+  const handleExport = () => {
+    const csvContent = [
+      ["No", "NIK", "Nama", "Alamat", "Status", "Tempat Lahir", "Tanggal Lahir", "Jenis Kelamin", "No. HP"],
+      ...filtered.map((w, i) => [
+        i + 1,
+        w.nik,
+        w.nama,
+        w.alamat,
+        w.status,
+        w.tempatLahir || "",
+        w.tanggalLahir ? new Date(w.tanggalLahir).toLocaleDateString('id-ID') : "",
+        w.jenisKelamin || "",
+        w.noHp || ""
+      ])
+    ].map(row => row.join(",")).join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const link = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    link.setAttribute("href", url);
+    link.setAttribute("download", `data_penduduk_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = "hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isSubmitting) return; // Prevent double submission
@@ -183,7 +210,7 @@ export default function DataPendudukPage() {
                 <option value="Pindah">Pindah</option>
                 <option value="Meninggal">Meninggal</option>
               </select>
-              <button className="px-3 py-1.5 text-xs bg-teal-600 text-white rounded-lg hover:bg-teal-700 flex items-center gap-1">
+              <button onClick={handleExport} className="px-3 py-1.5 text-xs bg-teal-600 text-white rounded-lg hover:bg-teal-700 flex items-center gap-1">
                 <Download size={12} /> Export
               </button>
             </div>
