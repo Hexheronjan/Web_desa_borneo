@@ -20,10 +20,10 @@ export async function POST(request: Request) {
       data: {
         namaDesa: body.namaDesa,
         kecamatan: body.kecamatan,
-        index: body.index,
-        readiness: body.readiness,
-        maturity: body.maturity,
-        status: body.status,
+        index: parseFloat(body.index) || 0,
+        readiness: parseFloat(body.readiness) || 0,
+        maturity: parseFloat(body.maturity) || 0,
+        status: body.status || "Aktif",
       }
     });
     return NextResponse.json({ success: true, data: record });
@@ -42,9 +42,9 @@ export async function PUT(request: Request) {
       data: {
         namaDesa: data.namaDesa,
         kecamatan: data.kecamatan,
-        index: data.index,
-        readiness: data.readiness,
-        maturity: data.maturity,
+        index: data.index !== undefined ? parseFloat(data.index) : undefined,
+        readiness: data.readiness !== undefined ? parseFloat(data.readiness) : undefined,
+        maturity: data.maturity !== undefined ? parseFloat(data.maturity) : undefined,
         status: data.status,
       }
     });

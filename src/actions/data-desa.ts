@@ -15,14 +15,36 @@ export async function createWarga(data: any) {
       return { success: false, error: "NIK sudah terdaftar" };
     }
 
-    // Get first desa and rwRt as defaults
-    const desa = await prisma.desa.findFirst();
-    const rwRt = await prisma.rwRt.findFirst();
+    // Get or create desa
+    let desa = await prisma.desa.findFirst();
+    if (!desa) {
+      desa = await prisma.desa.create({
+        data: {
+          nama: "Desa Borneo Adat",
+          kecamatan: "Kecamatan Default",
+          kabupaten: "Kabupaten Default",
+          provinsi: "Kalimantan Tengah",
+        }
+      });
+    }
+
+    // Get or create rwRt
+    let rwRt = await prisma.rwRt.findFirst({ where: { desaId: desa.id } });
+    if (!rwRt) {
+      rwRt = await prisma.rwRt.create({
+        data: {
+          desaId: desa.id,
+          rw: '01',
+          rt: '01',
+          jumlahWarga: 0,
+        }
+      });
+    }
 
     const record = await prisma.warga.create({
       data: {
-        desaId: desa?.id || "clv_desa_dummy_123",
-        rwRtId: data.rwRtId || rwRt?.id || "clv_rwt_dummy_123",
+        desaId: desa.id,
+        rwRtId: data.rwRtId || rwRt.id,
         nik: data.nik,
         nama: data.nama,
         tempatLahir: data.tempatLahir || "Borneo",
