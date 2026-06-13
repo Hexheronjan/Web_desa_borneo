@@ -63,11 +63,11 @@ export async function updateWarga(id: string, data: any) {
       data: {
         nik: data.nik,
         nama: data.nama,
-        tempatLahir: data.tempatLahir,
-        tanggalLahir: new Date(data.tanggalLahir),
+        tempatLahir: data.tempatLahir || undefined,
+        tanggalLahir: data.tanggalLahir ? new Date(data.tanggalLahir) : undefined,
         jenisKelamin: data.jenisKelamin as JenisKelamin,
         alamat: data.alamat,
-        noHp: data.noHp,
+        noHp: data.noHp || undefined,
         status: data.status as StatusWarga,
       }
     });
