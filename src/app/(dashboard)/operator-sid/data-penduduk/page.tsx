@@ -43,6 +43,7 @@ export default function DataPendudukPage() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingWarga, setEditingWarga] = useState<Warga | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     nik: "",
     nama: "",
@@ -123,6 +124,9 @@ export default function DataPendudukPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (isSubmitting) return; // Prevent double submission
+    setIsSubmitting(true);
+
     const res = editingWarga
       ? await updateWarga(editingWarga.id, formData)
       : await createWarga(formData);
@@ -130,10 +134,11 @@ export default function DataPendudukPage() {
     if (res.success) {
       alert(editingWarga ? "Data berhasil diperbarui" : "Data berhasil ditambahkan");
       setIsModalOpen(false);
-      loadData();
+      await loadData();
     } else {
       alert("Gagal: " + res.error);
     }
+    setIsSubmitting(false);
   };
 
   return (
@@ -423,15 +428,17 @@ export default function DataPendudukPage() {
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+                  disabled={isSubmitting}
+                  className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg transition-colors disabled:opacity-50"
                 >
                   Batal
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2 text-sm bg-[#00695c] hover:bg-[#004d40] text-white rounded-lg transition-colors"
+                  disabled={isSubmitting}
+                  className="px-6 py-2 text-sm bg-[#00695c] hover:bg-[#004d40] text-white rounded-lg transition-colors disabled:opacity-50"
                 >
-                  {editingWarga ? "Simpan Perubahan" : "Simpan Data"}
+                  {isSubmitting ? "Menyimpan..." : (editingWarga ? "Simpan Perubahan" : "Simpan Data")}
                 </button>
               </div>
             </form>
