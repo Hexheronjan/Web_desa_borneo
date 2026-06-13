@@ -245,9 +245,10 @@ export default function StuntingPage() {
                   required
                   value={formData.wargaId || ''}
                   onChange={e => setFormData({ ...formData, wargaId: e.target.value })}
-                  placeholder="Masukkan NIK balita"
+                  placeholder="Masukkan NIK (harus ada di Data Penduduk)"
                   className="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-orange-300"
                 />
+                <p className="text-[10px] text-slate-400 mt-1">NIK harus terdaftar di menu Data Penduduk</p>
               </div>
               <div>
                 <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Tanggal</label>

@@ -18,9 +18,19 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
+    
+    // Find warga by NIK
+    const warga = await prisma.warga.findUnique({
+      where: { nik: body.wargaId }
+    });
+    
+    if (!warga) {
+      return NextResponse.json({ success: false, error: "NIK tidak ditemukan di database" }, { status: 400 });
+    }
+    
     const record = await prisma.monitoringKesehatan.create({
       data: {
-        wargaId: body.wargaId,
+        wargaId: warga.id,
         tanggal: new Date(body.tanggal || new Date()),
         beratBadan: body.beratBadan,
         tinggiBadan: body.tinggiBadan,
@@ -40,10 +50,23 @@ export async function PUT(request: Request) {
   try {
     const body = await request.json();
     const { id, ...data } = body;
+    
+    // Find warga by NIK if wargaId is provided
+    let wargaId = data.wargaId;
+    if (data.wargaId) {
+      const warga = await prisma.warga.findUnique({
+        where: { nik: data.wargaId }
+      });
+      if (!warga) {
+        return NextResponse.json({ success: false, error: "NIK tidak ditemukan di database" }, { status: 400 });
+      }
+      wargaId = warga.id;
+    }
+    
     const record = await prisma.monitoringKesehatan.update({
       where: { id },
       data: {
-        wargaId: data.wargaId,
+        wargaId: wargaId,
         tanggal: data.tanggal ? new Date(data.tanggal) : undefined,
         beratBadan: data.beratBadan,
         tinggiBadan: data.tinggiBadan,
