@@ -53,10 +53,10 @@ export async function POST(request: Request) {
           nama: body.nama || 'Warga Baru',
           tempatLahir: body.tempatLahir || '-',
           tanggalLahir: body.tanggalLahir ? new Date(body.tanggalLahir) : new Date(),
-          jenisKelamin: body.jenisKelamin || 'P',
+          jenisKelamin: (body.jenisKelamin || 'P') as 'L' | 'P',
           alamat: body.alamat || '-',
           noHp: body.noHp || null,
-          status: 'Aktif',
+          status: 'Aktif' as const,
         }
       });
     }
