@@ -159,6 +159,7 @@ export default function DataBalitaPage() {
                   <thead>
                     <tr className="text-left text-xs text-slate-500 uppercase tracking-wider border-b">
                       <th className="pb-2 pr-4 text-center">No</th>
+                      <th className="pb-2 pr-4">NIK</th>
                       <th className="pb-2 pr-4">Nama Lengkap</th>
                       <th className="pb-2 pr-4">Tempat, Tanggal Lahir</th>
                       <th className="pb-2 pr-4">Berat Badan</th>
@@ -172,6 +173,7 @@ export default function DataBalitaPage() {
                     {filtered.map((b, i) => (
                       <tr key={b.id} className={`border-b last:border-0 ${i % 2 === 0 ? 'bg-slate-50/50' : ''}`}>
                         <td className="py-2.5 pr-4 text-center text-slate-400 font-mono text-xs">{i + 1}</td>
+                        <td className="py-2.5 pr-4 font-mono text-xs text-slate-600">{b.warga?.nik || '-'}</td>
                         <td className="py-2.5 pr-4 font-semibold text-slate-700">{b.warga?.nama || '-'}</td>
                         <td className="py-2.5 pr-4 text-xs text-slate-500 font-mono">
                           {b.warga?.tempatLahir || '-'}, {b.warga?.tanggalLahir ? new Date(b.warga.tanggalLahir).toLocaleDateString('id-ID') : '-'}
@@ -209,7 +211,7 @@ export default function DataBalitaPage() {
                     ))}
                     {filtered.length === 0 && (
                       <tr>
-                        <td colSpan={8} className="py-8 text-center text-slate-400 text-sm">Data tidak ditemukan</td>
+                        <td colSpan={9} className="py-8 text-center text-slate-400 text-sm">Data tidak ditemukan</td>
                       </tr>
                     )}
                   </tbody>

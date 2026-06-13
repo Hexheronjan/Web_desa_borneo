@@ -154,6 +154,7 @@ export default function IbuHamilPage() {
                   <thead>
                     <tr className="text-left text-xs text-slate-500 uppercase tracking-wider border-b">
                       <th className="pb-2 pr-4 text-center">No</th>
+                      <th className="pb-2 pr-4">NIK</th>
                       <th className="pb-2 pr-4">Nama Ibu</th>
                       <th className="pb-2 pr-4">Tanggal</th>
                       <th className="pb-2 pr-4">BB/TB</th>
@@ -166,6 +167,7 @@ export default function IbuHamilPage() {
                     {filtered.map((item, i) => (
                       <tr key={item.id} className={`border-b last:border-0 ${i % 2 === 0 ? 'bg-slate-50/50' : ''}`}>
                         <td className="py-2.5 pr-4 text-center text-slate-400 font-mono text-xs">{i + 1}</td>
+                        <td className="py-2.5 pr-4 font-mono text-xs text-slate-600">{item.warga?.nik || '-'}</td>
                         <td className="py-2.5 pr-4 font-semibold text-slate-700">{item.warga?.nama || '-'}</td>
                         <td className="py-2.5 pr-4 text-slate-600 text-xs">
                           {new Date(item.tanggal).toLocaleDateString('id-ID')}
@@ -201,7 +203,7 @@ export default function IbuHamilPage() {
                     ))}
                     {filtered.length === 0 && (
                       <tr>
-                        <td colSpan={7} className="py-8 text-center text-slate-400 text-sm">Data tidak ditemukan</td>
+                        <td colSpan={8} className="py-8 text-center text-slate-400 text-sm">Data tidak ditemukan</td>
                       </tr>
                     )}
                   </tbody>

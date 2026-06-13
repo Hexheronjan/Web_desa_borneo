@@ -158,6 +158,7 @@ export default function StuntingPage() {
                   <thead>
                     <tr className="text-left text-xs text-slate-500 uppercase tracking-wider border-b">
                       <th className="pb-2 pr-4 text-center">No</th>
+                      <th className="pb-2 pr-4">NIK</th>
                       <th className="pb-2 pr-4">Nama Balita</th>
                       <th className="pb-2 pr-4">Umur</th>
                       <th className="pb-2 pr-4 text-center">Tinggi / Berat</th>
@@ -170,6 +171,7 @@ export default function StuntingPage() {
                     {filtered.map((c, i) => (
                       <tr key={c.id} className={`border-b last:border-0 ${i % 2 === 0 ? 'bg-slate-50/50' : ''}`}>
                         <td className="py-2.5 pr-4 text-center text-slate-400 font-mono text-xs">{i + 1}</td>
+                        <td className="py-2.5 pr-4 font-mono text-xs text-slate-600">{c.warga?.nik || '-'}</td>
                         <td className="py-2.5 pr-4 font-semibold text-slate-700">{c.warga?.nama || '-'}</td>
                         <td className="py-2.5 pr-4 text-xs font-mono text-slate-600">{c.umurBulan} bulan</td>
                         <td className="py-2.5 pr-4 text-center text-xs font-mono text-slate-500">{c.tb} cm / {c.bb} kg</td>
@@ -204,7 +206,7 @@ export default function StuntingPage() {
                     ))}
                     {filtered.length === 0 && (
                       <tr>
-                        <td colSpan={7} className="py-8 text-center text-slate-400 text-sm">Data tidak ditemukan</td>
+                        <td colSpan={8} className="py-8 text-center text-slate-400 text-sm">Data tidak ditemukan</td>
                       </tr>
                     )}
                   </tbody>
