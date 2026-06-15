@@ -19,7 +19,7 @@ interface SuratApplication {
   title: string;
   status: string;
   valueText: string | null;
-  valueBlob: string | null;
+  hasPdf: boolean;
   createdAt: string;
 }
 
@@ -41,7 +41,7 @@ export default function SuratOnlinePage() {
           title: r.title || 'Tanpa Judul',
           status: r.status || 'Proses Validasi',
           valueText: r.valueText || null,
-          valueBlob: r.valueBlob || null,
+          hasPdf: Boolean(r.hasPdf),
           createdAt: new Date(r.createdAt).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })
         })));
       }
@@ -82,8 +82,8 @@ export default function SuratOnlinePage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard label="Total Pengajuan" value={apps.length} satuan="surat" barColor="purple" progress={100} />
-        <StatCard label="Tervalidasi" value={apps.filter(a => a.status === 'Tervalidasi').length} satuan="surat selesai" barColor="green" progress={75} />
-        <StatCard label="Dalam Proses" value={apps.filter(a => a.status !== 'Tervalidasi').length} satuan="surat antrian" barColor="orange" progress={25} />
+        <StatCard label="Selesai" value={apps.filter(a => a.status === 'Selesai' || a.status === 'Tervalidasi').length} satuan="surat selesai" barColor="green" progress={75} />
+        <StatCard label="Dalam Proses" value={apps.filter(a => a.status === 'Proses Validasi').length} satuan="surat antrian" barColor="orange" progress={25} />
         <StatCard label="Waktu Proses Rerata" value="10 Menit" satuan="sangat cepat" barColor="green" progress={95} />
       </div>
 
@@ -133,13 +133,14 @@ export default function SuratOnlinePage() {
                     <span className="text-[10px] text-indigo-700 font-mono font-bold block mt-0.5">{a.id} • {a.createdAt}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    {(a.status === 'Selesai' || a.status === 'Tervalidasi') && (a.valueBlob || a.valueText) && (
+                    {(a.status === 'Selesai' || (a.hasPdf || a.valueText)) && (
                       <button
                         onClick={async () => {
                           try {
                             const response = await fetch(`/api/surat-online/download?id=${a.id}`);
                             if (!response.ok) {
-                              throw new Error('Gagal mendownload file');
+                              const err = await response.json().catch(() => null);
+                              throw new Error(err?.error || 'Gagal mendownload file');
                             }
                             const blob = await response.blob();
                             const url = window.URL.createObjectURL(blob);
@@ -155,8 +156,9 @@ export default function SuratOnlinePage() {
                           }
                         }}
                         className="px-2 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center gap-1"
+                        title="Unduh PDF surat"
                       >
-                        <Download size={12} /> PDF
+                        <Download size={12} /> Unduh PDF
                       </button>
                     )}
                     <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${

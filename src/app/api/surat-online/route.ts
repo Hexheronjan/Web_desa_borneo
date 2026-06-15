@@ -4,7 +4,8 @@ import prisma from "@/lib/prisma";
 export async function GET() {
   try {
     const surat = await prisma.$queryRaw<any[]>`
-      SELECT id, title, category, description, valueText, status, createdBy, createdAt, updatedAt
+      SELECT id, title, category, description, valueText, status, createdBy, createdAt, updatedAt,
+        CASE WHEN valueBlob IS NOT NULL AND valueBlob != '' THEN 1 ELSE 0 END as hasPdf
       FROM ModuleRecord
       WHERE modulePath = '/warga/surat-online'
       ORDER BY createdAt DESC
