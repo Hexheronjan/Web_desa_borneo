@@ -75,27 +75,43 @@ export default function ValidasiSuratPage() {
 
   const handlePdfUpload = async (id: string, file: File) => {
     try {
-      // In a real implementation, you would upload to a storage service
-      // For now, we'll use a mock URL
-      const pdfUrl = `/pdf/${id}.pdf`;
+      // Create FormData for file upload
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('id', id);
+
+      // Upload the file first
+      const uploadRes = await fetch('/api/surat-online/upload', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!uploadRes.ok) {
+        const error = await uploadRes.json();
+        throw new Error(error.error || 'Gagal mengupload file');
+      }
+
+      const uploadData = await uploadRes.json();
       
+      // Update the database with the file path
       const res = await fetch('/api/surat-online', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           id,
           modulePath: '/warga/surat-online',
-          valueText: pdfUrl,
+          valueText: uploadData.filePath,
           status: 'Selesai'
         })
       });
+
       if (res.ok) {
         loadSurat();
       } else {
-        alert('Gagal mengupload PDF');
+        alert('Gagal mengupdate status surat');
       }
     } catch (error) {
-      alert('Terjadi kesalahan');
+      alert('Terjadi kesalahan: ' + (error as Error).message);
     }
   };
 

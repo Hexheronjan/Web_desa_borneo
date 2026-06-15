@@ -37,8 +37,14 @@ export async function GET(request: Request) {
     if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
       // If it's a URL, redirect to it
       return NextResponse.redirect(filePath);
+    } else if (filePath.startsWith('/uploads/surat/')) {
+      // New format: absolute path from public folder
+      pdfPath = path.join(process.cwd(), 'public', filePath);
     } else if (filePath.startsWith('/')) {
-      // Absolute path from public folder
+      // Old format: absolute path from public folder
+      pdfPath = path.join(process.cwd(), 'public', filePath);
+    } else if (filePath.startsWith('/pdf/')) {
+      // Mock format that was used before - this won't work but handle gracefully
       pdfPath = path.join(process.cwd(), 'public', filePath);
     } else {
       // Relative path, assume in public/uploads/surat
@@ -47,6 +53,8 @@ export async function GET(request: Request) {
 
     // Check if file exists
     if (!fs.existsSync(pdfPath)) {
+      console.error(`File not found at path: ${pdfPath}`);
+      console.error(`Original filePath from database: ${filePath}`);
       return NextResponse.json({ success: false, error: "File PDF tidak ditemukan di server" }, { status: 404 });
     }
 
