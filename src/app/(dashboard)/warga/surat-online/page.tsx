@@ -26,6 +26,7 @@ interface SuratApplication {
 export default function SuratOnlinePage() {
   const [apps, setApps] = useState<SuratApplication[]>([]);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState<string | null>(null);
 
   useEffect(() => {
     loadApplications();
@@ -41,9 +42,11 @@ export default function SuratOnlinePage() {
           title: r.title || 'Tanpa Judul',
           status: r.status || 'Proses Validasi',
           valueText: r.valueText || null,
-          hasPdf: Boolean(r.hasPdf),
+          hasPdf: Boolean(Number(r.hasPdf)),
           createdAt: new Date(r.createdAt).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })
         })));
+      } else {
+        console.error('Error loading applications:', data.error);
       }
     } catch (error) {
       console.error('Error loading applications:', error);
@@ -53,6 +56,9 @@ export default function SuratOnlinePage() {
   };
 
   const handleApply = async (type: string) => {
+    if (submitting) return;
+
+    setSubmitting(type);
     try {
       const res = await fetch('/api/surat-online', {
         method: 'POST',
@@ -67,12 +73,15 @@ export default function SuratOnlinePage() {
       });
       const result = await res.json();
       if (result.success) {
-        loadApplications();
+        alert(`Pengajuan "${type}" berhasil dikirim. Menunggu validasi operator.`);
+        await loadApplications();
       } else {
         alert('Gagal mengajukan surat: ' + (result.error || 'Unknown error'));
       }
     } catch (error) {
       alert('Terjadi kesalahan: ' + (error as Error).message);
+    } finally {
+      setSubmitting(null);
     }
   };
 
@@ -104,9 +113,10 @@ export default function SuratOnlinePage() {
                 </div>
                 <button
                   onClick={() => handleApply(doc.name)}
-                  className="px-3.5 py-2 bg-purple-700 hover:bg-purple-800 text-white rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 flex-shrink-0"
+                  disabled={submitting === doc.name}
+                  className="px-3.5 py-2 bg-purple-700 hover:bg-purple-800 disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1 flex-shrink-0"
                 >
-                  <Plus size={14} /> Ajukan Surat
+                  <Plus size={14} /> {submitting === doc.name ? 'Mengirim...' : 'Ajukan Surat'}
                 </button>
               </div>
             ))}
