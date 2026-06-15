@@ -1,7 +1,5 @@
 import { NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
-import { existsSync } from "fs";
+import { put } from '@vercel/blob';
 
 export async function POST(request: Request) {
   try {
@@ -21,31 +19,28 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "Hanya file PDF yang diperbolehkan" }, { status: 400 });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
-
-    // Create uploads directory if it doesn't exist
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads', 'surat');
-    if (!existsSync(uploadsDir)) {
-      await mkdir(uploadsDir, { recursive: true });
+    // Check if Vercel Blob is configured
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      return NextResponse.json({ 
+        success: false, 
+        error: "Vercel Blob belum dikonfigurasi. Silakan tambahkan BLOB_READ_WRITE_TOKEN di environment variables." 
+      }, { status: 500 });
     }
 
     // Generate unique filename
     const timestamp = Date.now();
-    const filename = `${id}_${timestamp}.pdf`;
-    const filePath = path.join(uploadsDir, filename);
+    const filename = `surat-${id}-${timestamp}.pdf`;
 
-    // Write file to disk
-    await writeFile(filePath, buffer);
+    // Upload to Vercel Blob
+    const blob = await put(filename, file, {
+      access: 'public',
+    });
 
-    // Return the relative path for storage in database
-    const relativePath = `/uploads/surat/${filename}`;
-
-    console.log(`PDF uploaded successfully: ${filePath}`);
+    console.log(`PDF uploaded successfully to Vercel Blob: ${blob.url}`);
 
     return NextResponse.json({ 
       success: true, 
-      filePath: relativePath 
+      filePath: blob.url 
     });
 
   } catch (error: any) {
