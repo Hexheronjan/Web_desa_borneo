@@ -133,7 +133,12 @@ export default function SuratOnlinePage() {
                   <div className="flex items-center gap-2">
                     {a.status === 'Selesai' && a.valueText && (
                       <button
-                        onClick={() => window.open(a.valueText || '', '_blank')}
+                        onClick={() => {
+                          const link = document.createElement('a');
+                          link.href = `/api/surat-online/download?id=${a.id}`;
+                          link.download = true;
+                          link.click();
+                        }}
                         className="px-2 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center gap-1"
                       >
                         <Download size={12} /> PDF
