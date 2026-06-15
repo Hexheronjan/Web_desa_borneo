@@ -45,6 +45,7 @@ export async function PUT(request: Request) {
     if (data.description) updates.push(`description = '${data.description}'`);
     if (data.status) updates.push(`status = '${data.status}'`);
     if (data.valueText) updates.push(`valueText = '${data.valueText}'`);
+    if (data.valueBlob) updates.push(`valueBlob = '${data.valueBlob}'`);
     
     const setClause = updates.join(', ');
     

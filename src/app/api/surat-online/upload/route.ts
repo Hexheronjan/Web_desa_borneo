@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import prisma from "@/lib/prisma";
 
 export async function POST(request: Request) {
   try {
@@ -24,6 +25,15 @@ export async function POST(request: Request) {
     const base64 = buffer.toString('base64');
 
     console.log(`PDF converted to base64, size: ${base64.length} characters`);
+
+    // Save base64 to database
+    await prisma.$executeRawUnsafe(`
+      UPDATE ModuleRecord
+      SET valueBlob = '${base64}'
+      WHERE id = '${id}' AND modulePath = '/warga/surat-online'
+    `);
+
+    console.log(`PDF saved to database for ID: ${id}`);
 
     return NextResponse.json({ 
       success: true, 

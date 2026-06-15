@@ -82,7 +82,7 @@ export default function ValidasiSuratPage() {
       formData.append('file', file);
       formData.append('id', id);
 
-      // Upload the file first (convert to base64)
+      // Upload the file (convert to base64 and save to database)
       const uploadRes = await fetch('/api/surat-online/upload', {
         method: 'POST',
         body: formData
@@ -95,19 +95,17 @@ export default function ValidasiSuratPage() {
 
       const uploadData = await uploadRes.json();
 
-      if (!uploadData.success || !uploadData.base64) {
-        throw new Error('Gagal convert file ke base64');
+      if (!uploadData.success) {
+        throw new Error('Gagal upload file');
       }
 
-      // Update the database with the base64 data
+      // Update status to 'Selesai' after successful upload
       const res = await fetch('/api/surat-online', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           id,
           modulePath: '/warga/surat-online',
-          valueBlob: uploadData.base64,
-          valueText: 'PDF stored as base64',
           status: 'Selesai'
         })
       });
