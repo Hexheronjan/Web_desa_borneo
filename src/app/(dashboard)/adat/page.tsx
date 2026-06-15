@@ -10,43 +10,51 @@ import {
 } from 'recharts';
 import { Landmark, Users, Calendar, BookOpen } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 const COLOR = '#4a148c';
 
-const kegiatanBulanan = [
-  { bln: 'Jan', kegiatan: 2 }, { bln: 'Feb', kegiatan: 3 },
-  { bln: 'Mar', kegiatan: 4 }, { bln: 'Apr', kegiatan: 3 },
-  { bln: 'Mei', kegiatan: 5 }, { bln: 'Jun', kegiatan: 6 },
-  { bln: 'Jul', kegiatan: 4 }, { bln: 'Agu', kegiatan: 7 },
-  { bln: 'Sep', kegiatan: 5 }, { bln: 'Okt', kegiatan: 6 },
-  { bln: 'Nov', kegiatan: 8 }, { bln: 'Des', kegiatan: 5 },
-];
-
-const kelembagaanRadar = [
-  { aspek: 'Struktur Org.', nilai: 80 },
-  { aspek: 'Musyawarah', nilai: 85 },
-  { aspek: 'Dokumentasi', nilai: 70 },
-  { aspek: 'Hukum Adat', nilai: 90 },
-  { aspek: 'Huma Betang', nilai: 88 },
-];
-
-const anggotaData = [
-  { jabatan: 'Damang Kepala Adat', nama: 'H. Tjilik Riwut', masa: '2022–2027', status: 'Aktif' },
-  { jabatan: 'Mantir Adat I', nama: 'Yansen Tambun', masa: '2022–2027', status: 'Aktif' },
-  { jabatan: 'Mantir Adat II', nama: 'Mariati Luha', masa: '2022–2027', status: 'Aktif' },
-  { jabatan: 'Sekretaris Adat', nama: 'Beno Sintha', masa: '2022–2027', status: 'Aktif' },
-];
-
 export default function AdatDashboardPage() {
+  const [kegiatanBulanan, setKegiatanBulanan] = useState<any[]>([]);
+  const [kelembagaanRadar, setKelembagaanRadar] = useState<any[]>([]);
+  const [anggotaData, setAnggotaData] = useState<any[]>([]);
+  const [stats, setStats] = useState<any>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const res = await fetch('/api/adat-dashboard');
+      const result = await res.json();
+      if (result.success) {
+        setKegiatanBulanan(result.data.kegiatanBulanan);
+        setKelembagaanRadar(result.data.kelembagaanRadar);
+        setAnggotaData(result.data.anggotaData);
+        setStats(result.data.stats);
+      }
+    } catch (error) {
+      console.error('Error loading adat data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <div className="p-5">Loading...</div>;
+  }
+
   return (
     <div className="flex flex-col gap-5">
       <PageTitle fitur="Dashboard Budaya Adat" modul="Lembaga Adat Dayak Borneo" color={COLOR} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard label="Smart Living Index" value="80%" satuan="nilai adat" barColor="purple" progress={80} sparkData={[70,72,74,76,78,80]} trend="up" />
-        <StatCard label="Kelembagaan Aktif" value={12} satuan="lembaga" barColor="blue" progress={80} />
-        <StatCard label="Musyawarah" value={5} satuan="agenda" barColor="orange" progress={50} />
-        <StatCard label="Didokumentasikan" value={28} satuan="arsip adat" barColor="green" progress={70} />
+        <StatCard label="Kelembagaan Aktif" value={stats.totalPengurus || 12} satuan="lembaga" barColor="blue" progress={80} />
+        <StatCard label="Musyawarah" value={stats.totalMusyawarah || 5} satuan="agenda" barColor="orange" progress={50} />
+        <StatCard label="Didokumentasikan" value={stats.totalArsipAdat || 28} satuan="arsip adat" barColor="green" progress={70} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
@@ -74,7 +82,7 @@ export default function AdatDashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f5f3ff" />
                 <XAxis dataKey="bln" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: number) => [v, 'Kegiatan']} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [v, 'Kegiatan']} />
                 <Area type="monotone" dataKey="kegiatan" name="Kegiatan Adat" stroke="#4a148c" strokeWidth={2.5} fill="url(#gradPurple)" dot={{ r: 3, fill: '#4a148c' }} />
               </AreaChart>
             </ResponsiveContainer>

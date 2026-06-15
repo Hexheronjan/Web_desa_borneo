@@ -9,36 +9,46 @@ import {
 } from 'recharts';
 import { FileText, TrendingUp, Users, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 const COLOR = '#1b5e20';
 
-const apbdesData = [
-  { name: 'Pemerintahan', anggaran: 250, realisasi: 200 },
-  { name: 'Pembangunan', anggaran: 450, realisasi: 340 },
-  { name: 'Kemasyarakatan', anggaran: 200, realisasi: 150 },
-  { name: 'Pemberdayaan', anggaran: 250, realisasi: 150 },
-  { name: 'Bencana', anggaran: 100, realisasi: 60 },
-];
+export default function BPDPage() {
+  const [apbdesData, setApbdesData] = useState<any[]>([]);
+  const [aspirasi, setAspirasi] = useState<any[]>([]);
+  const [stats, setStats] = useState<any>({});
+  const [loading, setLoading] = useState(true);
 
-const programTrend = [
-  { bln: 'Jan', prog: 18 }, { bln: 'Feb', prog: 20 }, { bln: 'Mar', prog: 20 },
-  { bln: 'Apr', prog: 22 }, { bln: 'Mei', prog: 22 }, { bln: 'Jun', prog: 24 },
-];
+  useEffect(() => {
+    loadData();
+  }, []);
 
-const aspirasi = [
-  { name: 'Ditindaklanjuti', value: 60, color: '#2E7D32' },
-  { name: 'Dalam Proses', value: 28, color: '#E65100' },
-  { name: 'Belum Diproses', value: 12, color: '#dc2626' },
-];
+  const loadData = async () => {
+    try {
+      const res = await fetch('/api/bpd-dashboard');
+      const result = await res.json();
+      if (result.success) {
+        setApbdesData(result.data.apbdesData);
+        setAspirasi(result.data.aspirasi);
+        setStats(result.data.stats);
+      }
+    } catch (error) {
+      console.error('Error loading BPD data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-const programs = [
-  { nama: 'Program Posyandu Mandiri', status: 'Selesai', prog: 100, anggaran: 'Rp 75 jt' },
-  { nama: 'Perbaikan Jalan RT 03 & 05', status: 'Berjalan', prog: 72, anggaran: 'Rp 150 jt' },
-  { nama: 'Pelatihan Digital UMKM', status: 'Berjalan', prog: 55, anggaran: 'Rp 50 jt' },
-  { nama: 'Revitalisasi Balai Adat', status: 'Perencanaan', prog: 20, anggaran: 'Rp 200 jt' },
-];
+  if (loading) {
+    return <div className="p-5">Loading...</div>;
+  }
 
-export default function BPDDashboardPage() {
+  const programs = [
+    { nama: 'Program Posyandu Mandiri', status: 'Selesai', prog: 100, anggaran: 'Rp 75 jt' },
+    { nama: 'Perbaikan Jalan RT 03 & 05', status: 'Berjalan', prog: 72, anggaran: 'Rp 150 jt' },
+    { nama: 'Pelatihan Digital UMKM', status: 'Berjalan', prog: 55, anggaran: 'Rp 50 jt' },
+  ];
+
   return (
     <div className="flex flex-col gap-5">
       <PageTitle fitur="Dashboard Pengawasan BPD" modul="Badan Permusyawaratan Desa" color={COLOR} />
@@ -69,7 +79,7 @@ export default function BPDDashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0fdf4" />
                 <XAxis dataKey="name" tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: number) => [`Rp ${v}jt`, '']} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`Rp ${v}jt`, '']} />
                 <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
                 <Bar dataKey="anggaran" name="Anggaran" fill="#a5d6a7" radius={[3,3,0,0]} />
                 <Bar dataKey="realisasi" name="Realisasi" fill="#1b5e20" radius={[3,3,0,0]} />
@@ -96,7 +106,7 @@ export default function BPDDashboardPage() {
                 <Pie data={aspirasi} dataKey="value" cx="50%" cy="50%" innerRadius={40} outerRadius={70} label={({ name, value }) => `${value}%`} labelLine={false}>
                   {aspirasi.map((e, i) => <Cell key={i} fill={e.color} />)}
                 </Pie>
-                <Tooltip formatter={(v: number) => `${v}%`} contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Tooltip formatter={(v: any) => `${v}%`} contentStyle={{ fontSize: 11, borderRadius: 8 }} />
               </PieChart>
             </ResponsiveContainer>
             <div className="w-full space-y-1.5 mt-1">

@@ -10,49 +10,58 @@ import {
 } from 'recharts';
 import { BarChart3, FileSearch, Brain, Calculator, ClipboardCheck } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 const COLOR = '#37474f';
 
-const readinessRadar = [
-  { dim: 'Teknologi', aktual: 72, target: 85 },
-  { dim: 'Infrastruktur', aktual: 73, target: 85 },
-  { dim: 'SDM', aktual: 75, target: 80 },
-  { dim: 'Tata Kelola', aktual: 78, target: 80 },
-  { dim: 'Budaya', aktual: 80, target: 75 },
-];
+export default function PenelitiPage() {
+  const [maturityData, setMaturityData] = useState<any[]>([]);
+  const [crTrend, setCrTrend] = useState<any[]>([]);
+  const [uatData, setUatData] = useState<any[]>([]);
+  const [stats, setStats] = useState<any>({});
+  const [loading, setLoading] = useState(true);
 
-const maturityData = [
-  { dim: 'Smart Admin', level: 3.2 },
-  { dim: 'Smart Sehat', level: 2.8 },
-  { dim: 'Smart Belajar', level: 3.5 },
-  { dim: 'Smart Adat', level: 4.0 },
-  { dim: 'Smart PMD', level: 3.1 },
-  { dim: 'Smart Warga', level: 2.9 },
-];
+  useEffect(() => {
+    loadData();
+  }, []);
 
-const uatData = [
-  { aspek: 'Kemudahan', sus: 82 },
-  { aspek: 'Efisiensi', sus: 78 },
-  { aspek: 'Kejelasan', sus: 80 },
-  { aspek: 'Pembelajaran', sus: 75 },
-  { aspek: 'Kepuasan', sus: 85 },
-];
+  const loadData = async () => {
+    try {
+      const res = await fetch('/api/research-dashboard');
+      const result = await res.json();
+      if (result.success) {
+        setMaturityData(result.data.maturityData);
+        setCrTrend(result.data.crTrend);
+        setUatData(result.data.uatData);
+        setStats(result.data.stats);
+      }
+    } catch (error) {
+      console.error('Error loading research data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-const crTrend = [
-  { iter: 'Iter 1', cr: 0.15 }, { iter: 'Iter 2', cr: 0.12 },
-  { iter: 'Iter 3', cr: 0.10 }, { iter: 'Iter 4', cr: 0.09 },
-  { iter: 'Iter 5', cr: 0.08 },
-];
+  if (loading) {
+    return <div className="p-5">Loading...</div>;
+  }
 
-export default function PenelitiDashboardPage() {
+  const readinessRadar = [
+    { dim: 'Teknologi', aktual: 72, target: 85 },
+    { dim: 'Infrastruktur', aktual: 73, target: 85 },
+    { dim: 'SDM', aktual: 75, target: 80 },
+    { dim: 'Tata Kelola', aktual: 78, target: 80 },
+    { dim: 'Budaya', aktual: 80, target: 75 },
+  ];
+
   return (
     <div className="flex flex-col gap-5">
       <PageTitle fitur="Dashboard Peneliti" modul="Research & DSS Analytics" color={COLOR} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Readiness Score" value="75,20" satuan="skor kesiapan" barColor="blue" progress={75}
+        <StatCard label="Total Kelas" value={stats.totalKelas || 12} satuan="kelas penelitian" barColor="blue" progress={75}
           sparkData={[65,68,70,72,73,74,75,75.2]} trend="up" />
-        <StatCard label="CR Consistency" value="0,08" satuan="CR < 0,10 ✓" barColor="green" progress={92}
+        <StatCard label="Forum Diskusi" value={stats.totalForum || 45} satuan="topik aktif" barColor="green" progress={92}
           sparkData={[0.15,0.12,0.10,0.09,0.08]} trend="down" />
         <StatCard label="Maturity Level" value="3,25" satuan="dari skala 5" barColor="purple" progress={65} />
         <StatCard label="QoL Index" value="76,80" satuan="kualitas hidup" barColor="orange" progress={77} />
@@ -103,9 +112,9 @@ export default function PenelitiDashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" horizontal={false} />
                 <XAxis type="number" domain={[0, 5]} tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis type="category" dataKey="dim" tick={{ fontSize: 10, fill: '#64748b' }} axisLine={false} tickLine={false} width={80} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: number) => [`${v.toFixed(1)} / 5.0`, 'Level']} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v.toFixed(1)} / 5.0`, 'Level']} />
                 <Bar dataKey="level" name="Maturity Level" fill="#37474f" radius={[0,4,4,0]}
-                  label={{ position: 'right', fontSize: 9, fill: '#64748b', formatter: (v: number) => v.toFixed(1) }} />
+                  label={{ position: 'right', fontSize: 9, fill: '#64748b', formatter: (v: any) => v.toFixed(1) }} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -131,7 +140,7 @@ export default function PenelitiDashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                 <XAxis dataKey="iter" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis domain={[0.05, 0.18]} tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: number) => [v.toFixed(2), 'CR']} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [v.toFixed(2), 'CR']} />
                 <Line type="monotone" dataKey="cr" name="Consistency Ratio" stroke="#37474f" strokeWidth={2.5} dot={{ r: 4, fill: '#37474f' }} activeDot={{ r: 6 }} />
               </LineChart>
             </ResponsiveContainer>
@@ -156,7 +165,7 @@ export default function PenelitiDashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                 <XAxis dataKey="aspek" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis domain={[60, 95]} tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: number) => [`${v}`, 'SUS Score']} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}`, 'SUS Score']} />
                 <Bar dataKey="sus" name="SUS Score" fill="#37474f" radius={[4,4,0,0]} />
               </BarChart>
             </ResponsiveContainer>

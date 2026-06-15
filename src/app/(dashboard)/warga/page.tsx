@@ -9,37 +9,48 @@ import {
 } from 'recharts';
 import { Home, FileText, MessageSquare, Star, ClipboardList } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 const COLOR = '#e65100';
 
-const qolData = [
-  { name: 'Infrastruktur', nilai: 4.10, color: '#1565C0' },
-  { name: 'Kesehatan', nilai: 4.50, color: '#2E7D32' },
-  { name: 'Pendidikan', nilai: 4.00, color: '#7B1FA2' },
-  { name: 'Ekonomi', nilai: 3.80, color: '#E65100' },
-  { name: 'Budaya Adat', nilai: 4.60, color: '#00695C' },
-  { name: 'Lingkungan', nilai: 4.20, color: '#1B5E20' },
-];
+export default function WargaPage() {
+  const [qolData, setQolData] = useState<any[]>([]);
+  const [statusSurat, setStatusSurat] = useState<any[]>([]);
+  const [stats, setStats] = useState<any>({});
+  const [loading, setLoading] = useState(true);
 
-const statusSurat = [
-  { name: 'Selesai', value: 78, color: '#2E7D32' },
-  { name: 'Diproses', value: 15, color: '#E65100' },
-  { name: 'Pending', value: 7, color: '#94a3b8' },
-];
+  useEffect(() => {
+    loadData();
+  }, []);
 
-const qolRadial = [
-  { name: 'QoL Index', value: 82, fill: '#e65100' },
-];
+  const loadData = async () => {
+    try {
+      const res = await fetch('/api/citizen-dashboard');
+      const result = await res.json();
+      if (result.success) {
+        setQolData(result.data.qolData);
+        setStatusSurat(result.data.statusSurat);
+        setStats(result.data.stats);
+      }
+    } catch (error) {
+      console.error('Error loading citizen data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-export default function WargaDashboardPage() {
+  if (loading) {
+    return <div className="p-5">Loading...</div>;
+  }
+
   return (
     <div className="flex flex-col gap-5">
       <PageTitle fitur="Portal Warga Desa" modul="Akses Layanan Mandiri Warga" color={COLOR} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="QoL Index" value="4,02" satuan="dari 5,00" barColor="orange" progress={80}
+        <StatCard label="Total Warga" value={stats.totalWarga || 125} satuan="terdaftar" barColor="orange" progress={80}
           sparkData={[3.5,3.6,3.7,3.8,3.9,4.0,4.02]} trend="up" />
-        <StatCard label="Surat Online" value={45} satuan="permohonan" barColor="blue" progress={65} />
+        <StatCard label="Surat Online" value={stats.totalAspirasi || 45} satuan="permohonan" barColor="blue" progress={65} />
         <StatCard label="Pengaduan" value={12} satuan="laporan aktif" barColor="red" progress={40} />
         <StatCard label="Survey QoL" value="4,02" satuan="rata-rata skor" barColor="green" progress={80} />
       </div>
@@ -63,9 +74,9 @@ export default function WargaDashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#fff7ed" horizontal={false} />
                 <XAxis type="number" domain={[0, 5]} tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis type="category" dataKey="name" tick={{ fontSize: 10, fill: '#64748b' }} axisLine={false} tickLine={false} width={75} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: number) => [`${(v as number).toFixed(2)} / 5.00`, 'Skor']} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${(v as number).toFixed(2)} / 5.00`, 'Skor']} />
                 <Bar dataKey="nilai" name="Skor" radius={[0,4,4,0]}
-                  label={{ position: 'right', fontSize: 9, fill: '#64748b', formatter: (v: number) => v.toFixed(2) }}>
+                  label={{ position: 'right', fontSize: 9, fill: '#64748b', formatter: (v: any) => v.toFixed(2) }}>
                   {qolData.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={entry.color} />
                   ))}
@@ -94,7 +105,7 @@ export default function WargaDashboardPage() {
                   label={({ name, value }) => `${value}%`} labelLine={false}>
                   {statusSurat.map((e, i) => <Cell key={i} fill={e.color} />)}
                 </Pie>
-                <Tooltip formatter={(v: number) => `${v}%`} contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Tooltip formatter={(v: any) => `${v}%`} contentStyle={{ fontSize: 11, borderRadius: 8 }} />
               </PieChart>
             </ResponsiveContainer>
             <div className="w-full space-y-1.5 mt-2">

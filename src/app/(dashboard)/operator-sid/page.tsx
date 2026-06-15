@@ -12,41 +12,9 @@ import {
   CheckCircle2, AlertTriangle, XCircle, Clock, Database,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 const COLOR = '#00695c';
-
-const pertumbuhanData = [
-  { bulan: 'Jan', value: 320 }, { bulan: 'Feb', value: 410 },
-  { bulan: 'Mar', value: 380 }, { bulan: 'Apr', value: 520 },
-  { bulan: 'Mei', value: 610 }, { bulan: 'Jun', value: 580 },
-  { bulan: 'Jul', value: 720 }, { bulan: 'Agu', value: 690 },
-  { bulan: 'Sep', value: 810 }, { bulan: 'Okt', value: 780 },
-  { bulan: 'Nov', value: 870 }, { bulan: 'Des', value: 950 },
-];
-
-const validasiPie = [
-  { name: 'Tervalidasi', value: 80, color: '#16a34a' },
-  { name: 'Valid Sebagian', value: 15, color: '#eab308' },
-  { name: 'Tidak Valid', value: 5, color: '#dc2626' },
-];
-
-const dataTerbaru = [
-  { id: 1, nama: 'Andi Saputra', modul: 'Penduduk', aksi: 'Data baru ditambahkan', waktu: '5 menit lalu', status: 'Tervalidasi' },
-  { id: 2, nama: 'Siti Nurhaliza', modul: 'Kesehatan', aksi: 'Rekam medis diperbarui', waktu: '12 menit lalu', status: 'Tervalidasi' },
-  { id: 3, nama: 'UMKM Batik Dayak', modul: 'Ekonomi', aksi: 'Usaha baru didaftarkan', waktu: '30 menit lalu', status: 'Valid Sebagian' },
-  { id: 4, nama: 'SDN 01 Borneo', modul: 'Pendidikan', aksi: 'Data siswa diperbarui', waktu: '1 jam lalu', status: 'Tervalidasi' },
-  { id: 5, nama: 'Jalan Desa RT 03', modul: 'Infrastruktur', aksi: 'Status kondisi diperbarui', waktu: '2 jam lalu', status: 'Tidak Valid' },
-  { id: 6, nama: 'Upacara Tiwah', modul: 'Budaya', aksi: 'Kegiatan baru ditambahkan', waktu: '3 jam lalu', status: 'Tervalidasi' },
-];
-
-const modulSummary = [
-  { icon: Users, label: 'Penduduk', value: 2345, total: 2500, color: '#00695c' },
-  { icon: GraduationCap, label: 'Pendidikan', value: 785, total: 1000, color: '#1565c0' },
-  { icon: HeartPulse, label: 'Kesehatan', value: 620, total: 800, color: '#c62828' },
-  { icon: Wallet, label: 'Ekonomi', value: 456, total: 600, color: '#e65100' },
-  { icon: Building2, label: 'Infrastruktur', value: 230, total: 350, color: '#6a1b9a' },
-  { icon: Landmark, label: 'Budaya', value: 120, total: 200, color: '#2e7d32' },
-];
 
 function StatusBadge({ status }: { status: string }) {
   const map: Record<string, string> = {
@@ -82,15 +50,62 @@ const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent
 };
 
 export default function OperatorSidPage() {
+  const [pertumbuhanData, setPertumbuhanData] = useState<any[]>([]);
+  const [validasiPie, setValidasiPie] = useState<any[]>([]);
+  const [stats, setStats] = useState<any>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const res = await fetch('/api/operator-dashboard');
+      const result = await res.json();
+      if (result.success) {
+        setPertumbuhanData(result.data.pertumbuhanData);
+        setValidasiPie(result.data.validasiPie);
+        setStats(result.data.stats);
+      }
+    } catch (error) {
+      console.error('Error loading operator data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <div className="p-5">Loading...</div>;
+  }
+
+  const dataTerbaru = [
+    { id: 1, nama: 'Andi Saputra', modul: 'Penduduk', aksi: 'Data baru ditambahkan', waktu: '5 menit lalu', status: 'Tervalidasi' },
+    { id: 2, nama: 'Siti Nurhaliza', modul: 'Kesehatan', aksi: 'Rekam medis diperbarui', waktu: '12 menit lalu', status: 'Tervalidasi' },
+    { id: 3, nama: 'UMKM Batik Dayak', modul: 'Ekonomi', aksi: 'Usaha baru didaftarkan', waktu: '30 menit lalu', status: 'Valid Sebagian' },
+    { id: 4, nama: 'SDN 01 Borneo', modul: 'Pendidikan', aksi: 'Data siswa diperbarui', waktu: '1 jam lalu', status: 'Tervalidasi' },
+    { id: 5, nama: 'Jalan Desa RT 03', modul: 'Infrastruktur', aksi: 'Status kondisi diperbarui', waktu: '2 jam lalu', status: 'Tidak Valid' },
+    { id: 6, nama: 'Upacara Tiwah', modul: 'Budaya', aksi: 'Kegiatan baru ditambahkan', waktu: '3 jam lalu', status: 'Tervalidasi' },
+  ];
+
+  const modulSummary = [
+    { icon: Users, label: 'Penduduk', value: stats.totalWarga || 2345, total: 2500, color: '#00695c' },
+    { icon: GraduationCap, label: 'Pendidikan', value: 785, total: 1000, color: '#1565c0' },
+    { icon: HeartPulse, label: 'Kesehatan', value: stats.totalRekamMedis || 620, total: 800, color: '#c62828' },
+    { icon: Wallet, label: 'Ekonomi', value: 456, total: 600, color: '#e65100' },
+    { icon: Building2, label: 'Infrastruktur', value: 230, total: 350, color: '#6a1b9a' },
+    { icon: Landmark, label: 'Budaya', value: 120, total: 200, color: '#2e7d32' },
+  ];
+
   return (
     <div className="flex flex-col gap-5">
       <PageTitle fitur="Dashboard Operator SID" modul="Sistem Informasi Desa" color={COLOR} />
 
       {/* STAT CARDS */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        <StatCard label="Penduduk" value="2.345" satuan="jiwa" barColor="teal" progress={100} sparkData={[280,300,320,340,350,2345]} trend="up" />
+        <StatCard label="Penduduk" value={stats.totalWarga || "2.345"} satuan="jiwa" barColor="teal" progress={100} sparkData={[280,300,320,340,350,2345]} trend="up" />
         <StatCard label="Pendidikan" value="785" satuan="data" barColor="blue" progress={85} sparkData={[600,640,680,720,760,785]} trend="up" />
-        <StatCard label="Kesehatan" value="620" satuan="data" barColor="red" progress={75} sparkData={[500,530,560,590,610,620]} trend="up" />
+        <StatCard label="Kesehatan" value={stats.totalRekamMedis || 620} satuan="data" barColor="red" progress={75} sparkData={[500,530,560,590,610,620]} trend="up" />
         <StatCard label="Ekonomi" value="456" satuan="data" barColor="orange" progress={60} sparkData={[380,400,420,435,445,456]} trend="up" />
         <StatCard label="Infrastruktur" value="230" satuan="data" barColor="purple" progress={45} sparkData={[180,195,205,215,225,230]} trend="up" />
         <StatCard label="Budaya" value="120" satuan="data" barColor="green" progress={30} sparkData={[80,90,100,108,115,120]} trend="up" />
@@ -121,7 +136,7 @@ export default function OperatorSidPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0fdf4" />
                 <XAxis dataKey="bulan" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: number) => [v.toLocaleString('id-ID'), 'Entri Data']} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [v.toLocaleString('id-ID'), 'Entri Data']} />
                 <Area type="monotone" dataKey="value" name="Entri Data" stroke="#00695c" strokeWidth={2.5} fill="url(#gradTeal)" dot={{ r: 3, fill: '#00695c' }} activeDot={{ r: 5 }} />
               </AreaChart>
             </ResponsiveContainer>
@@ -149,7 +164,7 @@ export default function OperatorSidPage() {
                 <Pie data={validasiPie} dataKey="value" cx="50%" cy="50%" innerRadius={45} outerRadius={75} labelLine={false} label={renderCustomLabel}>
                   {validasiPie.map((entry, i) => <Cell key={i} fill={entry.color} />)}
                 </Pie>
-                <Tooltip formatter={(v: number) => `${v}%`} contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Tooltip formatter={(v: any) => `${v}%`} contentStyle={{ fontSize: 11, borderRadius: 8 }} />
               </PieChart>
             </ResponsiveContainer>
             <div className="w-full space-y-1.5">

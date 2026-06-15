@@ -12,45 +12,9 @@ import {
   CheckCircle2, BookOpen, Heart, Landmark, TrendingUp, Globe,
 } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 const COLOR = '#1a237e';
-
-const trendBulanan = [
-  { bulan: 'Jan', user: 80, desa: 18, data: 38000 },
-  { bulan: 'Feb', user: 90, desa: 19, data: 41000 },
-  { bulan: 'Mar', user: 95, desa: 20, data: 43000 },
-  { bulan: 'Apr', user: 100, desa: 21, data: 45000 },
-  { bulan: 'Mei', user: 108, desa: 22, data: 47000 },
-  { bulan: 'Jun', user: 112, desa: 23, data: 49000 },
-  { bulan: 'Jul', user: 115, desa: 23, data: 50000 },
-  { bulan: 'Agu', user: 118, desa: 24, data: 51000 },
-  { bulan: 'Sep', user: 120, desa: 24, data: 51500 },
-  { bulan: 'Okt', user: 122, desa: 24, data: 52000 },
-  { bulan: 'Nov', user: 124, desa: 24, data: 52200 },
-  { bulan: 'Des', user: 125, desa: 24, data: 52430 },
-];
-
-const sdgsData = [
-  { name: 'SDGs 3\nKesehatan', value: 82, fill: '#2E7D32' },
-  { name: 'SDGs 4\nPendidikan', value: 75, fill: '#1565C0' },
-  { name: 'SDGs 18\nBudaya', value: 80, fill: '#E65100' },
-];
-
-const sistemData = [
-  { name: 'Server', value: 99, fill: '#2E7D32' },
-  { name: 'Memory', value: 48, fill: '#1565C0' },
-  { name: 'Storage', value: 65, fill: '#7B1FA2' },
-  { name: 'Database', value: 72, fill: '#00838F' },
-];
-
-const masterDataItems = [
-  { icon: Users, label: 'Penduduk', count: '2.345', color: 'bg-blue-500' },
-  { icon: BookOpen, label: 'Pendidikan', count: '785', color: 'bg-green-500' },
-  { icon: Heart, label: 'Kesehatan', count: '620', color: 'bg-red-500' },
-  { icon: TrendingUp, label: 'Ekonomi', count: '456', color: 'bg-amber-500' },
-  { icon: Landmark, label: 'Infrastruktur', count: '230', color: 'bg-purple-500' },
-  { icon: Globe, label: 'Budaya', count: '120', color: 'bg-teal-500' },
-];
 
 const aktivitasTerbaru = [
   { user: 'Admin Super', aksi: 'Login ke sistem', modul: 'Auth', waktu: '2 menit lalu', status: 'success' },
@@ -65,14 +29,55 @@ const sparkUser = [80, 90, 95, 100, 108, 112, 115, 118, 120, 122, 124, 125];
 const sparkDesa = [18, 19, 20, 21, 22, 23, 23, 24, 24, 24, 24, 24];
 
 export default function AdminDashboardPage() {
+  const [trendBulanan, setTrendBulanan] = useState<any[]>([]);
+  const [sdgsData, setSdgsData] = useState<any[]>([]);
+  const [sistemData, setSistemData] = useState<any[]>([]);
+  const [masterDataItems, setMasterDataItems] = useState<any[]>([]);
+  const [stats, setStats] = useState<any>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const res = await fetch('/api/admin-dashboard');
+      const result = await res.json();
+      if (result.success) {
+        setTrendBulanan(result.data.trendBulanan);
+        setSdgsData(result.data.sdgsData);
+        setSistemData(result.data.sistemData);
+        setMasterDataItems(result.data.masterDataItems);
+        setStats(result.data.stats);
+      }
+    } catch (error) {
+      console.error('Error loading admin data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Transform master data for display
+  const displayMasterData = [
+    { icon: Users, label: 'Data Warga', count: stats.totalWarga || 0, color: 'bg-blue-500' },
+    { icon: Activity, label: 'User Sistem', count: stats.totalUsers || 0, color: 'bg-green-500' },
+    { icon: BookOpen, label: 'Kelas Aktif', count: stats.totalKelas || 0, color: 'bg-amber-500' },
+    { icon: Heart, label: 'Rekam Medis', count: stats.totalRekamMedis || 0, color: 'bg-red-500' },
+  ];
+
+  if (loading) {
+    return <div className="p-5">Loading...</div>;
+  }
+
   return (
     <div className="flex flex-col gap-5">
       <PageTitle fitur="Dashboard Sistem — Super Admin" modul="Modul 1: Dashboard Utama" color={COLOR} />
 
       {/* Stat Cards Row 1 */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Total User" value={125} satuan="pengguna aktif" barColor="blue" progress={85} sparkData={sparkUser} trend="up" />
-        <StatCard label="Total Desa" value={24} satuan="desa terdaftar" barColor="green" progress={80} sparkData={sparkDesa} trend="up" />
+        <StatCard label="Total User" value={stats.totalUsers || 125} satuan="pengguna aktif" barColor="blue" progress={85} sparkData={sparkUser} trend="up" />
+        <StatCard label="Data Warga" value={stats.totalWarga || 24} satuan="terdaftar" barColor="green" progress={80} sparkData={sparkDesa} trend="up" />
         <StatCard label="Smart Living Index" value="78,45" satuan="Baik" barColor="purple" progress={78} sparkData={[70,72,74,75,76,77,78,78,78,78,78,78]} trend="up" />
         <StatCard label="Total Data" value="52.430" satuan="record" barColor="orange" progress={90} sparkData={[38,41,43,45,47,49,50,51,51.5,52,52.2,52.4]} trend="up" />
       </div>
@@ -137,7 +142,7 @@ export default function AdminDashboardPage() {
             <ResponsiveContainer width="100%" height={140}>
               <RadialBarChart cx="50%" cy="50%" innerRadius="30%" outerRadius="90%" data={sdgsData} startAngle={90} endAngle={-270}>
                 <RadialBar dataKey="value" background={{ fill: '#f1f5f9' }} cornerRadius={4} />
-                <Tooltip formatter={(v: number) => `${v}%`} contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Tooltip formatter={(v: any) => `${v}%`} contentStyle={{ fontSize: 11, borderRadius: 8 }} />
               </RadialBarChart>
             </ResponsiveContainer>
             <div className="space-y-1 mt-2">
@@ -173,7 +178,7 @@ export default function AdminDashboardPage() {
               <RadialBarChart cx="50%" cy="50%" innerRadius="20%" outerRadius="80%" data={sistemData} startAngle={180} endAngle={-180}>
                 <RadialBar dataKey="value" background={{ fill: '#f8fafc' }} cornerRadius={4} label={{ position: 'insideStart', fill: '#fff', fontSize: 9, fontWeight: 'bold' }} />
                 <Legend iconSize={8} formatter={(v) => <span style={{ fontSize: 10, color: '#64748b' }}>{v}</span>} />
-                <Tooltip formatter={(v: number) => `${v}%`} contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Tooltip formatter={(v: any) => `${v}%`} contentStyle={{ fontSize: 11, borderRadius: 8 }} />
               </RadialBarChart>
             </ResponsiveContainer>
           </CardContent>
@@ -193,13 +198,13 @@ export default function AdminDashboardPage() {
           <CardContent>
             <div className="space-y-2">
               {aktivitasTerbaru.map((a, i) => (
-                <div key={i} className={`flex items-start gap-2 p-2 rounded-lg text-xs ${i % 2 === 0 ? 'bg-slate-50' : ''}`}>
-                  <div className={`w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0 ${a.status === 'success' ? 'bg-green-500' : 'bg-amber-500'}`} />
+                <div key={i} className="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition-colors">
+                  <div className={`w-2 h-2 rounded-full ${a.status === 'success' ? 'bg-green-500' : a.status === 'warning' ? 'bg-amber-500' : 'bg-red-500'}`} />
                   <div className="flex-1 min-w-0">
-                    <span className="font-bold text-slate-700">{a.user}</span>
-                    <span className="text-slate-500"> · {a.aksi}</span>
+                    <p className="text-xs font-semibold text-slate-700">{a.user}</p>
+                    <p className="text-[10px] text-slate-500 truncate">{a.aksi} · {a.modul}</p>
                   </div>
-                  <span className="text-[10px] text-slate-400 flex-shrink-0">{a.waktu}</span>
+                  <span className="text-[10px] text-slate-400">{a.waktu}</span>
                 </div>
               ))}
             </div>
@@ -207,27 +212,24 @@ export default function AdminDashboardPage() {
         </Card>
       </div>
 
-      {/* Master Data Referensi */}
+      {/* Master Data Summary */}
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-sm font-semibold" style={{ color: COLOR }}>
-              📂 Master Data Referensi
-            </CardTitle>
-            <Link href="/admin/master-desa" className="text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
-              Kelola Data →
-            </Link>
-          </div>
+          <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+            <Database size={16} /> Ringkap Master Data
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
-            {masterDataItems.map((item, i) => (
-              <div key={i} className="p-4 rounded-xl border hover:shadow-md transition-shadow cursor-pointer bg-gradient-to-br from-white to-slate-50 text-center">
-                <div className={`w-10 h-10 ${item.color} rounded-lg flex items-center justify-center mx-auto mb-2`}>
-                  <item.icon className="w-5 h-5 text-white" />
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {displayMasterData.map((item, i) => (
+              <div key={i} className="p-3 rounded-lg border flex items-center gap-3" style={{ backgroundColor: '#f8fafc', borderColor: '#e2e8f0' }}>
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white ${item.color}`}>
+                  <item.icon size={18} />
                 </div>
-                <p className="text-lg font-black text-slate-800">{item.count}</p>
-                <p className="text-[10px] text-slate-500 font-medium">{item.label}</p>
+                <div>
+                  <p className="text-[10px] text-slate-500 uppercase font-semibold">{item.label}</p>
+                  <p className="text-lg font-bold text-slate-800">{item.count}</p>
+                </div>
               </div>
             ))}
           </div>

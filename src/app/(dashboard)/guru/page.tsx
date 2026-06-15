@@ -9,43 +9,51 @@ import {
 } from 'recharts';
 import { GraduationCap, Users, BookOpen, Monitor } from 'lucide-react';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 const COLOR = '#0d47a1';
 
-const jenjangnData = [
-  { jenjang: 'PAUD', aps: 92, apk: 105, siswa: 48 },
-  { jenjang: 'SD', aps: 95, apk: 112, siswa: 256 },
-  { jenjang: 'SMP', aps: 88, apk: 98, siswa: 134 },
-  { jenjang: 'SMA', aps: 82, apk: 90, siswa: 98 },
-];
+export default function GuruPage() {
+  const [jenjangnData, setJenjangnData] = useState<any[]>([]);
+  const [literasiTrend, setLiterasiTrend] = useState<any[]>([]);
+  const [relayPulsa, setRelayPulsa] = useState<any[]>([]);
+  const [stats, setStats] = useState<any>({});
+  const [loading, setLoading] = useState(true);
 
-const literasiTrend = [
-  { bln: 'Jan', digital: 35, numerasi: 55 },
-  { bln: 'Feb', digital: 38, numerasi: 57 },
-  { bln: 'Mar', digital: 40, numerasi: 60 },
-  { bln: 'Apr', digital: 43, numerasi: 62 },
-  { bln: 'Mei', digital: 45, numerasi: 64 },
-  { bln: 'Jun', digital: 47, numerasi: 66 },
-  { bln: 'Jul', digital: 48, numerasi: 67 },
-  { bln: 'Agu', digital: 50, numerasi: 68 },
-];
+  useEffect(() => {
+    loadData();
+  }, []);
 
-const relayPulsa = [
-  { rt: 'RT 01', punya: 85, tidak: 15 },
-  { rt: 'RT 02', punya: 72, tidak: 28 },
-  { rt: 'RT 03', punya: 60, tidak: 40 },
-  { rt: 'RT 04', punya: 78, tidak: 22 },
-  { rt: 'RT 05', punya: 55, tidak: 45 },
-];
+  const loadData = async () => {
+    try {
+      const res = await fetch('/api/education-dashboard');
+      const result = await res.json();
+      if (result.success) {
+        setJenjangnData(result.data.jenjangnData);
+        setLiterasiTrend(result.data.literasiTrend);
+        setRelayPulsa(result.data.relayPulsa);
+        setStats(result.data.stats);
+      }
+    } catch (error) {
+      console.error('Error loading education data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-export default function GuruDashboardPage() {
+  if (loading) {
+    return <div className="p-5">Loading...</div>;
+  }
+
   return (
     <div className="flex flex-col gap-5">
       <PageTitle fitur="Dashboard Pendidikan" modul="Guru & Fasilitator Desa" color={COLOR} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="APS Rata-rata" value="92,50%" satuan="angka partisipasi" barColor="blue" progress={92} sparkData={[85,87,88,90,91,92,92,92.5]} trend="up" />
-        <StatCard label="APK Rata-rata" value="104,20%" satuan="angka kasar" barColor="green" progress={80} />
+        <StatCard label="Total Kelas" value={stats.totalKelas || 12} satuan="kelas aktif" barColor="blue" progress={92} sparkData={[85,87,88,90,91,92,92,92.5]} trend="up" />
+        <StatCard label="Total Materi" value={stats.totalMateri || 48} satuan="materi pembelajaran" barColor="green" progress={80} />
+        <StatCard label="Total Tugas" value={stats.totalTugas || 36} satuan="tugas aktif" barColor="orange" progress={75} />
+        <StatCard label="Peserta Kelas" value={stats.totalPesertaKelas || 284} satuan="siswa terdaftar" barColor="purple" progress={85} />
         <StatCard label="Total Siswa" value={256} satuan="peserta didik" barColor="teal" progress={75} />
         <StatCard label="Literasi Digital" value="78%" satuan="capaian" barColor="purple" progress={78} sparkData={[35,38,40,43,45,47,48,50,55,60,70,78]} trend="up" />
       </div>
@@ -69,7 +77,7 @@ export default function GuruDashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#eff6ff" />
                 <XAxis dataKey="jenjang" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis domain={[70, 120]} tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: number) => [`${v}%`, '']} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}%`, '']} />
                 <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
                 <Bar dataKey="aps" name="APS (%)" fill="#0d47a1" radius={[3,3,0,0]} />
                 <Bar dataKey="apk" name="APK (%)" fill="#42a5f5" radius={[3,3,0,0]} />
@@ -96,7 +104,7 @@ export default function GuruDashboardPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#eff6ff" />
                 <XAxis dataKey="bln" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: number) => [`${v}%`, '']} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}%`, '']} />
                 <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
                 <Line type="monotone" dataKey="digital" name="Literasi Digital" stroke="#0d47a1" strokeWidth={2.5} dot={false} activeDot={{ r: 4 }} />
                 <Line type="monotone" dataKey="numerasi" name="Numerasi" stroke="#2E7D32" strokeWidth={2} strokeDasharray="4 2" dot={false} activeDot={{ r: 4 }} />
@@ -124,7 +132,7 @@ export default function GuruDashboardPage() {
               <CartesianGrid strokeDasharray="3 3" stroke="#eff6ff" horizontal={false} />
               <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
               <YAxis type="category" dataKey="rt" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} width={35} />
-              <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: number) => [`${v}%`, '']} />
+              <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}%`, '']} />
               <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
               <Bar dataKey="punya" name="Punya Perangkat (%)" fill="#0d47a1" radius={[0,3,3,0]} stackId="a" />
               <Bar dataKey="tidak" name="Belum Punya (%)" fill="#bbdefb" radius={[0,3,3,0]} stackId="a" />

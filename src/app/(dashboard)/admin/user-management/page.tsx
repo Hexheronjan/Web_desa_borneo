@@ -11,7 +11,20 @@ const COLOR = '#1a237e';
 const ROLE_OPTIONS = ['Super Admin', 'Operator SID', 'Pemerintah Desa', 'BPD', 'Lembaga Adat', 'Guru/Fasilitator', 'Nakes/Posyandu', 'Warga', 'Dinas PMD', 'Peneliti/Akademisi'];
 const STATUS_OPTIONS = ['Aktif', 'Nonaktif'];
 
-const usersData = [
+interface User {
+  id: number;
+  nama: string;
+  username: string;
+  password: string;
+  role: string;
+  status: string;
+  lastLogin: string;
+  isPendingAddition?: boolean;
+  recordId?: string;
+  operatorName?: string;
+}
+
+const usersData: User[] = [
   { id: 1, nama: 'Dr. Ahmad Surya', username: 'admin_super', password: '••••••••', role: 'Super Admin', status: 'Aktif', lastLogin: '11 Jun 2026, 09:15' },
   { id: 2, nama: 'Siti Nurhaliza', username: 'operator_sid01', password: '••••••••', role: 'Operator SID', status: 'Aktif', lastLogin: '11 Jun 2026, 08:30' },
   { id: 3, nama: 'Bapak Lurah Hasan', username: 'pemdes_hasan', password: '••••••••', role: 'Pemerintah Desa', status: 'Aktif', lastLogin: '10 Jun 2026, 14:20' },
@@ -39,7 +52,7 @@ const roleColors: Record<string, string> = {
 };
 
 export default function UserManagementPage() {
-  const [users, setUsers] = useState(usersData);
+  const [users, setUsers] = useState<User[]>(usersData);
   const [search, setSearch] = useState('');
   const [simulatedRole, setSimulatedRole] = useState<'admin' | 'operator'>('admin');
   
@@ -553,7 +566,7 @@ export default function UserManagementPage() {
       const add = pendingAdditions[username];
       if (!list.some(u => u.username === username)) {
         list.push({
-          id: `pending_${username}`,
+          id: -Math.abs(username.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)),
           nama: add.nama,
           username: add.username,
           password: '••••••••',

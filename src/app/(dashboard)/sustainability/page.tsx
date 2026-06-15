@@ -8,31 +8,9 @@ import {
   ResponsiveContainer, PieChart, Pie, Cell, Legend,
 } from 'recharts';
 import { Leaf, Sun, Trash2, Droplets, Award } from 'lucide-react';
+import { useState, useEffect } from 'react';
 
 const COLOR = '#2e7d32';
-
-const envTrend = [
-  { bln: 'Jan', air: 82, sampah: 55, solar: 28 },
-  { bln: 'Feb', air: 84, sampah: 57, solar: 30 },
-  { bln: 'Mar', air: 85, sampah: 58, solar: 31 },
-  { bln: 'Apr', air: 86, sampah: 60, solar: 32 },
-  { bln: 'Mei', air: 87, sampah: 61, solar: 33 },
-  { bln: 'Jun', air: 88, sampah: 62, solar: 35 },
-];
-
-const energiData = [
-  { name: 'Solar Panel', value: 35, color: '#E65100' },
-  { name: 'PLN Grid', value: 55, color: '#1565C0' },
-  { name: 'Genset Desa', value: 10, color: '#94a3b8' },
-];
-
-const sdgsProgress = [
-  { sdg: 'SDGs 6 — Air Bersih', capaian: 88, target: 90, color: '#1565C0' },
-  { sdg: 'SDGs 7 — Energi Bersih', capaian: 35, target: 50, color: '#E65100' },
-  { sdg: 'SDGs 11 — Kota Layak Huni', capaian: 72, target: 80, color: '#7B1FA2' },
-  { sdg: 'SDGs 13 — Iklim', capaian: 65, target: 70, color: '#2E7D32' },
-  { sdg: 'SDGs 15 — Ekosistem', capaian: 78, target: 80, color: '#00695C' },
-];
 
 const RADIAN = Math.PI / 180;
 const renderLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: any) => {
@@ -47,18 +25,49 @@ const renderLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: an
 };
 
 export default function SmartSustainabilityPage() {
+  const [envTrend, setEnvTrend] = useState<any[]>([]);
+  const [energiData, setEnergiData] = useState<any[]>([]);
+  const [sdgsProgress, setSdgsProgress] = useState<any[]>([]);
+  const [stats, setStats] = useState<any>({});
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const res = await fetch('/api/sustainability');
+      const result = await res.json();
+      if (result.success) {
+        setEnvTrend(result.data.envTrend);
+        setEnergiData(result.data.energiData);
+        setSdgsProgress(result.data.sdgsProgress);
+        setStats(result.data.stats);
+      }
+    } catch (error) {
+      console.error('Error loading sustainability data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  if (loading) {
+    return <div className="p-5">Loading...</div>;
+  }
+
   return (
     <div className="flex flex-col gap-5">
       <PageTitle fitur="Smart Sustainability" modul="Lintas Peran — Pemdes / Admin / Dinas" color={COLOR} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Skor Lingkungan" value="78" satuan="poin baik" barColor="green" progress={78}
+        <StatCard label="Skor Lingkungan" value={stats.skorLingkungan || 78} satuan="poin baik" barColor="green" progress={stats.skorLingkungan || 78}
           sparkData={[70,72,74,75,76,77,78]} trend="up" />
-        <StatCard label="Energi Terbarukan" value="35%" satuan="solar power" barColor="orange" progress={35}
+        <StatCard label="Energi Terbarukan" value={`${stats.energiTerbarukan || 35}%`} satuan="solar power" barColor="orange" progress={stats.energiTerbarukan || 35}
           sparkData={[25,27,28,30,31,33,35]} trend="up" />
-        <StatCard label="Pengelolaan Sampah" value="62%" satuan="terproses" barColor="purple" progress={62}
+        <StatCard label="Pengelolaan Sampah" value={`${stats.pengelolaanSampah || 62}%`} satuan="terproses" barColor="purple" progress={stats.pengelolaanSampah || 62}
           sparkData={[50,53,55,57,59,61,62]} trend="up" />
-        <StatCard label="Akses Air Bersih" value="88%" satuan="layanan layak" barColor="blue" progress={88}
+        <StatCard label="Akses Air Bersih" value={`${stats.aksesAirBersih || 88}%`} satuan="layanan layak" barColor="blue" progress={stats.aksesAirBersih || 88}
           sparkData={[80,82,83,84,85,87,88]} trend="up" />
       </div>
 
@@ -90,7 +99,7 @@ export default function SmartSustainabilityPage() {
                 <CartesianGrid strokeDasharray="3 3" stroke="#f0fdf4" />
                 <XAxis dataKey="bln" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: number) => [`${v}%`, '']} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}%`, '']} />
                 <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
                 <Area type="monotone" dataKey="air" name="Air Bersih (%)" stroke="#1565C0" strokeWidth={2} fill="url(#gradAir)" />
                 <Area type="monotone" dataKey="sampah" name="Sampah Terkelola (%)" stroke="#7B1FA2" strokeWidth={2} fill="url(#gradSampah)" />
@@ -113,7 +122,7 @@ export default function SmartSustainabilityPage() {
                 <Pie data={energiData} dataKey="value" cx="50%" cy="50%" innerRadius={40} outerRadius={68} label={renderLabel} labelLine={false}>
                   {energiData.map((e, i) => <Cell key={i} fill={e.color} />)}
                 </Pie>
-                <Tooltip formatter={(v: number) => `${v}%`} contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Tooltip formatter={(v: any) => `${v}%`} contentStyle={{ fontSize: 11, borderRadius: 8 }} />
               </PieChart>
             </ResponsiveContainer>
             <div className="w-full space-y-1.5 mt-2">
@@ -146,7 +155,7 @@ export default function SmartSustainabilityPage() {
                 <div className="flex items-center gap-3 text-xs">
                   <span style={{ color: s.color }} className="font-black">{s.capaian}%</span>
                   <span className="text-slate-400">/ target {s.target}%</span>
-                </div>
+                </div>  
               </div>
               <div className="w-full h-3 bg-slate-100 rounded-full overflow-hidden relative">
                 <div className="h-full rounded-full transition-all duration-700" style={{ width: `${s.capaian}%`, backgroundColor: s.color }} />
