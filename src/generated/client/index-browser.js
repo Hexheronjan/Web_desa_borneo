@@ -436,6 +436,7 @@ exports.Prisma.ModuleRecordScalarFieldEnum = {
   category: 'category',
   description: 'description',
   valueText: 'valueText',
+  valueBlob: 'valueBlob',
   status: 'status',
   createdBy: 'createdBy',
   createdAt: 'createdAt',

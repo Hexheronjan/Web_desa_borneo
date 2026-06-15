@@ -29175,6 +29175,7 @@ export namespace Prisma {
     category: string | null
     description: string | null
     valueText: string | null
+    valueBlob: string | null
     status: string | null
     createdBy: string | null
     createdAt: Date | null
@@ -29189,6 +29190,7 @@ export namespace Prisma {
     category: string | null
     description: string | null
     valueText: string | null
+    valueBlob: string | null
     status: string | null
     createdBy: string | null
     createdAt: Date | null
@@ -29203,6 +29205,7 @@ export namespace Prisma {
     category: number
     description: number
     valueText: number
+    valueBlob: number
     status: number
     createdBy: number
     createdAt: number
@@ -29219,6 +29222,7 @@ export namespace Prisma {
     category?: true
     description?: true
     valueText?: true
+    valueBlob?: true
     status?: true
     createdBy?: true
     createdAt?: true
@@ -29233,6 +29237,7 @@ export namespace Prisma {
     category?: true
     description?: true
     valueText?: true
+    valueBlob?: true
     status?: true
     createdBy?: true
     createdAt?: true
@@ -29247,6 +29252,7 @@ export namespace Prisma {
     category?: true
     description?: true
     valueText?: true
+    valueBlob?: true
     status?: true
     createdBy?: true
     createdAt?: true
@@ -29334,6 +29340,7 @@ export namespace Prisma {
     category: string | null
     description: string | null
     valueText: string | null
+    valueBlob: string | null
     status: string
     createdBy: string | null
     createdAt: Date
@@ -29365,6 +29372,7 @@ export namespace Prisma {
     category?: boolean
     description?: boolean
     valueText?: boolean
+    valueBlob?: boolean
     status?: boolean
     createdBy?: boolean
     createdAt?: boolean
@@ -29380,6 +29388,7 @@ export namespace Prisma {
     category?: boolean
     description?: boolean
     valueText?: boolean
+    valueBlob?: boolean
     status?: boolean
     createdBy?: boolean
     createdAt?: boolean
@@ -29398,6 +29407,7 @@ export namespace Prisma {
       category: string | null
       description: string | null
       valueText: string | null
+      valueBlob: string | null
       status: string
       createdBy: string | null
       createdAt: Date
@@ -29778,6 +29788,7 @@ export namespace Prisma {
     readonly category: FieldRef<"ModuleRecord", 'String'>
     readonly description: FieldRef<"ModuleRecord", 'String'>
     readonly valueText: FieldRef<"ModuleRecord", 'String'>
+    readonly valueBlob: FieldRef<"ModuleRecord", 'String'>
     readonly status: FieldRef<"ModuleRecord", 'String'>
     readonly createdBy: FieldRef<"ModuleRecord", 'String'>
     readonly createdAt: FieldRef<"ModuleRecord", 'DateTime'>
@@ -30467,6 +30478,7 @@ export namespace Prisma {
     category: 'category',
     description: 'description',
     valueText: 'valueText',
+    valueBlob: 'valueBlob',
     status: 'status',
     createdBy: 'createdBy',
     createdAt: 'createdAt',
@@ -32617,6 +32629,7 @@ export namespace Prisma {
     category?: StringNullableFilter<"ModuleRecord"> | string | null
     description?: StringNullableFilter<"ModuleRecord"> | string | null
     valueText?: StringNullableFilter<"ModuleRecord"> | string | null
+    valueBlob?: StringNullableFilter<"ModuleRecord"> | string | null
     status?: StringFilter<"ModuleRecord"> | string
     createdBy?: StringNullableFilter<"ModuleRecord"> | string | null
     createdAt?: DateTimeFilter<"ModuleRecord"> | Date | string
@@ -32631,6 +32644,7 @@ export namespace Prisma {
     category?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     valueText?: SortOrderInput | SortOrder
+    valueBlob?: SortOrderInput | SortOrder
     status?: SortOrder
     createdBy?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -32648,6 +32662,7 @@ export namespace Prisma {
     category?: StringNullableFilter<"ModuleRecord"> | string | null
     description?: StringNullableFilter<"ModuleRecord"> | string | null
     valueText?: StringNullableFilter<"ModuleRecord"> | string | null
+    valueBlob?: StringNullableFilter<"ModuleRecord"> | string | null
     status?: StringFilter<"ModuleRecord"> | string
     createdBy?: StringNullableFilter<"ModuleRecord"> | string | null
     createdAt?: DateTimeFilter<"ModuleRecord"> | Date | string
@@ -32662,6 +32677,7 @@ export namespace Prisma {
     category?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     valueText?: SortOrderInput | SortOrder
+    valueBlob?: SortOrderInput | SortOrder
     status?: SortOrder
     createdBy?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -32682,6 +32698,7 @@ export namespace Prisma {
     category?: StringNullableWithAggregatesFilter<"ModuleRecord"> | string | null
     description?: StringNullableWithAggregatesFilter<"ModuleRecord"> | string | null
     valueText?: StringNullableWithAggregatesFilter<"ModuleRecord"> | string | null
+    valueBlob?: StringNullableWithAggregatesFilter<"ModuleRecord"> | string | null
     status?: StringWithAggregatesFilter<"ModuleRecord"> | string
     createdBy?: StringNullableWithAggregatesFilter<"ModuleRecord"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ModuleRecord"> | Date | string
@@ -34886,6 +34903,7 @@ export namespace Prisma {
     category?: string | null
     description?: string | null
     valueText?: string | null
+    valueBlob?: string | null
     status?: string
     createdBy?: string | null
     createdAt?: Date | string
@@ -34900,6 +34918,7 @@ export namespace Prisma {
     category?: string | null
     description?: string | null
     valueText?: string | null
+    valueBlob?: string | null
     status?: string
     createdBy?: string | null
     createdAt?: Date | string
@@ -34914,6 +34933,7 @@ export namespace Prisma {
     category?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     valueText?: NullableStringFieldUpdateOperationsInput | string | null
+    valueBlob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34928,6 +34948,7 @@ export namespace Prisma {
     category?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     valueText?: NullableStringFieldUpdateOperationsInput | string | null
+    valueBlob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34942,6 +34963,7 @@ export namespace Prisma {
     category?: string | null
     description?: string | null
     valueText?: string | null
+    valueBlob?: string | null
     status?: string
     createdBy?: string | null
     createdAt?: Date | string
@@ -34956,6 +34978,7 @@ export namespace Prisma {
     category?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     valueText?: NullableStringFieldUpdateOperationsInput | string | null
+    valueBlob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -34970,6 +34993,7 @@ export namespace Prisma {
     category?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     valueText?: NullableStringFieldUpdateOperationsInput | string | null
+    valueBlob?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36604,6 +36628,7 @@ export namespace Prisma {
     category?: SortOrder
     description?: SortOrder
     valueText?: SortOrder
+    valueBlob?: SortOrder
     status?: SortOrder
     createdBy?: SortOrder
     createdAt?: SortOrder
@@ -36618,6 +36643,7 @@ export namespace Prisma {
     category?: SortOrder
     description?: SortOrder
     valueText?: SortOrder
+    valueBlob?: SortOrder
     status?: SortOrder
     createdBy?: SortOrder
     createdAt?: SortOrder
@@ -36632,6 +36658,7 @@ export namespace Prisma {
     category?: SortOrder
     description?: SortOrder
     valueText?: SortOrder
+    valueBlob?: SortOrder
     status?: SortOrder
     createdBy?: SortOrder
     createdAt?: SortOrder

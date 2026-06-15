@@ -19,6 +19,7 @@ interface SuratApplication {
   title: string;
   status: string;
   valueText: string | null;
+  valueBlob: string | null;
   createdAt: string;
 }
 
@@ -40,6 +41,7 @@ export default function SuratOnlinePage() {
           title: r.title || 'Tanpa Judul',
           status: r.status || 'Proses Validasi',
           valueText: r.valueText || null,
+          valueBlob: r.valueBlob || null,
           createdAt: new Date(r.createdAt).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })
         })));
       }
@@ -131,7 +133,7 @@ export default function SuratOnlinePage() {
                     <span className="text-[10px] text-indigo-700 font-mono font-bold block mt-0.5">{a.id} • {a.createdAt}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    {(a.status === 'Selesai' || a.status === 'Tervalidasi') && a.valueText && (
+                    {(a.status === 'Selesai' || a.status === 'Tervalidasi') && (a.valueBlob || a.valueText) && (
                       <button
                         onClick={async () => {
                           try {

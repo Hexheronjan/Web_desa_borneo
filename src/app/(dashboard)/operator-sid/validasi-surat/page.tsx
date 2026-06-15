@@ -14,6 +14,7 @@ interface SuratSubmission {
   category: string;
   description: string;
   valueText: string | null;
+  valueBlob: string | null;
   status: string;
   createdBy: string;
   createdAt: string;
@@ -40,6 +41,7 @@ export default function ValidasiSuratPage() {
           category: r.category || 'Umum',
           description: r.description || '',
           valueText: r.valueText || null,
+          valueBlob: r.valueBlob || null,
           status: r.status || 'Proses Validasi',
           createdBy: r.createdBy || 'Warga',
           createdAt: new Date(r.createdAt).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })
@@ -80,7 +82,7 @@ export default function ValidasiSuratPage() {
       formData.append('file', file);
       formData.append('id', id);
 
-      // Upload the file first
+      // Upload the file first (convert to base64)
       const uploadRes = await fetch('/api/surat-online/upload', {
         method: 'POST',
         body: formData
@@ -92,15 +94,20 @@ export default function ValidasiSuratPage() {
       }
 
       const uploadData = await uploadRes.json();
-      
-      // Update the database with the file path
+
+      if (!uploadData.success || !uploadData.base64) {
+        throw new Error('Gagal convert file ke base64');
+      }
+
+      // Update the database with the base64 data
       const res = await fetch('/api/surat-online', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           id,
           modulePath: '/warga/surat-online',
-          valueText: uploadData.filePath,
+          valueBlob: uploadData.base64,
+          valueText: 'PDF stored as base64',
           status: 'Selesai'
         })
       });

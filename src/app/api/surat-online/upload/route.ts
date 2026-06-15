@@ -1,5 +1,4 @@
 import { NextResponse } from "next/server";
-import { put } from '@vercel/blob';
 
 export async function POST(request: Request) {
   try {
@@ -19,28 +18,17 @@ export async function POST(request: Request) {
       return NextResponse.json({ success: false, error: "Hanya file PDF yang diperbolehkan" }, { status: 400 });
     }
 
-    // Check if Vercel Blob is configured
-    if (!process.env.BLOB_READ_WRITE_TOKEN) {
-      return NextResponse.json({ 
-        success: false, 
-        error: "Vercel Blob belum dikonfigurasi. Silakan tambahkan BLOB_READ_WRITE_TOKEN di environment variables." 
-      }, { status: 500 });
-    }
+    // Convert file to base64
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    const base64 = buffer.toString('base64');
 
-    // Generate unique filename
-    const timestamp = Date.now();
-    const filename = `surat-${id}-${timestamp}.pdf`;
-
-    // Upload to Vercel Blob
-    const blob = await put(filename, file, {
-      access: 'public',
-    });
-
-    console.log(`PDF uploaded successfully to Vercel Blob: ${blob.url}`);
+    console.log(`PDF converted to base64, size: ${base64.length} characters`);
 
     return NextResponse.json({ 
       success: true, 
-      filePath: blob.url 
+      base64: base64,
+      size: base64.length
     });
 
   } catch (error: any) {

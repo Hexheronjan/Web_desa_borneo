@@ -435,7 +435,8 @@ model ModuleRecord {
   title       String
   category    String?
   description String?  @db.Text
-  valueText   String?
+  valueText   String?  @db.Text
+  valueBlob   String?  @db.LongText
   status      String   @default("Baru")
   createdBy   String?
   createdAt   DateTime @default(now())

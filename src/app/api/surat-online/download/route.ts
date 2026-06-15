@@ -12,7 +12,7 @@ export async function GET(request: Request) {
 
     // Get surat data from database
     const surat = await prisma.$queryRaw<any[]>`
-      SELECT valueText, title
+      SELECT valueBlob, valueText, title
       FROM ModuleRecord
       WHERE id = ${id} AND modulePath = '/warga/surat-online'
       LIMIT 1
@@ -23,26 +23,40 @@ export async function GET(request: Request) {
     }
 
     const suratData = surat[0];
-    const filePath = suratData.valueText;
+    const base64Data = suratData.valueBlob;
+    const title = suratData.title;
 
-    if (!filePath) {
-      return NextResponse.json({ success: false, error: "File PDF tidak tersedia" }, { status: 404 });
+    // Check if we have base64 data
+    if (!base64Data) {
+      // Check if there's old URL format
+      const filePath = suratData.valueText;
+      if (filePath && (filePath.startsWith('http://') || filePath.startsWith('https://'))) {
+        console.log(`Redirecting to external URL: ${filePath}`);
+        return NextResponse.redirect(filePath);
+      }
+
+      return NextResponse.json({ success: false, error: "File PDF tidak tersedia. Silakan upload ulang oleh operator." }, { status: 404 });
     }
 
-    // Handle different file path formats
-    if (filePath.startsWith('http://') || filePath.startsWith('https://')) {
-      // If it's a URL (Vercel Blob or external), redirect to it
-      console.log(`Redirecting to external URL: ${filePath}`);
-      return NextResponse.redirect(filePath);
-    }
+    // Convert base64 back to buffer
+    const fileBuffer = Buffer.from(base64Data, 'base64');
 
-    // For local filesystem paths (won't work in Vercel production)
-    console.error(`Local filesystem path detected (won't work in Vercel): ${filePath}`);
-    return NextResponse.json({ 
-      success: false, 
-      error: "File menggunakan local storage yang tidak didukung di Vercel. Silakan upload ulang file PDF." 
-    }, { status: 400 });
+    console.log(`Downloading PDF from base64, size: ${fileBuffer.length} bytes`);
 
+    // Generate clean filename
+    const cleanFilename = title ? `${title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf` : 'surat.pdf';
+
+    // Return file with proper headers for download
+    return new NextResponse(fileBuffer, {
+      headers: {
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="${encodeURIComponent(cleanFilename)}"`,
+        'Content-Length': fileBuffer.length.toString(),
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
+    });
   } catch (error: any) {
     console.error('Error downloading PDF:', error);
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
