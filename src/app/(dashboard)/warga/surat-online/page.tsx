@@ -131,13 +131,26 @@ export default function SuratOnlinePage() {
                     <span className="text-[10px] text-indigo-700 font-mono font-bold block mt-0.5">{a.id} • {a.createdAt}</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    {a.status === 'Selesai' && a.valueText && (
+                    {(a.status === 'Selesai' || a.status === 'Tervalidasi') && a.valueText && (
                       <button
-                        onClick={() => {
-                          const link = document.createElement('a');
-                          link.href = `/api/surat-online/download?id=${a.id}`;
-                          link.download = true;
-                          link.click();
+                        onClick={async () => {
+                          try {
+                            const response = await fetch(`/api/surat-online/download?id=${a.id}`);
+                            if (!response.ok) {
+                              throw new Error('Gagal mendownload file');
+                            }
+                            const blob = await response.blob();
+                            const url = window.URL.createObjectURL(blob);
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.download = `${a.title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                            window.URL.revokeObjectURL(url);
+                          } catch (error) {
+                            alert('Gagal mendownload PDF: ' + (error as Error).message);
+                          }
                         }}
                         className="px-2 py-1 text-xs bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center gap-1"
                       >

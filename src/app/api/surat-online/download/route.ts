@@ -53,6 +53,9 @@ export async function GET(request: Request) {
     // Read file
     const fileBuffer = fs.readFileSync(pdfPath);
 
+    // Log file info for debugging
+    console.log(`Downloading PDF: ${pdfPath}, size: ${fileBuffer.length} bytes`);
+
     // Extract filename from path
     const filename = path.basename(pdfPath);
     const cleanFilename = suratData.title ? `${suratData.title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf` : filename;
@@ -61,8 +64,11 @@ export async function GET(request: Request) {
     return new NextResponse(fileBuffer, {
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': `attachment; filename="${cleanFilename}"`,
+        'Content-Disposition': `attachment; filename="${encodeURIComponent(cleanFilename)}"`,
         'Content-Length': fileBuffer.length.toString(),
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
       },
     });
   } catch (error: any) {
