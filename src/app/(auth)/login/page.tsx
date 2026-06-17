@@ -233,7 +233,7 @@ export default function LoginPage() {
                   <span className="px-1.5 py-0.5 bg-sky-100 text-sky-700 rounded font-black text-[9px]">DINAS PMD</span>
                   <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
                 </div>
-                <span className="font-mono text-slate-600 font-bold truncate">dinaspmd@borneo.id</span>
+                <span className="font-mono text-slate-600 font-bold truncate">dinas@borneo.id</span>
               </div>
 
               {/* PENELITI */}

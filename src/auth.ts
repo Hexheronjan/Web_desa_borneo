@@ -43,7 +43,7 @@ export const authConfig = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
-        
+
         try {
           const user = await prisma.user.findUnique({
             where: { email: credentials.email as string }
@@ -55,6 +55,10 @@ export const authConfig = {
 
           if (user.password !== credentials.password) {
             throw new Error("KATA_SANDI_SALAH");
+          }
+
+          if (user.status !== "Aktif") {
+            throw new Error("AKUN_NONAKTIF");
           }
 
           return {
