@@ -405,6 +405,7 @@ enum Role {
   bpd
   dinas_pmd
   peneliti
+  pengguna_layanan
 }
 
 enum StatusWarga {

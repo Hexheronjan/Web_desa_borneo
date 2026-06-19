@@ -4,6 +4,7 @@ import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Database, Plus, RefreshCw, Trash2, CheckCircle2 } from "lucide-react";
 import { getFiturFromPath, getRoleFromPath } from "@/lib/modul-config";
+import { useSession } from "next-auth/react";
 
 type ModuleRecord = {
   id: string;
@@ -20,7 +21,8 @@ const statusFlow = ["Baru", "Diproses", "Selesai"];
 
 export function ModuleRecordsPanel() {
   const pathname = usePathname();
-  const roleInfo = useMemo(() => getRoleFromPath(pathname), [pathname]);
+  const { data: session } = useSession();
+  const roleInfo = useMemo(() => getRoleFromPath(pathname, session?.user?.role), [pathname, session?.user?.role]);
   const moduleName = useMemo(() => getFiturFromPath(pathname, roleInfo), [pathname, roleInfo]);
   const [records, setRecords] = useState<ModuleRecord[]>([]);
   const [loading, setLoading] = useState(false);

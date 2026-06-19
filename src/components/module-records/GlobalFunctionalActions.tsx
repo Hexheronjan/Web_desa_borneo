@@ -4,6 +4,7 @@ import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { CheckCircle2, Pencil, Plus, Trash2 } from "lucide-react";
+import { useSession } from "next-auth/react";
 import { getFiturFromPath, getRoleFromPath } from "@/lib/modul-config";
 
 type ActionMode = "Tambah" | "Edit" | "Hapus" | "Export" | "Proses";
@@ -104,7 +105,8 @@ function appendSyntheticRow(action: SavedAction) {
 
 export function GlobalFunctionalActions() {
   const pathname = usePathname();
-  const roleInfo = useMemo(() => getRoleFromPath(pathname), [pathname]);
+  const { data: session } = useSession();
+  const roleInfo = useMemo(() => getRoleFromPath(pathname, session?.user?.role), [pathname, session?.user?.role]);
   const moduleName = useMemo(() => getFiturFromPath(pathname, roleInfo), [pathname, roleInfo]);
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<ActionMode>("Proses");

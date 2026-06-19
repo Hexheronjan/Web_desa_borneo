@@ -56,8 +56,32 @@ function getItemIcon(label: string) {
 
 export function AppSidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
-  const { data: session } = useSession();
-  const roleInfo = getRoleFromPath(pathname);
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return (
+      <aside className="w-72 bg-[#062342] text-white flex flex-col h-full flex-shrink-0 shadow-xl relative animate-pulse">
+        <div className="px-5 py-5 flex items-center justify-between border-b border-white/10">
+          <div className="flex items-center gap-2">
+            <div className="p-2 bg-white/10 rounded-lg">
+              <Leaf size={20} />
+            </div>
+            <div>
+              <span className="font-black text-lg block leading-tight">APL-SLV BORNEO</span>
+              <span className="text-xs opacity-80 block leading-tight">Smart Living Village</span>
+            </div>
+          </div>
+        </div>
+        <div className="flex-1 p-5 space-y-4">
+          <div className="h-4 bg-white/10 rounded w-2/3"></div>
+          <div className="h-4 bg-white/10 rounded w-1/2"></div>
+          <div className="h-4 bg-white/10 rounded w-3/4"></div>
+        </div>
+      </aside>
+    );
+  }
+
+  const roleInfo = getRoleFromPath(pathname, session?.user?.role);
   const sidebarItems = [
     { label: "Dashboard", path: roleInfo.dashboardPath, group: "MENU UTAMA" },
     ...roleInfo.sidebarItems.filter((item) => item.path !== roleInfo.dashboardPath),

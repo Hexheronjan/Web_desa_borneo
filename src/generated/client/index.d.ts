@@ -178,7 +178,8 @@ export namespace $Enums {
   operator_sid: 'operator_sid',
   bpd: 'bpd',
   dinas_pmd: 'dinas_pmd',
-  peneliti: 'peneliti'
+  peneliti: 'peneliti',
+  pengguna_layanan: 'pengguna_layanan'
 };
 
 export type Role = (typeof Role)[keyof typeof Role]

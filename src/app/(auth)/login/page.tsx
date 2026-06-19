@@ -153,102 +153,40 @@ export default function LoginPage() {
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <h3 className="text-sm font-bold text-emerald-900 uppercase tracking-widest">Akses Akun Demo (Live Data)</h3>
             </div>
+            <p className="text-[10px] text-slate-500 mb-3">Klik kartu untuk mengisi form login otomatis ↓</p>
             
             <div className="grid grid-cols-2 gap-2">
-              {/* SUPER ADMIN */}
-              <div className="flex flex-col p-2 bg-white rounded-lg border border-blue-100 shadow-sm hover:border-blue-300 transition-all text-[10px]">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="px-1.5 py-0.5 bg-blue-100 text-blue-700 rounded font-black text-[9px]">ADMIN</span>
-                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
-                </div>
-                <span className="font-mono text-slate-600 font-bold truncate">admin@borneo.id</span>
-              </div>
-
-              {/* OPERATOR SID */}
-              <div className="flex flex-col p-2 bg-white rounded-lg border border-teal-100 shadow-sm hover:border-teal-300 transition-all text-[10px]">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="px-1.5 py-0.5 bg-teal-100 text-teal-700 rounded font-black text-[9px]">OPERATOR</span>
-                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
-                </div>
-                <span className="font-mono text-slate-600 font-bold truncate">operator@borneo.id</span>
-              </div>
-
-              {/* PEMDES */}
-              <div className="flex flex-col p-2 bg-white rounded-lg border border-indigo-100 shadow-sm hover:border-indigo-300 transition-all text-[10px]">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="px-1.5 py-0.5 bg-indigo-100 text-indigo-700 rounded font-black text-[9px]">PEMDES</span>
-                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
-                </div>
-                <span className="font-mono text-slate-600 font-bold truncate">pemdes@borneo.id</span>
-              </div>
-
-              {/* BPD */}
-              <div className="flex flex-col p-2 bg-white rounded-lg border border-violet-100 shadow-sm hover:border-violet-300 transition-all text-[10px]">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="px-1.5 py-0.5 bg-violet-100 text-violet-700 rounded font-black text-[9px]">BPD</span>
-                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
-                </div>
-                <span className="font-mono text-slate-600 font-bold truncate">bpd@borneo.id</span>
-              </div>
-
-              {/* LEMBAGA ADAT */}
-              <div className="flex flex-col p-2 bg-white rounded-lg border border-emerald-100 shadow-sm hover:border-emerald-300 transition-all text-[10px]">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="px-1.5 py-0.5 bg-emerald-100 text-emerald-700 rounded font-black text-[9px]">ADAT</span>
-                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
-                </div>
-                <span className="font-mono text-slate-600 font-bold truncate">adat@borneo.id</span>
-              </div>
-
-              {/* GURU */}
-              <div className="flex flex-col p-2 bg-white rounded-lg border border-purple-100 shadow-sm hover:border-purple-300 transition-all text-[10px]">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="px-1.5 py-0.5 bg-purple-100 text-purple-700 rounded font-black text-[9px]">GURU</span>
-                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
-                </div>
-                <span className="font-mono text-slate-600 font-bold truncate">guru@borneo.id</span>
-              </div>
-
-              {/* NAKES */}
-              <div className="flex flex-col p-2 bg-white rounded-lg border border-orange-100 shadow-sm hover:border-orange-300 transition-all text-[10px]">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 rounded font-black text-[9px]">NAKES</span>
-                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
-                </div>
-                <span className="font-mono text-slate-600 font-bold truncate">nakes@borneo.id</span>
-              </div>
-
-              {/* WARGA */}
-              <div className="flex flex-col p-2 bg-white rounded-lg border border-pink-100 shadow-sm hover:border-pink-300 transition-all text-[10px]">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="px-1.5 py-0.5 bg-pink-100 text-pink-700 rounded font-black text-[9px]">WARGA</span>
-                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
-                </div>
-                <span className="font-mono text-slate-600 font-bold truncate">warga@borneo.id</span>
-              </div>
-
-              {/* DINAS PMD */}
-              <div className="flex flex-col p-2 bg-white rounded-lg border border-sky-100 shadow-sm hover:border-sky-300 transition-all text-[10px]">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="px-1.5 py-0.5 bg-sky-100 text-sky-700 rounded font-black text-[9px]">DINAS PMD</span>
-                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
-                </div>
-                <span className="font-mono text-slate-600 font-bold truncate">dinas@borneo.id</span>
-              </div>
-
-              {/* PENELITI */}
-              <div className="flex flex-col p-2 bg-white rounded-lg border border-slate-200 shadow-sm hover:border-slate-300 transition-all text-[10px]">
-                <div className="flex items-center justify-between mb-1">
-                  <span className="px-1.5 py-0.5 bg-slate-100 text-slate-700 rounded font-black text-[9px]">PENELITI</span>
-                  <span className="text-[8px] text-slate-400 font-medium">Password: password123</span>
-                </div>
-                <span className="font-mono text-slate-600 font-bold truncate">peneliti@borneo.id</span>
-              </div>
+              {[
+                { label: 'ADMIN', email: 'admin@borneo.id', border: 'border-blue-100 hover:border-blue-400', badge: 'bg-blue-100 text-blue-700' },
+                { label: 'OPERATOR', email: 'operator@borneo.id', border: 'border-teal-100 hover:border-teal-400', badge: 'bg-teal-100 text-teal-700' },
+                { label: 'PEMDES', email: 'pemdes@borneo.id', border: 'border-indigo-100 hover:border-indigo-400', badge: 'bg-indigo-100 text-indigo-700' },
+                { label: 'BPD', email: 'bpd@borneo.id', border: 'border-violet-100 hover:border-violet-400', badge: 'bg-violet-100 text-violet-700' },
+                { label: 'ADAT', email: 'adat@borneo.id', border: 'border-emerald-100 hover:border-emerald-400', badge: 'bg-emerald-100 text-emerald-700' },
+                { label: 'GURU', email: 'guru@borneo.id', border: 'border-purple-100 hover:border-purple-400', badge: 'bg-purple-100 text-purple-700' },
+                { label: 'NAKES', email: 'nakes@borneo.id', border: 'border-orange-100 hover:border-orange-400', badge: 'bg-orange-100 text-orange-700' },
+                { label: 'WARGA', email: 'warga@borneo.id', border: 'border-pink-100 hover:border-pink-400', badge: 'bg-pink-100 text-pink-700' },
+                { label: 'DINAS PMD', email: 'dinas@borneo.id', border: 'border-sky-100 hover:border-sky-400', badge: 'bg-sky-100 text-sky-700' },
+                { label: 'PENELITI', email: 'peneliti@borneo.id', border: 'border-slate-200 hover:border-slate-400', badge: 'bg-slate-100 text-slate-700' },
+                { label: 'LAYANAN', email: 'layanan@borneo.id', border: 'border-green-100 hover:border-green-500 col-span-2', badge: 'bg-green-100 text-green-700' },
+              ].map((demo) => (
+                <button
+                  key={demo.email}
+                  type="button"
+                  onClick={() => { setEmail(demo.email); setPassword('password123'); }}
+                  className={`flex flex-col p-2 bg-white rounded-lg border shadow-sm transition-all text-[10px] cursor-pointer text-left active:scale-95 ${demo.border} ${demo.label === 'LAYANAN' ? 'col-span-2' : ''}`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <span className={`px-1.5 py-0.5 rounded font-black text-[9px] ${demo.badge}`}>{demo.label}</span>
+                    <span className="text-[8px] text-emerald-600 font-bold">▶ Klik isi</span>
+                  </div>
+                  <span className="font-mono text-slate-600 font-bold truncate">{demo.email}</span>
+                </button>
+              ))}
             </div>
 
             <div className="mt-4 flex items-center gap-2 text-[10px] text-slate-400 italic bg-white/50 p-2 rounded-lg border border-dashed border-slate-200">
               <div className="w-1 h-1 rounded-full bg-slate-300" />
-              <span>Gunakan Password <b>password123</b> untuk mencoba semua akun di atas.</span>
+              <span>Semua akun menggunakan Password <b>password123</b></span>
             </div>
           </div>
 

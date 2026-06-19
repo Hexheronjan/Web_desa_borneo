@@ -156,6 +156,15 @@ async function main() {
       status: 'Aktif',
       desaId: desa.id,
     },
+    {
+      name: 'Andi Saputra',
+      email: 'layanan@borneo.id',
+      username: 'layanan_andi',
+      password: 'password123',
+      role: 'pengguna_layanan',
+      status: 'Aktif',
+      desaId: desa.id,
+    },
   ];
 
   const createdUsers = await Promise.all(

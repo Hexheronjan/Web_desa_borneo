@@ -11,7 +11,8 @@ export type RoleKey =
   | "nakes_posyandu"
   | "warga"
   | "dinas_pmd"
-  | "peneliti";
+  | "peneliti"
+  | "pengguna_layanan";
 
 export interface SidebarItem {
   label: string;
@@ -186,6 +187,45 @@ export const roleConfig: Record<RoleKey, RoleConfig> = {
       { label: "Consistency Ratio", path: "/peneliti/consistency-ratio", group: "DSS ANALYTICS" },
       { label: "Penilaian Maturity", path: "/peneliti/penilaian-maturity", group: "MATURITY ASSESSMENT" },
       { label: "UAT dan SUS", path: "/peneliti/uat-sus", group: "EVALUASI SISTEM" },
+    ],
+  },
+  
+  // === PENGGUNA LAYANAN (SDGs 3, 4 & 18) ===
+  pengguna_layanan: {
+    key: "pengguna_layanan",
+    nama: "Pengguna Layanan",
+    warna: "#2e7d32",
+    dashboardPath: "/pengguna-layanan",
+    sidebarItems: [
+      // SDGs 3 - DESA SEHAT
+      { label: "Posyandu Digital", path: "/sehat/posyandu", group: "SDGS 3 - DESA SEHAT" },
+      { label: "Jadwal Kesehatan", path: "/sehat/laporan-kesehatan", group: "SDGS 3 - DESA SEHAT" },
+      { label: "Monitoring Kesehatan Keluarga", path: "/sehat/monitoring", group: "SDGS 3 - DESA SEHAT" },
+      { label: "Riwayat Kesehatan", path: "/sehat/rekam-medis", group: "SDGS 3 - DESA SEHAT" },
+      { label: "Edukasi Kesehatan", path: "/sehat/stunting", group: "SDGS 3 - DESA SEHAT" },
+      { label: "Telekonsultasi", path: "/sehat/telemedicine", group: "SDGS 3 - DESA SEHAT" },
+      
+      // SDGs 4 - PENDIDIKAN BERKUALITAS
+      { label: "Literasi Digital", path: "/belajar/e-learning", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
+      { label: "Kelas Desa", path: "/belajar/kelas-virtual", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
+      { label: "Pelatihan Online", path: "/belajar/platform-pembelajaran", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
+      { label: "Sertifikasi", path: "/belajar/laporan-pembelajaran", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
+      { label: "Riwayat Pelatihan", path: "/belajar/pelatihan-guru", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
+      { label: "Materi Pembelajaran", path: "/belajar/pusat-literasi", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
+      
+      // SDGs 18 - KELEMBAGAAN & BUDAYA
+      { label: "Informasi Adat", path: "/adat/kelembagaan-adat", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+      { label: "Kalender Adat", path: "/adat/kalender-adat", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+      { label: "Arsip Budaya", path: "/adat/arsip", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+      { label: "Forum Desa", path: "/warga/aspirasi", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+      { label: "Musyawarah Digital", path: "/adat/musyawarah", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+      { label: "Partisipasi Musyawarah", path: "/adat/musyawarah-adat", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+      
+      // PROFIL PENGGUNA
+      { label: "Profil Saya", path: "/warga/profil-desa", group: "PROFIL PENGGUNA" },
+      { label: "Riwayat Layanan", path: "/warga/survey-qol", group: "PROFIL PENGGUNA" },
+      { label: "Notifikasi", path: "/warga/notifikasi-desa", group: "PROFIL PENGGUNA" },
+      { label: "Bantuan & Panduan", path: "/warga/bantuan", group: "PROFIL PENGGUNA" },
     ],
   },
 };
@@ -381,7 +421,39 @@ export function getRoleKey(dbRole: string): RoleKey {
 }
 
 // Get role config from path
-export function getRoleFromPath(pathname: string): RoleConfig {
+export function getRoleFromPath(pathname: string, userRole?: string): RoleConfig {
+  // === PRIORITAS 1: Cek apakah path ada di sidebar role yang sedang login ===
+  // Ini memastikan pengguna_layanan (dan role lain) yang mengakses shared routes
+  // seperti /warga, /adat, /sehat, /belajar tetap mendapat sidebar yang benar.
+  if (userRole && userRole in roleConfig) {
+    const userConfig = roleConfig[userRole as RoleKey];
+
+    // Cek apakah ini adalah dashboard path role tersebut
+    if (
+      pathname === userConfig.dashboardPath ||
+      pathname.startsWith(userConfig.dashboardPath + "/")
+    ) {
+      return userConfig;
+    }
+
+    // Cek apakah path saat ini ada di salah satu sidebar item role tersebut
+    const isInUserSidebar = userConfig.sidebarItems.some(
+      (item) =>
+        pathname === item.path ||
+        (item.path !== "/" && pathname.startsWith(item.path + "/"))
+    );
+    if (isInUserSidebar) {
+      return userConfig;
+    }
+  }
+
+  // === PRIORITAS 1.5: Jika userRole terdefinisi dan BUKAN admin_super,
+  // maka paksa gunakan roleConfig dari userRole tersebut (tidak boleh beralih ke role lain).
+  if (userRole && userRole in roleConfig && userRole !== "admin_super") {
+    return roleConfig[userRole as RoleKey];
+  }
+
+  // === PRIORITAS 2: Deteksi berdasarkan prefix path (fallback) ===
   if (pathname.startsWith("/admin")) return roleConfig.admin_super;
   if (pathname.startsWith("/operator-sid")) return roleConfig.operator_sid;
   if (pathname.startsWith("/pemdes")) return roleConfig.pemerintah_desa;
@@ -392,7 +464,13 @@ export function getRoleFromPath(pathname: string): RoleConfig {
   if (pathname.startsWith("/warga")) return roleConfig.warga;
   if (pathname.startsWith("/dinas-pmd")) return roleConfig.dinas_pmd;
   if (pathname.startsWith("/peneliti")) return roleConfig.peneliti;
+  if (pathname.startsWith("/pengguna-layanan")) return roleConfig.pengguna_layanan;
   if (pathname.startsWith("/sustainability")) return roleConfig.admin_super;
+
+  // === PRIORITAS 3: Kembalikan config userRole sebagai fallback terakhir ===
+  if (userRole && userRole in roleConfig) {
+    return roleConfig[userRole as RoleKey];
+  }
   return roleConfig.warga;
 }
 

@@ -486,7 +486,8 @@ exports.Role = exports.$Enums.Role = {
   operator_sid: 'operator_sid',
   bpd: 'bpd',
   dinas_pmd: 'dinas_pmd',
-  peneliti: 'peneliti'
+  peneliti: 'peneliti',
+  pengguna_layanan: 'pengguna_layanan'
 };
 
 exports.JenisKelamin = exports.$Enums.JenisKelamin = {

@@ -11,7 +11,7 @@ export function AppHeader() {
   const pathname = usePathname();
   const { data: session } = useSession();
   const [now, setNow] = useState<Date | null>(null);
-  const roleInfo = getRoleFromPath(pathname);
+  const roleInfo = getRoleFromPath(pathname, session?.user?.role);
   const fitur = getFiturFromPath(pathname, roleInfo);
   const userName = session?.user?.name ?? "User";
   const year = now?.getFullYear() ?? new Date().getFullYear();

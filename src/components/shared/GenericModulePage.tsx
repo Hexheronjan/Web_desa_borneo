@@ -6,11 +6,13 @@ import { Activity, ClipboardCheck, Database, FileText } from "lucide-react";
 import { ModuleRecordsPanel } from "@/components/module-records/ModuleRecordsPanel";
 import { PageTitle } from "@/components/shared/PageTitle";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useSession } from "next-auth/react";
 import { getFiturFromPath, getRoleFromPath } from "@/lib/modul-config";
 
 export function GenericModulePage() {
   const pathname = usePathname();
-  const roleInfo = useMemo(() => getRoleFromPath(pathname), [pathname]);
+  const { data: session } = useSession();
+  const roleInfo = useMemo(() => getRoleFromPath(pathname, session?.user?.role), [pathname, session?.user?.role]);
   const fitur = useMemo(() => getFiturFromPath(pathname, roleInfo), [pathname, roleInfo]);
 
   const quickStats = [

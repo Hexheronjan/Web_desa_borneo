@@ -6,8 +6,8 @@ import { useSession } from "next-auth/react";
 
 export function RoleTabs() {
   const pathname = usePathname();
-  const roleInfo = getRoleFromPath(pathname);
   const { data: session } = useSession();
+  const roleInfo = getRoleFromPath(pathname, session?.user?.role);
   const userRole = session?.user?.role || "guest";
 
   const roleLabels: Record<string, string> = {

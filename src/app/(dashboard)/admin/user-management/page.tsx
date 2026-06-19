@@ -9,7 +9,7 @@ import { UserPlus, Search, Download, Edit, Trash2, Eye, Shield, CheckCircle2, Al
 import { Document, Page, Text, View, StyleSheet, pdf } from '@react-pdf/renderer';
 
 const COLOR = '#1a237e';
-const ROLE_OPTIONS = ['Super Admin', 'Operator SID', 'Pemerintah Desa', 'BPD', 'Lembaga Adat', 'Guru/Fasilitator', 'Nakes/Posyandu', 'Warga', 'Dinas PMD', 'Peneliti/Akademisi'];
+const ROLE_OPTIONS = ['Super Admin', 'Operator SID', 'Pemerintah Desa', 'BPD', 'Lembaga Adat', 'Guru/Fasilitator', 'Nakes/Posyandu', 'Warga', 'Dinas PMD', 'Peneliti/Akademisi', 'Pengguna Layanan'];
 const STATUS_OPTIONS = ['Aktif', 'Nonaktif'];
 
 interface User {
@@ -56,6 +56,7 @@ const usersData: User[] = [
   { id: 9, nama: 'Dinas PMD Joko', username: 'dinas_joko', password: '••••••••', role: 'Dinas PMD', status: 'Nonaktif', lastLogin: '05 Jun 2026, 09:00' },
   { id: 10, nama: 'Dr. Peneliti Andi', username: 'peneliti_andi', password: '••••••••', role: 'Peneliti/Akademisi', status: 'Aktif', lastLogin: '10 Jun 2026, 11:20' },
   { id: 11, nama: 'Operator SID Budi', username: 'operator_sid02', password: '••••••••', role: 'Operator SID', status: 'Aktif', lastLogin: '11 Jun 2026, 09:45' },
+  { id: 12, nama: 'Andi Saputra', username: 'layanan_andi', password: '••••••••', role: 'Pengguna Layanan', status: 'Aktif', lastLogin: '19 Jun 2026, 08:00' },
 ];
 
 const roleColors: Record<string, string> = {
@@ -69,6 +70,7 @@ const roleColors: Record<string, string> = {
   'Warga': 'bg-slate-100 text-slate-700',
   'Dinas PMD': 'bg-indigo-100 text-indigo-700',
   'Peneliti/Akademisi': 'bg-teal-100 text-teal-700',
+  'Pengguna Layanan': 'bg-emerald-100 text-emerald-700',
 };
 
 export default function UserManagementPage() {
