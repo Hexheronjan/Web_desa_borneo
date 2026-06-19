@@ -158,6 +158,11 @@ export type MasterDesaRecord = $Result.DefaultSelection<Prisma.$MasterDesaRecord
  * 
  */
 export type ModuleRecord = $Result.DefaultSelection<Prisma.$ModuleRecordPayload>
+/**
+ * Model Umkm
+ * 
+ */
+export type Umkm = $Result.DefaultSelection<Prisma.$UmkmPayload>
 
 /**
  * Enums
@@ -715,6 +720,16 @@ export class PrismaClient<
     * ```
     */
   get moduleRecord(): Prisma.ModuleRecordDelegate<ExtArgs>;
+
+  /**
+   * `prisma.umkm`: Exposes CRUD operations for the **Umkm** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Umkms
+    * const umkms = await prisma.umkm.findMany()
+    * ```
+    */
+  get umkm(): Prisma.UmkmDelegate<ExtArgs>;
 }
 
 export namespace Prisma {
@@ -1184,7 +1199,8 @@ export namespace Prisma {
     Siswa: 'Siswa',
     MonitoringDesa: 'MonitoringDesa',
     MasterDesaRecord: 'MasterDesaRecord',
-    ModuleRecord: 'ModuleRecord'
+    ModuleRecord: 'ModuleRecord',
+    Umkm: 'Umkm'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1200,7 +1216,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "desa" | "rwRt" | "warga" | "kelas" | "materi" | "pesertaKelas" | "tugas" | "rekamMedis" | "telemedicine" | "monitoringKesehatan" | "posyandu" | "stunting" | "pengurus" | "arsipAdat" | "musyawarah" | "wilayahAdat" | "hukumAdat" | "auditTrail" | "notifikasi" | "laporan" | "forum" | "diskusi" | "shiftNakes" | "aspirasi" | "siswa" | "monitoringDesa" | "masterDesaRecord" | "moduleRecord"
+      modelProps: "user" | "desa" | "rwRt" | "warga" | "kelas" | "materi" | "pesertaKelas" | "tugas" | "rekamMedis" | "telemedicine" | "monitoringKesehatan" | "posyandu" | "stunting" | "pengurus" | "arsipAdat" | "musyawarah" | "wilayahAdat" | "hukumAdat" | "auditTrail" | "notifikasi" | "laporan" | "forum" | "diskusi" | "shiftNakes" | "aspirasi" | "siswa" | "monitoringDesa" | "masterDesaRecord" | "moduleRecord" | "umkm"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3118,6 +3134,72 @@ export namespace Prisma {
           }
         }
       }
+      Umkm: {
+        payload: Prisma.$UmkmPayload<ExtArgs>
+        fields: Prisma.UmkmFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.UmkmFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UmkmPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.UmkmFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UmkmPayload>
+          }
+          findFirst: {
+            args: Prisma.UmkmFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UmkmPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.UmkmFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UmkmPayload>
+          }
+          findMany: {
+            args: Prisma.UmkmFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UmkmPayload>[]
+          }
+          create: {
+            args: Prisma.UmkmCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UmkmPayload>
+          }
+          createMany: {
+            args: Prisma.UmkmCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.UmkmDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UmkmPayload>
+          }
+          update: {
+            args: Prisma.UmkmUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UmkmPayload>
+          }
+          deleteMany: {
+            args: Prisma.UmkmDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.UmkmUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.UmkmUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$UmkmPayload>
+          }
+          aggregate: {
+            args: Prisma.UmkmAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateUmkm>
+          }
+          groupBy: {
+            args: Prisma.UmkmGroupByArgs<ExtArgs>
+            result: $Utils.Optional<UmkmGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.UmkmCountArgs<ExtArgs>
+            result: $Utils.Optional<UmkmCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3279,14 +3361,14 @@ export namespace Prisma {
    */
 
   export type DesaCountOutputType = {
-    users: number
     rwrts: number
+    users: number
     warga: number
   }
 
   export type DesaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    users?: boolean | DesaCountOutputTypeCountUsersArgs
     rwrts?: boolean | DesaCountOutputTypeCountRwrtsArgs
+    users?: boolean | DesaCountOutputTypeCountUsersArgs
     warga?: boolean | DesaCountOutputTypeCountWargaArgs
   }
 
@@ -3304,15 +3386,15 @@ export namespace Prisma {
   /**
    * DesaCountOutputType without action
    */
-  export type DesaCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserWhereInput
+  export type DesaCountOutputTypeCountRwrtsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RwRtWhereInput
   }
 
   /**
    * DesaCountOutputType without action
    */
-  export type DesaCountOutputTypeCountRwrtsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RwRtWhereInput
+  export type DesaCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UserWhereInput
   }
 
   /**
@@ -3359,21 +3441,21 @@ export namespace Prisma {
    */
 
   export type WargaCountOutputType = {
-    rekamMedis: number
-    telemedicine: number
-    monitoring: number
-    stunting: number
-    pesertaKelas: number
     aspirasi: number
+    monitoring: number
+    pesertaKelas: number
+    rekamMedis: number
+    stunting: number
+    telemedicine: number
   }
 
   export type WargaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    rekamMedis?: boolean | WargaCountOutputTypeCountRekamMedisArgs
-    telemedicine?: boolean | WargaCountOutputTypeCountTelemedicineArgs
-    monitoring?: boolean | WargaCountOutputTypeCountMonitoringArgs
-    stunting?: boolean | WargaCountOutputTypeCountStuntingArgs
-    pesertaKelas?: boolean | WargaCountOutputTypeCountPesertaKelasArgs
     aspirasi?: boolean | WargaCountOutputTypeCountAspirasiArgs
+    monitoring?: boolean | WargaCountOutputTypeCountMonitoringArgs
+    pesertaKelas?: boolean | WargaCountOutputTypeCountPesertaKelasArgs
+    rekamMedis?: boolean | WargaCountOutputTypeCountRekamMedisArgs
+    stunting?: boolean | WargaCountOutputTypeCountStuntingArgs
+    telemedicine?: boolean | WargaCountOutputTypeCountTelemedicineArgs
   }
 
   // Custom InputTypes
@@ -3390,15 +3472,8 @@ export namespace Prisma {
   /**
    * WargaCountOutputType without action
    */
-  export type WargaCountOutputTypeCountRekamMedisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: RekamMedisWhereInput
-  }
-
-  /**
-   * WargaCountOutputType without action
-   */
-  export type WargaCountOutputTypeCountTelemedicineArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: TelemedicineWhereInput
+  export type WargaCountOutputTypeCountAspirasiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AspirasiWhereInput
   }
 
   /**
@@ -3411,13 +3486,6 @@ export namespace Prisma {
   /**
    * WargaCountOutputType without action
    */
-  export type WargaCountOutputTypeCountStuntingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: StuntingWhereInput
-  }
-
-  /**
-   * WargaCountOutputType without action
-   */
   export type WargaCountOutputTypeCountPesertaKelasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PesertaKelasWhereInput
   }
@@ -3425,8 +3493,22 @@ export namespace Prisma {
   /**
    * WargaCountOutputType without action
    */
-  export type WargaCountOutputTypeCountAspirasiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: AspirasiWhereInput
+  export type WargaCountOutputTypeCountRekamMedisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RekamMedisWhereInput
+  }
+
+  /**
+   * WargaCountOutputType without action
+   */
+  export type WargaCountOutputTypeCountStuntingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StuntingWhereInput
+  }
+
+  /**
+   * WargaCountOutputType without action
+   */
+  export type WargaCountOutputTypeCountTelemedicineArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TelemedicineWhereInput
   }
 
 
@@ -3435,17 +3517,17 @@ export namespace Prisma {
    */
 
   export type KelasCountOutputType = {
+    forum: number
     materi: number
     peserta: number
     tugas: number
-    forum: number
   }
 
   export type KelasCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    forum?: boolean | KelasCountOutputTypeCountForumArgs
     materi?: boolean | KelasCountOutputTypeCountMateriArgs
     peserta?: boolean | KelasCountOutputTypeCountPesertaArgs
     tugas?: boolean | KelasCountOutputTypeCountTugasArgs
-    forum?: boolean | KelasCountOutputTypeCountForumArgs
   }
 
   // Custom InputTypes
@@ -3457,6 +3539,13 @@ export namespace Prisma {
      * Select specific fields to fetch from the KelasCountOutputType
      */
     select?: KelasCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * KelasCountOutputType without action
+   */
+  export type KelasCountOutputTypeCountForumArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ForumWhereInput
   }
 
   /**
@@ -3478,13 +3567,6 @@ export namespace Prisma {
    */
   export type KelasCountOutputTypeCountTugasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TugasWhereInput
-  }
-
-  /**
-   * KelasCountOutputType without action
-   */
-  export type KelasCountOutputTypeCountForumArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ForumWhereInput
   }
 
 
@@ -3537,8 +3619,10 @@ export namespace Prisma {
     id: string | null
     name: string | null
     email: string | null
+    username: string | null
     password: string | null
     role: $Enums.Role | null
+    status: string | null
     desaId: string | null
     wargaId: string | null
     createdAt: Date | null
@@ -3549,8 +3633,10 @@ export namespace Prisma {
     id: string | null
     name: string | null
     email: string | null
+    username: string | null
     password: string | null
     role: $Enums.Role | null
+    status: string | null
     desaId: string | null
     wargaId: string | null
     createdAt: Date | null
@@ -3561,8 +3647,10 @@ export namespace Prisma {
     id: number
     name: number
     email: number
+    username: number
     password: number
     role: number
+    status: number
     desaId: number
     wargaId: number
     createdAt: number
@@ -3575,8 +3663,10 @@ export namespace Prisma {
     id?: true
     name?: true
     email?: true
+    username?: true
     password?: true
     role?: true
+    status?: true
     desaId?: true
     wargaId?: true
     createdAt?: true
@@ -3587,8 +3677,10 @@ export namespace Prisma {
     id?: true
     name?: true
     email?: true
+    username?: true
     password?: true
     role?: true
+    status?: true
     desaId?: true
     wargaId?: true
     createdAt?: true
@@ -3599,8 +3691,10 @@ export namespace Prisma {
     id?: true
     name?: true
     email?: true
+    username?: true
     password?: true
     role?: true
+    status?: true
     desaId?: true
     wargaId?: true
     createdAt?: true
@@ -3684,8 +3778,10 @@ export namespace Prisma {
     id: string
     name: string
     email: string
+    username: string
     password: string
     role: $Enums.Role
+    status: string
     desaId: string
     wargaId: string | null
     createdAt: Date
@@ -3713,8 +3809,10 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     email?: boolean
+    username?: boolean
     password?: boolean
     role?: boolean
+    status?: boolean
     desaId?: boolean
     wargaId?: boolean
     createdAt?: boolean
@@ -3728,8 +3826,10 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     email?: boolean
+    username?: boolean
     password?: boolean
     role?: boolean
+    status?: boolean
     desaId?: boolean
     wargaId?: boolean
     createdAt?: boolean
@@ -3751,8 +3851,10 @@ export namespace Prisma {
       id: string
       name: string
       email: string
+      username: string
       password: string
       role: $Enums.Role
+      status: string
       desaId: string
       wargaId: string | null
       createdAt: Date
@@ -4131,8 +4233,10 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
+    readonly username: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'Role'>
+    readonly status: FieldRef<"User", 'String'>
     readonly desaId: FieldRef<"User", 'String'>
     readonly wargaId: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
@@ -4687,8 +4791,8 @@ export namespace Prisma {
     luasWilayah?: boolean
     sejarah?: boolean
     createdAt?: boolean
-    users?: boolean | Desa$usersArgs<ExtArgs>
     rwrts?: boolean | Desa$rwrtsArgs<ExtArgs>
+    users?: boolean | Desa$usersArgs<ExtArgs>
     warga?: boolean | Desa$wargaArgs<ExtArgs>
     _count?: boolean | DesaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["desa"]>
@@ -4706,8 +4810,8 @@ export namespace Prisma {
   }
 
   export type DesaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    users?: boolean | Desa$usersArgs<ExtArgs>
     rwrts?: boolean | Desa$rwrtsArgs<ExtArgs>
+    users?: boolean | Desa$usersArgs<ExtArgs>
     warga?: boolean | Desa$wargaArgs<ExtArgs>
     _count?: boolean | DesaCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -4715,8 +4819,8 @@ export namespace Prisma {
   export type $DesaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Desa"
     objects: {
-      users: Prisma.$UserPayload<ExtArgs>[]
       rwrts: Prisma.$RwRtPayload<ExtArgs>[]
+      users: Prisma.$UserPayload<ExtArgs>[]
       warga: Prisma.$WargaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -5068,8 +5172,8 @@ export namespace Prisma {
    */
   export interface Prisma__DesaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    users<T extends Desa$usersArgs<ExtArgs> = {}>(args?: Subset<T, Desa$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany"> | Null>
     rwrts<T extends Desa$rwrtsArgs<ExtArgs> = {}>(args?: Subset<T, Desa$rwrtsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RwRtPayload<ExtArgs>, T, "findMany"> | Null>
+    users<T extends Desa$usersArgs<ExtArgs> = {}>(args?: Subset<T, Desa$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany"> | Null>
     warga<T extends Desa$wargaArgs<ExtArgs> = {}>(args?: Subset<T, Desa$wargaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WargaPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -5407,26 +5511,6 @@ export namespace Prisma {
   }
 
   /**
-   * Desa.users
-   */
-  export type Desa$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
-    cursor?: UserWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
-  }
-
-  /**
    * Desa.rwrts
    */
   export type Desa$rwrtsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5444,6 +5528,26 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: RwRtScalarFieldEnum | RwRtScalarFieldEnum[]
+  }
+
+  /**
+   * Desa.users
+   */
+  export type Desa$usersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
+    cursor?: UserWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
@@ -6648,15 +6752,15 @@ export namespace Prisma {
     foto?: boolean
     status?: boolean
     createdAt?: boolean
+    aspirasi?: boolean | Warga$aspirasiArgs<ExtArgs>
+    monitoring?: boolean | Warga$monitoringArgs<ExtArgs>
+    pesertaKelas?: boolean | Warga$pesertaKelasArgs<ExtArgs>
+    rekamMedis?: boolean | Warga$rekamMedisArgs<ExtArgs>
+    stunting?: boolean | Warga$stuntingArgs<ExtArgs>
+    telemedicine?: boolean | Warga$telemedicineArgs<ExtArgs>
+    user?: boolean | Warga$userArgs<ExtArgs>
     desa?: boolean | DesaDefaultArgs<ExtArgs>
     rwRt?: boolean | RwRtDefaultArgs<ExtArgs>
-    rekamMedis?: boolean | Warga$rekamMedisArgs<ExtArgs>
-    telemedicine?: boolean | Warga$telemedicineArgs<ExtArgs>
-    monitoring?: boolean | Warga$monitoringArgs<ExtArgs>
-    stunting?: boolean | Warga$stuntingArgs<ExtArgs>
-    pesertaKelas?: boolean | Warga$pesertaKelasArgs<ExtArgs>
-    aspirasi?: boolean | Warga$aspirasiArgs<ExtArgs>
-    user?: boolean | Warga$userArgs<ExtArgs>
     _count?: boolean | WargaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["warga"]>
 
@@ -6678,30 +6782,30 @@ export namespace Prisma {
   }
 
   export type WargaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    aspirasi?: boolean | Warga$aspirasiArgs<ExtArgs>
+    monitoring?: boolean | Warga$monitoringArgs<ExtArgs>
+    pesertaKelas?: boolean | Warga$pesertaKelasArgs<ExtArgs>
+    rekamMedis?: boolean | Warga$rekamMedisArgs<ExtArgs>
+    stunting?: boolean | Warga$stuntingArgs<ExtArgs>
+    telemedicine?: boolean | Warga$telemedicineArgs<ExtArgs>
+    user?: boolean | Warga$userArgs<ExtArgs>
     desa?: boolean | DesaDefaultArgs<ExtArgs>
     rwRt?: boolean | RwRtDefaultArgs<ExtArgs>
-    rekamMedis?: boolean | Warga$rekamMedisArgs<ExtArgs>
-    telemedicine?: boolean | Warga$telemedicineArgs<ExtArgs>
-    monitoring?: boolean | Warga$monitoringArgs<ExtArgs>
-    stunting?: boolean | Warga$stuntingArgs<ExtArgs>
-    pesertaKelas?: boolean | Warga$pesertaKelasArgs<ExtArgs>
-    aspirasi?: boolean | Warga$aspirasiArgs<ExtArgs>
-    user?: boolean | Warga$userArgs<ExtArgs>
     _count?: boolean | WargaCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $WargaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Warga"
     objects: {
+      aspirasi: Prisma.$AspirasiPayload<ExtArgs>[]
+      monitoring: Prisma.$MonitoringKesehatanPayload<ExtArgs>[]
+      pesertaKelas: Prisma.$PesertaKelasPayload<ExtArgs>[]
+      rekamMedis: Prisma.$RekamMedisPayload<ExtArgs>[]
+      stunting: Prisma.$StuntingPayload<ExtArgs>[]
+      telemedicine: Prisma.$TelemedicinePayload<ExtArgs>[]
+      user: Prisma.$UserPayload<ExtArgs> | null
       desa: Prisma.$DesaPayload<ExtArgs>
       rwRt: Prisma.$RwRtPayload<ExtArgs>
-      rekamMedis: Prisma.$RekamMedisPayload<ExtArgs>[]
-      telemedicine: Prisma.$TelemedicinePayload<ExtArgs>[]
-      monitoring: Prisma.$MonitoringKesehatanPayload<ExtArgs>[]
-      stunting: Prisma.$StuntingPayload<ExtArgs>[]
-      pesertaKelas: Prisma.$PesertaKelasPayload<ExtArgs>[]
-      aspirasi: Prisma.$AspirasiPayload<ExtArgs>[]
-      user: Prisma.$UserPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -7057,15 +7161,15 @@ export namespace Prisma {
    */
   export interface Prisma__WargaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    aspirasi<T extends Warga$aspirasiArgs<ExtArgs> = {}>(args?: Subset<T, Warga$aspirasiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AspirasiPayload<ExtArgs>, T, "findMany"> | Null>
+    monitoring<T extends Warga$monitoringArgs<ExtArgs> = {}>(args?: Subset<T, Warga$monitoringArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonitoringKesehatanPayload<ExtArgs>, T, "findMany"> | Null>
+    pesertaKelas<T extends Warga$pesertaKelasArgs<ExtArgs> = {}>(args?: Subset<T, Warga$pesertaKelasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PesertaKelasPayload<ExtArgs>, T, "findMany"> | Null>
+    rekamMedis<T extends Warga$rekamMedisArgs<ExtArgs> = {}>(args?: Subset<T, Warga$rekamMedisArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RekamMedisPayload<ExtArgs>, T, "findMany"> | Null>
+    stunting<T extends Warga$stuntingArgs<ExtArgs> = {}>(args?: Subset<T, Warga$stuntingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StuntingPayload<ExtArgs>, T, "findMany"> | Null>
+    telemedicine<T extends Warga$telemedicineArgs<ExtArgs> = {}>(args?: Subset<T, Warga$telemedicineArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TelemedicinePayload<ExtArgs>, T, "findMany"> | Null>
+    user<T extends Warga$userArgs<ExtArgs> = {}>(args?: Subset<T, Warga$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     desa<T extends DesaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DesaDefaultArgs<ExtArgs>>): Prisma__DesaClient<$Result.GetResult<Prisma.$DesaPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     rwRt<T extends RwRtDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RwRtDefaultArgs<ExtArgs>>): Prisma__RwRtClient<$Result.GetResult<Prisma.$RwRtPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
-    rekamMedis<T extends Warga$rekamMedisArgs<ExtArgs> = {}>(args?: Subset<T, Warga$rekamMedisArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RekamMedisPayload<ExtArgs>, T, "findMany"> | Null>
-    telemedicine<T extends Warga$telemedicineArgs<ExtArgs> = {}>(args?: Subset<T, Warga$telemedicineArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TelemedicinePayload<ExtArgs>, T, "findMany"> | Null>
-    monitoring<T extends Warga$monitoringArgs<ExtArgs> = {}>(args?: Subset<T, Warga$monitoringArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MonitoringKesehatanPayload<ExtArgs>, T, "findMany"> | Null>
-    stunting<T extends Warga$stuntingArgs<ExtArgs> = {}>(args?: Subset<T, Warga$stuntingArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StuntingPayload<ExtArgs>, T, "findMany"> | Null>
-    pesertaKelas<T extends Warga$pesertaKelasArgs<ExtArgs> = {}>(args?: Subset<T, Warga$pesertaKelasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PesertaKelasPayload<ExtArgs>, T, "findMany"> | Null>
-    aspirasi<T extends Warga$aspirasiArgs<ExtArgs> = {}>(args?: Subset<T, Warga$aspirasiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AspirasiPayload<ExtArgs>, T, "findMany"> | Null>
-    user<T extends Warga$userArgs<ExtArgs> = {}>(args?: Subset<T, Warga$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7407,43 +7511,23 @@ export namespace Prisma {
   }
 
   /**
-   * Warga.rekamMedis
+   * Warga.aspirasi
    */
-  export type Warga$rekamMedisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Warga$aspirasiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the RekamMedis
+     * Select specific fields to fetch from the Aspirasi
      */
-    select?: RekamMedisSelect<ExtArgs> | null
+    select?: AspirasiSelect<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: RekamMedisInclude<ExtArgs> | null
-    where?: RekamMedisWhereInput
-    orderBy?: RekamMedisOrderByWithRelationInput | RekamMedisOrderByWithRelationInput[]
-    cursor?: RekamMedisWhereUniqueInput
+    include?: AspirasiInclude<ExtArgs> | null
+    where?: AspirasiWhereInput
+    orderBy?: AspirasiOrderByWithRelationInput | AspirasiOrderByWithRelationInput[]
+    cursor?: AspirasiWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: RekamMedisScalarFieldEnum | RekamMedisScalarFieldEnum[]
-  }
-
-  /**
-   * Warga.telemedicine
-   */
-  export type Warga$telemedicineArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Telemedicine
-     */
-    select?: TelemedicineSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: TelemedicineInclude<ExtArgs> | null
-    where?: TelemedicineWhereInput
-    orderBy?: TelemedicineOrderByWithRelationInput | TelemedicineOrderByWithRelationInput[]
-    cursor?: TelemedicineWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: TelemedicineScalarFieldEnum | TelemedicineScalarFieldEnum[]
+    distinct?: AspirasiScalarFieldEnum | AspirasiScalarFieldEnum[]
   }
 
   /**
@@ -7467,26 +7551,6 @@ export namespace Prisma {
   }
 
   /**
-   * Warga.stunting
-   */
-  export type Warga$stuntingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Stunting
-     */
-    select?: StuntingSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: StuntingInclude<ExtArgs> | null
-    where?: StuntingWhereInput
-    orderBy?: StuntingOrderByWithRelationInput | StuntingOrderByWithRelationInput[]
-    cursor?: StuntingWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: StuntingScalarFieldEnum | StuntingScalarFieldEnum[]
-  }
-
-  /**
    * Warga.pesertaKelas
    */
   export type Warga$pesertaKelasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7507,23 +7571,63 @@ export namespace Prisma {
   }
 
   /**
-   * Warga.aspirasi
+   * Warga.rekamMedis
    */
-  export type Warga$aspirasiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type Warga$rekamMedisArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Aspirasi
+     * Select specific fields to fetch from the RekamMedis
      */
-    select?: AspirasiSelect<ExtArgs> | null
+    select?: RekamMedisSelect<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: AspirasiInclude<ExtArgs> | null
-    where?: AspirasiWhereInput
-    orderBy?: AspirasiOrderByWithRelationInput | AspirasiOrderByWithRelationInput[]
-    cursor?: AspirasiWhereUniqueInput
+    include?: RekamMedisInclude<ExtArgs> | null
+    where?: RekamMedisWhereInput
+    orderBy?: RekamMedisOrderByWithRelationInput | RekamMedisOrderByWithRelationInput[]
+    cursor?: RekamMedisWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: AspirasiScalarFieldEnum | AspirasiScalarFieldEnum[]
+    distinct?: RekamMedisScalarFieldEnum | RekamMedisScalarFieldEnum[]
+  }
+
+  /**
+   * Warga.stunting
+   */
+  export type Warga$stuntingArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Stunting
+     */
+    select?: StuntingSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: StuntingInclude<ExtArgs> | null
+    where?: StuntingWhereInput
+    orderBy?: StuntingOrderByWithRelationInput | StuntingOrderByWithRelationInput[]
+    cursor?: StuntingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: StuntingScalarFieldEnum | StuntingScalarFieldEnum[]
+  }
+
+  /**
+   * Warga.telemedicine
+   */
+  export type Warga$telemedicineArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Telemedicine
+     */
+    select?: TelemedicineSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TelemedicineInclude<ExtArgs> | null
+    where?: TelemedicineWhereInput
+    orderBy?: TelemedicineOrderByWithRelationInput | TelemedicineOrderByWithRelationInput[]
+    cursor?: TelemedicineWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TelemedicineScalarFieldEnum | TelemedicineScalarFieldEnum[]
   }
 
   /**
@@ -7752,10 +7856,10 @@ export namespace Prisma {
     fasilitatorId?: boolean
     status?: boolean
     createdAt?: boolean
+    forum?: boolean | Kelas$forumArgs<ExtArgs>
     materi?: boolean | Kelas$materiArgs<ExtArgs>
     peserta?: boolean | Kelas$pesertaArgs<ExtArgs>
     tugas?: boolean | Kelas$tugasArgs<ExtArgs>
-    forum?: boolean | Kelas$forumArgs<ExtArgs>
     _count?: boolean | KelasCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["kelas"]>
 
@@ -7773,20 +7877,20 @@ export namespace Prisma {
   }
 
   export type KelasInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    forum?: boolean | Kelas$forumArgs<ExtArgs>
     materi?: boolean | Kelas$materiArgs<ExtArgs>
     peserta?: boolean | Kelas$pesertaArgs<ExtArgs>
     tugas?: boolean | Kelas$tugasArgs<ExtArgs>
-    forum?: boolean | Kelas$forumArgs<ExtArgs>
     _count?: boolean | KelasCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $KelasPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Kelas"
     objects: {
+      forum: Prisma.$ForumPayload<ExtArgs>[]
       materi: Prisma.$MateriPayload<ExtArgs>[]
       peserta: Prisma.$PesertaKelasPayload<ExtArgs>[]
       tugas: Prisma.$TugasPayload<ExtArgs>[]
-      forum: Prisma.$ForumPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8138,10 +8242,10 @@ export namespace Prisma {
    */
   export interface Prisma__KelasClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
+    forum<T extends Kelas$forumArgs<ExtArgs> = {}>(args?: Subset<T, Kelas$forumArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ForumPayload<ExtArgs>, T, "findMany"> | Null>
     materi<T extends Kelas$materiArgs<ExtArgs> = {}>(args?: Subset<T, Kelas$materiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MateriPayload<ExtArgs>, T, "findMany"> | Null>
     peserta<T extends Kelas$pesertaArgs<ExtArgs> = {}>(args?: Subset<T, Kelas$pesertaArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PesertaKelasPayload<ExtArgs>, T, "findMany"> | Null>
     tugas<T extends Kelas$tugasArgs<ExtArgs> = {}>(args?: Subset<T, Kelas$tugasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TugasPayload<ExtArgs>, T, "findMany"> | Null>
-    forum<T extends Kelas$forumArgs<ExtArgs> = {}>(args?: Subset<T, Kelas$forumArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ForumPayload<ExtArgs>, T, "findMany"> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8479,6 +8583,26 @@ export namespace Prisma {
   }
 
   /**
+   * Kelas.forum
+   */
+  export type Kelas$forumArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Forum
+     */
+    select?: ForumSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ForumInclude<ExtArgs> | null
+    where?: ForumWhereInput
+    orderBy?: ForumOrderByWithRelationInput | ForumOrderByWithRelationInput[]
+    cursor?: ForumWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ForumScalarFieldEnum | ForumScalarFieldEnum[]
+  }
+
+  /**
    * Kelas.materi
    */
   export type Kelas$materiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -8536,26 +8660,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TugasScalarFieldEnum | TugasScalarFieldEnum[]
-  }
-
-  /**
-   * Kelas.forum
-   */
-  export type Kelas$forumArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Forum
-     */
-    select?: ForumSelect<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: ForumInclude<ExtArgs> | null
-    where?: ForumWhereInput
-    orderBy?: ForumOrderByWithRelationInput | ForumOrderByWithRelationInput[]
-    cursor?: ForumWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: ForumScalarFieldEnum | ForumScalarFieldEnum[]
   }
 
   /**
@@ -23100,8 +23204,8 @@ export namespace Prisma {
     kelasId?: boolean
     judul?: boolean
     createdAt?: boolean
-    kelas?: boolean | KelasDefaultArgs<ExtArgs>
     diskusi?: boolean | Forum$diskusiArgs<ExtArgs>
+    kelas?: boolean | KelasDefaultArgs<ExtArgs>
     _count?: boolean | ForumCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["forum"]>
 
@@ -23114,16 +23218,16 @@ export namespace Prisma {
   }
 
   export type ForumInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    kelas?: boolean | KelasDefaultArgs<ExtArgs>
     diskusi?: boolean | Forum$diskusiArgs<ExtArgs>
+    kelas?: boolean | KelasDefaultArgs<ExtArgs>
     _count?: boolean | ForumCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $ForumPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Forum"
     objects: {
-      kelas: Prisma.$KelasPayload<ExtArgs>
       diskusi: Prisma.$DiskusiPayload<ExtArgs>[]
+      kelas: Prisma.$KelasPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -23470,8 +23574,8 @@ export namespace Prisma {
    */
   export interface Prisma__ForumClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    kelas<T extends KelasDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KelasDefaultArgs<ExtArgs>>): Prisma__KelasClient<$Result.GetResult<Prisma.$KelasPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     diskusi<T extends Forum$diskusiArgs<ExtArgs> = {}>(args?: Subset<T, Forum$diskusiArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DiskusiPayload<ExtArgs>, T, "findMany"> | Null>
+    kelas<T extends KelasDefaultArgs<ExtArgs> = {}>(args?: Subset<T, KelasDefaultArgs<ExtArgs>>): Prisma__KelasClient<$Result.GetResult<Prisma.$KelasPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -30067,6 +30171,916 @@ export namespace Prisma {
 
 
   /**
+   * Model Umkm
+   */
+
+  export type AggregateUmkm = {
+    _count: UmkmCountAggregateOutputType | null
+    _avg: UmkmAvgAggregateOutputType | null
+    _sum: UmkmSumAggregateOutputType | null
+    _min: UmkmMinAggregateOutputType | null
+    _max: UmkmMaxAggregateOutputType | null
+  }
+
+  export type UmkmAvgAggregateOutputType = {
+    omset: number | null
+  }
+
+  export type UmkmSumAggregateOutputType = {
+    omset: number | null
+  }
+
+  export type UmkmMinAggregateOutputType = {
+    id: string | null
+    desaId: string | null
+    nama: string | null
+    pemilik: string | null
+    bidang: string | null
+    omset: number | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UmkmMaxAggregateOutputType = {
+    id: string | null
+    desaId: string | null
+    nama: string | null
+    pemilik: string | null
+    bidang: string | null
+    omset: number | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type UmkmCountAggregateOutputType = {
+    id: number
+    desaId: number
+    nama: number
+    pemilik: number
+    bidang: number
+    omset: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type UmkmAvgAggregateInputType = {
+    omset?: true
+  }
+
+  export type UmkmSumAggregateInputType = {
+    omset?: true
+  }
+
+  export type UmkmMinAggregateInputType = {
+    id?: true
+    desaId?: true
+    nama?: true
+    pemilik?: true
+    bidang?: true
+    omset?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UmkmMaxAggregateInputType = {
+    id?: true
+    desaId?: true
+    nama?: true
+    pemilik?: true
+    bidang?: true
+    omset?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type UmkmCountAggregateInputType = {
+    id?: true
+    desaId?: true
+    nama?: true
+    pemilik?: true
+    bidang?: true
+    omset?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type UmkmAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Umkm to aggregate.
+     */
+    where?: UmkmWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Umkms to fetch.
+     */
+    orderBy?: UmkmOrderByWithRelationInput | UmkmOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: UmkmWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Umkms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Umkms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Umkms
+    **/
+    _count?: true | UmkmCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: UmkmAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UmkmSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: UmkmMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: UmkmMaxAggregateInputType
+  }
+
+  export type GetUmkmAggregateType<T extends UmkmAggregateArgs> = {
+        [P in keyof T & keyof AggregateUmkm]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateUmkm[P]>
+      : GetScalarType<T[P], AggregateUmkm[P]>
+  }
+
+
+
+
+  export type UmkmGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: UmkmWhereInput
+    orderBy?: UmkmOrderByWithAggregationInput | UmkmOrderByWithAggregationInput[]
+    by: UmkmScalarFieldEnum[] | UmkmScalarFieldEnum
+    having?: UmkmScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: UmkmCountAggregateInputType | true
+    _avg?: UmkmAvgAggregateInputType
+    _sum?: UmkmSumAggregateInputType
+    _min?: UmkmMinAggregateInputType
+    _max?: UmkmMaxAggregateInputType
+  }
+
+  export type UmkmGroupByOutputType = {
+    id: string
+    desaId: string
+    nama: string
+    pemilik: string
+    bidang: string
+    omset: number | null
+    status: string
+    createdAt: Date
+    updatedAt: Date
+    _count: UmkmCountAggregateOutputType | null
+    _avg: UmkmAvgAggregateOutputType | null
+    _sum: UmkmSumAggregateOutputType | null
+    _min: UmkmMinAggregateOutputType | null
+    _max: UmkmMaxAggregateOutputType | null
+  }
+
+  type GetUmkmGroupByPayload<T extends UmkmGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<UmkmGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof UmkmGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], UmkmGroupByOutputType[P]>
+            : GetScalarType<T[P], UmkmGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type UmkmSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    desaId?: boolean
+    nama?: boolean
+    pemilik?: boolean
+    bidang?: boolean
+    omset?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["umkm"]>
+
+
+  export type UmkmSelectScalar = {
+    id?: boolean
+    desaId?: boolean
+    nama?: boolean
+    pemilik?: boolean
+    bidang?: boolean
+    omset?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $UmkmPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Umkm"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      desaId: string
+      nama: string
+      pemilik: string
+      bidang: string
+      omset: number | null
+      status: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["umkm"]>
+    composites: {}
+  }
+
+  type UmkmGetPayload<S extends boolean | null | undefined | UmkmDefaultArgs> = $Result.GetResult<Prisma.$UmkmPayload, S>
+
+  type UmkmCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<UmkmFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: UmkmCountAggregateInputType | true
+    }
+
+  export interface UmkmDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Umkm'], meta: { name: 'Umkm' } }
+    /**
+     * Find zero or one Umkm that matches the filter.
+     * @param {UmkmFindUniqueArgs} args - Arguments to find a Umkm
+     * @example
+     * // Get one Umkm
+     * const umkm = await prisma.umkm.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends UmkmFindUniqueArgs>(args: SelectSubset<T, UmkmFindUniqueArgs<ExtArgs>>): Prisma__UmkmClient<$Result.GetResult<Prisma.$UmkmPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Umkm that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {UmkmFindUniqueOrThrowArgs} args - Arguments to find a Umkm
+     * @example
+     * // Get one Umkm
+     * const umkm = await prisma.umkm.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends UmkmFindUniqueOrThrowArgs>(args: SelectSubset<T, UmkmFindUniqueOrThrowArgs<ExtArgs>>): Prisma__UmkmClient<$Result.GetResult<Prisma.$UmkmPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Umkm that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UmkmFindFirstArgs} args - Arguments to find a Umkm
+     * @example
+     * // Get one Umkm
+     * const umkm = await prisma.umkm.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends UmkmFindFirstArgs>(args?: SelectSubset<T, UmkmFindFirstArgs<ExtArgs>>): Prisma__UmkmClient<$Result.GetResult<Prisma.$UmkmPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Umkm that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UmkmFindFirstOrThrowArgs} args - Arguments to find a Umkm
+     * @example
+     * // Get one Umkm
+     * const umkm = await prisma.umkm.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends UmkmFindFirstOrThrowArgs>(args?: SelectSubset<T, UmkmFindFirstOrThrowArgs<ExtArgs>>): Prisma__UmkmClient<$Result.GetResult<Prisma.$UmkmPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Umkms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UmkmFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Umkms
+     * const umkms = await prisma.umkm.findMany()
+     * 
+     * // Get first 10 Umkms
+     * const umkms = await prisma.umkm.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const umkmWithIdOnly = await prisma.umkm.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends UmkmFindManyArgs>(args?: SelectSubset<T, UmkmFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UmkmPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Umkm.
+     * @param {UmkmCreateArgs} args - Arguments to create a Umkm.
+     * @example
+     * // Create one Umkm
+     * const Umkm = await prisma.umkm.create({
+     *   data: {
+     *     // ... data to create a Umkm
+     *   }
+     * })
+     * 
+     */
+    create<T extends UmkmCreateArgs>(args: SelectSubset<T, UmkmCreateArgs<ExtArgs>>): Prisma__UmkmClient<$Result.GetResult<Prisma.$UmkmPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Umkms.
+     * @param {UmkmCreateManyArgs} args - Arguments to create many Umkms.
+     * @example
+     * // Create many Umkms
+     * const umkm = await prisma.umkm.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends UmkmCreateManyArgs>(args?: SelectSubset<T, UmkmCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Umkm.
+     * @param {UmkmDeleteArgs} args - Arguments to delete one Umkm.
+     * @example
+     * // Delete one Umkm
+     * const Umkm = await prisma.umkm.delete({
+     *   where: {
+     *     // ... filter to delete one Umkm
+     *   }
+     * })
+     * 
+     */
+    delete<T extends UmkmDeleteArgs>(args: SelectSubset<T, UmkmDeleteArgs<ExtArgs>>): Prisma__UmkmClient<$Result.GetResult<Prisma.$UmkmPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Umkm.
+     * @param {UmkmUpdateArgs} args - Arguments to update one Umkm.
+     * @example
+     * // Update one Umkm
+     * const umkm = await prisma.umkm.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends UmkmUpdateArgs>(args: SelectSubset<T, UmkmUpdateArgs<ExtArgs>>): Prisma__UmkmClient<$Result.GetResult<Prisma.$UmkmPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Umkms.
+     * @param {UmkmDeleteManyArgs} args - Arguments to filter Umkms to delete.
+     * @example
+     * // Delete a few Umkms
+     * const { count } = await prisma.umkm.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends UmkmDeleteManyArgs>(args?: SelectSubset<T, UmkmDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Umkms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UmkmUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Umkms
+     * const umkm = await prisma.umkm.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends UmkmUpdateManyArgs>(args: SelectSubset<T, UmkmUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Umkm.
+     * @param {UmkmUpsertArgs} args - Arguments to update or create a Umkm.
+     * @example
+     * // Update or create a Umkm
+     * const umkm = await prisma.umkm.upsert({
+     *   create: {
+     *     // ... data to create a Umkm
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Umkm we want to update
+     *   }
+     * })
+     */
+    upsert<T extends UmkmUpsertArgs>(args: SelectSubset<T, UmkmUpsertArgs<ExtArgs>>): Prisma__UmkmClient<$Result.GetResult<Prisma.$UmkmPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Umkms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UmkmCountArgs} args - Arguments to filter Umkms to count.
+     * @example
+     * // Count the number of Umkms
+     * const count = await prisma.umkm.count({
+     *   where: {
+     *     // ... the filter for the Umkms we want to count
+     *   }
+     * })
+    **/
+    count<T extends UmkmCountArgs>(
+      args?: Subset<T, UmkmCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], UmkmCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Umkm.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UmkmAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends UmkmAggregateArgs>(args: Subset<T, UmkmAggregateArgs>): Prisma.PrismaPromise<GetUmkmAggregateType<T>>
+
+    /**
+     * Group by Umkm.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {UmkmGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends UmkmGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: UmkmGroupByArgs['orderBy'] }
+        : { orderBy?: UmkmGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, UmkmGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetUmkmGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Umkm model
+   */
+  readonly fields: UmkmFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Umkm.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__UmkmClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Umkm model
+   */ 
+  interface UmkmFieldRefs {
+    readonly id: FieldRef<"Umkm", 'String'>
+    readonly desaId: FieldRef<"Umkm", 'String'>
+    readonly nama: FieldRef<"Umkm", 'String'>
+    readonly pemilik: FieldRef<"Umkm", 'String'>
+    readonly bidang: FieldRef<"Umkm", 'String'>
+    readonly omset: FieldRef<"Umkm", 'Float'>
+    readonly status: FieldRef<"Umkm", 'String'>
+    readonly createdAt: FieldRef<"Umkm", 'DateTime'>
+    readonly updatedAt: FieldRef<"Umkm", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Umkm findUnique
+   */
+  export type UmkmFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Umkm
+     */
+    select?: UmkmSelect<ExtArgs> | null
+    /**
+     * Filter, which Umkm to fetch.
+     */
+    where: UmkmWhereUniqueInput
+  }
+
+  /**
+   * Umkm findUniqueOrThrow
+   */
+  export type UmkmFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Umkm
+     */
+    select?: UmkmSelect<ExtArgs> | null
+    /**
+     * Filter, which Umkm to fetch.
+     */
+    where: UmkmWhereUniqueInput
+  }
+
+  /**
+   * Umkm findFirst
+   */
+  export type UmkmFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Umkm
+     */
+    select?: UmkmSelect<ExtArgs> | null
+    /**
+     * Filter, which Umkm to fetch.
+     */
+    where?: UmkmWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Umkms to fetch.
+     */
+    orderBy?: UmkmOrderByWithRelationInput | UmkmOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Umkms.
+     */
+    cursor?: UmkmWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Umkms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Umkms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Umkms.
+     */
+    distinct?: UmkmScalarFieldEnum | UmkmScalarFieldEnum[]
+  }
+
+  /**
+   * Umkm findFirstOrThrow
+   */
+  export type UmkmFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Umkm
+     */
+    select?: UmkmSelect<ExtArgs> | null
+    /**
+     * Filter, which Umkm to fetch.
+     */
+    where?: UmkmWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Umkms to fetch.
+     */
+    orderBy?: UmkmOrderByWithRelationInput | UmkmOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Umkms.
+     */
+    cursor?: UmkmWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Umkms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Umkms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Umkms.
+     */
+    distinct?: UmkmScalarFieldEnum | UmkmScalarFieldEnum[]
+  }
+
+  /**
+   * Umkm findMany
+   */
+  export type UmkmFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Umkm
+     */
+    select?: UmkmSelect<ExtArgs> | null
+    /**
+     * Filter, which Umkms to fetch.
+     */
+    where?: UmkmWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Umkms to fetch.
+     */
+    orderBy?: UmkmOrderByWithRelationInput | UmkmOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Umkms.
+     */
+    cursor?: UmkmWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Umkms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Umkms.
+     */
+    skip?: number
+    distinct?: UmkmScalarFieldEnum | UmkmScalarFieldEnum[]
+  }
+
+  /**
+   * Umkm create
+   */
+  export type UmkmCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Umkm
+     */
+    select?: UmkmSelect<ExtArgs> | null
+    /**
+     * The data needed to create a Umkm.
+     */
+    data: XOR<UmkmCreateInput, UmkmUncheckedCreateInput>
+  }
+
+  /**
+   * Umkm createMany
+   */
+  export type UmkmCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Umkms.
+     */
+    data: UmkmCreateManyInput | UmkmCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Umkm update
+   */
+  export type UmkmUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Umkm
+     */
+    select?: UmkmSelect<ExtArgs> | null
+    /**
+     * The data needed to update a Umkm.
+     */
+    data: XOR<UmkmUpdateInput, UmkmUncheckedUpdateInput>
+    /**
+     * Choose, which Umkm to update.
+     */
+    where: UmkmWhereUniqueInput
+  }
+
+  /**
+   * Umkm updateMany
+   */
+  export type UmkmUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Umkms.
+     */
+    data: XOR<UmkmUpdateManyMutationInput, UmkmUncheckedUpdateManyInput>
+    /**
+     * Filter which Umkms to update
+     */
+    where?: UmkmWhereInput
+  }
+
+  /**
+   * Umkm upsert
+   */
+  export type UmkmUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Umkm
+     */
+    select?: UmkmSelect<ExtArgs> | null
+    /**
+     * The filter to search for the Umkm to update in case it exists.
+     */
+    where: UmkmWhereUniqueInput
+    /**
+     * In case the Umkm found by the `where` argument doesn't exist, create a new Umkm with this data.
+     */
+    create: XOR<UmkmCreateInput, UmkmUncheckedCreateInput>
+    /**
+     * In case the Umkm was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<UmkmUpdateInput, UmkmUncheckedUpdateInput>
+  }
+
+  /**
+   * Umkm delete
+   */
+  export type UmkmDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Umkm
+     */
+    select?: UmkmSelect<ExtArgs> | null
+    /**
+     * Filter which Umkm to delete.
+     */
+    where: UmkmWhereUniqueInput
+  }
+
+  /**
+   * Umkm deleteMany
+   */
+  export type UmkmDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Umkms to delete
+     */
+    where?: UmkmWhereInput
+  }
+
+  /**
+   * Umkm without action
+   */
+  export type UmkmDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Umkm
+     */
+    select?: UmkmSelect<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -30084,8 +31098,10 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     email: 'email',
+    username: 'username',
     password: 'password',
     role: 'role',
+    status: 'status',
     desaId: 'desaId',
     wargaId: 'wargaId',
     createdAt: 'createdAt',
@@ -30488,6 +31504,21 @@ export namespace Prisma {
   export type ModuleRecordScalarFieldEnum = (typeof ModuleRecordScalarFieldEnum)[keyof typeof ModuleRecordScalarFieldEnum]
 
 
+  export const UmkmScalarFieldEnum: {
+    id: 'id',
+    desaId: 'desaId',
+    nama: 'nama',
+    pemilik: 'pemilik',
+    bidang: 'bidang',
+    omset: 'omset',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type UmkmScalarFieldEnum = (typeof UmkmScalarFieldEnum)[keyof typeof UmkmScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -30647,8 +31678,10 @@ export namespace Prisma {
     id?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
+    username?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
+    status?: StringFilter<"User"> | string
     desaId?: StringFilter<"User"> | string
     wargaId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
@@ -30661,8 +31694,10 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    username?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    status?: SortOrder
     desaId?: SortOrder
     wargaId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -30674,6 +31709,7 @@ export namespace Prisma {
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
+    username?: string
     wargaId?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -30681,19 +31717,22 @@ export namespace Prisma {
     name?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
     role?: EnumRoleFilter<"User"> | $Enums.Role
+    status?: StringFilter<"User"> | string
     desaId?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
     desa?: XOR<DesaRelationFilter, DesaWhereInput>
     warga?: XOR<WargaNullableRelationFilter, WargaWhereInput> | null
-  }, "id" | "email" | "wargaId">
+  }, "id" | "email" | "username" | "wargaId">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    username?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    status?: SortOrder
     desaId?: SortOrder
     wargaId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
@@ -30710,8 +31749,10 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
+    username?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumRoleWithAggregatesFilter<"User"> | $Enums.Role
+    status?: StringWithAggregatesFilter<"User"> | string
     desaId?: StringWithAggregatesFilter<"User"> | string
     wargaId?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -30730,8 +31771,8 @@ export namespace Prisma {
     luasWilayah?: FloatNullableFilter<"Desa"> | number | null
     sejarah?: StringNullableFilter<"Desa"> | string | null
     createdAt?: DateTimeFilter<"Desa"> | Date | string
-    users?: UserListRelationFilter
     rwrts?: RwRtListRelationFilter
+    users?: UserListRelationFilter
     warga?: WargaListRelationFilter
   }
 
@@ -30744,8 +31785,8 @@ export namespace Prisma {
     luasWilayah?: SortOrderInput | SortOrder
     sejarah?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    users?: UserOrderByRelationAggregateInput
     rwrts?: RwRtOrderByRelationAggregateInput
+    users?: UserOrderByRelationAggregateInput
     warga?: WargaOrderByRelationAggregateInput
   }
 
@@ -30761,8 +31802,8 @@ export namespace Prisma {
     luasWilayah?: FloatNullableFilter<"Desa"> | number | null
     sejarah?: StringNullableFilter<"Desa"> | string | null
     createdAt?: DateTimeFilter<"Desa"> | Date | string
-    users?: UserListRelationFilter
     rwrts?: RwRtListRelationFilter
+    users?: UserListRelationFilter
     warga?: WargaListRelationFilter
   }, "id">
 
@@ -30873,15 +31914,15 @@ export namespace Prisma {
     foto?: StringNullableFilter<"Warga"> | string | null
     status?: EnumStatusWargaFilter<"Warga"> | $Enums.StatusWarga
     createdAt?: DateTimeFilter<"Warga"> | Date | string
+    aspirasi?: AspirasiListRelationFilter
+    monitoring?: MonitoringKesehatanListRelationFilter
+    pesertaKelas?: PesertaKelasListRelationFilter
+    rekamMedis?: RekamMedisListRelationFilter
+    stunting?: StuntingListRelationFilter
+    telemedicine?: TelemedicineListRelationFilter
+    user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     desa?: XOR<DesaRelationFilter, DesaWhereInput>
     rwRt?: XOR<RwRtRelationFilter, RwRtWhereInput>
-    rekamMedis?: RekamMedisListRelationFilter
-    telemedicine?: TelemedicineListRelationFilter
-    monitoring?: MonitoringKesehatanListRelationFilter
-    stunting?: StuntingListRelationFilter
-    pesertaKelas?: PesertaKelasListRelationFilter
-    aspirasi?: AspirasiListRelationFilter
-    user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
   }
 
   export type WargaOrderByWithRelationInput = {
@@ -30898,15 +31939,15 @@ export namespace Prisma {
     foto?: SortOrderInput | SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+    aspirasi?: AspirasiOrderByRelationAggregateInput
+    monitoring?: MonitoringKesehatanOrderByRelationAggregateInput
+    pesertaKelas?: PesertaKelasOrderByRelationAggregateInput
+    rekamMedis?: RekamMedisOrderByRelationAggregateInput
+    stunting?: StuntingOrderByRelationAggregateInput
+    telemedicine?: TelemedicineOrderByRelationAggregateInput
+    user?: UserOrderByWithRelationInput
     desa?: DesaOrderByWithRelationInput
     rwRt?: RwRtOrderByWithRelationInput
-    rekamMedis?: RekamMedisOrderByRelationAggregateInput
-    telemedicine?: TelemedicineOrderByRelationAggregateInput
-    monitoring?: MonitoringKesehatanOrderByRelationAggregateInput
-    stunting?: StuntingOrderByRelationAggregateInput
-    pesertaKelas?: PesertaKelasOrderByRelationAggregateInput
-    aspirasi?: AspirasiOrderByRelationAggregateInput
-    user?: UserOrderByWithRelationInput
   }
 
   export type WargaWhereUniqueInput = Prisma.AtLeast<{
@@ -30926,15 +31967,15 @@ export namespace Prisma {
     foto?: StringNullableFilter<"Warga"> | string | null
     status?: EnumStatusWargaFilter<"Warga"> | $Enums.StatusWarga
     createdAt?: DateTimeFilter<"Warga"> | Date | string
+    aspirasi?: AspirasiListRelationFilter
+    monitoring?: MonitoringKesehatanListRelationFilter
+    pesertaKelas?: PesertaKelasListRelationFilter
+    rekamMedis?: RekamMedisListRelationFilter
+    stunting?: StuntingListRelationFilter
+    telemedicine?: TelemedicineListRelationFilter
+    user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
     desa?: XOR<DesaRelationFilter, DesaWhereInput>
     rwRt?: XOR<RwRtRelationFilter, RwRtWhereInput>
-    rekamMedis?: RekamMedisListRelationFilter
-    telemedicine?: TelemedicineListRelationFilter
-    monitoring?: MonitoringKesehatanListRelationFilter
-    stunting?: StuntingListRelationFilter
-    pesertaKelas?: PesertaKelasListRelationFilter
-    aspirasi?: AspirasiListRelationFilter
-    user?: XOR<UserNullableRelationFilter, UserWhereInput> | null
   }, "id" | "nik">
 
   export type WargaOrderByWithAggregationInput = {
@@ -30988,10 +32029,10 @@ export namespace Prisma {
     fasilitatorId?: StringNullableFilter<"Kelas"> | string | null
     status?: EnumStatusKelasFilter<"Kelas"> | $Enums.StatusKelas
     createdAt?: DateTimeFilter<"Kelas"> | Date | string
+    forum?: ForumListRelationFilter
     materi?: MateriListRelationFilter
     peserta?: PesertaKelasListRelationFilter
     tugas?: TugasListRelationFilter
-    forum?: ForumListRelationFilter
   }
 
   export type KelasOrderByWithRelationInput = {
@@ -31004,10 +32045,10 @@ export namespace Prisma {
     fasilitatorId?: SortOrderInput | SortOrder
     status?: SortOrder
     createdAt?: SortOrder
+    forum?: ForumOrderByRelationAggregateInput
     materi?: MateriOrderByRelationAggregateInput
     peserta?: PesertaKelasOrderByRelationAggregateInput
     tugas?: TugasOrderByRelationAggregateInput
-    forum?: ForumOrderByRelationAggregateInput
   }
 
   export type KelasWhereUniqueInput = Prisma.AtLeast<{
@@ -31023,10 +32064,10 @@ export namespace Prisma {
     fasilitatorId?: StringNullableFilter<"Kelas"> | string | null
     status?: EnumStatusKelasFilter<"Kelas"> | $Enums.StatusKelas
     createdAt?: DateTimeFilter<"Kelas"> | Date | string
+    forum?: ForumListRelationFilter
     materi?: MateriListRelationFilter
     peserta?: PesertaKelasListRelationFilter
     tugas?: TugasListRelationFilter
-    forum?: ForumListRelationFilter
   }, "id">
 
   export type KelasOrderByWithAggregationInput = {
@@ -32173,8 +33214,8 @@ export namespace Prisma {
     kelasId?: StringFilter<"Forum"> | string
     judul?: StringFilter<"Forum"> | string
     createdAt?: DateTimeFilter<"Forum"> | Date | string
-    kelas?: XOR<KelasRelationFilter, KelasWhereInput>
     diskusi?: DiskusiListRelationFilter
+    kelas?: XOR<KelasRelationFilter, KelasWhereInput>
   }
 
   export type ForumOrderByWithRelationInput = {
@@ -32182,8 +33223,8 @@ export namespace Prisma {
     kelasId?: SortOrder
     judul?: SortOrder
     createdAt?: SortOrder
-    kelas?: KelasOrderByWithRelationInput
     diskusi?: DiskusiOrderByRelationAggregateInput
+    kelas?: KelasOrderByWithRelationInput
   }
 
   export type ForumWhereUniqueInput = Prisma.AtLeast<{
@@ -32194,8 +33235,8 @@ export namespace Prisma {
     kelasId?: StringFilter<"Forum"> | string
     judul?: StringFilter<"Forum"> | string
     createdAt?: DateTimeFilter<"Forum"> | Date | string
-    kelas?: XOR<KelasRelationFilter, KelasWhereInput>
     diskusi?: DiskusiListRelationFilter
+    kelas?: XOR<KelasRelationFilter, KelasWhereInput>
   }, "id">
 
   export type ForumOrderByWithAggregationInput = {
@@ -32705,12 +33746,88 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"ModuleRecord"> | Date | string
   }
 
+  export type UmkmWhereInput = {
+    AND?: UmkmWhereInput | UmkmWhereInput[]
+    OR?: UmkmWhereInput[]
+    NOT?: UmkmWhereInput | UmkmWhereInput[]
+    id?: StringFilter<"Umkm"> | string
+    desaId?: StringFilter<"Umkm"> | string
+    nama?: StringFilter<"Umkm"> | string
+    pemilik?: StringFilter<"Umkm"> | string
+    bidang?: StringFilter<"Umkm"> | string
+    omset?: FloatNullableFilter<"Umkm"> | number | null
+    status?: StringFilter<"Umkm"> | string
+    createdAt?: DateTimeFilter<"Umkm"> | Date | string
+    updatedAt?: DateTimeFilter<"Umkm"> | Date | string
+  }
+
+  export type UmkmOrderByWithRelationInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    nama?: SortOrder
+    pemilik?: SortOrder
+    bidang?: SortOrder
+    omset?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UmkmWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: UmkmWhereInput | UmkmWhereInput[]
+    OR?: UmkmWhereInput[]
+    NOT?: UmkmWhereInput | UmkmWhereInput[]
+    desaId?: StringFilter<"Umkm"> | string
+    nama?: StringFilter<"Umkm"> | string
+    pemilik?: StringFilter<"Umkm"> | string
+    bidang?: StringFilter<"Umkm"> | string
+    omset?: FloatNullableFilter<"Umkm"> | number | null
+    status?: StringFilter<"Umkm"> | string
+    createdAt?: DateTimeFilter<"Umkm"> | Date | string
+    updatedAt?: DateTimeFilter<"Umkm"> | Date | string
+  }, "id">
+
+  export type UmkmOrderByWithAggregationInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    nama?: SortOrder
+    pemilik?: SortOrder
+    bidang?: SortOrder
+    omset?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: UmkmCountOrderByAggregateInput
+    _avg?: UmkmAvgOrderByAggregateInput
+    _max?: UmkmMaxOrderByAggregateInput
+    _min?: UmkmMinOrderByAggregateInput
+    _sum?: UmkmSumOrderByAggregateInput
+  }
+
+  export type UmkmScalarWhereWithAggregatesInput = {
+    AND?: UmkmScalarWhereWithAggregatesInput | UmkmScalarWhereWithAggregatesInput[]
+    OR?: UmkmScalarWhereWithAggregatesInput[]
+    NOT?: UmkmScalarWhereWithAggregatesInput | UmkmScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Umkm"> | string
+    desaId?: StringWithAggregatesFilter<"Umkm"> | string
+    nama?: StringWithAggregatesFilter<"Umkm"> | string
+    pemilik?: StringWithAggregatesFilter<"Umkm"> | string
+    bidang?: StringWithAggregatesFilter<"Umkm"> | string
+    omset?: FloatNullableWithAggregatesFilter<"Umkm"> | number | null
+    status?: StringWithAggregatesFilter<"Umkm"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Umkm"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Umkm"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     name: string
     email: string
+    username: string
     password: string
     role: $Enums.Role
+    status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     desa: DesaCreateNestedOneWithoutUsersInput
@@ -32721,8 +33838,10 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    username: string
     password: string
     role: $Enums.Role
+    status?: string
     desaId: string
     wargaId?: string | null
     createdAt?: Date | string
@@ -32733,8 +33852,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     desa?: DesaUpdateOneRequiredWithoutUsersNestedInput
@@ -32745,8 +33866,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: StringFieldUpdateOperationsInput | string
     desaId?: StringFieldUpdateOperationsInput | string
     wargaId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32757,8 +33880,10 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    username: string
     password: string
     role: $Enums.Role
+    status?: string
     desaId: string
     wargaId?: string | null
     createdAt?: Date | string
@@ -32769,8 +33894,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32779,8 +33906,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: StringFieldUpdateOperationsInput | string
     desaId?: StringFieldUpdateOperationsInput | string
     wargaId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32796,8 +33925,8 @@ export namespace Prisma {
     luasWilayah?: number | null
     sejarah?: string | null
     createdAt?: Date | string
-    users?: UserCreateNestedManyWithoutDesaInput
     rwrts?: RwRtCreateNestedManyWithoutDesaInput
+    users?: UserCreateNestedManyWithoutDesaInput
     warga?: WargaCreateNestedManyWithoutDesaInput
   }
 
@@ -32810,8 +33939,8 @@ export namespace Prisma {
     luasWilayah?: number | null
     sejarah?: string | null
     createdAt?: Date | string
-    users?: UserUncheckedCreateNestedManyWithoutDesaInput
     rwrts?: RwRtUncheckedCreateNestedManyWithoutDesaInput
+    users?: UserUncheckedCreateNestedManyWithoutDesaInput
     warga?: WargaUncheckedCreateNestedManyWithoutDesaInput
   }
 
@@ -32824,8 +33953,8 @@ export namespace Prisma {
     luasWilayah?: NullableFloatFieldUpdateOperationsInput | number | null
     sejarah?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: UserUpdateManyWithoutDesaNestedInput
     rwrts?: RwRtUpdateManyWithoutDesaNestedInput
+    users?: UserUpdateManyWithoutDesaNestedInput
     warga?: WargaUpdateManyWithoutDesaNestedInput
   }
 
@@ -32838,8 +33967,8 @@ export namespace Prisma {
     luasWilayah?: NullableFloatFieldUpdateOperationsInput | number | null
     sejarah?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: UserUncheckedUpdateManyWithoutDesaNestedInput
     rwrts?: RwRtUncheckedUpdateManyWithoutDesaNestedInput
+    users?: UserUncheckedUpdateManyWithoutDesaNestedInput
     warga?: WargaUncheckedUpdateManyWithoutDesaNestedInput
   }
 
@@ -32947,15 +34076,15 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
+    stunting?: StuntingCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
+    user?: UserCreateNestedOneWithoutWargaInput
     desa: DesaCreateNestedOneWithoutWargaInput
     rwRt: RwRtCreateNestedOneWithoutWargaInput
-    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
-    stunting?: StuntingCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
-    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
-    user?: UserCreateNestedOneWithoutWargaInput
   }
 
   export type WargaUncheckedCreateInput = {
@@ -32972,12 +34101,12 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
-    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
     aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
+    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -32993,15 +34122,15 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
+    user?: UserUpdateOneWithoutWargaNestedInput
     desa?: DesaUpdateOneRequiredWithoutWargaNestedInput
     rwRt?: RwRtUpdateOneRequiredWithoutWargaNestedInput
-    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
-    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
-    user?: UserUpdateOneWithoutWargaNestedInput
   }
 
   export type WargaUncheckedUpdateInput = {
@@ -33018,12 +34147,12 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
     aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -33083,10 +34212,10 @@ export namespace Prisma {
     fasilitatorId?: string | null
     status?: $Enums.StatusKelas
     createdAt?: Date | string
+    forum?: ForumCreateNestedManyWithoutKelasInput
     materi?: MateriCreateNestedManyWithoutKelasInput
     peserta?: PesertaKelasCreateNestedManyWithoutKelasInput
     tugas?: TugasCreateNestedManyWithoutKelasInput
-    forum?: ForumCreateNestedManyWithoutKelasInput
   }
 
   export type KelasUncheckedCreateInput = {
@@ -33099,10 +34228,10 @@ export namespace Prisma {
     fasilitatorId?: string | null
     status?: $Enums.StatusKelas
     createdAt?: Date | string
+    forum?: ForumUncheckedCreateNestedManyWithoutKelasInput
     materi?: MateriUncheckedCreateNestedManyWithoutKelasInput
     peserta?: PesertaKelasUncheckedCreateNestedManyWithoutKelasInput
     tugas?: TugasUncheckedCreateNestedManyWithoutKelasInput
-    forum?: ForumUncheckedCreateNestedManyWithoutKelasInput
   }
 
   export type KelasUpdateInput = {
@@ -33115,10 +34244,10 @@ export namespace Prisma {
     fasilitatorId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusKelasFieldUpdateOperationsInput | $Enums.StatusKelas
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forum?: ForumUpdateManyWithoutKelasNestedInput
     materi?: MateriUpdateManyWithoutKelasNestedInput
     peserta?: PesertaKelasUpdateManyWithoutKelasNestedInput
     tugas?: TugasUpdateManyWithoutKelasNestedInput
-    forum?: ForumUpdateManyWithoutKelasNestedInput
   }
 
   export type KelasUncheckedUpdateInput = {
@@ -33131,10 +34260,10 @@ export namespace Prisma {
     fasilitatorId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusKelasFieldUpdateOperationsInput | $Enums.StatusKelas
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forum?: ForumUncheckedUpdateManyWithoutKelasNestedInput
     materi?: MateriUncheckedUpdateManyWithoutKelasNestedInput
     peserta?: PesertaKelasUncheckedUpdateManyWithoutKelasNestedInput
     tugas?: TugasUncheckedUpdateManyWithoutKelasNestedInput
-    forum?: ForumUncheckedUpdateManyWithoutKelasNestedInput
   }
 
   export type KelasCreateManyInput = {
@@ -34401,8 +35530,8 @@ export namespace Prisma {
     id?: string
     judul: string
     createdAt?: Date | string
-    kelas: KelasCreateNestedOneWithoutForumInput
     diskusi?: DiskusiCreateNestedManyWithoutForumInput
+    kelas: KelasCreateNestedOneWithoutForumInput
   }
 
   export type ForumUncheckedCreateInput = {
@@ -34417,8 +35546,8 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     judul?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kelas?: KelasUpdateOneRequiredWithoutForumNestedInput
     diskusi?: DiskusiUpdateManyWithoutForumNestedInput
+    kelas?: KelasUpdateOneRequiredWithoutForumNestedInput
   }
 
   export type ForumUncheckedUpdateInput = {
@@ -35000,6 +36129,90 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type UmkmCreateInput = {
+    id?: string
+    desaId: string
+    nama: string
+    pemilik: string
+    bidang: string
+    omset?: number | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UmkmUncheckedCreateInput = {
+    id?: string
+    desaId: string
+    nama: string
+    pemilik: string
+    bidang: string
+    omset?: number | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UmkmUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    pemilik?: StringFieldUpdateOperationsInput | string
+    bidang?: StringFieldUpdateOperationsInput | string
+    omset?: NullableFloatFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UmkmUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    pemilik?: StringFieldUpdateOperationsInput | string
+    bidang?: StringFieldUpdateOperationsInput | string
+    omset?: NullableFloatFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UmkmCreateManyInput = {
+    id?: string
+    desaId: string
+    nama: string
+    pemilik: string
+    bidang: string
+    omset?: number | null
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UmkmUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    pemilik?: StringFieldUpdateOperationsInput | string
+    bidang?: StringFieldUpdateOperationsInput | string
+    omset?: NullableFloatFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UmkmUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    pemilik?: StringFieldUpdateOperationsInput | string
+    bidang?: StringFieldUpdateOperationsInput | string
+    omset?: NullableFloatFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[]
@@ -35065,8 +36278,10 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    username?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    status?: SortOrder
     desaId?: SortOrder
     wargaId?: SortOrder
     createdAt?: SortOrder
@@ -35077,8 +36292,10 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    username?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    status?: SortOrder
     desaId?: SortOrder
     wargaId?: SortOrder
     createdAt?: SortOrder
@@ -35089,8 +36306,10 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     email?: SortOrder
+    username?: SortOrder
     password?: SortOrder
     role?: SortOrder
+    status?: SortOrder
     desaId?: SortOrder
     wargaId?: SortOrder
     createdAt?: SortOrder
@@ -35166,16 +36385,16 @@ export namespace Prisma {
     not?: NestedFloatNullableFilter<$PrismaModel> | number | null
   }
 
-  export type UserListRelationFilter = {
-    every?: UserWhereInput
-    some?: UserWhereInput
-    none?: UserWhereInput
-  }
-
   export type RwRtListRelationFilter = {
     every?: RwRtWhereInput
     some?: RwRtWhereInput
     none?: RwRtWhereInput
+  }
+
+  export type UserListRelationFilter = {
+    every?: UserWhereInput
+    some?: UserWhereInput
+    none?: UserWhereInput
   }
 
   export type WargaListRelationFilter = {
@@ -35184,11 +36403,11 @@ export namespace Prisma {
     none?: WargaWhereInput
   }
 
-  export type UserOrderByRelationAggregateInput = {
+  export type RwRtOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type RwRtOrderByRelationAggregateInput = {
+  export type UserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -35326,21 +36545,10 @@ export namespace Prisma {
     not?: NestedEnumStatusWargaFilter<$PrismaModel> | $Enums.StatusWarga
   }
 
-  export type RwRtRelationFilter = {
-    is?: RwRtWhereInput
-    isNot?: RwRtWhereInput
-  }
-
-  export type RekamMedisListRelationFilter = {
-    every?: RekamMedisWhereInput
-    some?: RekamMedisWhereInput
-    none?: RekamMedisWhereInput
-  }
-
-  export type TelemedicineListRelationFilter = {
-    every?: TelemedicineWhereInput
-    some?: TelemedicineWhereInput
-    none?: TelemedicineWhereInput
+  export type AspirasiListRelationFilter = {
+    every?: AspirasiWhereInput
+    some?: AspirasiWhereInput
+    none?: AspirasiWhereInput
   }
 
   export type MonitoringKesehatanListRelationFilter = {
@@ -35349,22 +36557,28 @@ export namespace Prisma {
     none?: MonitoringKesehatanWhereInput
   }
 
-  export type StuntingListRelationFilter = {
-    every?: StuntingWhereInput
-    some?: StuntingWhereInput
-    none?: StuntingWhereInput
-  }
-
   export type PesertaKelasListRelationFilter = {
     every?: PesertaKelasWhereInput
     some?: PesertaKelasWhereInput
     none?: PesertaKelasWhereInput
   }
 
-  export type AspirasiListRelationFilter = {
-    every?: AspirasiWhereInput
-    some?: AspirasiWhereInput
-    none?: AspirasiWhereInput
+  export type RekamMedisListRelationFilter = {
+    every?: RekamMedisWhereInput
+    some?: RekamMedisWhereInput
+    none?: RekamMedisWhereInput
+  }
+
+  export type StuntingListRelationFilter = {
+    every?: StuntingWhereInput
+    some?: StuntingWhereInput
+    none?: StuntingWhereInput
+  }
+
+  export type TelemedicineListRelationFilter = {
+    every?: TelemedicineWhereInput
+    some?: TelemedicineWhereInput
+    none?: TelemedicineWhereInput
   }
 
   export type UserNullableRelationFilter = {
@@ -35372,11 +36586,12 @@ export namespace Prisma {
     isNot?: UserWhereInput | null
   }
 
-  export type RekamMedisOrderByRelationAggregateInput = {
-    _count?: SortOrder
+  export type RwRtRelationFilter = {
+    is?: RwRtWhereInput
+    isNot?: RwRtWhereInput
   }
 
-  export type TelemedicineOrderByRelationAggregateInput = {
+  export type AspirasiOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -35384,15 +36599,19 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type StuntingOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
   export type PesertaKelasOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type AspirasiOrderByRelationAggregateInput = {
+  export type RekamMedisOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type StuntingOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type TelemedicineOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -35478,6 +36697,12 @@ export namespace Prisma {
     not?: NestedEnumStatusKelasFilter<$PrismaModel> | $Enums.StatusKelas
   }
 
+  export type ForumListRelationFilter = {
+    every?: ForumWhereInput
+    some?: ForumWhereInput
+    none?: ForumWhereInput
+  }
+
   export type MateriListRelationFilter = {
     every?: MateriWhereInput
     some?: MateriWhereInput
@@ -35490,10 +36715,8 @@ export namespace Prisma {
     none?: TugasWhereInput
   }
 
-  export type ForumListRelationFilter = {
-    every?: ForumWhereInput
-    some?: ForumWhereInput
-    none?: ForumWhereInput
+  export type ForumOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type MateriOrderByRelationAggregateInput = {
@@ -35501,10 +36724,6 @@ export namespace Prisma {
   }
 
   export type TugasOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type ForumOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -36665,6 +37884,50 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type UmkmCountOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    nama?: SortOrder
+    pemilik?: SortOrder
+    bidang?: SortOrder
+    omset?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UmkmAvgOrderByAggregateInput = {
+    omset?: SortOrder
+  }
+
+  export type UmkmMaxOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    nama?: SortOrder
+    pemilik?: SortOrder
+    bidang?: SortOrder
+    omset?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UmkmMinOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    nama?: SortOrder
+    pemilik?: SortOrder
+    bidang?: SortOrder
+    omset?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type UmkmSumOrderByAggregateInput = {
+    omset?: SortOrder
+  }
+
   export type DesaCreateNestedOneWithoutUsersInput = {
     create?: XOR<DesaCreateWithoutUsersInput, DesaUncheckedCreateWithoutUsersInput>
     connectOrCreate?: DesaCreateOrConnectWithoutUsersInput
@@ -36711,18 +37974,18 @@ export namespace Prisma {
     set?: string | null
   }
 
-  export type UserCreateNestedManyWithoutDesaInput = {
-    create?: XOR<UserCreateWithoutDesaInput, UserUncheckedCreateWithoutDesaInput> | UserCreateWithoutDesaInput[] | UserUncheckedCreateWithoutDesaInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutDesaInput | UserCreateOrConnectWithoutDesaInput[]
-    createMany?: UserCreateManyDesaInputEnvelope
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-  }
-
   export type RwRtCreateNestedManyWithoutDesaInput = {
     create?: XOR<RwRtCreateWithoutDesaInput, RwRtUncheckedCreateWithoutDesaInput> | RwRtCreateWithoutDesaInput[] | RwRtUncheckedCreateWithoutDesaInput[]
     connectOrCreate?: RwRtCreateOrConnectWithoutDesaInput | RwRtCreateOrConnectWithoutDesaInput[]
     createMany?: RwRtCreateManyDesaInputEnvelope
     connect?: RwRtWhereUniqueInput | RwRtWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedManyWithoutDesaInput = {
+    create?: XOR<UserCreateWithoutDesaInput, UserUncheckedCreateWithoutDesaInput> | UserCreateWithoutDesaInput[] | UserUncheckedCreateWithoutDesaInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutDesaInput | UserCreateOrConnectWithoutDesaInput[]
+    createMany?: UserCreateManyDesaInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
   export type WargaCreateNestedManyWithoutDesaInput = {
@@ -36732,18 +37995,18 @@ export namespace Prisma {
     connect?: WargaWhereUniqueInput | WargaWhereUniqueInput[]
   }
 
-  export type UserUncheckedCreateNestedManyWithoutDesaInput = {
-    create?: XOR<UserCreateWithoutDesaInput, UserUncheckedCreateWithoutDesaInput> | UserCreateWithoutDesaInput[] | UserUncheckedCreateWithoutDesaInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutDesaInput | UserCreateOrConnectWithoutDesaInput[]
-    createMany?: UserCreateManyDesaInputEnvelope
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-  }
-
   export type RwRtUncheckedCreateNestedManyWithoutDesaInput = {
     create?: XOR<RwRtCreateWithoutDesaInput, RwRtUncheckedCreateWithoutDesaInput> | RwRtCreateWithoutDesaInput[] | RwRtUncheckedCreateWithoutDesaInput[]
     connectOrCreate?: RwRtCreateOrConnectWithoutDesaInput | RwRtCreateOrConnectWithoutDesaInput[]
     createMany?: RwRtCreateManyDesaInputEnvelope
     connect?: RwRtWhereUniqueInput | RwRtWhereUniqueInput[]
+  }
+
+  export type UserUncheckedCreateNestedManyWithoutDesaInput = {
+    create?: XOR<UserCreateWithoutDesaInput, UserUncheckedCreateWithoutDesaInput> | UserCreateWithoutDesaInput[] | UserUncheckedCreateWithoutDesaInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutDesaInput | UserCreateOrConnectWithoutDesaInput[]
+    createMany?: UserCreateManyDesaInputEnvelope
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
   export type WargaUncheckedCreateNestedManyWithoutDesaInput = {
@@ -36761,20 +38024,6 @@ export namespace Prisma {
     divide?: number
   }
 
-  export type UserUpdateManyWithoutDesaNestedInput = {
-    create?: XOR<UserCreateWithoutDesaInput, UserUncheckedCreateWithoutDesaInput> | UserCreateWithoutDesaInput[] | UserUncheckedCreateWithoutDesaInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutDesaInput | UserCreateOrConnectWithoutDesaInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutDesaInput | UserUpsertWithWhereUniqueWithoutDesaInput[]
-    createMany?: UserCreateManyDesaInputEnvelope
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutDesaInput | UserUpdateWithWhereUniqueWithoutDesaInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutDesaInput | UserUpdateManyWithWhereWithoutDesaInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
-  }
-
   export type RwRtUpdateManyWithoutDesaNestedInput = {
     create?: XOR<RwRtCreateWithoutDesaInput, RwRtUncheckedCreateWithoutDesaInput> | RwRtCreateWithoutDesaInput[] | RwRtUncheckedCreateWithoutDesaInput[]
     connectOrCreate?: RwRtCreateOrConnectWithoutDesaInput | RwRtCreateOrConnectWithoutDesaInput[]
@@ -36787,6 +38036,20 @@ export namespace Prisma {
     update?: RwRtUpdateWithWhereUniqueWithoutDesaInput | RwRtUpdateWithWhereUniqueWithoutDesaInput[]
     updateMany?: RwRtUpdateManyWithWhereWithoutDesaInput | RwRtUpdateManyWithWhereWithoutDesaInput[]
     deleteMany?: RwRtScalarWhereInput | RwRtScalarWhereInput[]
+  }
+
+  export type UserUpdateManyWithoutDesaNestedInput = {
+    create?: XOR<UserCreateWithoutDesaInput, UserUncheckedCreateWithoutDesaInput> | UserCreateWithoutDesaInput[] | UserUncheckedCreateWithoutDesaInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutDesaInput | UserCreateOrConnectWithoutDesaInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutDesaInput | UserUpsertWithWhereUniqueWithoutDesaInput[]
+    createMany?: UserCreateManyDesaInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutDesaInput | UserUpdateWithWhereUniqueWithoutDesaInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutDesaInput | UserUpdateManyWithWhereWithoutDesaInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type WargaUpdateManyWithoutDesaNestedInput = {
@@ -36803,20 +38066,6 @@ export namespace Prisma {
     deleteMany?: WargaScalarWhereInput | WargaScalarWhereInput[]
   }
 
-  export type UserUncheckedUpdateManyWithoutDesaNestedInput = {
-    create?: XOR<UserCreateWithoutDesaInput, UserUncheckedCreateWithoutDesaInput> | UserCreateWithoutDesaInput[] | UserUncheckedCreateWithoutDesaInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutDesaInput | UserCreateOrConnectWithoutDesaInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutDesaInput | UserUpsertWithWhereUniqueWithoutDesaInput[]
-    createMany?: UserCreateManyDesaInputEnvelope
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutDesaInput | UserUpdateWithWhereUniqueWithoutDesaInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutDesaInput | UserUpdateManyWithWhereWithoutDesaInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
-  }
-
   export type RwRtUncheckedUpdateManyWithoutDesaNestedInput = {
     create?: XOR<RwRtCreateWithoutDesaInput, RwRtUncheckedCreateWithoutDesaInput> | RwRtCreateWithoutDesaInput[] | RwRtUncheckedCreateWithoutDesaInput[]
     connectOrCreate?: RwRtCreateOrConnectWithoutDesaInput | RwRtCreateOrConnectWithoutDesaInput[]
@@ -36829,6 +38078,20 @@ export namespace Prisma {
     update?: RwRtUpdateWithWhereUniqueWithoutDesaInput | RwRtUpdateWithWhereUniqueWithoutDesaInput[]
     updateMany?: RwRtUpdateManyWithWhereWithoutDesaInput | RwRtUpdateManyWithWhereWithoutDesaInput[]
     deleteMany?: RwRtScalarWhereInput | RwRtScalarWhereInput[]
+  }
+
+  export type UserUncheckedUpdateManyWithoutDesaNestedInput = {
+    create?: XOR<UserCreateWithoutDesaInput, UserUncheckedCreateWithoutDesaInput> | UserCreateWithoutDesaInput[] | UserUncheckedCreateWithoutDesaInput[]
+    connectOrCreate?: UserCreateOrConnectWithoutDesaInput | UserCreateOrConnectWithoutDesaInput[]
+    upsert?: UserUpsertWithWhereUniqueWithoutDesaInput | UserUpsertWithWhereUniqueWithoutDesaInput[]
+    createMany?: UserCreateManyDesaInputEnvelope
+    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
+    update?: UserUpdateWithWhereUniqueWithoutDesaInput | UserUpdateWithWhereUniqueWithoutDesaInput[]
+    updateMany?: UserUpdateManyWithWhereWithoutDesaInput | UserUpdateManyWithWhereWithoutDesaInput[]
+    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type WargaUncheckedUpdateManyWithoutDesaNestedInput = {
@@ -36909,6 +38172,54 @@ export namespace Prisma {
     deleteMany?: WargaScalarWhereInput | WargaScalarWhereInput[]
   }
 
+  export type AspirasiCreateNestedManyWithoutWargaInput = {
+    create?: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput> | AspirasiCreateWithoutWargaInput[] | AspirasiUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: AspirasiCreateOrConnectWithoutWargaInput | AspirasiCreateOrConnectWithoutWargaInput[]
+    createMany?: AspirasiCreateManyWargaInputEnvelope
+    connect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+  }
+
+  export type MonitoringKesehatanCreateNestedManyWithoutWargaInput = {
+    create?: XOR<MonitoringKesehatanCreateWithoutWargaInput, MonitoringKesehatanUncheckedCreateWithoutWargaInput> | MonitoringKesehatanCreateWithoutWargaInput[] | MonitoringKesehatanUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: MonitoringKesehatanCreateOrConnectWithoutWargaInput | MonitoringKesehatanCreateOrConnectWithoutWargaInput[]
+    createMany?: MonitoringKesehatanCreateManyWargaInputEnvelope
+    connect?: MonitoringKesehatanWhereUniqueInput | MonitoringKesehatanWhereUniqueInput[]
+  }
+
+  export type PesertaKelasCreateNestedManyWithoutWargaInput = {
+    create?: XOR<PesertaKelasCreateWithoutWargaInput, PesertaKelasUncheckedCreateWithoutWargaInput> | PesertaKelasCreateWithoutWargaInput[] | PesertaKelasUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: PesertaKelasCreateOrConnectWithoutWargaInput | PesertaKelasCreateOrConnectWithoutWargaInput[]
+    createMany?: PesertaKelasCreateManyWargaInputEnvelope
+    connect?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
+  }
+
+  export type RekamMedisCreateNestedManyWithoutWargaInput = {
+    create?: XOR<RekamMedisCreateWithoutWargaInput, RekamMedisUncheckedCreateWithoutWargaInput> | RekamMedisCreateWithoutWargaInput[] | RekamMedisUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: RekamMedisCreateOrConnectWithoutWargaInput | RekamMedisCreateOrConnectWithoutWargaInput[]
+    createMany?: RekamMedisCreateManyWargaInputEnvelope
+    connect?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
+  }
+
+  export type StuntingCreateNestedManyWithoutWargaInput = {
+    create?: XOR<StuntingCreateWithoutWargaInput, StuntingUncheckedCreateWithoutWargaInput> | StuntingCreateWithoutWargaInput[] | StuntingUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: StuntingCreateOrConnectWithoutWargaInput | StuntingCreateOrConnectWithoutWargaInput[]
+    createMany?: StuntingCreateManyWargaInputEnvelope
+    connect?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
+  }
+
+  export type TelemedicineCreateNestedManyWithoutWargaInput = {
+    create?: XOR<TelemedicineCreateWithoutWargaInput, TelemedicineUncheckedCreateWithoutWargaInput> | TelemedicineCreateWithoutWargaInput[] | TelemedicineUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: TelemedicineCreateOrConnectWithoutWargaInput | TelemedicineCreateOrConnectWithoutWargaInput[]
+    createMany?: TelemedicineCreateManyWargaInputEnvelope
+    connect?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
+  }
+
+  export type UserCreateNestedOneWithoutWargaInput = {
+    create?: XOR<UserCreateWithoutWargaInput, UserUncheckedCreateWithoutWargaInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWargaInput
+    connect?: UserWhereUniqueInput
+  }
+
   export type DesaCreateNestedOneWithoutWargaInput = {
     create?: XOR<DesaCreateWithoutWargaInput, DesaUncheckedCreateWithoutWargaInput>
     connectOrCreate?: DesaCreateOrConnectWithoutWargaInput
@@ -36921,66 +38232,11 @@ export namespace Prisma {
     connect?: RwRtWhereUniqueInput
   }
 
-  export type RekamMedisCreateNestedManyWithoutWargaInput = {
-    create?: XOR<RekamMedisCreateWithoutWargaInput, RekamMedisUncheckedCreateWithoutWargaInput> | RekamMedisCreateWithoutWargaInput[] | RekamMedisUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: RekamMedisCreateOrConnectWithoutWargaInput | RekamMedisCreateOrConnectWithoutWargaInput[]
-    createMany?: RekamMedisCreateManyWargaInputEnvelope
-    connect?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
-  }
-
-  export type TelemedicineCreateNestedManyWithoutWargaInput = {
-    create?: XOR<TelemedicineCreateWithoutWargaInput, TelemedicineUncheckedCreateWithoutWargaInput> | TelemedicineCreateWithoutWargaInput[] | TelemedicineUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: TelemedicineCreateOrConnectWithoutWargaInput | TelemedicineCreateOrConnectWithoutWargaInput[]
-    createMany?: TelemedicineCreateManyWargaInputEnvelope
-    connect?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
-  }
-
-  export type MonitoringKesehatanCreateNestedManyWithoutWargaInput = {
-    create?: XOR<MonitoringKesehatanCreateWithoutWargaInput, MonitoringKesehatanUncheckedCreateWithoutWargaInput> | MonitoringKesehatanCreateWithoutWargaInput[] | MonitoringKesehatanUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: MonitoringKesehatanCreateOrConnectWithoutWargaInput | MonitoringKesehatanCreateOrConnectWithoutWargaInput[]
-    createMany?: MonitoringKesehatanCreateManyWargaInputEnvelope
-    connect?: MonitoringKesehatanWhereUniqueInput | MonitoringKesehatanWhereUniqueInput[]
-  }
-
-  export type StuntingCreateNestedManyWithoutWargaInput = {
-    create?: XOR<StuntingCreateWithoutWargaInput, StuntingUncheckedCreateWithoutWargaInput> | StuntingCreateWithoutWargaInput[] | StuntingUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: StuntingCreateOrConnectWithoutWargaInput | StuntingCreateOrConnectWithoutWargaInput[]
-    createMany?: StuntingCreateManyWargaInputEnvelope
-    connect?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
-  }
-
-  export type PesertaKelasCreateNestedManyWithoutWargaInput = {
-    create?: XOR<PesertaKelasCreateWithoutWargaInput, PesertaKelasUncheckedCreateWithoutWargaInput> | PesertaKelasCreateWithoutWargaInput[] | PesertaKelasUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: PesertaKelasCreateOrConnectWithoutWargaInput | PesertaKelasCreateOrConnectWithoutWargaInput[]
-    createMany?: PesertaKelasCreateManyWargaInputEnvelope
-    connect?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
-  }
-
-  export type AspirasiCreateNestedManyWithoutWargaInput = {
+  export type AspirasiUncheckedCreateNestedManyWithoutWargaInput = {
     create?: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput> | AspirasiCreateWithoutWargaInput[] | AspirasiUncheckedCreateWithoutWargaInput[]
     connectOrCreate?: AspirasiCreateOrConnectWithoutWargaInput | AspirasiCreateOrConnectWithoutWargaInput[]
     createMany?: AspirasiCreateManyWargaInputEnvelope
     connect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
-  }
-
-  export type UserCreateNestedOneWithoutWargaInput = {
-    create?: XOR<UserCreateWithoutWargaInput, UserUncheckedCreateWithoutWargaInput>
-    connectOrCreate?: UserCreateOrConnectWithoutWargaInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type RekamMedisUncheckedCreateNestedManyWithoutWargaInput = {
-    create?: XOR<RekamMedisCreateWithoutWargaInput, RekamMedisUncheckedCreateWithoutWargaInput> | RekamMedisCreateWithoutWargaInput[] | RekamMedisUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: RekamMedisCreateOrConnectWithoutWargaInput | RekamMedisCreateOrConnectWithoutWargaInput[]
-    createMany?: RekamMedisCreateManyWargaInputEnvelope
-    connect?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
-  }
-
-  export type TelemedicineUncheckedCreateNestedManyWithoutWargaInput = {
-    create?: XOR<TelemedicineCreateWithoutWargaInput, TelemedicineUncheckedCreateWithoutWargaInput> | TelemedicineCreateWithoutWargaInput[] | TelemedicineUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: TelemedicineCreateOrConnectWithoutWargaInput | TelemedicineCreateOrConnectWithoutWargaInput[]
-    createMany?: TelemedicineCreateManyWargaInputEnvelope
-    connect?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
   }
 
   export type MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput = {
@@ -36990,13 +38246,6 @@ export namespace Prisma {
     connect?: MonitoringKesehatanWhereUniqueInput | MonitoringKesehatanWhereUniqueInput[]
   }
 
-  export type StuntingUncheckedCreateNestedManyWithoutWargaInput = {
-    create?: XOR<StuntingCreateWithoutWargaInput, StuntingUncheckedCreateWithoutWargaInput> | StuntingCreateWithoutWargaInput[] | StuntingUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: StuntingCreateOrConnectWithoutWargaInput | StuntingCreateOrConnectWithoutWargaInput[]
-    createMany?: StuntingCreateManyWargaInputEnvelope
-    connect?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
-  }
-
   export type PesertaKelasUncheckedCreateNestedManyWithoutWargaInput = {
     create?: XOR<PesertaKelasCreateWithoutWargaInput, PesertaKelasUncheckedCreateWithoutWargaInput> | PesertaKelasCreateWithoutWargaInput[] | PesertaKelasUncheckedCreateWithoutWargaInput[]
     connectOrCreate?: PesertaKelasCreateOrConnectWithoutWargaInput | PesertaKelasCreateOrConnectWithoutWargaInput[]
@@ -37004,11 +38253,25 @@ export namespace Prisma {
     connect?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
   }
 
-  export type AspirasiUncheckedCreateNestedManyWithoutWargaInput = {
-    create?: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput> | AspirasiCreateWithoutWargaInput[] | AspirasiUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: AspirasiCreateOrConnectWithoutWargaInput | AspirasiCreateOrConnectWithoutWargaInput[]
-    createMany?: AspirasiCreateManyWargaInputEnvelope
-    connect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+  export type RekamMedisUncheckedCreateNestedManyWithoutWargaInput = {
+    create?: XOR<RekamMedisCreateWithoutWargaInput, RekamMedisUncheckedCreateWithoutWargaInput> | RekamMedisCreateWithoutWargaInput[] | RekamMedisUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: RekamMedisCreateOrConnectWithoutWargaInput | RekamMedisCreateOrConnectWithoutWargaInput[]
+    createMany?: RekamMedisCreateManyWargaInputEnvelope
+    connect?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
+  }
+
+  export type StuntingUncheckedCreateNestedManyWithoutWargaInput = {
+    create?: XOR<StuntingCreateWithoutWargaInput, StuntingUncheckedCreateWithoutWargaInput> | StuntingCreateWithoutWargaInput[] | StuntingUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: StuntingCreateOrConnectWithoutWargaInput | StuntingCreateOrConnectWithoutWargaInput[]
+    createMany?: StuntingCreateManyWargaInputEnvelope
+    connect?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
+  }
+
+  export type TelemedicineUncheckedCreateNestedManyWithoutWargaInput = {
+    create?: XOR<TelemedicineCreateWithoutWargaInput, TelemedicineUncheckedCreateWithoutWargaInput> | TelemedicineCreateWithoutWargaInput[] | TelemedicineUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: TelemedicineCreateOrConnectWithoutWargaInput | TelemedicineCreateOrConnectWithoutWargaInput[]
+    createMany?: TelemedicineCreateManyWargaInputEnvelope
+    connect?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
   }
 
   export type UserUncheckedCreateNestedOneWithoutWargaInput = {
@@ -37023,6 +38286,100 @@ export namespace Prisma {
 
   export type EnumStatusWargaFieldUpdateOperationsInput = {
     set?: $Enums.StatusWarga
+  }
+
+  export type AspirasiUpdateManyWithoutWargaNestedInput = {
+    create?: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput> | AspirasiCreateWithoutWargaInput[] | AspirasiUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: AspirasiCreateOrConnectWithoutWargaInput | AspirasiCreateOrConnectWithoutWargaInput[]
+    upsert?: AspirasiUpsertWithWhereUniqueWithoutWargaInput | AspirasiUpsertWithWhereUniqueWithoutWargaInput[]
+    createMany?: AspirasiCreateManyWargaInputEnvelope
+    set?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+    disconnect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+    delete?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+    connect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
+    update?: AspirasiUpdateWithWhereUniqueWithoutWargaInput | AspirasiUpdateWithWhereUniqueWithoutWargaInput[]
+    updateMany?: AspirasiUpdateManyWithWhereWithoutWargaInput | AspirasiUpdateManyWithWhereWithoutWargaInput[]
+    deleteMany?: AspirasiScalarWhereInput | AspirasiScalarWhereInput[]
+  }
+
+  export type MonitoringKesehatanUpdateManyWithoutWargaNestedInput = {
+    create?: XOR<MonitoringKesehatanCreateWithoutWargaInput, MonitoringKesehatanUncheckedCreateWithoutWargaInput> | MonitoringKesehatanCreateWithoutWargaInput[] | MonitoringKesehatanUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: MonitoringKesehatanCreateOrConnectWithoutWargaInput | MonitoringKesehatanCreateOrConnectWithoutWargaInput[]
+    upsert?: MonitoringKesehatanUpsertWithWhereUniqueWithoutWargaInput | MonitoringKesehatanUpsertWithWhereUniqueWithoutWargaInput[]
+    createMany?: MonitoringKesehatanCreateManyWargaInputEnvelope
+    set?: MonitoringKesehatanWhereUniqueInput | MonitoringKesehatanWhereUniqueInput[]
+    disconnect?: MonitoringKesehatanWhereUniqueInput | MonitoringKesehatanWhereUniqueInput[]
+    delete?: MonitoringKesehatanWhereUniqueInput | MonitoringKesehatanWhereUniqueInput[]
+    connect?: MonitoringKesehatanWhereUniqueInput | MonitoringKesehatanWhereUniqueInput[]
+    update?: MonitoringKesehatanUpdateWithWhereUniqueWithoutWargaInput | MonitoringKesehatanUpdateWithWhereUniqueWithoutWargaInput[]
+    updateMany?: MonitoringKesehatanUpdateManyWithWhereWithoutWargaInput | MonitoringKesehatanUpdateManyWithWhereWithoutWargaInput[]
+    deleteMany?: MonitoringKesehatanScalarWhereInput | MonitoringKesehatanScalarWhereInput[]
+  }
+
+  export type PesertaKelasUpdateManyWithoutWargaNestedInput = {
+    create?: XOR<PesertaKelasCreateWithoutWargaInput, PesertaKelasUncheckedCreateWithoutWargaInput> | PesertaKelasCreateWithoutWargaInput[] | PesertaKelasUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: PesertaKelasCreateOrConnectWithoutWargaInput | PesertaKelasCreateOrConnectWithoutWargaInput[]
+    upsert?: PesertaKelasUpsertWithWhereUniqueWithoutWargaInput | PesertaKelasUpsertWithWhereUniqueWithoutWargaInput[]
+    createMany?: PesertaKelasCreateManyWargaInputEnvelope
+    set?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
+    disconnect?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
+    delete?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
+    connect?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
+    update?: PesertaKelasUpdateWithWhereUniqueWithoutWargaInput | PesertaKelasUpdateWithWhereUniqueWithoutWargaInput[]
+    updateMany?: PesertaKelasUpdateManyWithWhereWithoutWargaInput | PesertaKelasUpdateManyWithWhereWithoutWargaInput[]
+    deleteMany?: PesertaKelasScalarWhereInput | PesertaKelasScalarWhereInput[]
+  }
+
+  export type RekamMedisUpdateManyWithoutWargaNestedInput = {
+    create?: XOR<RekamMedisCreateWithoutWargaInput, RekamMedisUncheckedCreateWithoutWargaInput> | RekamMedisCreateWithoutWargaInput[] | RekamMedisUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: RekamMedisCreateOrConnectWithoutWargaInput | RekamMedisCreateOrConnectWithoutWargaInput[]
+    upsert?: RekamMedisUpsertWithWhereUniqueWithoutWargaInput | RekamMedisUpsertWithWhereUniqueWithoutWargaInput[]
+    createMany?: RekamMedisCreateManyWargaInputEnvelope
+    set?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
+    disconnect?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
+    delete?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
+    connect?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
+    update?: RekamMedisUpdateWithWhereUniqueWithoutWargaInput | RekamMedisUpdateWithWhereUniqueWithoutWargaInput[]
+    updateMany?: RekamMedisUpdateManyWithWhereWithoutWargaInput | RekamMedisUpdateManyWithWhereWithoutWargaInput[]
+    deleteMany?: RekamMedisScalarWhereInput | RekamMedisScalarWhereInput[]
+  }
+
+  export type StuntingUpdateManyWithoutWargaNestedInput = {
+    create?: XOR<StuntingCreateWithoutWargaInput, StuntingUncheckedCreateWithoutWargaInput> | StuntingCreateWithoutWargaInput[] | StuntingUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: StuntingCreateOrConnectWithoutWargaInput | StuntingCreateOrConnectWithoutWargaInput[]
+    upsert?: StuntingUpsertWithWhereUniqueWithoutWargaInput | StuntingUpsertWithWhereUniqueWithoutWargaInput[]
+    createMany?: StuntingCreateManyWargaInputEnvelope
+    set?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
+    disconnect?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
+    delete?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
+    connect?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
+    update?: StuntingUpdateWithWhereUniqueWithoutWargaInput | StuntingUpdateWithWhereUniqueWithoutWargaInput[]
+    updateMany?: StuntingUpdateManyWithWhereWithoutWargaInput | StuntingUpdateManyWithWhereWithoutWargaInput[]
+    deleteMany?: StuntingScalarWhereInput | StuntingScalarWhereInput[]
+  }
+
+  export type TelemedicineUpdateManyWithoutWargaNestedInput = {
+    create?: XOR<TelemedicineCreateWithoutWargaInput, TelemedicineUncheckedCreateWithoutWargaInput> | TelemedicineCreateWithoutWargaInput[] | TelemedicineUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: TelemedicineCreateOrConnectWithoutWargaInput | TelemedicineCreateOrConnectWithoutWargaInput[]
+    upsert?: TelemedicineUpsertWithWhereUniqueWithoutWargaInput | TelemedicineUpsertWithWhereUniqueWithoutWargaInput[]
+    createMany?: TelemedicineCreateManyWargaInputEnvelope
+    set?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
+    disconnect?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
+    delete?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
+    connect?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
+    update?: TelemedicineUpdateWithWhereUniqueWithoutWargaInput | TelemedicineUpdateWithWhereUniqueWithoutWargaInput[]
+    updateMany?: TelemedicineUpdateManyWithWhereWithoutWargaInput | TelemedicineUpdateManyWithWhereWithoutWargaInput[]
+    deleteMany?: TelemedicineScalarWhereInput | TelemedicineScalarWhereInput[]
+  }
+
+  export type UserUpdateOneWithoutWargaNestedInput = {
+    create?: XOR<UserCreateWithoutWargaInput, UserUncheckedCreateWithoutWargaInput>
+    connectOrCreate?: UserCreateOrConnectWithoutWargaInput
+    upsert?: UserUpsertWithoutWargaInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWargaInput, UserUpdateWithoutWargaInput>, UserUncheckedUpdateWithoutWargaInput>
   }
 
   export type DesaUpdateOneRequiredWithoutWargaNestedInput = {
@@ -37041,77 +38398,7 @@ export namespace Prisma {
     update?: XOR<XOR<RwRtUpdateToOneWithWhereWithoutWargaInput, RwRtUpdateWithoutWargaInput>, RwRtUncheckedUpdateWithoutWargaInput>
   }
 
-  export type RekamMedisUpdateManyWithoutWargaNestedInput = {
-    create?: XOR<RekamMedisCreateWithoutWargaInput, RekamMedisUncheckedCreateWithoutWargaInput> | RekamMedisCreateWithoutWargaInput[] | RekamMedisUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: RekamMedisCreateOrConnectWithoutWargaInput | RekamMedisCreateOrConnectWithoutWargaInput[]
-    upsert?: RekamMedisUpsertWithWhereUniqueWithoutWargaInput | RekamMedisUpsertWithWhereUniqueWithoutWargaInput[]
-    createMany?: RekamMedisCreateManyWargaInputEnvelope
-    set?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
-    disconnect?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
-    delete?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
-    connect?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
-    update?: RekamMedisUpdateWithWhereUniqueWithoutWargaInput | RekamMedisUpdateWithWhereUniqueWithoutWargaInput[]
-    updateMany?: RekamMedisUpdateManyWithWhereWithoutWargaInput | RekamMedisUpdateManyWithWhereWithoutWargaInput[]
-    deleteMany?: RekamMedisScalarWhereInput | RekamMedisScalarWhereInput[]
-  }
-
-  export type TelemedicineUpdateManyWithoutWargaNestedInput = {
-    create?: XOR<TelemedicineCreateWithoutWargaInput, TelemedicineUncheckedCreateWithoutWargaInput> | TelemedicineCreateWithoutWargaInput[] | TelemedicineUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: TelemedicineCreateOrConnectWithoutWargaInput | TelemedicineCreateOrConnectWithoutWargaInput[]
-    upsert?: TelemedicineUpsertWithWhereUniqueWithoutWargaInput | TelemedicineUpsertWithWhereUniqueWithoutWargaInput[]
-    createMany?: TelemedicineCreateManyWargaInputEnvelope
-    set?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
-    disconnect?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
-    delete?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
-    connect?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
-    update?: TelemedicineUpdateWithWhereUniqueWithoutWargaInput | TelemedicineUpdateWithWhereUniqueWithoutWargaInput[]
-    updateMany?: TelemedicineUpdateManyWithWhereWithoutWargaInput | TelemedicineUpdateManyWithWhereWithoutWargaInput[]
-    deleteMany?: TelemedicineScalarWhereInput | TelemedicineScalarWhereInput[]
-  }
-
-  export type MonitoringKesehatanUpdateManyWithoutWargaNestedInput = {
-    create?: XOR<MonitoringKesehatanCreateWithoutWargaInput, MonitoringKesehatanUncheckedCreateWithoutWargaInput> | MonitoringKesehatanCreateWithoutWargaInput[] | MonitoringKesehatanUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: MonitoringKesehatanCreateOrConnectWithoutWargaInput | MonitoringKesehatanCreateOrConnectWithoutWargaInput[]
-    upsert?: MonitoringKesehatanUpsertWithWhereUniqueWithoutWargaInput | MonitoringKesehatanUpsertWithWhereUniqueWithoutWargaInput[]
-    createMany?: MonitoringKesehatanCreateManyWargaInputEnvelope
-    set?: MonitoringKesehatanWhereUniqueInput | MonitoringKesehatanWhereUniqueInput[]
-    disconnect?: MonitoringKesehatanWhereUniqueInput | MonitoringKesehatanWhereUniqueInput[]
-    delete?: MonitoringKesehatanWhereUniqueInput | MonitoringKesehatanWhereUniqueInput[]
-    connect?: MonitoringKesehatanWhereUniqueInput | MonitoringKesehatanWhereUniqueInput[]
-    update?: MonitoringKesehatanUpdateWithWhereUniqueWithoutWargaInput | MonitoringKesehatanUpdateWithWhereUniqueWithoutWargaInput[]
-    updateMany?: MonitoringKesehatanUpdateManyWithWhereWithoutWargaInput | MonitoringKesehatanUpdateManyWithWhereWithoutWargaInput[]
-    deleteMany?: MonitoringKesehatanScalarWhereInput | MonitoringKesehatanScalarWhereInput[]
-  }
-
-  export type StuntingUpdateManyWithoutWargaNestedInput = {
-    create?: XOR<StuntingCreateWithoutWargaInput, StuntingUncheckedCreateWithoutWargaInput> | StuntingCreateWithoutWargaInput[] | StuntingUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: StuntingCreateOrConnectWithoutWargaInput | StuntingCreateOrConnectWithoutWargaInput[]
-    upsert?: StuntingUpsertWithWhereUniqueWithoutWargaInput | StuntingUpsertWithWhereUniqueWithoutWargaInput[]
-    createMany?: StuntingCreateManyWargaInputEnvelope
-    set?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
-    disconnect?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
-    delete?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
-    connect?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
-    update?: StuntingUpdateWithWhereUniqueWithoutWargaInput | StuntingUpdateWithWhereUniqueWithoutWargaInput[]
-    updateMany?: StuntingUpdateManyWithWhereWithoutWargaInput | StuntingUpdateManyWithWhereWithoutWargaInput[]
-    deleteMany?: StuntingScalarWhereInput | StuntingScalarWhereInput[]
-  }
-
-  export type PesertaKelasUpdateManyWithoutWargaNestedInput = {
-    create?: XOR<PesertaKelasCreateWithoutWargaInput, PesertaKelasUncheckedCreateWithoutWargaInput> | PesertaKelasCreateWithoutWargaInput[] | PesertaKelasUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: PesertaKelasCreateOrConnectWithoutWargaInput | PesertaKelasCreateOrConnectWithoutWargaInput[]
-    upsert?: PesertaKelasUpsertWithWhereUniqueWithoutWargaInput | PesertaKelasUpsertWithWhereUniqueWithoutWargaInput[]
-    createMany?: PesertaKelasCreateManyWargaInputEnvelope
-    set?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
-    disconnect?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
-    delete?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
-    connect?: PesertaKelasWhereUniqueInput | PesertaKelasWhereUniqueInput[]
-    update?: PesertaKelasUpdateWithWhereUniqueWithoutWargaInput | PesertaKelasUpdateWithWhereUniqueWithoutWargaInput[]
-    updateMany?: PesertaKelasUpdateManyWithWhereWithoutWargaInput | PesertaKelasUpdateManyWithWhereWithoutWargaInput[]
-    deleteMany?: PesertaKelasScalarWhereInput | PesertaKelasScalarWhereInput[]
-  }
-
-  export type AspirasiUpdateManyWithoutWargaNestedInput = {
+  export type AspirasiUncheckedUpdateManyWithoutWargaNestedInput = {
     create?: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput> | AspirasiCreateWithoutWargaInput[] | AspirasiUncheckedCreateWithoutWargaInput[]
     connectOrCreate?: AspirasiCreateOrConnectWithoutWargaInput | AspirasiCreateOrConnectWithoutWargaInput[]
     upsert?: AspirasiUpsertWithWhereUniqueWithoutWargaInput | AspirasiUpsertWithWhereUniqueWithoutWargaInput[]
@@ -37123,44 +38410,6 @@ export namespace Prisma {
     update?: AspirasiUpdateWithWhereUniqueWithoutWargaInput | AspirasiUpdateWithWhereUniqueWithoutWargaInput[]
     updateMany?: AspirasiUpdateManyWithWhereWithoutWargaInput | AspirasiUpdateManyWithWhereWithoutWargaInput[]
     deleteMany?: AspirasiScalarWhereInput | AspirasiScalarWhereInput[]
-  }
-
-  export type UserUpdateOneWithoutWargaNestedInput = {
-    create?: XOR<UserCreateWithoutWargaInput, UserUncheckedCreateWithoutWargaInput>
-    connectOrCreate?: UserCreateOrConnectWithoutWargaInput
-    upsert?: UserUpsertWithoutWargaInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWargaInput, UserUpdateWithoutWargaInput>, UserUncheckedUpdateWithoutWargaInput>
-  }
-
-  export type RekamMedisUncheckedUpdateManyWithoutWargaNestedInput = {
-    create?: XOR<RekamMedisCreateWithoutWargaInput, RekamMedisUncheckedCreateWithoutWargaInput> | RekamMedisCreateWithoutWargaInput[] | RekamMedisUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: RekamMedisCreateOrConnectWithoutWargaInput | RekamMedisCreateOrConnectWithoutWargaInput[]
-    upsert?: RekamMedisUpsertWithWhereUniqueWithoutWargaInput | RekamMedisUpsertWithWhereUniqueWithoutWargaInput[]
-    createMany?: RekamMedisCreateManyWargaInputEnvelope
-    set?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
-    disconnect?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
-    delete?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
-    connect?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
-    update?: RekamMedisUpdateWithWhereUniqueWithoutWargaInput | RekamMedisUpdateWithWhereUniqueWithoutWargaInput[]
-    updateMany?: RekamMedisUpdateManyWithWhereWithoutWargaInput | RekamMedisUpdateManyWithWhereWithoutWargaInput[]
-    deleteMany?: RekamMedisScalarWhereInput | RekamMedisScalarWhereInput[]
-  }
-
-  export type TelemedicineUncheckedUpdateManyWithoutWargaNestedInput = {
-    create?: XOR<TelemedicineCreateWithoutWargaInput, TelemedicineUncheckedCreateWithoutWargaInput> | TelemedicineCreateWithoutWargaInput[] | TelemedicineUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: TelemedicineCreateOrConnectWithoutWargaInput | TelemedicineCreateOrConnectWithoutWargaInput[]
-    upsert?: TelemedicineUpsertWithWhereUniqueWithoutWargaInput | TelemedicineUpsertWithWhereUniqueWithoutWargaInput[]
-    createMany?: TelemedicineCreateManyWargaInputEnvelope
-    set?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
-    disconnect?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
-    delete?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
-    connect?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
-    update?: TelemedicineUpdateWithWhereUniqueWithoutWargaInput | TelemedicineUpdateWithWhereUniqueWithoutWargaInput[]
-    updateMany?: TelemedicineUpdateManyWithWhereWithoutWargaInput | TelemedicineUpdateManyWithWhereWithoutWargaInput[]
-    deleteMany?: TelemedicineScalarWhereInput | TelemedicineScalarWhereInput[]
   }
 
   export type MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput = {
@@ -37177,20 +38426,6 @@ export namespace Prisma {
     deleteMany?: MonitoringKesehatanScalarWhereInput | MonitoringKesehatanScalarWhereInput[]
   }
 
-  export type StuntingUncheckedUpdateManyWithoutWargaNestedInput = {
-    create?: XOR<StuntingCreateWithoutWargaInput, StuntingUncheckedCreateWithoutWargaInput> | StuntingCreateWithoutWargaInput[] | StuntingUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: StuntingCreateOrConnectWithoutWargaInput | StuntingCreateOrConnectWithoutWargaInput[]
-    upsert?: StuntingUpsertWithWhereUniqueWithoutWargaInput | StuntingUpsertWithWhereUniqueWithoutWargaInput[]
-    createMany?: StuntingCreateManyWargaInputEnvelope
-    set?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
-    disconnect?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
-    delete?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
-    connect?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
-    update?: StuntingUpdateWithWhereUniqueWithoutWargaInput | StuntingUpdateWithWhereUniqueWithoutWargaInput[]
-    updateMany?: StuntingUpdateManyWithWhereWithoutWargaInput | StuntingUpdateManyWithWhereWithoutWargaInput[]
-    deleteMany?: StuntingScalarWhereInput | StuntingScalarWhereInput[]
-  }
-
   export type PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput = {
     create?: XOR<PesertaKelasCreateWithoutWargaInput, PesertaKelasUncheckedCreateWithoutWargaInput> | PesertaKelasCreateWithoutWargaInput[] | PesertaKelasUncheckedCreateWithoutWargaInput[]
     connectOrCreate?: PesertaKelasCreateOrConnectWithoutWargaInput | PesertaKelasCreateOrConnectWithoutWargaInput[]
@@ -37205,18 +38440,46 @@ export namespace Prisma {
     deleteMany?: PesertaKelasScalarWhereInput | PesertaKelasScalarWhereInput[]
   }
 
-  export type AspirasiUncheckedUpdateManyWithoutWargaNestedInput = {
-    create?: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput> | AspirasiCreateWithoutWargaInput[] | AspirasiUncheckedCreateWithoutWargaInput[]
-    connectOrCreate?: AspirasiCreateOrConnectWithoutWargaInput | AspirasiCreateOrConnectWithoutWargaInput[]
-    upsert?: AspirasiUpsertWithWhereUniqueWithoutWargaInput | AspirasiUpsertWithWhereUniqueWithoutWargaInput[]
-    createMany?: AspirasiCreateManyWargaInputEnvelope
-    set?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
-    disconnect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
-    delete?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
-    connect?: AspirasiWhereUniqueInput | AspirasiWhereUniqueInput[]
-    update?: AspirasiUpdateWithWhereUniqueWithoutWargaInput | AspirasiUpdateWithWhereUniqueWithoutWargaInput[]
-    updateMany?: AspirasiUpdateManyWithWhereWithoutWargaInput | AspirasiUpdateManyWithWhereWithoutWargaInput[]
-    deleteMany?: AspirasiScalarWhereInput | AspirasiScalarWhereInput[]
+  export type RekamMedisUncheckedUpdateManyWithoutWargaNestedInput = {
+    create?: XOR<RekamMedisCreateWithoutWargaInput, RekamMedisUncheckedCreateWithoutWargaInput> | RekamMedisCreateWithoutWargaInput[] | RekamMedisUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: RekamMedisCreateOrConnectWithoutWargaInput | RekamMedisCreateOrConnectWithoutWargaInput[]
+    upsert?: RekamMedisUpsertWithWhereUniqueWithoutWargaInput | RekamMedisUpsertWithWhereUniqueWithoutWargaInput[]
+    createMany?: RekamMedisCreateManyWargaInputEnvelope
+    set?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
+    disconnect?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
+    delete?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
+    connect?: RekamMedisWhereUniqueInput | RekamMedisWhereUniqueInput[]
+    update?: RekamMedisUpdateWithWhereUniqueWithoutWargaInput | RekamMedisUpdateWithWhereUniqueWithoutWargaInput[]
+    updateMany?: RekamMedisUpdateManyWithWhereWithoutWargaInput | RekamMedisUpdateManyWithWhereWithoutWargaInput[]
+    deleteMany?: RekamMedisScalarWhereInput | RekamMedisScalarWhereInput[]
+  }
+
+  export type StuntingUncheckedUpdateManyWithoutWargaNestedInput = {
+    create?: XOR<StuntingCreateWithoutWargaInput, StuntingUncheckedCreateWithoutWargaInput> | StuntingCreateWithoutWargaInput[] | StuntingUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: StuntingCreateOrConnectWithoutWargaInput | StuntingCreateOrConnectWithoutWargaInput[]
+    upsert?: StuntingUpsertWithWhereUniqueWithoutWargaInput | StuntingUpsertWithWhereUniqueWithoutWargaInput[]
+    createMany?: StuntingCreateManyWargaInputEnvelope
+    set?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
+    disconnect?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
+    delete?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
+    connect?: StuntingWhereUniqueInput | StuntingWhereUniqueInput[]
+    update?: StuntingUpdateWithWhereUniqueWithoutWargaInput | StuntingUpdateWithWhereUniqueWithoutWargaInput[]
+    updateMany?: StuntingUpdateManyWithWhereWithoutWargaInput | StuntingUpdateManyWithWhereWithoutWargaInput[]
+    deleteMany?: StuntingScalarWhereInput | StuntingScalarWhereInput[]
+  }
+
+  export type TelemedicineUncheckedUpdateManyWithoutWargaNestedInput = {
+    create?: XOR<TelemedicineCreateWithoutWargaInput, TelemedicineUncheckedCreateWithoutWargaInput> | TelemedicineCreateWithoutWargaInput[] | TelemedicineUncheckedCreateWithoutWargaInput[]
+    connectOrCreate?: TelemedicineCreateOrConnectWithoutWargaInput | TelemedicineCreateOrConnectWithoutWargaInput[]
+    upsert?: TelemedicineUpsertWithWhereUniqueWithoutWargaInput | TelemedicineUpsertWithWhereUniqueWithoutWargaInput[]
+    createMany?: TelemedicineCreateManyWargaInputEnvelope
+    set?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
+    disconnect?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
+    delete?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
+    connect?: TelemedicineWhereUniqueInput | TelemedicineWhereUniqueInput[]
+    update?: TelemedicineUpdateWithWhereUniqueWithoutWargaInput | TelemedicineUpdateWithWhereUniqueWithoutWargaInput[]
+    updateMany?: TelemedicineUpdateManyWithWhereWithoutWargaInput | TelemedicineUpdateManyWithWhereWithoutWargaInput[]
+    deleteMany?: TelemedicineScalarWhereInput | TelemedicineScalarWhereInput[]
   }
 
   export type UserUncheckedUpdateOneWithoutWargaNestedInput = {
@@ -37227,6 +38490,13 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWargaInput, UserUpdateWithoutWargaInput>, UserUncheckedUpdateWithoutWargaInput>
+  }
+
+  export type ForumCreateNestedManyWithoutKelasInput = {
+    create?: XOR<ForumCreateWithoutKelasInput, ForumUncheckedCreateWithoutKelasInput> | ForumCreateWithoutKelasInput[] | ForumUncheckedCreateWithoutKelasInput[]
+    connectOrCreate?: ForumCreateOrConnectWithoutKelasInput | ForumCreateOrConnectWithoutKelasInput[]
+    createMany?: ForumCreateManyKelasInputEnvelope
+    connect?: ForumWhereUniqueInput | ForumWhereUniqueInput[]
   }
 
   export type MateriCreateNestedManyWithoutKelasInput = {
@@ -37250,7 +38520,7 @@ export namespace Prisma {
     connect?: TugasWhereUniqueInput | TugasWhereUniqueInput[]
   }
 
-  export type ForumCreateNestedManyWithoutKelasInput = {
+  export type ForumUncheckedCreateNestedManyWithoutKelasInput = {
     create?: XOR<ForumCreateWithoutKelasInput, ForumUncheckedCreateWithoutKelasInput> | ForumCreateWithoutKelasInput[] | ForumUncheckedCreateWithoutKelasInput[]
     connectOrCreate?: ForumCreateOrConnectWithoutKelasInput | ForumCreateOrConnectWithoutKelasInput[]
     createMany?: ForumCreateManyKelasInputEnvelope
@@ -37278,19 +38548,26 @@ export namespace Prisma {
     connect?: TugasWhereUniqueInput | TugasWhereUniqueInput[]
   }
 
-  export type ForumUncheckedCreateNestedManyWithoutKelasInput = {
-    create?: XOR<ForumCreateWithoutKelasInput, ForumUncheckedCreateWithoutKelasInput> | ForumCreateWithoutKelasInput[] | ForumUncheckedCreateWithoutKelasInput[]
-    connectOrCreate?: ForumCreateOrConnectWithoutKelasInput | ForumCreateOrConnectWithoutKelasInput[]
-    createMany?: ForumCreateManyKelasInputEnvelope
-    connect?: ForumWhereUniqueInput | ForumWhereUniqueInput[]
-  }
-
   export type EnumModulBelajarFieldUpdateOperationsInput = {
     set?: $Enums.ModulBelajar
   }
 
   export type EnumStatusKelasFieldUpdateOperationsInput = {
     set?: $Enums.StatusKelas
+  }
+
+  export type ForumUpdateManyWithoutKelasNestedInput = {
+    create?: XOR<ForumCreateWithoutKelasInput, ForumUncheckedCreateWithoutKelasInput> | ForumCreateWithoutKelasInput[] | ForumUncheckedCreateWithoutKelasInput[]
+    connectOrCreate?: ForumCreateOrConnectWithoutKelasInput | ForumCreateOrConnectWithoutKelasInput[]
+    upsert?: ForumUpsertWithWhereUniqueWithoutKelasInput | ForumUpsertWithWhereUniqueWithoutKelasInput[]
+    createMany?: ForumCreateManyKelasInputEnvelope
+    set?: ForumWhereUniqueInput | ForumWhereUniqueInput[]
+    disconnect?: ForumWhereUniqueInput | ForumWhereUniqueInput[]
+    delete?: ForumWhereUniqueInput | ForumWhereUniqueInput[]
+    connect?: ForumWhereUniqueInput | ForumWhereUniqueInput[]
+    update?: ForumUpdateWithWhereUniqueWithoutKelasInput | ForumUpdateWithWhereUniqueWithoutKelasInput[]
+    updateMany?: ForumUpdateManyWithWhereWithoutKelasInput | ForumUpdateManyWithWhereWithoutKelasInput[]
+    deleteMany?: ForumScalarWhereInput | ForumScalarWhereInput[]
   }
 
   export type MateriUpdateManyWithoutKelasNestedInput = {
@@ -37335,7 +38612,7 @@ export namespace Prisma {
     deleteMany?: TugasScalarWhereInput | TugasScalarWhereInput[]
   }
 
-  export type ForumUpdateManyWithoutKelasNestedInput = {
+  export type ForumUncheckedUpdateManyWithoutKelasNestedInput = {
     create?: XOR<ForumCreateWithoutKelasInput, ForumUncheckedCreateWithoutKelasInput> | ForumCreateWithoutKelasInput[] | ForumUncheckedCreateWithoutKelasInput[]
     connectOrCreate?: ForumCreateOrConnectWithoutKelasInput | ForumCreateOrConnectWithoutKelasInput[]
     upsert?: ForumUpsertWithWhereUniqueWithoutKelasInput | ForumUpsertWithWhereUniqueWithoutKelasInput[]
@@ -37389,20 +38666,6 @@ export namespace Prisma {
     update?: TugasUpdateWithWhereUniqueWithoutKelasInput | TugasUpdateWithWhereUniqueWithoutKelasInput[]
     updateMany?: TugasUpdateManyWithWhereWithoutKelasInput | TugasUpdateManyWithWhereWithoutKelasInput[]
     deleteMany?: TugasScalarWhereInput | TugasScalarWhereInput[]
-  }
-
-  export type ForumUncheckedUpdateManyWithoutKelasNestedInput = {
-    create?: XOR<ForumCreateWithoutKelasInput, ForumUncheckedCreateWithoutKelasInput> | ForumCreateWithoutKelasInput[] | ForumUncheckedCreateWithoutKelasInput[]
-    connectOrCreate?: ForumCreateOrConnectWithoutKelasInput | ForumCreateOrConnectWithoutKelasInput[]
-    upsert?: ForumUpsertWithWhereUniqueWithoutKelasInput | ForumUpsertWithWhereUniqueWithoutKelasInput[]
-    createMany?: ForumCreateManyKelasInputEnvelope
-    set?: ForumWhereUniqueInput | ForumWhereUniqueInput[]
-    disconnect?: ForumWhereUniqueInput | ForumWhereUniqueInput[]
-    delete?: ForumWhereUniqueInput | ForumWhereUniqueInput[]
-    connect?: ForumWhereUniqueInput | ForumWhereUniqueInput[]
-    update?: ForumUpdateWithWhereUniqueWithoutKelasInput | ForumUpdateWithWhereUniqueWithoutKelasInput[]
-    updateMany?: ForumUpdateManyWithWhereWithoutKelasInput | ForumUpdateManyWithWhereWithoutKelasInput[]
-    deleteMany?: ForumScalarWhereInput | ForumScalarWhereInput[]
   }
 
   export type KelasCreateNestedOneWithoutMateriInput = {
@@ -37561,12 +38824,6 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
-  export type KelasCreateNestedOneWithoutForumInput = {
-    create?: XOR<KelasCreateWithoutForumInput, KelasUncheckedCreateWithoutForumInput>
-    connectOrCreate?: KelasCreateOrConnectWithoutForumInput
-    connect?: KelasWhereUniqueInput
-  }
-
   export type DiskusiCreateNestedManyWithoutForumInput = {
     create?: XOR<DiskusiCreateWithoutForumInput, DiskusiUncheckedCreateWithoutForumInput> | DiskusiCreateWithoutForumInput[] | DiskusiUncheckedCreateWithoutForumInput[]
     connectOrCreate?: DiskusiCreateOrConnectWithoutForumInput | DiskusiCreateOrConnectWithoutForumInput[]
@@ -37574,19 +38831,17 @@ export namespace Prisma {
     connect?: DiskusiWhereUniqueInput | DiskusiWhereUniqueInput[]
   }
 
+  export type KelasCreateNestedOneWithoutForumInput = {
+    create?: XOR<KelasCreateWithoutForumInput, KelasUncheckedCreateWithoutForumInput>
+    connectOrCreate?: KelasCreateOrConnectWithoutForumInput
+    connect?: KelasWhereUniqueInput
+  }
+
   export type DiskusiUncheckedCreateNestedManyWithoutForumInput = {
     create?: XOR<DiskusiCreateWithoutForumInput, DiskusiUncheckedCreateWithoutForumInput> | DiskusiCreateWithoutForumInput[] | DiskusiUncheckedCreateWithoutForumInput[]
     connectOrCreate?: DiskusiCreateOrConnectWithoutForumInput | DiskusiCreateOrConnectWithoutForumInput[]
     createMany?: DiskusiCreateManyForumInputEnvelope
     connect?: DiskusiWhereUniqueInput | DiskusiWhereUniqueInput[]
-  }
-
-  export type KelasUpdateOneRequiredWithoutForumNestedInput = {
-    create?: XOR<KelasCreateWithoutForumInput, KelasUncheckedCreateWithoutForumInput>
-    connectOrCreate?: KelasCreateOrConnectWithoutForumInput
-    upsert?: KelasUpsertWithoutForumInput
-    connect?: KelasWhereUniqueInput
-    update?: XOR<XOR<KelasUpdateToOneWithWhereWithoutForumInput, KelasUpdateWithoutForumInput>, KelasUncheckedUpdateWithoutForumInput>
   }
 
   export type DiskusiUpdateManyWithoutForumNestedInput = {
@@ -37601,6 +38856,14 @@ export namespace Prisma {
     update?: DiskusiUpdateWithWhereUniqueWithoutForumInput | DiskusiUpdateWithWhereUniqueWithoutForumInput[]
     updateMany?: DiskusiUpdateManyWithWhereWithoutForumInput | DiskusiUpdateManyWithWhereWithoutForumInput[]
     deleteMany?: DiskusiScalarWhereInput | DiskusiScalarWhereInput[]
+  }
+
+  export type KelasUpdateOneRequiredWithoutForumNestedInput = {
+    create?: XOR<KelasCreateWithoutForumInput, KelasUncheckedCreateWithoutForumInput>
+    connectOrCreate?: KelasCreateOrConnectWithoutForumInput
+    upsert?: KelasUpsertWithoutForumInput
+    connect?: KelasWhereUniqueInput
+    update?: XOR<XOR<KelasUpdateToOneWithWhereWithoutForumInput, KelasUpdateWithoutForumInput>, KelasUncheckedUpdateWithoutForumInput>
   }
 
   export type DiskusiUncheckedUpdateManyWithoutForumNestedInput = {
@@ -38115,14 +39378,14 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
+    stunting?: StuntingCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
     desa: DesaCreateNestedOneWithoutWargaInput
     rwRt: RwRtCreateNestedOneWithoutWargaInput
-    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
-    stunting?: StuntingCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
-    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
   }
 
   export type WargaUncheckedCreateWithoutUserInput = {
@@ -38139,12 +39402,12 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
-    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
     aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
+    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
   }
 
   export type WargaCreateOrConnectWithoutUserInput = {
@@ -38212,14 +39475,14 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
     desa?: DesaUpdateOneRequiredWithoutWargaNestedInput
     rwRt?: RwRtUpdateOneRequiredWithoutWargaNestedInput
-    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
-    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
   }
 
   export type WargaUncheckedUpdateWithoutUserInput = {
@@ -38236,44 +39499,12 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
     aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
-  }
-
-  export type UserCreateWithoutDesaInput = {
-    id?: string
-    name: string
-    email: string
-    password: string
-    role: $Enums.Role
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    warga?: WargaCreateNestedOneWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutDesaInput = {
-    id?: string
-    name: string
-    email: string
-    password: string
-    role: $Enums.Role
-    wargaId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type UserCreateOrConnectWithoutDesaInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutDesaInput, UserUncheckedCreateWithoutDesaInput>
-  }
-
-  export type UserCreateManyDesaInputEnvelope = {
-    data: UserCreateManyDesaInput | UserCreateManyDesaInput[]
-    skipDuplicates?: boolean
+    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
   }
 
   export type RwRtCreateWithoutDesaInput = {
@@ -38302,6 +39533,42 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type UserCreateWithoutDesaInput = {
+    id?: string
+    name: string
+    email: string
+    username: string
+    password: string
+    role: $Enums.Role
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    warga?: WargaCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutDesaInput = {
+    id?: string
+    name: string
+    email: string
+    username: string
+    password: string
+    role: $Enums.Role
+    status?: string
+    wargaId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type UserCreateOrConnectWithoutDesaInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutDesaInput, UserUncheckedCreateWithoutDesaInput>
+  }
+
+  export type UserCreateManyDesaInputEnvelope = {
+    data: UserCreateManyDesaInput | UserCreateManyDesaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type WargaCreateWithoutDesaInput = {
     id?: string
     nik: string
@@ -38314,14 +39581,14 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    rwRt: RwRtCreateNestedOneWithoutWargaInput
-    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
-    stunting?: StuntingCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
     aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
+    stunting?: StuntingCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
     user?: UserCreateNestedOneWithoutWargaInput
+    rwRt: RwRtCreateNestedOneWithoutWargaInput
   }
 
   export type WargaUncheckedCreateWithoutDesaInput = {
@@ -38337,12 +39604,12 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
-    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
     aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
+    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -38354,37 +39621,6 @@ export namespace Prisma {
   export type WargaCreateManyDesaInputEnvelope = {
     data: WargaCreateManyDesaInput | WargaCreateManyDesaInput[]
     skipDuplicates?: boolean
-  }
-
-  export type UserUpsertWithWhereUniqueWithoutDesaInput = {
-    where: UserWhereUniqueInput
-    update: XOR<UserUpdateWithoutDesaInput, UserUncheckedUpdateWithoutDesaInput>
-    create: XOR<UserCreateWithoutDesaInput, UserUncheckedCreateWithoutDesaInput>
-  }
-
-  export type UserUpdateWithWhereUniqueWithoutDesaInput = {
-    where: UserWhereUniqueInput
-    data: XOR<UserUpdateWithoutDesaInput, UserUncheckedUpdateWithoutDesaInput>
-  }
-
-  export type UserUpdateManyWithWhereWithoutDesaInput = {
-    where: UserScalarWhereInput
-    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutDesaInput>
-  }
-
-  export type UserScalarWhereInput = {
-    AND?: UserScalarWhereInput | UserScalarWhereInput[]
-    OR?: UserScalarWhereInput[]
-    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
-    id?: StringFilter<"User"> | string
-    name?: StringFilter<"User"> | string
-    email?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
-    role?: EnumRoleFilter<"User"> | $Enums.Role
-    desaId?: StringFilter<"User"> | string
-    wargaId?: StringNullableFilter<"User"> | string | null
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
   }
 
   export type RwRtUpsertWithWhereUniqueWithoutDesaInput = {
@@ -38412,6 +39648,39 @@ export namespace Prisma {
     rw?: StringFilter<"RwRt"> | string
     rt?: StringFilter<"RwRt"> | string
     jumlahWarga?: IntFilter<"RwRt"> | number
+  }
+
+  export type UserUpsertWithWhereUniqueWithoutDesaInput = {
+    where: UserWhereUniqueInput
+    update: XOR<UserUpdateWithoutDesaInput, UserUncheckedUpdateWithoutDesaInput>
+    create: XOR<UserCreateWithoutDesaInput, UserUncheckedCreateWithoutDesaInput>
+  }
+
+  export type UserUpdateWithWhereUniqueWithoutDesaInput = {
+    where: UserWhereUniqueInput
+    data: XOR<UserUpdateWithoutDesaInput, UserUncheckedUpdateWithoutDesaInput>
+  }
+
+  export type UserUpdateManyWithWhereWithoutDesaInput = {
+    where: UserScalarWhereInput
+    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutDesaInput>
+  }
+
+  export type UserScalarWhereInput = {
+    AND?: UserScalarWhereInput | UserScalarWhereInput[]
+    OR?: UserScalarWhereInput[]
+    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
+    id?: StringFilter<"User"> | string
+    name?: StringFilter<"User"> | string
+    email?: StringFilter<"User"> | string
+    username?: StringFilter<"User"> | string
+    password?: StringFilter<"User"> | string
+    role?: EnumRoleFilter<"User"> | $Enums.Role
+    status?: StringFilter<"User"> | string
+    desaId?: StringFilter<"User"> | string
+    wargaId?: StringNullableFilter<"User"> | string | null
+    createdAt?: DateTimeFilter<"User"> | Date | string
+    updatedAt?: DateTimeFilter<"User"> | Date | string
   }
 
   export type WargaUpsertWithWhereUniqueWithoutDesaInput = {
@@ -38492,14 +39761,14 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    desa: DesaCreateNestedOneWithoutWargaInput
-    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
-    stunting?: StuntingCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
     aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
+    stunting?: StuntingCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
     user?: UserCreateNestedOneWithoutWargaInput
+    desa: DesaCreateNestedOneWithoutWargaInput
   }
 
   export type WargaUncheckedCreateWithoutRwRtInput = {
@@ -38515,12 +39784,12 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
-    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
     aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
+    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -38587,115 +39856,33 @@ export namespace Prisma {
     data: XOR<WargaUpdateManyMutationInput, WargaUncheckedUpdateManyWithoutRwRtInput>
   }
 
-  export type DesaCreateWithoutWargaInput = {
-    id?: string
-    nama: string
-    kecamatan: string
-    kabupaten: string
-    provinsi: string
-    luasWilayah?: number | null
-    sejarah?: string | null
-    createdAt?: Date | string
-    users?: UserCreateNestedManyWithoutDesaInput
-    rwrts?: RwRtCreateNestedManyWithoutDesaInput
-  }
-
-  export type DesaUncheckedCreateWithoutWargaInput = {
-    id?: string
-    nama: string
-    kecamatan: string
-    kabupaten: string
-    provinsi: string
-    luasWilayah?: number | null
-    sejarah?: string | null
-    createdAt?: Date | string
-    users?: UserUncheckedCreateNestedManyWithoutDesaInput
-    rwrts?: RwRtUncheckedCreateNestedManyWithoutDesaInput
-  }
-
-  export type DesaCreateOrConnectWithoutWargaInput = {
-    where: DesaWhereUniqueInput
-    create: XOR<DesaCreateWithoutWargaInput, DesaUncheckedCreateWithoutWargaInput>
-  }
-
-  export type RwRtCreateWithoutWargaInput = {
-    id?: string
-    rw: string
-    rt: string
-    jumlahWarga?: number
-    desa: DesaCreateNestedOneWithoutRwrtsInput
-  }
-
-  export type RwRtUncheckedCreateWithoutWargaInput = {
+  export type AspirasiCreateWithoutWargaInput = {
     id?: string
     desaId: string
-    rw: string
-    rt: string
-    jumlahWarga?: number
-  }
-
-  export type RwRtCreateOrConnectWithoutWargaInput = {
-    where: RwRtWhereUniqueInput
-    create: XOR<RwRtCreateWithoutWargaInput, RwRtUncheckedCreateWithoutWargaInput>
-  }
-
-  export type RekamMedisCreateWithoutWargaInput = {
-    id?: string
-    tanggal: Date | string
-    diagnosis: string
-    nakes: string
-    catatan?: string | null
-    alergi?: string | null
+    kategori: string
+    judul: string
+    isi: string
+    status?: string
     createdAt?: Date | string
   }
 
-  export type RekamMedisUncheckedCreateWithoutWargaInput = {
+  export type AspirasiUncheckedCreateWithoutWargaInput = {
     id?: string
-    tanggal: Date | string
-    diagnosis: string
-    nakes: string
-    catatan?: string | null
-    alergi?: string | null
+    desaId: string
+    kategori: string
+    judul: string
+    isi: string
+    status?: string
     createdAt?: Date | string
   }
 
-  export type RekamMedisCreateOrConnectWithoutWargaInput = {
-    where: RekamMedisWhereUniqueInput
-    create: XOR<RekamMedisCreateWithoutWargaInput, RekamMedisUncheckedCreateWithoutWargaInput>
+  export type AspirasiCreateOrConnectWithoutWargaInput = {
+    where: AspirasiWhereUniqueInput
+    create: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput>
   }
 
-  export type RekamMedisCreateManyWargaInputEnvelope = {
-    data: RekamMedisCreateManyWargaInput | RekamMedisCreateManyWargaInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type TelemedicineCreateWithoutWargaInput = {
-    id?: string
-    waktu: Date | string
-    status?: $Enums.StatusTelemedicine
-    nakesId?: string | null
-    catatanKonsultasi?: string | null
-    suratRujukan?: string | null
-    createdAt?: Date | string
-  }
-
-  export type TelemedicineUncheckedCreateWithoutWargaInput = {
-    id?: string
-    waktu: Date | string
-    status?: $Enums.StatusTelemedicine
-    nakesId?: string | null
-    catatanKonsultasi?: string | null
-    suratRujukan?: string | null
-    createdAt?: Date | string
-  }
-
-  export type TelemedicineCreateOrConnectWithoutWargaInput = {
-    where: TelemedicineWhereUniqueInput
-    create: XOR<TelemedicineCreateWithoutWargaInput, TelemedicineUncheckedCreateWithoutWargaInput>
-  }
-
-  export type TelemedicineCreateManyWargaInputEnvelope = {
-    data: TelemedicineCreateManyWargaInput | TelemedicineCreateManyWargaInput[]
+  export type AspirasiCreateManyWargaInputEnvelope = {
+    data: AspirasiCreateManyWargaInput | AspirasiCreateManyWargaInput[]
     skipDuplicates?: boolean
   }
 
@@ -38733,6 +39920,64 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type PesertaKelasCreateWithoutWargaInput = {
+    id?: string
+    status?: $Enums.StatusWarga
+    nilai?: number | null
+    sertifikat?: string | null
+    createdAt?: Date | string
+    kelas: KelasCreateNestedOneWithoutPesertaInput
+  }
+
+  export type PesertaKelasUncheckedCreateWithoutWargaInput = {
+    id?: string
+    kelasId: string
+    status?: $Enums.StatusWarga
+    nilai?: number | null
+    sertifikat?: string | null
+    createdAt?: Date | string
+  }
+
+  export type PesertaKelasCreateOrConnectWithoutWargaInput = {
+    where: PesertaKelasWhereUniqueInput
+    create: XOR<PesertaKelasCreateWithoutWargaInput, PesertaKelasUncheckedCreateWithoutWargaInput>
+  }
+
+  export type PesertaKelasCreateManyWargaInputEnvelope = {
+    data: PesertaKelasCreateManyWargaInput | PesertaKelasCreateManyWargaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RekamMedisCreateWithoutWargaInput = {
+    id?: string
+    tanggal: Date | string
+    diagnosis: string
+    nakes: string
+    catatan?: string | null
+    alergi?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RekamMedisUncheckedCreateWithoutWargaInput = {
+    id?: string
+    tanggal: Date | string
+    diagnosis: string
+    nakes: string
+    catatan?: string | null
+    alergi?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RekamMedisCreateOrConnectWithoutWargaInput = {
+    where: RekamMedisWhereUniqueInput
+    create: XOR<RekamMedisCreateWithoutWargaInput, RekamMedisUncheckedCreateWithoutWargaInput>
+  }
+
+  export type RekamMedisCreateManyWargaInputEnvelope = {
+    data: RekamMedisCreateManyWargaInput | RekamMedisCreateManyWargaInput[]
+    skipDuplicates?: boolean
+  }
+
   export type StuntingCreateWithoutWargaInput = {
     id?: string
     tanggal: Date | string
@@ -38767,61 +40012,33 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type PesertaKelasCreateWithoutWargaInput = {
+  export type TelemedicineCreateWithoutWargaInput = {
     id?: string
-    status?: $Enums.StatusWarga
-    nilai?: number | null
-    sertifikat?: string | null
-    createdAt?: Date | string
-    kelas: KelasCreateNestedOneWithoutPesertaInput
-  }
-
-  export type PesertaKelasUncheckedCreateWithoutWargaInput = {
-    id?: string
-    kelasId: string
-    status?: $Enums.StatusWarga
-    nilai?: number | null
-    sertifikat?: string | null
+    waktu: Date | string
+    status?: $Enums.StatusTelemedicine
+    nakesId?: string | null
+    catatanKonsultasi?: string | null
+    suratRujukan?: string | null
     createdAt?: Date | string
   }
 
-  export type PesertaKelasCreateOrConnectWithoutWargaInput = {
-    where: PesertaKelasWhereUniqueInput
-    create: XOR<PesertaKelasCreateWithoutWargaInput, PesertaKelasUncheckedCreateWithoutWargaInput>
-  }
-
-  export type PesertaKelasCreateManyWargaInputEnvelope = {
-    data: PesertaKelasCreateManyWargaInput | PesertaKelasCreateManyWargaInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type AspirasiCreateWithoutWargaInput = {
+  export type TelemedicineUncheckedCreateWithoutWargaInput = {
     id?: string
-    desaId: string
-    kategori: string
-    judul: string
-    isi: string
-    status?: string
+    waktu: Date | string
+    status?: $Enums.StatusTelemedicine
+    nakesId?: string | null
+    catatanKonsultasi?: string | null
+    suratRujukan?: string | null
     createdAt?: Date | string
   }
 
-  export type AspirasiUncheckedCreateWithoutWargaInput = {
-    id?: string
-    desaId: string
-    kategori: string
-    judul: string
-    isi: string
-    status?: string
-    createdAt?: Date | string
+  export type TelemedicineCreateOrConnectWithoutWargaInput = {
+    where: TelemedicineWhereUniqueInput
+    create: XOR<TelemedicineCreateWithoutWargaInput, TelemedicineUncheckedCreateWithoutWargaInput>
   }
 
-  export type AspirasiCreateOrConnectWithoutWargaInput = {
-    where: AspirasiWhereUniqueInput
-    create: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput>
-  }
-
-  export type AspirasiCreateManyWargaInputEnvelope = {
-    data: AspirasiCreateManyWargaInput | AspirasiCreateManyWargaInput[]
+  export type TelemedicineCreateManyWargaInputEnvelope = {
+    data: TelemedicineCreateManyWargaInput | TelemedicineCreateManyWargaInput[]
     skipDuplicates?: boolean
   }
 
@@ -38829,8 +40046,10 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    username: string
     password: string
     role: $Enums.Role
+    status?: string
     createdAt?: Date | string
     updatedAt?: Date | string
     desa: DesaCreateNestedOneWithoutUsersInput
@@ -38840,8 +40059,10 @@ export namespace Prisma {
     id?: string
     name: string
     email: string
+    username: string
     password: string
     role: $Enums.Role
+    status?: string
     desaId: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -38852,128 +40073,86 @@ export namespace Prisma {
     create: XOR<UserCreateWithoutWargaInput, UserUncheckedCreateWithoutWargaInput>
   }
 
-  export type DesaUpsertWithoutWargaInput = {
-    update: XOR<DesaUpdateWithoutWargaInput, DesaUncheckedUpdateWithoutWargaInput>
+  export type DesaCreateWithoutWargaInput = {
+    id?: string
+    nama: string
+    kecamatan: string
+    kabupaten: string
+    provinsi: string
+    luasWilayah?: number | null
+    sejarah?: string | null
+    createdAt?: Date | string
+    rwrts?: RwRtCreateNestedManyWithoutDesaInput
+    users?: UserCreateNestedManyWithoutDesaInput
+  }
+
+  export type DesaUncheckedCreateWithoutWargaInput = {
+    id?: string
+    nama: string
+    kecamatan: string
+    kabupaten: string
+    provinsi: string
+    luasWilayah?: number | null
+    sejarah?: string | null
+    createdAt?: Date | string
+    rwrts?: RwRtUncheckedCreateNestedManyWithoutDesaInput
+    users?: UserUncheckedCreateNestedManyWithoutDesaInput
+  }
+
+  export type DesaCreateOrConnectWithoutWargaInput = {
+    where: DesaWhereUniqueInput
     create: XOR<DesaCreateWithoutWargaInput, DesaUncheckedCreateWithoutWargaInput>
-    where?: DesaWhereInput
   }
 
-  export type DesaUpdateToOneWithWhereWithoutWargaInput = {
-    where?: DesaWhereInput
-    data: XOR<DesaUpdateWithoutWargaInput, DesaUncheckedUpdateWithoutWargaInput>
+  export type RwRtCreateWithoutWargaInput = {
+    id?: string
+    rw: string
+    rt: string
+    jumlahWarga?: number
+    desa: DesaCreateNestedOneWithoutRwrtsInput
   }
 
-  export type DesaUpdateWithoutWargaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nama?: StringFieldUpdateOperationsInput | string
-    kecamatan?: StringFieldUpdateOperationsInput | string
-    kabupaten?: StringFieldUpdateOperationsInput | string
-    provinsi?: StringFieldUpdateOperationsInput | string
-    luasWilayah?: NullableFloatFieldUpdateOperationsInput | number | null
-    sejarah?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: UserUpdateManyWithoutDesaNestedInput
-    rwrts?: RwRtUpdateManyWithoutDesaNestedInput
+  export type RwRtUncheckedCreateWithoutWargaInput = {
+    id?: string
+    desaId: string
+    rw: string
+    rt: string
+    jumlahWarga?: number
   }
 
-  export type DesaUncheckedUpdateWithoutWargaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    nama?: StringFieldUpdateOperationsInput | string
-    kecamatan?: StringFieldUpdateOperationsInput | string
-    kabupaten?: StringFieldUpdateOperationsInput | string
-    provinsi?: StringFieldUpdateOperationsInput | string
-    luasWilayah?: NullableFloatFieldUpdateOperationsInput | number | null
-    sejarah?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    users?: UserUncheckedUpdateManyWithoutDesaNestedInput
-    rwrts?: RwRtUncheckedUpdateManyWithoutDesaNestedInput
-  }
-
-  export type RwRtUpsertWithoutWargaInput = {
-    update: XOR<RwRtUpdateWithoutWargaInput, RwRtUncheckedUpdateWithoutWargaInput>
+  export type RwRtCreateOrConnectWithoutWargaInput = {
+    where: RwRtWhereUniqueInput
     create: XOR<RwRtCreateWithoutWargaInput, RwRtUncheckedCreateWithoutWargaInput>
-    where?: RwRtWhereInput
   }
 
-  export type RwRtUpdateToOneWithWhereWithoutWargaInput = {
-    where?: RwRtWhereInput
-    data: XOR<RwRtUpdateWithoutWargaInput, RwRtUncheckedUpdateWithoutWargaInput>
+  export type AspirasiUpsertWithWhereUniqueWithoutWargaInput = {
+    where: AspirasiWhereUniqueInput
+    update: XOR<AspirasiUpdateWithoutWargaInput, AspirasiUncheckedUpdateWithoutWargaInput>
+    create: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput>
   }
 
-  export type RwRtUpdateWithoutWargaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    rw?: StringFieldUpdateOperationsInput | string
-    rt?: StringFieldUpdateOperationsInput | string
-    jumlahWarga?: IntFieldUpdateOperationsInput | number
-    desa?: DesaUpdateOneRequiredWithoutRwrtsNestedInput
+  export type AspirasiUpdateWithWhereUniqueWithoutWargaInput = {
+    where: AspirasiWhereUniqueInput
+    data: XOR<AspirasiUpdateWithoutWargaInput, AspirasiUncheckedUpdateWithoutWargaInput>
   }
 
-  export type RwRtUncheckedUpdateWithoutWargaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    desaId?: StringFieldUpdateOperationsInput | string
-    rw?: StringFieldUpdateOperationsInput | string
-    rt?: StringFieldUpdateOperationsInput | string
-    jumlahWarga?: IntFieldUpdateOperationsInput | number
+  export type AspirasiUpdateManyWithWhereWithoutWargaInput = {
+    where: AspirasiScalarWhereInput
+    data: XOR<AspirasiUpdateManyMutationInput, AspirasiUncheckedUpdateManyWithoutWargaInput>
   }
 
-  export type RekamMedisUpsertWithWhereUniqueWithoutWargaInput = {
-    where: RekamMedisWhereUniqueInput
-    update: XOR<RekamMedisUpdateWithoutWargaInput, RekamMedisUncheckedUpdateWithoutWargaInput>
-    create: XOR<RekamMedisCreateWithoutWargaInput, RekamMedisUncheckedCreateWithoutWargaInput>
-  }
-
-  export type RekamMedisUpdateWithWhereUniqueWithoutWargaInput = {
-    where: RekamMedisWhereUniqueInput
-    data: XOR<RekamMedisUpdateWithoutWargaInput, RekamMedisUncheckedUpdateWithoutWargaInput>
-  }
-
-  export type RekamMedisUpdateManyWithWhereWithoutWargaInput = {
-    where: RekamMedisScalarWhereInput
-    data: XOR<RekamMedisUpdateManyMutationInput, RekamMedisUncheckedUpdateManyWithoutWargaInput>
-  }
-
-  export type RekamMedisScalarWhereInput = {
-    AND?: RekamMedisScalarWhereInput | RekamMedisScalarWhereInput[]
-    OR?: RekamMedisScalarWhereInput[]
-    NOT?: RekamMedisScalarWhereInput | RekamMedisScalarWhereInput[]
-    id?: StringFilter<"RekamMedis"> | string
-    wargaId?: StringFilter<"RekamMedis"> | string
-    tanggal?: DateTimeFilter<"RekamMedis"> | Date | string
-    diagnosis?: StringFilter<"RekamMedis"> | string
-    nakes?: StringFilter<"RekamMedis"> | string
-    catatan?: StringNullableFilter<"RekamMedis"> | string | null
-    alergi?: StringNullableFilter<"RekamMedis"> | string | null
-    createdAt?: DateTimeFilter<"RekamMedis"> | Date | string
-  }
-
-  export type TelemedicineUpsertWithWhereUniqueWithoutWargaInput = {
-    where: TelemedicineWhereUniqueInput
-    update: XOR<TelemedicineUpdateWithoutWargaInput, TelemedicineUncheckedUpdateWithoutWargaInput>
-    create: XOR<TelemedicineCreateWithoutWargaInput, TelemedicineUncheckedCreateWithoutWargaInput>
-  }
-
-  export type TelemedicineUpdateWithWhereUniqueWithoutWargaInput = {
-    where: TelemedicineWhereUniqueInput
-    data: XOR<TelemedicineUpdateWithoutWargaInput, TelemedicineUncheckedUpdateWithoutWargaInput>
-  }
-
-  export type TelemedicineUpdateManyWithWhereWithoutWargaInput = {
-    where: TelemedicineScalarWhereInput
-    data: XOR<TelemedicineUpdateManyMutationInput, TelemedicineUncheckedUpdateManyWithoutWargaInput>
-  }
-
-  export type TelemedicineScalarWhereInput = {
-    AND?: TelemedicineScalarWhereInput | TelemedicineScalarWhereInput[]
-    OR?: TelemedicineScalarWhereInput[]
-    NOT?: TelemedicineScalarWhereInput | TelemedicineScalarWhereInput[]
-    id?: StringFilter<"Telemedicine"> | string
-    wargaId?: StringFilter<"Telemedicine"> | string
-    waktu?: DateTimeFilter<"Telemedicine"> | Date | string
-    status?: EnumStatusTelemedicineFilter<"Telemedicine"> | $Enums.StatusTelemedicine
-    nakesId?: StringNullableFilter<"Telemedicine"> | string | null
-    catatanKonsultasi?: StringNullableFilter<"Telemedicine"> | string | null
-    suratRujukan?: StringNullableFilter<"Telemedicine"> | string | null
-    createdAt?: DateTimeFilter<"Telemedicine"> | Date | string
+  export type AspirasiScalarWhereInput = {
+    AND?: AspirasiScalarWhereInput | AspirasiScalarWhereInput[]
+    OR?: AspirasiScalarWhereInput[]
+    NOT?: AspirasiScalarWhereInput | AspirasiScalarWhereInput[]
+    id?: StringFilter<"Aspirasi"> | string
+    desaId?: StringFilter<"Aspirasi"> | string
+    wargaId?: StringNullableFilter<"Aspirasi"> | string | null
+    kategori?: StringFilter<"Aspirasi"> | string
+    judul?: StringFilter<"Aspirasi"> | string
+    isi?: StringFilter<"Aspirasi"> | string
+    status?: StringFilter<"Aspirasi"> | string
+    createdAt?: DateTimeFilter<"Aspirasi"> | Date | string
   }
 
   export type MonitoringKesehatanUpsertWithWhereUniqueWithoutWargaInput = {
@@ -39008,6 +40187,65 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"MonitoringKesehatan"> | Date | string
   }
 
+  export type PesertaKelasUpsertWithWhereUniqueWithoutWargaInput = {
+    where: PesertaKelasWhereUniqueInput
+    update: XOR<PesertaKelasUpdateWithoutWargaInput, PesertaKelasUncheckedUpdateWithoutWargaInput>
+    create: XOR<PesertaKelasCreateWithoutWargaInput, PesertaKelasUncheckedCreateWithoutWargaInput>
+  }
+
+  export type PesertaKelasUpdateWithWhereUniqueWithoutWargaInput = {
+    where: PesertaKelasWhereUniqueInput
+    data: XOR<PesertaKelasUpdateWithoutWargaInput, PesertaKelasUncheckedUpdateWithoutWargaInput>
+  }
+
+  export type PesertaKelasUpdateManyWithWhereWithoutWargaInput = {
+    where: PesertaKelasScalarWhereInput
+    data: XOR<PesertaKelasUpdateManyMutationInput, PesertaKelasUncheckedUpdateManyWithoutWargaInput>
+  }
+
+  export type PesertaKelasScalarWhereInput = {
+    AND?: PesertaKelasScalarWhereInput | PesertaKelasScalarWhereInput[]
+    OR?: PesertaKelasScalarWhereInput[]
+    NOT?: PesertaKelasScalarWhereInput | PesertaKelasScalarWhereInput[]
+    id?: StringFilter<"PesertaKelas"> | string
+    kelasId?: StringFilter<"PesertaKelas"> | string
+    wargaId?: StringFilter<"PesertaKelas"> | string
+    status?: EnumStatusWargaFilter<"PesertaKelas"> | $Enums.StatusWarga
+    nilai?: FloatNullableFilter<"PesertaKelas"> | number | null
+    sertifikat?: StringNullableFilter<"PesertaKelas"> | string | null
+    createdAt?: DateTimeFilter<"PesertaKelas"> | Date | string
+  }
+
+  export type RekamMedisUpsertWithWhereUniqueWithoutWargaInput = {
+    where: RekamMedisWhereUniqueInput
+    update: XOR<RekamMedisUpdateWithoutWargaInput, RekamMedisUncheckedUpdateWithoutWargaInput>
+    create: XOR<RekamMedisCreateWithoutWargaInput, RekamMedisUncheckedCreateWithoutWargaInput>
+  }
+
+  export type RekamMedisUpdateWithWhereUniqueWithoutWargaInput = {
+    where: RekamMedisWhereUniqueInput
+    data: XOR<RekamMedisUpdateWithoutWargaInput, RekamMedisUncheckedUpdateWithoutWargaInput>
+  }
+
+  export type RekamMedisUpdateManyWithWhereWithoutWargaInput = {
+    where: RekamMedisScalarWhereInput
+    data: XOR<RekamMedisUpdateManyMutationInput, RekamMedisUncheckedUpdateManyWithoutWargaInput>
+  }
+
+  export type RekamMedisScalarWhereInput = {
+    AND?: RekamMedisScalarWhereInput | RekamMedisScalarWhereInput[]
+    OR?: RekamMedisScalarWhereInput[]
+    NOT?: RekamMedisScalarWhereInput | RekamMedisScalarWhereInput[]
+    id?: StringFilter<"RekamMedis"> | string
+    wargaId?: StringFilter<"RekamMedis"> | string
+    tanggal?: DateTimeFilter<"RekamMedis"> | Date | string
+    diagnosis?: StringFilter<"RekamMedis"> | string
+    nakes?: StringFilter<"RekamMedis"> | string
+    catatan?: StringNullableFilter<"RekamMedis"> | string | null
+    alergi?: StringNullableFilter<"RekamMedis"> | string | null
+    createdAt?: DateTimeFilter<"RekamMedis"> | Date | string
+  }
+
   export type StuntingUpsertWithWhereUniqueWithoutWargaInput = {
     where: StuntingWhereUniqueInput
     update: XOR<StuntingUpdateWithoutWargaInput, StuntingUncheckedUpdateWithoutWargaInput>
@@ -39040,63 +40278,34 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Stunting"> | Date | string
   }
 
-  export type PesertaKelasUpsertWithWhereUniqueWithoutWargaInput = {
-    where: PesertaKelasWhereUniqueInput
-    update: XOR<PesertaKelasUpdateWithoutWargaInput, PesertaKelasUncheckedUpdateWithoutWargaInput>
-    create: XOR<PesertaKelasCreateWithoutWargaInput, PesertaKelasUncheckedCreateWithoutWargaInput>
+  export type TelemedicineUpsertWithWhereUniqueWithoutWargaInput = {
+    where: TelemedicineWhereUniqueInput
+    update: XOR<TelemedicineUpdateWithoutWargaInput, TelemedicineUncheckedUpdateWithoutWargaInput>
+    create: XOR<TelemedicineCreateWithoutWargaInput, TelemedicineUncheckedCreateWithoutWargaInput>
   }
 
-  export type PesertaKelasUpdateWithWhereUniqueWithoutWargaInput = {
-    where: PesertaKelasWhereUniqueInput
-    data: XOR<PesertaKelasUpdateWithoutWargaInput, PesertaKelasUncheckedUpdateWithoutWargaInput>
+  export type TelemedicineUpdateWithWhereUniqueWithoutWargaInput = {
+    where: TelemedicineWhereUniqueInput
+    data: XOR<TelemedicineUpdateWithoutWargaInput, TelemedicineUncheckedUpdateWithoutWargaInput>
   }
 
-  export type PesertaKelasUpdateManyWithWhereWithoutWargaInput = {
-    where: PesertaKelasScalarWhereInput
-    data: XOR<PesertaKelasUpdateManyMutationInput, PesertaKelasUncheckedUpdateManyWithoutWargaInput>
+  export type TelemedicineUpdateManyWithWhereWithoutWargaInput = {
+    where: TelemedicineScalarWhereInput
+    data: XOR<TelemedicineUpdateManyMutationInput, TelemedicineUncheckedUpdateManyWithoutWargaInput>
   }
 
-  export type PesertaKelasScalarWhereInput = {
-    AND?: PesertaKelasScalarWhereInput | PesertaKelasScalarWhereInput[]
-    OR?: PesertaKelasScalarWhereInput[]
-    NOT?: PesertaKelasScalarWhereInput | PesertaKelasScalarWhereInput[]
-    id?: StringFilter<"PesertaKelas"> | string
-    kelasId?: StringFilter<"PesertaKelas"> | string
-    wargaId?: StringFilter<"PesertaKelas"> | string
-    status?: EnumStatusWargaFilter<"PesertaKelas"> | $Enums.StatusWarga
-    nilai?: FloatNullableFilter<"PesertaKelas"> | number | null
-    sertifikat?: StringNullableFilter<"PesertaKelas"> | string | null
-    createdAt?: DateTimeFilter<"PesertaKelas"> | Date | string
-  }
-
-  export type AspirasiUpsertWithWhereUniqueWithoutWargaInput = {
-    where: AspirasiWhereUniqueInput
-    update: XOR<AspirasiUpdateWithoutWargaInput, AspirasiUncheckedUpdateWithoutWargaInput>
-    create: XOR<AspirasiCreateWithoutWargaInput, AspirasiUncheckedCreateWithoutWargaInput>
-  }
-
-  export type AspirasiUpdateWithWhereUniqueWithoutWargaInput = {
-    where: AspirasiWhereUniqueInput
-    data: XOR<AspirasiUpdateWithoutWargaInput, AspirasiUncheckedUpdateWithoutWargaInput>
-  }
-
-  export type AspirasiUpdateManyWithWhereWithoutWargaInput = {
-    where: AspirasiScalarWhereInput
-    data: XOR<AspirasiUpdateManyMutationInput, AspirasiUncheckedUpdateManyWithoutWargaInput>
-  }
-
-  export type AspirasiScalarWhereInput = {
-    AND?: AspirasiScalarWhereInput | AspirasiScalarWhereInput[]
-    OR?: AspirasiScalarWhereInput[]
-    NOT?: AspirasiScalarWhereInput | AspirasiScalarWhereInput[]
-    id?: StringFilter<"Aspirasi"> | string
-    desaId?: StringFilter<"Aspirasi"> | string
-    wargaId?: StringNullableFilter<"Aspirasi"> | string | null
-    kategori?: StringFilter<"Aspirasi"> | string
-    judul?: StringFilter<"Aspirasi"> | string
-    isi?: StringFilter<"Aspirasi"> | string
-    status?: StringFilter<"Aspirasi"> | string
-    createdAt?: DateTimeFilter<"Aspirasi"> | Date | string
+  export type TelemedicineScalarWhereInput = {
+    AND?: TelemedicineScalarWhereInput | TelemedicineScalarWhereInput[]
+    OR?: TelemedicineScalarWhereInput[]
+    NOT?: TelemedicineScalarWhereInput | TelemedicineScalarWhereInput[]
+    id?: StringFilter<"Telemedicine"> | string
+    wargaId?: StringFilter<"Telemedicine"> | string
+    waktu?: DateTimeFilter<"Telemedicine"> | Date | string
+    status?: EnumStatusTelemedicineFilter<"Telemedicine"> | $Enums.StatusTelemedicine
+    nakesId?: StringNullableFilter<"Telemedicine"> | string | null
+    catatanKonsultasi?: StringNullableFilter<"Telemedicine"> | string | null
+    suratRujukan?: StringNullableFilter<"Telemedicine"> | string | null
+    createdAt?: DateTimeFilter<"Telemedicine"> | Date | string
   }
 
   export type UserUpsertWithoutWargaInput = {
@@ -39114,8 +40323,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     desa?: DesaUpdateOneRequiredWithoutUsersNestedInput
@@ -39125,11 +40336,101 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: StringFieldUpdateOperationsInput | string
     desaId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DesaUpsertWithoutWargaInput = {
+    update: XOR<DesaUpdateWithoutWargaInput, DesaUncheckedUpdateWithoutWargaInput>
+    create: XOR<DesaCreateWithoutWargaInput, DesaUncheckedCreateWithoutWargaInput>
+    where?: DesaWhereInput
+  }
+
+  export type DesaUpdateToOneWithWhereWithoutWargaInput = {
+    where?: DesaWhereInput
+    data: XOR<DesaUpdateWithoutWargaInput, DesaUncheckedUpdateWithoutWargaInput>
+  }
+
+  export type DesaUpdateWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    kecamatan?: StringFieldUpdateOperationsInput | string
+    kabupaten?: StringFieldUpdateOperationsInput | string
+    provinsi?: StringFieldUpdateOperationsInput | string
+    luasWilayah?: NullableFloatFieldUpdateOperationsInput | number | null
+    sejarah?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rwrts?: RwRtUpdateManyWithoutDesaNestedInput
+    users?: UserUpdateManyWithoutDesaNestedInput
+  }
+
+  export type DesaUncheckedUpdateWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    kecamatan?: StringFieldUpdateOperationsInput | string
+    kabupaten?: StringFieldUpdateOperationsInput | string
+    provinsi?: StringFieldUpdateOperationsInput | string
+    luasWilayah?: NullableFloatFieldUpdateOperationsInput | number | null
+    sejarah?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    rwrts?: RwRtUncheckedUpdateManyWithoutDesaNestedInput
+    users?: UserUncheckedUpdateManyWithoutDesaNestedInput
+  }
+
+  export type RwRtUpsertWithoutWargaInput = {
+    update: XOR<RwRtUpdateWithoutWargaInput, RwRtUncheckedUpdateWithoutWargaInput>
+    create: XOR<RwRtCreateWithoutWargaInput, RwRtUncheckedCreateWithoutWargaInput>
+    where?: RwRtWhereInput
+  }
+
+  export type RwRtUpdateToOneWithWhereWithoutWargaInput = {
+    where?: RwRtWhereInput
+    data: XOR<RwRtUpdateWithoutWargaInput, RwRtUncheckedUpdateWithoutWargaInput>
+  }
+
+  export type RwRtUpdateWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    rw?: StringFieldUpdateOperationsInput | string
+    rt?: StringFieldUpdateOperationsInput | string
+    jumlahWarga?: IntFieldUpdateOperationsInput | number
+    desa?: DesaUpdateOneRequiredWithoutRwrtsNestedInput
+  }
+
+  export type RwRtUncheckedUpdateWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    rw?: StringFieldUpdateOperationsInput | string
+    rt?: StringFieldUpdateOperationsInput | string
+    jumlahWarga?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type ForumCreateWithoutKelasInput = {
+    id?: string
+    judul: string
+    createdAt?: Date | string
+    diskusi?: DiskusiCreateNestedManyWithoutForumInput
+  }
+
+  export type ForumUncheckedCreateWithoutKelasInput = {
+    id?: string
+    judul: string
+    createdAt?: Date | string
+    diskusi?: DiskusiUncheckedCreateNestedManyWithoutForumInput
+  }
+
+  export type ForumCreateOrConnectWithoutKelasInput = {
+    where: ForumWhereUniqueInput
+    create: XOR<ForumCreateWithoutKelasInput, ForumUncheckedCreateWithoutKelasInput>
+  }
+
+  export type ForumCreateManyKelasInputEnvelope = {
+    data: ForumCreateManyKelasInput | ForumCreateManyKelasInput[]
+    skipDuplicates?: boolean
   }
 
   export type MateriCreateWithoutKelasInput = {
@@ -39214,28 +40515,30 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ForumCreateWithoutKelasInput = {
-    id?: string
-    judul: string
-    createdAt?: Date | string
-    diskusi?: DiskusiCreateNestedManyWithoutForumInput
-  }
-
-  export type ForumUncheckedCreateWithoutKelasInput = {
-    id?: string
-    judul: string
-    createdAt?: Date | string
-    diskusi?: DiskusiUncheckedCreateNestedManyWithoutForumInput
-  }
-
-  export type ForumCreateOrConnectWithoutKelasInput = {
+  export type ForumUpsertWithWhereUniqueWithoutKelasInput = {
     where: ForumWhereUniqueInput
+    update: XOR<ForumUpdateWithoutKelasInput, ForumUncheckedUpdateWithoutKelasInput>
     create: XOR<ForumCreateWithoutKelasInput, ForumUncheckedCreateWithoutKelasInput>
   }
 
-  export type ForumCreateManyKelasInputEnvelope = {
-    data: ForumCreateManyKelasInput | ForumCreateManyKelasInput[]
-    skipDuplicates?: boolean
+  export type ForumUpdateWithWhereUniqueWithoutKelasInput = {
+    where: ForumWhereUniqueInput
+    data: XOR<ForumUpdateWithoutKelasInput, ForumUncheckedUpdateWithoutKelasInput>
+  }
+
+  export type ForumUpdateManyWithWhereWithoutKelasInput = {
+    where: ForumScalarWhereInput
+    data: XOR<ForumUpdateManyMutationInput, ForumUncheckedUpdateManyWithoutKelasInput>
+  }
+
+  export type ForumScalarWhereInput = {
+    AND?: ForumScalarWhereInput | ForumScalarWhereInput[]
+    OR?: ForumScalarWhereInput[]
+    NOT?: ForumScalarWhereInput | ForumScalarWhereInput[]
+    id?: StringFilter<"Forum"> | string
+    kelasId?: StringFilter<"Forum"> | string
+    judul?: StringFilter<"Forum"> | string
+    createdAt?: DateTimeFilter<"Forum"> | Date | string
   }
 
   export type MateriUpsertWithWhereUniqueWithoutKelasInput = {
@@ -39311,32 +40614,6 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Tugas"> | Date | string
   }
 
-  export type ForumUpsertWithWhereUniqueWithoutKelasInput = {
-    where: ForumWhereUniqueInput
-    update: XOR<ForumUpdateWithoutKelasInput, ForumUncheckedUpdateWithoutKelasInput>
-    create: XOR<ForumCreateWithoutKelasInput, ForumUncheckedCreateWithoutKelasInput>
-  }
-
-  export type ForumUpdateWithWhereUniqueWithoutKelasInput = {
-    where: ForumWhereUniqueInput
-    data: XOR<ForumUpdateWithoutKelasInput, ForumUncheckedUpdateWithoutKelasInput>
-  }
-
-  export type ForumUpdateManyWithWhereWithoutKelasInput = {
-    where: ForumScalarWhereInput
-    data: XOR<ForumUpdateManyMutationInput, ForumUncheckedUpdateManyWithoutKelasInput>
-  }
-
-  export type ForumScalarWhereInput = {
-    AND?: ForumScalarWhereInput | ForumScalarWhereInput[]
-    OR?: ForumScalarWhereInput[]
-    NOT?: ForumScalarWhereInput | ForumScalarWhereInput[]
-    id?: StringFilter<"Forum"> | string
-    kelasId?: StringFilter<"Forum"> | string
-    judul?: StringFilter<"Forum"> | string
-    createdAt?: DateTimeFilter<"Forum"> | Date | string
-  }
-
   export type KelasCreateWithoutMateriInput = {
     id?: string
     desaId: string
@@ -39347,9 +40624,9 @@ export namespace Prisma {
     fasilitatorId?: string | null
     status?: $Enums.StatusKelas
     createdAt?: Date | string
+    forum?: ForumCreateNestedManyWithoutKelasInput
     peserta?: PesertaKelasCreateNestedManyWithoutKelasInput
     tugas?: TugasCreateNestedManyWithoutKelasInput
-    forum?: ForumCreateNestedManyWithoutKelasInput
   }
 
   export type KelasUncheckedCreateWithoutMateriInput = {
@@ -39362,9 +40639,9 @@ export namespace Prisma {
     fasilitatorId?: string | null
     status?: $Enums.StatusKelas
     createdAt?: Date | string
+    forum?: ForumUncheckedCreateNestedManyWithoutKelasInput
     peserta?: PesertaKelasUncheckedCreateNestedManyWithoutKelasInput
     tugas?: TugasUncheckedCreateNestedManyWithoutKelasInput
-    forum?: ForumUncheckedCreateNestedManyWithoutKelasInput
   }
 
   export type KelasCreateOrConnectWithoutMateriInput = {
@@ -39393,9 +40670,9 @@ export namespace Prisma {
     fasilitatorId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusKelasFieldUpdateOperationsInput | $Enums.StatusKelas
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forum?: ForumUpdateManyWithoutKelasNestedInput
     peserta?: PesertaKelasUpdateManyWithoutKelasNestedInput
     tugas?: TugasUpdateManyWithoutKelasNestedInput
-    forum?: ForumUpdateManyWithoutKelasNestedInput
   }
 
   export type KelasUncheckedUpdateWithoutMateriInput = {
@@ -39408,9 +40685,9 @@ export namespace Prisma {
     fasilitatorId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusKelasFieldUpdateOperationsInput | $Enums.StatusKelas
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forum?: ForumUncheckedUpdateManyWithoutKelasNestedInput
     peserta?: PesertaKelasUncheckedUpdateManyWithoutKelasNestedInput
     tugas?: TugasUncheckedUpdateManyWithoutKelasNestedInput
-    forum?: ForumUncheckedUpdateManyWithoutKelasNestedInput
   }
 
   export type KelasCreateWithoutPesertaInput = {
@@ -39423,9 +40700,9 @@ export namespace Prisma {
     fasilitatorId?: string | null
     status?: $Enums.StatusKelas
     createdAt?: Date | string
+    forum?: ForumCreateNestedManyWithoutKelasInput
     materi?: MateriCreateNestedManyWithoutKelasInput
     tugas?: TugasCreateNestedManyWithoutKelasInput
-    forum?: ForumCreateNestedManyWithoutKelasInput
   }
 
   export type KelasUncheckedCreateWithoutPesertaInput = {
@@ -39438,9 +40715,9 @@ export namespace Prisma {
     fasilitatorId?: string | null
     status?: $Enums.StatusKelas
     createdAt?: Date | string
+    forum?: ForumUncheckedCreateNestedManyWithoutKelasInput
     materi?: MateriUncheckedCreateNestedManyWithoutKelasInput
     tugas?: TugasUncheckedCreateNestedManyWithoutKelasInput
-    forum?: ForumUncheckedCreateNestedManyWithoutKelasInput
   }
 
   export type KelasCreateOrConnectWithoutPesertaInput = {
@@ -39460,14 +40737,14 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
+    stunting?: StuntingCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
+    user?: UserCreateNestedOneWithoutWargaInput
     desa: DesaCreateNestedOneWithoutWargaInput
     rwRt: RwRtCreateNestedOneWithoutWargaInput
-    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
-    stunting?: StuntingCreateNestedManyWithoutWargaInput
-    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
-    user?: UserCreateNestedOneWithoutWargaInput
   }
 
   export type WargaUncheckedCreateWithoutPesertaKelasInput = {
@@ -39484,11 +40761,11 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
-    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
     aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
+    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -39518,9 +40795,9 @@ export namespace Prisma {
     fasilitatorId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusKelasFieldUpdateOperationsInput | $Enums.StatusKelas
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forum?: ForumUpdateManyWithoutKelasNestedInput
     materi?: MateriUpdateManyWithoutKelasNestedInput
     tugas?: TugasUpdateManyWithoutKelasNestedInput
-    forum?: ForumUpdateManyWithoutKelasNestedInput
   }
 
   export type KelasUncheckedUpdateWithoutPesertaInput = {
@@ -39533,9 +40810,9 @@ export namespace Prisma {
     fasilitatorId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusKelasFieldUpdateOperationsInput | $Enums.StatusKelas
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forum?: ForumUncheckedUpdateManyWithoutKelasNestedInput
     materi?: MateriUncheckedUpdateManyWithoutKelasNestedInput
     tugas?: TugasUncheckedUpdateManyWithoutKelasNestedInput
-    forum?: ForumUncheckedUpdateManyWithoutKelasNestedInput
   }
 
   export type WargaUpsertWithoutPesertaKelasInput = {
@@ -39561,14 +40838,14 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
+    user?: UserUpdateOneWithoutWargaNestedInput
     desa?: DesaUpdateOneRequiredWithoutWargaNestedInput
     rwRt?: RwRtUpdateOneRequiredWithoutWargaNestedInput
-    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUpdateManyWithoutWargaNestedInput
-    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
-    user?: UserUpdateOneWithoutWargaNestedInput
   }
 
   export type WargaUncheckedUpdateWithoutPesertaKelasInput = {
@@ -39585,11 +40862,11 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
     aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -39603,9 +40880,9 @@ export namespace Prisma {
     fasilitatorId?: string | null
     status?: $Enums.StatusKelas
     createdAt?: Date | string
+    forum?: ForumCreateNestedManyWithoutKelasInput
     materi?: MateriCreateNestedManyWithoutKelasInput
     peserta?: PesertaKelasCreateNestedManyWithoutKelasInput
-    forum?: ForumCreateNestedManyWithoutKelasInput
   }
 
   export type KelasUncheckedCreateWithoutTugasInput = {
@@ -39618,9 +40895,9 @@ export namespace Prisma {
     fasilitatorId?: string | null
     status?: $Enums.StatusKelas
     createdAt?: Date | string
+    forum?: ForumUncheckedCreateNestedManyWithoutKelasInput
     materi?: MateriUncheckedCreateNestedManyWithoutKelasInput
     peserta?: PesertaKelasUncheckedCreateNestedManyWithoutKelasInput
-    forum?: ForumUncheckedCreateNestedManyWithoutKelasInput
   }
 
   export type KelasCreateOrConnectWithoutTugasInput = {
@@ -39649,9 +40926,9 @@ export namespace Prisma {
     fasilitatorId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusKelasFieldUpdateOperationsInput | $Enums.StatusKelas
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forum?: ForumUpdateManyWithoutKelasNestedInput
     materi?: MateriUpdateManyWithoutKelasNestedInput
     peserta?: PesertaKelasUpdateManyWithoutKelasNestedInput
-    forum?: ForumUpdateManyWithoutKelasNestedInput
   }
 
   export type KelasUncheckedUpdateWithoutTugasInput = {
@@ -39664,9 +40941,9 @@ export namespace Prisma {
     fasilitatorId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusKelasFieldUpdateOperationsInput | $Enums.StatusKelas
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    forum?: ForumUncheckedUpdateManyWithoutKelasNestedInput
     materi?: MateriUncheckedUpdateManyWithoutKelasNestedInput
     peserta?: PesertaKelasUncheckedUpdateManyWithoutKelasNestedInput
-    forum?: ForumUncheckedUpdateManyWithoutKelasNestedInput
   }
 
   export type WargaCreateWithoutRekamMedisInput = {
@@ -39681,14 +40958,14 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    stunting?: StuntingCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
+    user?: UserCreateNestedOneWithoutWargaInput
     desa: DesaCreateNestedOneWithoutWargaInput
     rwRt: RwRtCreateNestedOneWithoutWargaInput
-    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
-    stunting?: StuntingCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
-    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
-    user?: UserCreateNestedOneWithoutWargaInput
   }
 
   export type WargaUncheckedCreateWithoutRekamMedisInput = {
@@ -39705,11 +40982,11 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
-    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
     aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -39741,14 +41018,14 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
+    user?: UserUpdateOneWithoutWargaNestedInput
     desa?: DesaUpdateOneRequiredWithoutWargaNestedInput
     rwRt?: RwRtUpdateOneRequiredWithoutWargaNestedInput
-    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
-    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
-    user?: UserUpdateOneWithoutWargaNestedInput
   }
 
   export type WargaUncheckedUpdateWithoutRekamMedisInput = {
@@ -39765,11 +41042,11 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
     aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -39785,14 +41062,14 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
+    stunting?: StuntingCreateNestedManyWithoutWargaInput
+    user?: UserCreateNestedOneWithoutWargaInput
     desa: DesaCreateNestedOneWithoutWargaInput
     rwRt: RwRtCreateNestedOneWithoutWargaInput
-    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
-    stunting?: StuntingCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
-    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
-    user?: UserCreateNestedOneWithoutWargaInput
   }
 
   export type WargaUncheckedCreateWithoutTelemedicineInput = {
@@ -39809,11 +41086,11 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
-    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
     aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
+    monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
+    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -39845,14 +41122,14 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUpdateManyWithoutWargaNestedInput
+    user?: UserUpdateOneWithoutWargaNestedInput
     desa?: DesaUpdateOneRequiredWithoutWargaNestedInput
     rwRt?: RwRtUpdateOneRequiredWithoutWargaNestedInput
-    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
-    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
-    user?: UserUpdateOneWithoutWargaNestedInput
   }
 
   export type WargaUncheckedUpdateWithoutTelemedicineInput = {
@@ -39869,11 +41146,11 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
     aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -39889,14 +41166,14 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
+    stunting?: StuntingCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
+    user?: UserCreateNestedOneWithoutWargaInput
     desa: DesaCreateNestedOneWithoutWargaInput
     rwRt: RwRtCreateNestedOneWithoutWargaInput
-    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
-    stunting?: StuntingCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
-    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
-    user?: UserCreateNestedOneWithoutWargaInput
   }
 
   export type WargaUncheckedCreateWithoutMonitoringInput = {
@@ -39913,11 +41190,11 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
-    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
     aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
+    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -39949,14 +41226,14 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
+    user?: UserUpdateOneWithoutWargaNestedInput
     desa?: DesaUpdateOneRequiredWithoutWargaNestedInput
     rwRt?: RwRtUpdateOneRequiredWithoutWargaNestedInput
-    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
-    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
-    user?: UserUpdateOneWithoutWargaNestedInput
   }
 
   export type WargaUncheckedUpdateWithoutMonitoringInput = {
@@ -39973,11 +41250,11 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
     aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -39993,14 +41270,14 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    desa: DesaCreateNestedOneWithoutWargaInput
-    rwRt: RwRtCreateNestedOneWithoutWargaInput
-    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
     monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
-    aspirasi?: AspirasiCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
     user?: UserCreateNestedOneWithoutWargaInput
+    desa: DesaCreateNestedOneWithoutWargaInput
+    rwRt: RwRtCreateNestedOneWithoutWargaInput
   }
 
   export type WargaUncheckedCreateWithoutStuntingInput = {
@@ -40017,11 +41294,11 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
+    aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
     monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
-    aspirasi?: AspirasiUncheckedCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -40053,14 +41330,14 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    desa?: DesaUpdateOneRequiredWithoutWargaNestedInput
-    rwRt?: RwRtUpdateOneRequiredWithoutWargaNestedInput
-    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
     monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
-    aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
     user?: UserUpdateOneWithoutWargaNestedInput
+    desa?: DesaUpdateOneRequiredWithoutWargaNestedInput
+    rwRt?: RwRtUpdateOneRequiredWithoutWargaNestedInput
   }
 
   export type WargaUncheckedUpdateWithoutStuntingInput = {
@@ -40077,12 +41354,36 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
+    aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
     monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
-    aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
+  }
+
+  export type DiskusiCreateWithoutForumInput = {
+    id?: string
+    userId: string
+    pesan: string
+    createdAt?: Date | string
+  }
+
+  export type DiskusiUncheckedCreateWithoutForumInput = {
+    id?: string
+    userId: string
+    pesan: string
+    createdAt?: Date | string
+  }
+
+  export type DiskusiCreateOrConnectWithoutForumInput = {
+    where: DiskusiWhereUniqueInput
+    create: XOR<DiskusiCreateWithoutForumInput, DiskusiUncheckedCreateWithoutForumInput>
+  }
+
+  export type DiskusiCreateManyForumInputEnvelope = {
+    data: DiskusiCreateManyForumInput | DiskusiCreateManyForumInput[]
+    skipDuplicates?: boolean
   }
 
   export type KelasCreateWithoutForumInput = {
@@ -40120,28 +41421,31 @@ export namespace Prisma {
     create: XOR<KelasCreateWithoutForumInput, KelasUncheckedCreateWithoutForumInput>
   }
 
-  export type DiskusiCreateWithoutForumInput = {
-    id?: string
-    userId: string
-    pesan: string
-    createdAt?: Date | string
-  }
-
-  export type DiskusiUncheckedCreateWithoutForumInput = {
-    id?: string
-    userId: string
-    pesan: string
-    createdAt?: Date | string
-  }
-
-  export type DiskusiCreateOrConnectWithoutForumInput = {
+  export type DiskusiUpsertWithWhereUniqueWithoutForumInput = {
     where: DiskusiWhereUniqueInput
+    update: XOR<DiskusiUpdateWithoutForumInput, DiskusiUncheckedUpdateWithoutForumInput>
     create: XOR<DiskusiCreateWithoutForumInput, DiskusiUncheckedCreateWithoutForumInput>
   }
 
-  export type DiskusiCreateManyForumInputEnvelope = {
-    data: DiskusiCreateManyForumInput | DiskusiCreateManyForumInput[]
-    skipDuplicates?: boolean
+  export type DiskusiUpdateWithWhereUniqueWithoutForumInput = {
+    where: DiskusiWhereUniqueInput
+    data: XOR<DiskusiUpdateWithoutForumInput, DiskusiUncheckedUpdateWithoutForumInput>
+  }
+
+  export type DiskusiUpdateManyWithWhereWithoutForumInput = {
+    where: DiskusiScalarWhereInput
+    data: XOR<DiskusiUpdateManyMutationInput, DiskusiUncheckedUpdateManyWithoutForumInput>
+  }
+
+  export type DiskusiScalarWhereInput = {
+    AND?: DiskusiScalarWhereInput | DiskusiScalarWhereInput[]
+    OR?: DiskusiScalarWhereInput[]
+    NOT?: DiskusiScalarWhereInput | DiskusiScalarWhereInput[]
+    id?: StringFilter<"Diskusi"> | string
+    forumId?: StringFilter<"Diskusi"> | string
+    userId?: StringFilter<"Diskusi"> | string
+    pesan?: StringFilter<"Diskusi"> | string
+    createdAt?: DateTimeFilter<"Diskusi"> | Date | string
   }
 
   export type KelasUpsertWithoutForumInput = {
@@ -40183,33 +41487,6 @@ export namespace Prisma {
     materi?: MateriUncheckedUpdateManyWithoutKelasNestedInput
     peserta?: PesertaKelasUncheckedUpdateManyWithoutKelasNestedInput
     tugas?: TugasUncheckedUpdateManyWithoutKelasNestedInput
-  }
-
-  export type DiskusiUpsertWithWhereUniqueWithoutForumInput = {
-    where: DiskusiWhereUniqueInput
-    update: XOR<DiskusiUpdateWithoutForumInput, DiskusiUncheckedUpdateWithoutForumInput>
-    create: XOR<DiskusiCreateWithoutForumInput, DiskusiUncheckedCreateWithoutForumInput>
-  }
-
-  export type DiskusiUpdateWithWhereUniqueWithoutForumInput = {
-    where: DiskusiWhereUniqueInput
-    data: XOR<DiskusiUpdateWithoutForumInput, DiskusiUncheckedUpdateWithoutForumInput>
-  }
-
-  export type DiskusiUpdateManyWithWhereWithoutForumInput = {
-    where: DiskusiScalarWhereInput
-    data: XOR<DiskusiUpdateManyMutationInput, DiskusiUncheckedUpdateManyWithoutForumInput>
-  }
-
-  export type DiskusiScalarWhereInput = {
-    AND?: DiskusiScalarWhereInput | DiskusiScalarWhereInput[]
-    OR?: DiskusiScalarWhereInput[]
-    NOT?: DiskusiScalarWhereInput | DiskusiScalarWhereInput[]
-    id?: StringFilter<"Diskusi"> | string
-    forumId?: StringFilter<"Diskusi"> | string
-    userId?: StringFilter<"Diskusi"> | string
-    pesan?: StringFilter<"Diskusi"> | string
-    createdAt?: DateTimeFilter<"Diskusi"> | Date | string
   }
 
   export type ForumCreateWithoutDiskusiInput = {
@@ -40268,14 +41545,14 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
+    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
+    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
+    stunting?: StuntingCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
+    user?: UserCreateNestedOneWithoutWargaInput
     desa: DesaCreateNestedOneWithoutWargaInput
     rwRt: RwRtCreateNestedOneWithoutWargaInput
-    rekamMedis?: RekamMedisCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineCreateNestedManyWithoutWargaInput
-    monitoring?: MonitoringKesehatanCreateNestedManyWithoutWargaInput
-    stunting?: StuntingCreateNestedManyWithoutWargaInput
-    pesertaKelas?: PesertaKelasCreateNestedManyWithoutWargaInput
-    user?: UserCreateNestedOneWithoutWargaInput
   }
 
   export type WargaUncheckedCreateWithoutAspirasiInput = {
@@ -40292,11 +41569,11 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
-    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
     monitoring?: MonitoringKesehatanUncheckedCreateNestedManyWithoutWargaInput
-    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
     pesertaKelas?: PesertaKelasUncheckedCreateNestedManyWithoutWargaInput
+    rekamMedis?: RekamMedisUncheckedCreateNestedManyWithoutWargaInput
+    stunting?: StuntingUncheckedCreateNestedManyWithoutWargaInput
+    telemedicine?: TelemedicineUncheckedCreateNestedManyWithoutWargaInput
     user?: UserUncheckedCreateNestedOneWithoutWargaInput
   }
 
@@ -40328,14 +41605,14 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
+    user?: UserUpdateOneWithoutWargaNestedInput
     desa?: DesaUpdateOneRequiredWithoutWargaNestedInput
     rwRt?: RwRtUpdateOneRequiredWithoutWargaNestedInput
-    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
-    user?: UserUpdateOneWithoutWargaNestedInput
   }
 
   export type WargaUncheckedUpdateWithoutAspirasiInput = {
@@ -40352,23 +41629,12 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
     monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
     pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
-  }
-
-  export type UserCreateManyDesaInput = {
-    id?: string
-    name: string
-    email: string
-    password: string
-    role: $Enums.Role
-    wargaId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
   }
 
   export type RwRtCreateManyDesaInput = {
@@ -40376,6 +41642,19 @@ export namespace Prisma {
     rw: string
     rt: string
     jumlahWarga?: number
+  }
+
+  export type UserCreateManyDesaInput = {
+    id?: string
+    name: string
+    email: string
+    username: string
+    password: string
+    role: $Enums.Role
+    status?: string
+    wargaId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type WargaCreateManyDesaInput = {
@@ -40391,39 +41670,6 @@ export namespace Prisma {
     foto?: string | null
     status?: $Enums.StatusWarga
     createdAt?: Date | string
-  }
-
-  export type UserUpdateWithoutDesaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    warga?: WargaUpdateOneWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutDesaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    wargaId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserUncheckedUpdateManyWithoutDesaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    wargaId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RwRtUpdateWithoutDesaInput = {
@@ -40449,6 +41695,45 @@ export namespace Prisma {
     jumlahWarga?: IntFieldUpdateOperationsInput | number
   }
 
+  export type UserUpdateWithoutDesaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    warga?: WargaUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutDesaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: StringFieldUpdateOperationsInput | string
+    wargaId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserUncheckedUpdateManyWithoutDesaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    username?: StringFieldUpdateOperationsInput | string
+    password?: StringFieldUpdateOperationsInput | string
+    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
+    status?: StringFieldUpdateOperationsInput | string
+    wargaId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type WargaUpdateWithoutDesaInput = {
     id?: StringFieldUpdateOperationsInput | string
     nik?: StringFieldUpdateOperationsInput | string
@@ -40461,14 +41746,14 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rwRt?: RwRtUpdateOneRequiredWithoutWargaNestedInput
-    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
     aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
     user?: UserUpdateOneWithoutWargaNestedInput
+    rwRt?: RwRtUpdateOneRequiredWithoutWargaNestedInput
   }
 
   export type WargaUncheckedUpdateWithoutDesaInput = {
@@ -40484,12 +41769,12 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
     aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -40535,14 +41820,14 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    desa?: DesaUpdateOneRequiredWithoutWargaNestedInput
-    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
     aspirasi?: AspirasiUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUpdateManyWithoutWargaNestedInput
     user?: UserUpdateOneWithoutWargaNestedInput
+    desa?: DesaUpdateOneRequiredWithoutWargaNestedInput
   }
 
   export type WargaUncheckedUpdateWithoutRwRtInput = {
@@ -40558,12 +41843,12 @@ export namespace Prisma {
     foto?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
-    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
-    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
-    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
-    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
     aspirasi?: AspirasiUncheckedUpdateManyWithoutWargaNestedInput
+    monitoring?: MonitoringKesehatanUncheckedUpdateManyWithoutWargaNestedInput
+    pesertaKelas?: PesertaKelasUncheckedUpdateManyWithoutWargaNestedInput
+    rekamMedis?: RekamMedisUncheckedUpdateManyWithoutWargaNestedInput
+    stunting?: StuntingUncheckedUpdateManyWithoutWargaNestedInput
+    telemedicine?: TelemedicineUncheckedUpdateManyWithoutWargaNestedInput
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
@@ -40582,23 +41867,13 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RekamMedisCreateManyWargaInput = {
+  export type AspirasiCreateManyWargaInput = {
     id?: string
-    tanggal: Date | string
-    diagnosis: string
-    nakes: string
-    catatan?: string | null
-    alergi?: string | null
-    createdAt?: Date | string
-  }
-
-  export type TelemedicineCreateManyWargaInput = {
-    id?: string
-    waktu: Date | string
-    status?: $Enums.StatusTelemedicine
-    nakesId?: string | null
-    catatanKonsultasi?: string | null
-    suratRujukan?: string | null
+    desaId: string
+    kategori: string
+    judul: string
+    isi: string
+    status?: string
     createdAt?: Date | string
   }
 
@@ -40614,6 +41889,25 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type PesertaKelasCreateManyWargaInput = {
+    id?: string
+    kelasId: string
+    status?: $Enums.StatusWarga
+    nilai?: number | null
+    sertifikat?: string | null
+    createdAt?: Date | string
+  }
+
+  export type RekamMedisCreateManyWargaInput = {
+    id?: string
+    tanggal: Date | string
+    diagnosis: string
+    nakes: string
+    catatan?: string | null
+    alergi?: string | null
+    createdAt?: Date | string
+  }
+
   export type StuntingCreateManyWargaInput = {
     id?: string
     tanggal: Date | string
@@ -40626,82 +41920,43 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type PesertaKelasCreateManyWargaInput = {
+  export type TelemedicineCreateManyWargaInput = {
     id?: string
-    kelasId: string
-    status?: $Enums.StatusWarga
-    nilai?: number | null
-    sertifikat?: string | null
+    waktu: Date | string
+    status?: $Enums.StatusTelemedicine
+    nakesId?: string | null
+    catatanKonsultasi?: string | null
+    suratRujukan?: string | null
     createdAt?: Date | string
   }
 
-  export type AspirasiCreateManyWargaInput = {
-    id?: string
-    desaId: string
-    kategori: string
-    judul: string
-    isi: string
-    status?: string
-    createdAt?: Date | string
-  }
-
-  export type RekamMedisUpdateWithoutWargaInput = {
+  export type AspirasiUpdateWithoutWargaInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
-    diagnosis?: StringFieldUpdateOperationsInput | string
-    nakes?: StringFieldUpdateOperationsInput | string
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
-    alergi?: NullableStringFieldUpdateOperationsInput | string | null
+    desaId?: StringFieldUpdateOperationsInput | string
+    kategori?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    isi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RekamMedisUncheckedUpdateWithoutWargaInput = {
+  export type AspirasiUncheckedUpdateWithoutWargaInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
-    diagnosis?: StringFieldUpdateOperationsInput | string
-    nakes?: StringFieldUpdateOperationsInput | string
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
-    alergi?: NullableStringFieldUpdateOperationsInput | string | null
+    desaId?: StringFieldUpdateOperationsInput | string
+    kategori?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    isi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type RekamMedisUncheckedUpdateManyWithoutWargaInput = {
+  export type AspirasiUncheckedUpdateManyWithoutWargaInput = {
     id?: StringFieldUpdateOperationsInput | string
-    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
-    diagnosis?: StringFieldUpdateOperationsInput | string
-    nakes?: StringFieldUpdateOperationsInput | string
-    catatan?: NullableStringFieldUpdateOperationsInput | string | null
-    alergi?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TelemedicineUpdateWithoutWargaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    waktu?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumStatusTelemedicineFieldUpdateOperationsInput | $Enums.StatusTelemedicine
-    nakesId?: NullableStringFieldUpdateOperationsInput | string | null
-    catatanKonsultasi?: NullableStringFieldUpdateOperationsInput | string | null
-    suratRujukan?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TelemedicineUncheckedUpdateWithoutWargaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    waktu?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumStatusTelemedicineFieldUpdateOperationsInput | $Enums.StatusTelemedicine
-    nakesId?: NullableStringFieldUpdateOperationsInput | string | null
-    catatanKonsultasi?: NullableStringFieldUpdateOperationsInput | string | null
-    suratRujukan?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type TelemedicineUncheckedUpdateManyWithoutWargaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    waktu?: DateTimeFieldUpdateOperationsInput | Date | string
-    status?: EnumStatusTelemedicineFieldUpdateOperationsInput | $Enums.StatusTelemedicine
-    nakesId?: NullableStringFieldUpdateOperationsInput | string | null
-    catatanKonsultasi?: NullableStringFieldUpdateOperationsInput | string | null
-    suratRujukan?: NullableStringFieldUpdateOperationsInput | string | null
+    desaId?: StringFieldUpdateOperationsInput | string
+    kategori?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    isi?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -40741,6 +41996,63 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PesertaKelasUpdateWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
+    nilai?: NullableFloatFieldUpdateOperationsInput | number | null
+    sertifikat?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    kelas?: KelasUpdateOneRequiredWithoutPesertaNestedInput
+  }
+
+  export type PesertaKelasUncheckedUpdateWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kelasId?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
+    nilai?: NullableFloatFieldUpdateOperationsInput | number | null
+    sertifikat?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PesertaKelasUncheckedUpdateManyWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    kelasId?: StringFieldUpdateOperationsInput | string
+    status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
+    nilai?: NullableFloatFieldUpdateOperationsInput | number | null
+    sertifikat?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RekamMedisUpdateWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosis?: StringFieldUpdateOperationsInput | string
+    nakes?: StringFieldUpdateOperationsInput | string
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    alergi?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RekamMedisUncheckedUpdateWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosis?: StringFieldUpdateOperationsInput | string
+    nakes?: StringFieldUpdateOperationsInput | string
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    alergi?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RekamMedisUncheckedUpdateManyWithoutWargaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
+    diagnosis?: StringFieldUpdateOperationsInput | string
+    nakes?: StringFieldUpdateOperationsInput | string
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    alergi?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StuntingUpdateWithoutWargaInput = {
     id?: StringFieldUpdateOperationsInput | string
     tanggal?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -40777,61 +42089,40 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type PesertaKelasUpdateWithoutWargaInput = {
+  export type TelemedicineUpdateWithoutWargaInput = {
     id?: StringFieldUpdateOperationsInput | string
-    status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
-    nilai?: NullableFloatFieldUpdateOperationsInput | number | null
-    sertifikat?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    kelas?: KelasUpdateOneRequiredWithoutPesertaNestedInput
-  }
-
-  export type PesertaKelasUncheckedUpdateWithoutWargaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    kelasId?: StringFieldUpdateOperationsInput | string
-    status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
-    nilai?: NullableFloatFieldUpdateOperationsInput | number | null
-    sertifikat?: NullableStringFieldUpdateOperationsInput | string | null
+    waktu?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusTelemedicineFieldUpdateOperationsInput | $Enums.StatusTelemedicine
+    nakesId?: NullableStringFieldUpdateOperationsInput | string | null
+    catatanKonsultasi?: NullableStringFieldUpdateOperationsInput | string | null
+    suratRujukan?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type PesertaKelasUncheckedUpdateManyWithoutWargaInput = {
+  export type TelemedicineUncheckedUpdateWithoutWargaInput = {
     id?: StringFieldUpdateOperationsInput | string
-    kelasId?: StringFieldUpdateOperationsInput | string
-    status?: EnumStatusWargaFieldUpdateOperationsInput | $Enums.StatusWarga
-    nilai?: NullableFloatFieldUpdateOperationsInput | number | null
-    sertifikat?: NullableStringFieldUpdateOperationsInput | string | null
+    waktu?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusTelemedicineFieldUpdateOperationsInput | $Enums.StatusTelemedicine
+    nakesId?: NullableStringFieldUpdateOperationsInput | string | null
+    catatanKonsultasi?: NullableStringFieldUpdateOperationsInput | string | null
+    suratRujukan?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AspirasiUpdateWithoutWargaInput = {
+  export type TelemedicineUncheckedUpdateManyWithoutWargaInput = {
     id?: StringFieldUpdateOperationsInput | string
-    desaId?: StringFieldUpdateOperationsInput | string
-    kategori?: StringFieldUpdateOperationsInput | string
-    judul?: StringFieldUpdateOperationsInput | string
-    isi?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
+    waktu?: DateTimeFieldUpdateOperationsInput | Date | string
+    status?: EnumStatusTelemedicineFieldUpdateOperationsInput | $Enums.StatusTelemedicine
+    nakesId?: NullableStringFieldUpdateOperationsInput | string | null
+    catatanKonsultasi?: NullableStringFieldUpdateOperationsInput | string | null
+    suratRujukan?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
-  export type AspirasiUncheckedUpdateWithoutWargaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    desaId?: StringFieldUpdateOperationsInput | string
-    kategori?: StringFieldUpdateOperationsInput | string
-    judul?: StringFieldUpdateOperationsInput | string
-    isi?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type AspirasiUncheckedUpdateManyWithoutWargaInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    desaId?: StringFieldUpdateOperationsInput | string
-    kategori?: StringFieldUpdateOperationsInput | string
-    judul?: StringFieldUpdateOperationsInput | string
-    isi?: StringFieldUpdateOperationsInput | string
-    status?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  export type ForumCreateManyKelasInput = {
+    id?: string
+    judul: string
+    createdAt?: Date | string
   }
 
   export type MateriCreateManyKelasInput = {
@@ -40860,10 +42151,24 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
-  export type ForumCreateManyKelasInput = {
-    id?: string
-    judul: string
-    createdAt?: Date | string
+  export type ForumUpdateWithoutKelasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diskusi?: DiskusiUpdateManyWithoutForumNestedInput
+  }
+
+  export type ForumUncheckedUpdateWithoutKelasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    diskusi?: DiskusiUncheckedUpdateManyWithoutForumNestedInput
+  }
+
+  export type ForumUncheckedUpdateManyWithoutKelasInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MateriUpdateWithoutKelasInput = {
@@ -40941,26 +42246,6 @@ export namespace Prisma {
     deskripsi?: StringFieldUpdateOperationsInput | string
     deadline?: DateTimeFieldUpdateOperationsInput | Date | string
     statusReview?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ForumUpdateWithoutKelasInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    judul?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    diskusi?: DiskusiUpdateManyWithoutForumNestedInput
-  }
-
-  export type ForumUncheckedUpdateWithoutKelasInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    judul?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    diskusi?: DiskusiUncheckedUpdateManyWithoutForumNestedInput
-  }
-
-  export type ForumUncheckedUpdateManyWithoutKelasInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    judul?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -41133,6 +42418,10 @@ export namespace Prisma {
      * @deprecated Use ModuleRecordDefaultArgs instead
      */
     export type ModuleRecordArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ModuleRecordDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use UmkmDefaultArgs instead
+     */
+    export type UmkmArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = UmkmDefaultArgs<ExtArgs>
 
   /**
    * Batch Payload for updateMany & deleteMany & createMany

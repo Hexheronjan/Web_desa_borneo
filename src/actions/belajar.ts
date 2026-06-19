@@ -1,6 +1,6 @@
 "use server";
 import prisma from "@/lib/prisma";
-import { ModulBelajar } from "@prisma/client";
+import { ModulBelajar } from "@/generated/client";
 import { revalidatePath } from "next/cache";
 
 

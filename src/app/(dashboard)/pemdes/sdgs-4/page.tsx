@@ -3,7 +3,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
-import { BookOpen, CheckCircle2, Award } from 'lucide-react';
+import { BookOpen, CheckCircle2, Award, Download } from 'lucide-react';
+import { Document, Page, Text, View, StyleSheet, pdf } from '@react-pdf/renderer';
 
 const COLOR = '#283593';
 
@@ -16,6 +17,93 @@ const educationIndicators = [
 ];
 
 export default function SDGs4Page() {
+  const handleExport = async () => {
+    const styles = StyleSheet.create({
+      page: {
+        padding: 30,
+        fontFamily: 'Helvetica',
+      },
+      title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color: '#283593',
+      },
+      table: {
+        marginBottom: 10,
+      },
+      tableRow: {
+        flexDirection: 'row',
+      },
+      tableColHeader: {
+        width: '20%',
+        backgroundColor: '#283593',
+        color: 'white',
+        fontSize: 10,
+        fontWeight: 'bold',
+        padding: 8,
+        textAlign: 'center',
+      },
+      tableCol: {
+        width: '20%',
+        fontSize: 9,
+        padding: 6,
+        textAlign: 'center',
+        border: '1px solid #e0e0e0',
+      },
+      tableColEven: {
+        width: '20%',
+        fontSize: 9,
+        padding: 6,
+        textAlign: 'center',
+        border: '1px solid #e0e0e0',
+        backgroundColor: '#f5f5f5',
+      },
+    });
+
+    const SDGsPDF = () => (
+      <Document>
+        <Page size="A4" style={styles.page}>
+          <Text style={styles.title}>Laporan SDGs 4 - Pendidikan Berkualitas</Text>
+          <Text style={{ fontSize: 9, marginBottom: 15, color: '#666' }}>
+            Tanggal: {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </Text>
+          <View style={styles.table}>
+            <View style={styles.tableRow}>
+              <Text style={styles.tableColHeader}>No</Text>
+              <Text style={styles.tableColHeader}>Indikator</Text>
+              <Text style={styles.tableColHeader}>Target</Text>
+              <Text style={styles.tableColHeader}>Capaian</Text>
+              <Text style={styles.tableColHeader}>Status</Text>
+            </View>
+            {educationIndicators.map((ind, i) => (
+              <View key={i} style={styles.tableRow}>
+                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{i + 1}</Text>
+                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{ind.name}</Text>
+                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{ind.target}</Text>
+                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{ind.actual}</Text>
+                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{ind.status}</Text>
+              </View>
+            ))}
+          </View>
+          <Text style={{ fontSize: 8, marginTop: 10, color: '#999' }}>
+            Total: {educationIndicators.length} indikator
+          </Text>
+        </Page>
+      </Document>
+    );
+
+    const blob = await pdf(<SDGsPDF />).toBlob();
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `sdgs_4_pendidikan_${new Date().toISOString().split('T')[0]}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
   return (
     <div className="flex flex-col gap-5">
       <PageTitle fitur="SDGs 4 — Pendidikan Berkualitas" modul="Pemdes / Kepala Desa" color={COLOR} />
@@ -30,9 +118,17 @@ export default function SDGs4Page() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         <Card className="lg:col-span-2">
           <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <BookOpen size={16} className="text-blue-500" /> Detail Indikator Kinerja Pendidikan Desa
-            </CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+                <BookOpen size={16} className="text-blue-500" /> Detail Indikator Kinerja Pendidikan Desa
+              </CardTitle>
+              <button
+                onClick={handleExport}
+                className="px-3 py-1.5 text-xs bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 flex items-center gap-1"
+              >
+                <Download size={12} /> Export CSV
+              </button>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">

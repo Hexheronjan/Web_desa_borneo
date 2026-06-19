@@ -1,6 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/client"
+  provider      = "prisma-client-js"
+  output        = "../src/generated/client"
   binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "linux-musl-openssl-3.0.x", "rhel-openssl-1.0.x", "rhel-openssl-1.1.x", "rhel-openssl-3.0.x"]
 }
 
@@ -9,7 +9,391 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// ── ENUMS ──────────────────────────────────────────
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  username  String   @unique
+  password  String
+  role      Role
+  status    String   @default("Aktif")
+  desaId    String
+  wargaId   String?  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  desa      Desa     @relation(fields: [desaId], references: [id])
+  warga     Warga?   @relation(fields: [wargaId], references: [id])
+
+  @@index([desaId], map: "User_desaId_fkey")
+}
+
+model Desa {
+  id          String   @id @default(cuid())
+  nama        String
+  kecamatan   String
+  kabupaten   String
+  provinsi    String
+  luasWilayah Float?
+  sejarah     String?  @db.Text
+  createdAt   DateTime @default(now())
+  rwrts       RwRt[]
+  users       User[]
+  warga       Warga[]
+}
+
+model RwRt {
+  id          String  @id @default(cuid())
+  desaId      String
+  rw          String
+  rt          String
+  jumlahWarga Int     @default(0)
+  desa        Desa    @relation(fields: [desaId], references: [id])
+  warga       Warga[]
+
+  @@index([desaId], map: "RwRt_desaId_fkey")
+}
+
+model Warga {
+  id           String                @id @default(cuid())
+  desaId       String
+  rwRtId       String
+  nik          String                @unique
+  nama         String
+  tempatLahir  String
+  tanggalLahir DateTime
+  jenisKelamin JenisKelamin
+  alamat       String                @db.Text
+  noHp         String?
+  foto         String?
+  status       StatusWarga           @default(Baru)
+  createdAt    DateTime              @default(now())
+  aspirasi     Aspirasi[]
+  monitoring   MonitoringKesehatan[]
+  pesertaKelas PesertaKelas[]
+  rekamMedis   RekamMedis[]
+  stunting     Stunting[]
+  telemedicine Telemedicine[]
+  user         User?
+  desa         Desa                  @relation(fields: [desaId], references: [id])
+  rwRt         RwRt                  @relation(fields: [rwRtId], references: [id])
+
+  @@index([desaId], map: "Warga_desaId_fkey")
+  @@index([rwRtId], map: "Warga_rwRtId_fkey")
+}
+
+model Kelas {
+  id            String         @id @default(cuid())
+  desaId        String
+  modul         ModulBelajar
+  nama          String
+  batch         String
+  waktu         String
+  fasilitatorId String?
+  status        StatusKelas    @default(Aktif)
+  createdAt     DateTime       @default(now())
+  forum         Forum[]
+  materi        Materi[]
+  peserta       PesertaKelas[]
+  tugas         Tugas[]
+}
+
+model Materi {
+  id        String     @id @default(cuid())
+  kelasId   String
+  judul     String
+  tipe      TipeMateri
+  url       String
+  createdAt DateTime   @default(now())
+  kelas     Kelas      @relation(fields: [kelasId], references: [id])
+
+  @@index([kelasId], map: "Materi_kelasId_fkey")
+}
+
+model PesertaKelas {
+  id         String      @id @default(cuid())
+  kelasId    String
+  wargaId    String
+  status     StatusWarga @default(Baru)
+  nilai      Float?
+  sertifikat String?
+  createdAt  DateTime    @default(now())
+  kelas      Kelas       @relation(fields: [kelasId], references: [id])
+  warga      Warga       @relation(fields: [wargaId], references: [id])
+
+  @@index([kelasId], map: "PesertaKelas_kelasId_fkey")
+  @@index([wargaId], map: "PesertaKelas_wargaId_fkey")
+}
+
+model Tugas {
+  id           String   @id @default(cuid())
+  kelasId      String
+  judul        String
+  deskripsi    String   @db.Text
+  deadline     DateTime
+  statusReview String   @default("pending")
+  createdAt    DateTime @default(now())
+  kelas        Kelas    @relation(fields: [kelasId], references: [id])
+
+  @@index([kelasId], map: "Tugas_kelasId_fkey")
+}
+
+model RekamMedis {
+  id        String   @id @default(cuid())
+  wargaId   String
+  tanggal   DateTime
+  diagnosis String
+  nakes     String
+  catatan   String?  @db.Text
+  alergi    String?
+  createdAt DateTime @default(now())
+  warga     Warga    @relation(fields: [wargaId], references: [id])
+
+  @@index([wargaId], map: "RekamMedis_wargaId_fkey")
+}
+
+model Telemedicine {
+  id                String             @id @default(cuid())
+  wargaId           String
+  waktu             DateTime
+  status            StatusTelemedicine @default(Antrian)
+  nakesId           String?
+  catatanKonsultasi String?            @db.Text
+  suratRujukan      String?
+  createdAt         DateTime           @default(now())
+  warga             Warga              @relation(fields: [wargaId], references: [id])
+
+  @@index([wargaId], map: "Telemedicine_wargaId_fkey")
+}
+
+model MonitoringKesehatan {
+  id             String   @id @default(cuid())
+  wargaId        String
+  tanggal        DateTime
+  beratBadan     Float?
+  tinggiBadan    Float?
+  tensiSistolik  Int?
+  tensiDiastolik Int?
+  suhu           Float?
+  alert          Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  warga          Warga    @relation(fields: [wargaId], references: [id])
+
+  @@index([wargaId], map: "MonitoringKesehatan_wargaId_fkey")
+}
+
+model Posyandu {
+  id              String   @id @default(cuid())
+  desaId          String
+  tanggal         DateTime
+  lokasi          String
+  jumlahBalita    Int      @default(0)
+  jumlahImunisasi Int      @default(0)
+  catatan         String?  @db.Text
+  createdAt       DateTime @default(now())
+}
+
+model Stunting {
+  id          String           @id @default(cuid())
+  wargaId     String
+  tanggal     DateTime
+  bb          Float
+  tb          Float
+  umurBulan   Int
+  zScore      Float
+  kategori    KategoriStunting @default(Normal)
+  rekomendasi String?          @db.Text
+  createdAt   DateTime         @default(now())
+  warga       Warga            @relation(fields: [wargaId], references: [id])
+
+  @@index([wargaId], map: "Stunting_wargaId_fkey")
+}
+
+model Pengurus {
+  id        String   @id @default(cuid())
+  desaId    String
+  nama      String
+  jabatan   String
+  bidang    String
+  periode   String
+  dokumen   String?
+  status    String   @default("Aktif")
+  createdAt DateTime @default(now())
+}
+
+model ArsipAdat {
+  id           String    @id @default(cuid())
+  desaId       String
+  judul        String
+  kategori     String
+  tipe         TipeArsip
+  url          String
+  tahun        Int?
+  narasumber   String?
+  lokasi       String?
+  statusReview String    @default("Review")
+  createdAt    DateTime  @default(now())
+}
+
+model Musyawarah {
+  id         String   @id @default(cuid())
+  desaId     String
+  judul      String
+  tanggal    DateTime
+  keputusan  String?  @db.Text
+  risalahUrl String?
+  statusSah  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model WilayahAdat {
+  id        String   @id @default(cuid())
+  desaId    String
+  namaLayer String
+  koordinat Json
+  validasi  Boolean  @default(false)
+  sengketa  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model HukumAdat {
+  id            String        @id @default(cuid())
+  desaId        String
+  judul         String
+  tipe          TipeHukumAdat
+  deskripsi     String        @db.Text
+  status        String        @default("Aktif")
+  tanggalSidang DateTime?
+  putusan       String?       @db.Text
+  publik        Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+}
+
+model AuditTrail {
+  id        String   @id @default(cuid())
+  userId    String
+  modul     String
+  aksi      String
+  detail    String?  @db.Text
+  createdAt DateTime @default(now())
+}
+
+model Notifikasi {
+  id          String   @id @default(cuid())
+  userId      String
+  judul       String
+  pesan       String   @db.Text
+  tipe        String
+  sudahDibaca Boolean  @default(false)
+  createdAt   DateTime @default(now())
+}
+
+model Laporan {
+  id        String   @id @default(cuid())
+  desaId    String
+  modul     String
+  periode   String
+  fileUrl   String?
+  createdAt DateTime @default(now())
+}
+
+model Forum {
+  id        String    @id @default(cuid())
+  kelasId   String
+  judul     String
+  createdAt DateTime  @default(now())
+  diskusi   Diskusi[]
+  kelas     Kelas     @relation(fields: [kelasId], references: [id])
+
+  @@index([kelasId], map: "Forum_kelasId_fkey")
+}
+
+model Diskusi {
+  id        String   @id @default(cuid())
+  forumId   String
+  userId    String
+  pesan     String   @db.Text
+  createdAt DateTime @default(now())
+  forum     Forum    @relation(fields: [forumId], references: [id])
+
+  @@index([forumId], map: "Diskusi_forumId_fkey")
+}
+
+model ShiftNakes {
+  id         String   @id @default(cuid())
+  desaId     String
+  namaNakes  String
+  hari       String
+  jamMulai   String
+  jamSelesai String
+  status     String   @default("Aktif")
+  createdAt  DateTime @default(now())
+}
+
+model Aspirasi {
+  id        String   @id @default(cuid())
+  desaId    String
+  wargaId   String?
+  kategori  String
+  judul     String
+  isi       String   @db.Text
+  status    String   @default("Diterima")
+  createdAt DateTime @default(now())
+  warga     Warga?   @relation(fields: [wargaId], references: [id])
+
+  @@index([wargaId], map: "Aspirasi_wargaId_fkey")
+}
+
+model Siswa {
+  id        String   @id @default(cuid())
+  desaId    String
+  nisn      String   @unique
+  nama      String
+  kelas     String
+  jenjang   String
+  status    String   @default("Aktif")
+  createdAt DateTime @default(now())
+}
+
+model MonitoringDesa {
+  id        String   @id @default(cuid())
+  namaDesa  String
+  kecamatan String
+  index     Float
+  readiness Float
+  maturity  Float
+  status    String
+  createdAt DateTime @default(now())
+}
+
+model MasterDesaRecord {
+  id        String   @id @default(cuid())
+  kodeDesa  String   @unique
+  nama      String
+  kecamatan String
+  kabupaten String
+  provinsi  String
+  status    String   @default("Berkembang")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ModuleRecord {
+  id          String   @id @default(cuid())
+  modulePath  String
+  moduleName  String
+  title       String
+  category    String?
+  description String?  @db.Text
+  valueText   String?  @db.Text
+  valueBlob   String?  @db.LongText
+  status      String   @default("Baru")
+  createdBy   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([modulePath, createdAt])
+}
+
 enum Role {
   warga
   pemerintah_desa
@@ -79,368 +463,14 @@ enum TipeHukumAdat {
   Putusan
 }
 
-// ── AUTH & DESA ────────────────────────────────────
-model User {
-  id        String   @id @default(cuid())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role
-  desaId    String
-  desa      Desa     @relation(fields: [desaId], references: [id])
-  wargaId   String?  @unique
-  warga     Warga?   @relation(fields: [wargaId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Desa {
-  id          String    @id @default(cuid())
-  nama        String
-  kecamatan   String
-  kabupaten   String
-  provinsi    String
-  luasWilayah Float?
-  sejarah     String?   @db.Text
-  users       User[]
-  rwrts       RwRt[]
-  warga       Warga[]
-  createdAt   DateTime  @default(now())
-}
-
-model RwRt {
-  id          String  @id @default(cuid())
-  desaId      String
-  desa        Desa    @relation(fields: [desaId], references: [id])
-  rw          String
-  rt          String
-  jumlahWarga Int     @default(0)
-  warga       Warga[]
-}
-
-// ── WARGA ──────────────────────────────────────────
-model Warga {
-  id           String        @id @default(cuid())
-  desaId       String
-  desa         Desa          @relation(fields: [desaId], references: [id])
-  rwRtId       String
-  rwRt         RwRt          @relation(fields: [rwRtId], references: [id])
-  nik          String        @unique
-  nama         String
-  tempatLahir  String
-  tanggalLahir DateTime
-  jenisKelamin JenisKelamin
-  alamat       String        @db.Text
-  noHp         String?
-  foto         String?
-  status       StatusWarga   @default(Baru)
-  createdAt    DateTime      @default(now())
-  rekamMedis   RekamMedis[]
-  telemedicine Telemedicine[]
-  monitoring   MonitoringKesehatan[]
-  stunting     Stunting[]
-  pesertaKelas PesertaKelas[]
-  aspirasi     Aspirasi[]
-  user         User?
-}
-
-// ── SMART BELAJAR ADAT ─────────────────────────────
-model Kelas {
-  id            String       @id @default(cuid())
-  desaId        String
-  modul         ModulBelajar
-  nama          String
-  batch         String
-  waktu         String
-  fasilitatorId String?
-  status        StatusKelas  @default(Aktif)
-  materi        Materi[]
-  peserta       PesertaKelas[]
-  tugas         Tugas[]
-  forum         Forum[]
-  createdAt     DateTime     @default(now())
-}
-
-model Materi {
-  id        String     @id @default(cuid())
-  kelasId   String
-  kelas     Kelas      @relation(fields: [kelasId], references: [id])
-  judul     String
-  tipe      TipeMateri
-  url       String
-  createdAt DateTime   @default(now())
-}
-
-model PesertaKelas {
-  id         String      @id @default(cuid())
-  kelasId    String
-  kelas      Kelas       @relation(fields: [kelasId], references: [id])
-  wargaId    String
-  warga      Warga       @relation(fields: [wargaId], references: [id])
-  status     StatusWarga @default(Baru)
-  nilai      Float?
-  sertifikat String?
-  createdAt  DateTime    @default(now())
-}
-
-model Tugas {
-  id           String   @id @default(cuid())
-  kelasId      String
-  kelas        Kelas    @relation(fields: [kelasId], references: [id])
-  judul        String
-  deskripsi    String   @db.Text
-  deadline     DateTime
-  statusReview String   @default("pending")
-  createdAt    DateTime @default(now())
-}
-
-// ── SMART SEHAT ADAT ───────────────────────────────
-model RekamMedis {
-  id        String   @id @default(cuid())
-  wargaId   String
-  warga     Warga    @relation(fields: [wargaId], references: [id])
-  tanggal   DateTime
-  diagnosis String
-  nakes     String
-  catatan   String?  @db.Text
-  alergi    String?
-  createdAt DateTime @default(now())
-}
-
-model Telemedicine {
-  id                String             @id @default(cuid())
-  wargaId           String
-  warga             Warga              @relation(fields: [wargaId], references: [id])
-  waktu             DateTime
-  status            StatusTelemedicine @default(Antrian)
-  nakesId           String?
-  catatanKonsultasi String?            @db.Text
-  suratRujukan      String?
-  createdAt         DateTime           @default(now())
-}
-
-model MonitoringKesehatan {
-  id             String   @id @default(cuid())
-  wargaId        String
-  warga          Warga    @relation(fields: [wargaId], references: [id])
-  tanggal        DateTime
-  beratBadan     Float?
-  tinggiBadan    Float?
-  tensiSistolik  Int?
-  tensiDiastolik Int?
-  suhu           Float?
-  alert          Boolean  @default(false)
-  createdAt      DateTime @default(now())
-}
-
-model Posyandu {
-  id              String   @id @default(cuid())
-  desaId          String
-  tanggal         DateTime
-  lokasi          String
-  jumlahBalita    Int      @default(0)
-  jumlahImunisasi Int      @default(0)
-  catatan         String?  @db.Text
-  createdAt       DateTime @default(now())
-}
-
-model Stunting {
-  id          String           @id @default(cuid())
-  wargaId     String
-  warga       Warga            @relation(fields: [wargaId], references: [id])
-  tanggal     DateTime
-  bb          Float
-  tb          Float
-  umurBulan   Int
-  zScore      Float
-  kategori    KategoriStunting @default(Normal)
-  rekomendasi String?          @db.Text
-  createdAt   DateTime         @default(now())
-}
-
-// ── SMART LEMBAGA ADAT ─────────────────────────────
-model Pengurus {
+model Umkm {
   id        String   @id @default(cuid())
   desaId    String
   nama      String
-  jabatan   String
+  pemilik   String
   bidang    String
-  periode   String
-  dokumen   String?
+  omset     Float?
   status    String   @default("Aktif")
   createdAt DateTime @default(now())
-}
-
-model ArsipAdat {
-  id           String    @id @default(cuid())
-  desaId       String
-  judul        String
-  kategori     String
-  tipe         TipeArsip
-  url          String
-  tahun        Int?
-  narasumber   String?
-  lokasi       String?
-  statusReview String    @default("Review")
-  createdAt    DateTime  @default(now())
-}
-
-model Musyawarah {
-  id        String   @id @default(cuid())
-  desaId    String
-  judul     String
-  tanggal   DateTime
-  keputusan String?  @db.Text
-  risalahUrl String?
-  statusSah Boolean  @default(false)
-  createdAt DateTime @default(now())
-}
-
-model WilayahAdat {
-  id        String   @id @default(cuid())
-  desaId    String
-  namaLayer String
-  koordinat Json
-  validasi  Boolean  @default(false)
-  sengketa  Boolean  @default(false)
-  createdAt DateTime @default(now())
-}
-
-model HukumAdat {
-  id            String        @id @default(cuid())
-  desaId        String
-  judul         String
-  tipe          TipeHukumAdat
-  deskripsi     String        @db.Text
-  status        String        @default("Aktif")
-  tanggalSidang DateTime?
-  putusan       String?       @db.Text
-  publik        Boolean       @default(false)
-  createdAt     DateTime      @default(now())
-}
-
-// ── SISTEM ─────────────────────────────────────────
-model AuditTrail {
-  id        String   @id @default(cuid())
-  userId    String
-  modul     String
-  aksi      String
-  detail    String?  @db.Text
-  createdAt DateTime @default(now())
-}
-
-model Notifikasi {
-  id          String   @id @default(cuid())
-  userId      String
-  judul       String
-  pesan       String   @db.Text
-  tipe        String
-  sudahDibaca Boolean  @default(false)
-  createdAt   DateTime @default(now())
-}
-
-model Laporan {
-  id        String   @id @default(cuid())
-  desaId    String
-  modul     String
-  periode   String
-  fileUrl   String?
-  createdAt DateTime @default(now())
-}
-
-model Forum {
-  id        String    @id @default(cuid())
-  kelasId   String
-  kelas     Kelas     @relation(fields: [kelasId], references: [id])
-  judul     String
-  diskusi   Diskusi[]
-  createdAt DateTime  @default(now())
-}
-
-model Diskusi {
-  id        String   @id @default(cuid())
-  forumId   String
-  forum     Forum    @relation(fields: [forumId], references: [id])
-  userId    String
-  pesan     String   @db.Text
-  createdAt DateTime @default(now())
-}
-
-model ShiftNakes {
-  id         String   @id @default(cuid())
-  desaId     String
-  namaNakes  String
-  hari       String
-  jamMulai   String
-  jamSelesai String
-  status     String   @default("Aktif")
-  createdAt  DateTime @default(now())
-}
-
-// ── ASPIRASI & PENGADUAN ─────────────────────────────
-model Aspirasi {
-  id        String   @id @default(cuid())
-  desaId    String
-  wargaId   String?
-  warga     Warga?   @relation(fields: [wargaId], references: [id])
-  kategori  String
-  judul     String
-  isi       String   @db.Text
-  status    String   @default("Diterima")
-  createdAt DateTime @default(now())
-}
-
-// ── DATA SISWA ───────────────────────────────────────
-model Siswa {
-  id           String   @id @default(cuid())
-  desaId       String
-  nisn         String   @unique
-  nama         String
-  kelas        String
-  jenjang      String
-  status       String   @default("Aktif")
-  createdAt    DateTime @default(now())
-}
-
-// ── MONITORING MULTI DESA ───────────────────────────
-model MonitoringDesa {
-  id         String   @id @default(cuid())
-  namaDesa   String
-  kecamatan  String
-  index      Float
-  readiness  Float
-  maturity   Float
-  status     String
-  createdAt  DateTime @default(now())
-}
-
-// ── MASTER DESA RECORD ─────────────────────────────
-model MasterDesaRecord {
-  id        String   @id @default(cuid())
-  kodeDesa  String   @unique
-  nama      String
-  kecamatan String
-  kabupaten String
-  provinsi  String
-  status    String   @default("Berkembang")
-  createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-}
-
-// ── MODULE RECORD ───────────────────────────────────
-model ModuleRecord {
-  id          String   @id @default(cuid())
-  modulePath  String
-  moduleName  String
-  title       String
-  category    String?
-  description String?  @db.Text
-  valueText   String?  @db.Text
-  valueBlob   String?  @db.LongText
-  status      String   @default("Baru")
-  createdBy   String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  @@index([modulePath, createdAt])
 }

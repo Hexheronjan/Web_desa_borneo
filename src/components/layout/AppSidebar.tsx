@@ -4,98 +4,135 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getRoleFromPath } from "@/lib/modul-config";
 import {
+  Activity,
+  BarChart3,
+  Bell,
+  BookOpen,
+  Building2,
+  Calendar,
+  ClipboardCheck,
+  Database,
+  FileText,
+  GraduationCap,
+  HeartPulse,
+  Landmark,
   LayoutDashboard,
-  X,
-  ChevronDown,
-  Shield,
   Leaf,
+  Map,
+  MessageSquare,
+  Settings,
+  Shield,
+  Stethoscope,
+  Users,
+  X,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
+
+const iconByText = [
+  { match: ["dashboard"], icon: LayoutDashboard },
+  { match: ["user", "role", "akses", "pengguna", "akun"], icon: Users },
+  { match: ["data", "integrasi", "sinkron", "import", "database", "sid"], icon: Database },
+  { match: ["periode", "kalender", "agenda"], icon: Calendar },
+  { match: ["validasi", "assessment", "evaluasi", "uat"], icon: ClipboardCheck },
+  { match: ["audit", "aktivitas", "monitoring", "progress"], icon: Activity },
+  { match: ["laporan", "repository", "arsip", "dokumen"], icon: FileText },
+  { match: ["backup", "konfigurasi", "pengaturan", "sistem"], icon: Settings },
+  { match: ["notifikasi", "pengumuman"], icon: Bell },
+  { match: ["readiness", "maturity", "quality", "analytics", "statistik", "gap", "benchmark"], icon: BarChart3 },
+  { match: ["kesehatan", "posyandu", "stunting", "balita", "hamil"], icon: HeartPulse },
+  { match: ["pendidikan", "literasi", "guru", "kelas", "pelatihan"], icon: GraduationCap },
+  { match: ["adat", "budaya", "kelembagaan", "warisan", "musyawarah"], icon: Landmark },
+  { match: ["peta", "wilayah", "gis"], icon: Map },
+  { match: ["panduan", "knowledge", "framework"], icon: BookOpen },
+  { match: ["aspirasi", "forum", "feedback"], icon: MessageSquare },
+  { match: ["telekonsultasi", "nakes"], icon: Stethoscope },
+  { match: ["desa", "pmd"], icon: Building2 },
+] as const;
+
+function getItemIcon(label: string) {
+  const lower = label.toLowerCase();
+  return iconByText.find((item) => item.match.some((word) => lower.includes(word)))?.icon || FileText;
+}
 
 export function AppSidebar({ onClose }: { onClose?: () => void }) {
   const pathname = usePathname();
   const { data: session } = useSession();
-  const role = session?.user?.role || "warga";
   const roleInfo = getRoleFromPath(pathname);
+  const sidebarItems = [
+    { label: "Dashboard", path: roleInfo.dashboardPath, group: "MENU UTAMA" },
+    ...roleInfo.sidebarItems.filter((item) => item.path !== roleInfo.dashboardPath),
+  ];
 
-  // Group sidebar items by their group property
-  const groups: Record<string, typeof roleInfo.sidebarItems> = {};
-  roleInfo.sidebarItems.forEach((item) => {
-    const g = item.group || "MENU";
-    if (!groups[g]) groups[g] = [];
-    groups[g].push(item);
+  const groups: Record<string, typeof sidebarItems> = {};
+  sidebarItems.forEach((item) => {
+    const group = item.group || "MENU";
+    groups[group] ??= [];
+    groups[group].push(item);
   });
 
   return (
-    <aside className="w-64 bg-white border-r border-slate-200 flex flex-col h-full flex-shrink-0 shadow-sm relative">
-      {/* Sidebar Header */}
-      <div
-        className="px-5 py-4 text-white flex items-center justify-between"
-        style={{ backgroundColor: roleInfo.warna }}
-      >
+    <aside className="w-72 bg-[#062342] text-white flex flex-col h-full flex-shrink-0 shadow-xl relative">
+      <div className="px-5 py-5 flex items-center justify-between border-b border-white/10">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 bg-white/20 rounded-lg">
-            <Leaf size={16} />
+          <div className="p-2 bg-white/10 rounded-lg">
+            <Leaf size={20} />
           </div>
           <div>
-            <span className="font-bold text-sm block leading-tight">SMART LIVING VILLAGE</span>
-            <span className="text-[10px] opacity-80 block leading-tight">ADAT BORNEO</span>
+            <span className="font-black text-lg block leading-tight">APL-SLV BORNEO</span>
+            <span className="text-xs opacity-80 block leading-tight">Smart Living Village</span>
           </div>
         </div>
-        {/* Mobile Close Button */}
         <button onClick={onClose} className="lg:hidden p-1 hover:bg-white/20 rounded-md transition-colors">
           <X size={20} />
         </button>
       </div>
 
-      {/* Role Badge */}
-      <div className="px-4 py-3 border-b border-slate-100 bg-slate-50">
-        <div className="flex items-center gap-2">
-          <Shield size={14} className="text-slate-400" />
-          <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider">{roleInfo.nama}</span>
+      <div className="px-5 py-4 border-b border-white/10">
+        <div className="flex items-center gap-3">
+          <div className="h-12 w-12 rounded-full bg-white/10 flex items-center justify-center">
+            <Shield size={22} />
+          </div>
+          <div className="min-w-0">
+            <span className="text-lg font-black uppercase tracking-tight block leading-tight">{roleInfo.nama}</span>
+            <span className="text-xs text-white/60 block truncate">{session?.user?.email || "APL-SLV Borneo"}</span>
+          </div>
         </div>
       </div>
 
       <nav className="flex-1 py-2 overflow-y-auto flex flex-col">
         {Object.entries(groups).map(([groupName, items]) => (
           <div key={groupName} className="px-3 mb-1">
-            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1 px-2 pt-2">
+            <p className="text-[10px] font-bold text-white/45 uppercase tracking-wider mb-1 px-2 pt-3">
               {groupName}
             </p>
             <div className="space-y-0.5">
               {items.map((item) => {
-                const isActive =
-                  pathname === item.path ||
-                  (item.path !== "/admin" &&
-                    item.path !== "/operator-sid" &&
-                    item.path !== "/pemdes" &&
-                    item.path !== "/bpd" &&
-                    item.path !== "/adat" &&
-                    item.path !== "/guru" &&
-                    item.path !== "/nakes" &&
-                    item.path !== "/warga" &&
-                    item.path !== "/dinas-pmd" &&
-                    item.path !== "/peneliti" &&
-                    pathname.startsWith(item.path));
+                const Icon = getItemIcon(item.label);
+                const isRoot = [
+                  "/admin",
+                  "/operator-sid",
+                  "/pemdes",
+                  "/bpd",
+                  "/adat",
+                  "/guru",
+                  "/nakes",
+                  "/warga",
+                  "/dinas-pmd",
+                  "/peneliti",
+                ].includes(item.path);
+                const isActive = pathname === item.path || (!isRoot && pathname.startsWith(item.path));
 
                 return (
                   <Link
                     key={item.path}
                     href={item.path}
                     onClick={onClose}
-                    className={`flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium transition-all ${
-                      isActive
-                        ? "text-white shadow-sm"
-                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
+                    className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13px] font-semibold transition-all ${
+                      isActive ? "text-white shadow-sm bg-blue-600" : "text-white/82 hover:bg-white/10 hover:text-white"
                     }`}
-                    style={isActive ? { backgroundColor: roleInfo.warna } : {}}
                   >
-                    <span
-                      className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${
-                        isActive ? "bg-white" : "bg-slate-300"
-                      }`}
-                    />
-                    <span className="leading-tight">{item.label}</span>
+                    <Icon size={17} className="flex-shrink-0" />
+                    <span className="leading-tight flex-1">{item.label}</span>
                   </Link>
                 );
               })}
@@ -104,12 +141,9 @@ export function AppSidebar({ onClose }: { onClose?: () => void }) {
         ))}
       </nav>
 
-      {/* Footer */}
-      <div className="px-4 py-3 border-t border-slate-100 bg-slate-50">
-        <p className="text-[10px] text-slate-400 leading-tight font-medium">
-          BINUS University × ASIIN 2023–2029
-        </p>
-        <p className="text-[10px] text-slate-400">SLV Prototype v2.0</p>
+      <div className="px-5 py-4 border-t border-white/10">
+        <p className="text-sm font-bold leading-tight">{session?.user?.name || "Pengguna SLV"}</p>
+        <p className="text-xs text-white/60">Online</p>
       </div>
     </aside>
   );

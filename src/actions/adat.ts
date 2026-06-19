@@ -1,6 +1,6 @@
 "use server";
 import prisma from "@/lib/prisma";
-import { TipeArsip, TipeHukumAdat } from "@prisma/client";
+import { TipeArsip, TipeHukumAdat } from "@/generated/client";
 import { revalidatePath } from "next/cache";
 
 

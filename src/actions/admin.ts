@@ -25,6 +25,7 @@ export async function createWargaBaru(data: { nik: string, nama: string, email: 
     await prisma.user.create({
       data: {
         email: data.email,
+        username: data.email.split("@")[0] || data.nik,
         name: data.nama,
         password: "password123", // Default password untuk demo
         role: data.role,
@@ -47,6 +48,7 @@ export async function createPetugasBaru(data: { nama: string, email: string, rol
     await prisma.user.create({
       data: {
         email: data.email,
+        username: data.email.split("@")[0] || data.nama.toLowerCase().replace(/\s+/g, "_"),
         name: data.nama,
         password: "password123",
         role: data.role,

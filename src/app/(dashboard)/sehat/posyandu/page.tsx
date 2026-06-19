@@ -1,24 +1,132 @@
+'use client';
 export const dynamic = 'force-dynamic';
-import prisma from "@/lib/prisma";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PageTitle } from "@/components/shared/PageTitle";
 import { StatCard } from "@/components/shared/StatCard";
 import NakesSehatActions from "../NakesSehatActions";
 import { PosyanduActions } from "./PosyanduActions";
 import { deletePosyandu, updatePosyandu } from "@/actions/sehat";
-import { Edit, Trash2 } from "lucide-react";
+import { Edit, Trash2, Calendar, TrendingUp, Activity, AlertCircle } from "lucide-react";
+import { useState, useEffect } from "react";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend } from "recharts";
 
 const COLOR = "#E07B2A";
 
-export default async function PosyanduPage() {
-  const posyandu = await prisma.posyandu.findMany({
-    orderBy: { tanggal: "desc" },
-    take: 10,
-  });
+interface Posyandu {
+  id: string;
+  tanggal: Date;
+  lokasi: string;
+  jumlahBalita: number;
+  jumlahImunisasi: number;
+  catatan?: string;
+}
 
-  const totalKegiatan = await prisma.posyandu.count();
+export default function PosyanduPage() {
+  const [posyandu, setPosyandu] = useState<Posyandu[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [selectedPosyandu, setSelectedPosyandu] = useState<Posyandu | null>(null);
+  const [editForm, setEditForm] = useState({ lokasi: "", jumlahBalita: 0, jumlahImunisasi: 0, catatan: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
+    try {
+      const res = await fetch('/api/posyandu');
+      const result = await res.json();
+      if (result.success) {
+        setPosyandu(result.data);
+      }
+    } catch (error) {
+      console.error('Error loading posyandu data:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const totalKegiatan = posyandu.length;
   const totalBalita = posyandu.reduce((acc, p) => acc + p.jumlahBalita, 0);
   const totalImunisasi = posyandu.reduce((acc, p) => acc + p.jumlahImunisasi, 0);
+
+  // Chart data preparation
+  const chartData = posyandu.slice(0, 6).reverse().map(p => ({
+    name: new Date(p.tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }),
+    balita: p.jumlahBalita,
+    imunisasi: p.jumlahImunisasi,
+  }));
+
+  const trendData = posyandu.slice(0, 8).reverse().map((p) => ({
+    name: new Date(p.tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }),
+    kehadiran: p.jumlahBalita,
+  }));
+
+  const handleEdit = (item: Posyandu) => {
+    setSelectedPosyandu(item);
+    setEditForm({
+      lokasi: item.lokasi,
+      jumlahBalita: item.jumlahBalita,
+      jumlahImunisasi: item.jumlahImunisasi,
+      catatan: item.catatan || "",
+    });
+    setEditModalOpen(true);
+  };
+
+  const handleEditSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedPosyandu) return;
+    
+    setIsSubmitting(true);
+    try {
+      const res = await updatePosyandu(selectedPosyandu.id, {
+        ...selectedPosyandu,
+        ...editForm,
+      });
+      if (res.success) {
+        alert("Data berhasil diperbarui");
+        setEditModalOpen(false);
+        loadData();
+      } else {
+        alert("Gagal: " + res.error);
+      }
+    } catch (error) {
+      alert("Terjadi kesalahan");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleDelete = (item: Posyandu) => {
+    setSelectedPosyandu(item);
+    setDeleteModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!selectedPosyandu) return;
+    
+    setIsSubmitting(true);
+    try {
+      const res = await deletePosyandu(selectedPosyandu.id);
+      if (res.success) {
+        alert("Data berhasil dihapus");
+        setDeleteModalOpen(false);
+        loadData();
+      } else {
+        alert("Gagal: " + res.error);
+      }
+    } catch (error) {
+      alert("Terjadi kesalahan");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (loading) {
+    return <div className="p-5">Memuat data...</div>;
+  }
 
   return (
     <div className="flex flex-col gap-5">
@@ -27,10 +135,53 @@ export default async function PosyanduPage() {
       <PosyanduActions color={COLOR} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Kegiatan" value={totalKegiatan || 5} satuan="mingguan" barColor="orange" progress={100} />
+        <StatCard label="Kegiatan" value={totalKegiatan || 5} satuan="total" barColor="orange" progress={100} />
         <StatCard label="Balita Hadir" value={totalBalita || 96} satuan="anak" barColor="green" progress={80} />
         <StatCard label="Imunisasi" value={totalImunisasi || 61} satuan="tindakan" barColor="teal" progress={64} />
-        <StatCard label="Jadwal Aktif" value={5} satuan="lokasi" barColor="blue" progress={100} />
+        <StatCard label="Rata-rata Kehadiran" value={posyandu.length > 0 ? Math.round(totalBalita / posyandu.length) : 0} satuan="per kegiatan" barColor="blue" progress={70} />
+      </div>
+
+      {/* Charts Section */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+              <Activity size={16} /> Statistik Kegiatan Posyandu
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={chartData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis dataKey="name" tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
+                <Bar dataKey="balita" name="Balita Hadir" fill="#E07B2A" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="imunisasi" name="Imunisasi" fill="#4DB6AC" radius={[3, 3, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+              <TrendingUp size={16} /> Trend Kehadiran Balita
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={200}>
+              <LineChart data={trendData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis dataKey="name" tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Line type="monotone" dataKey="kehadiran" stroke="#E07B2A" strokeWidth={2} dot={{ r: 3 }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -86,37 +237,14 @@ export default async function PosyanduPage() {
                       </div>
                       <div className="flex gap-1">
                         <button
-                          onClick={() => {
-                            const newLokasi = prompt("Edit Lokasi:", p.lokasi);
-                            if (newLokasi) {
-                              updatePosyandu(p.id, { ...p, lokasi: newLokasi }).then(res => {
-                                if (res.success) {
-                                  alert("Data berhasil diperbarui");
-                                  window.location.reload();
-                                } else {
-                                  alert("Gagal: " + res.error);
-                                }
-                              });
-                            }
-                          }}
+                          onClick={() => handleEdit(p)}
                           className="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                           title="Edit"
                         >
                           <Edit size={14} />
                         </button>
                         <button
-                          onClick={() => {
-                            if (confirm("Apakah Anda yakin ingin menghapus data ini?")) {
-                              deletePosyandu(p.id).then(res => {
-                                if (res.success) {
-                                  alert("Data berhasil dihapus");
-                                  window.location.reload();
-                                } else {
-                                  alert("Gagal: " + res.error);
-                                }
-                              });
-                            }
-                          }}
+                          onClick={() => handleDelete(p)}
                           className="p-1.5 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                           title="Hapus"
                         >
@@ -136,6 +264,106 @@ export default async function PosyanduPage() {
           </CardContent>
         </Card>
       </div>
+
+      {/* Edit Modal */}
+      {editModalOpen && selectedPosyandu && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-md rounded-xl shadow-xl overflow-hidden">
+            <div className="bg-[#E07B2A] px-6 py-4 text-white">
+              <h2 className="font-bold text-lg">Edit Data Posyandu</h2>
+            </div>
+            <form onSubmit={handleEditSubmit} className="p-6 space-y-4">
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Lokasi *</label>
+                <input
+                  type="text"
+                  required
+                  value={editForm.lokasi}
+                  onChange={(e) => setEditForm({ ...editForm, lokasi: e.target.value })}
+                  className="w-full border rounded-lg p-2.5 text-sm"
+                />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Jumlah Balita</label>
+                  <input
+                    type="number"
+                    value={editForm.jumlahBalita}
+                    onChange={(e) => setEditForm({ ...editForm, jumlahBalita: parseInt(e.target.value) || 0 })}
+                    className="w-full border rounded-lg p-2.5 text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Imunisasi</label>
+                  <input
+                    type="number"
+                    value={editForm.jumlahImunisasi}
+                    onChange={(e) => setEditForm({ ...editForm, jumlahImunisasi: parseInt(e.target.value) || 0 })}
+                    className="w-full border rounded-lg p-2.5 text-sm"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="block text-xs font-bold text-slate-500 uppercase mb-1">Catatan</label>
+                <textarea
+                  value={editForm.catatan}
+                  onChange={(e) => setEditForm({ ...editForm, catatan: e.target.value })}
+                  className="w-full border rounded-lg p-2.5 text-sm h-20"
+                />
+              </div>
+              <div className="flex justify-end gap-3 pt-4 border-t">
+                <button
+                  type="button"
+                  onClick={() => setEditModalOpen(false)}
+                  className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="px-4 py-2 text-sm bg-[#E07B2A] text-white rounded-lg hover:bg-[#c66a1f] disabled:opacity-50"
+                >
+                  {isSubmitting ? "Menyimpan..." : "Simpan"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteModalOpen && selectedPosyandu && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white w-full max-w-sm rounded-xl shadow-xl overflow-hidden">
+            <div className="p-6 text-center">
+              <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <AlertCircle size={24} className="text-red-600" />
+              </div>
+              <h3 className="font-bold text-lg text-slate-800 mb-2">Hapus Data Posyandu?</h3>
+              <p className="text-sm text-slate-600 mb-6">
+                Anda yakin ingin menghapus data posyandu di <strong>{selectedPosyandu.lokasi}</strong> tanggal{" "}
+                {new Date(selectedPosyandu.tanggal).toLocaleDateString("id-ID")}? Tindakan ini tidak dapat dibatalkan.
+              </p>
+              <div className="flex justify-center gap-3">
+                <button
+                  onClick={() => setDeleteModalOpen(false)}
+                  className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg"
+                >
+                  Batal
+                </button>
+                <button
+                  onClick={handleDeleteConfirm}
+                  disabled={isSubmitting}
+                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50"
+                >
+                  {isSubmitting ? "Menghapus..." : "Hapus"}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

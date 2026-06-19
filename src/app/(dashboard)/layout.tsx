@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { AppHeader } from "@/components/layout/AppHeader";
 import { AppSidebar } from "@/components/layout/AppSidebar";
-import { RoleTabs } from "@/components/layout/RoleTabs";
-import { SearchBar } from "@/components/layout/SearchBar";
+import { GlobalFunctionalActions } from "@/components/module-records/GlobalFunctionalActions";
 import { Menu } from "lucide-react";
 
 export default function DashboardLayout({
@@ -47,13 +46,10 @@ export default function DashboardLayout({
 
         <div className="flex-1 flex flex-col overflow-y-auto">
           <AppHeader />
-          <div className="hidden md:block">
-            <RoleTabs />
-            <SearchBar />
-          </div>
           <main className="flex-1 p-3 md:p-6 pb-20">
             {children}
           </main>
+          <GlobalFunctionalActions />
         </div>
       </div>
     </div>

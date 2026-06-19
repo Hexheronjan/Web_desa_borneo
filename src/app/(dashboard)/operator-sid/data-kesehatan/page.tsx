@@ -4,7 +4,10 @@ import { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
-import { Heart, Search, Filter, Download, UserPlus, Edit, Trash2, Activity, Calendar } from 'lucide-react';
+import { Heart, Search, Filter, Download, UserPlus, Edit, Trash2, Activity, Calendar, BarChart3, FileSpreadsheet, TrendingUp } from 'lucide-react';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, Legend, PieChart, Pie, Cell,
+} from 'recharts';
 
 const COLOR = '#00695c';
 
@@ -62,6 +65,9 @@ export default function DataKesehatanPage() {
   const [editingData, setEditingData] = useState<any>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<any>({});
+  const [showCharts, setShowCharts] = useState(false);
+  const [filterDate, setFilterDate] = useState('');
+  const [filterStatus, setFilterStatus] = useState('');
 
   useEffect(() => {
     loadData();
@@ -145,16 +151,67 @@ export default function DataKesehatanPage() {
   };
 
   const filteredData = () => {
-    const data = activeTab === 'monitoring' ? monitoringData :
-                  activeTab === 'posyandu' ? posyanduData : stuntingData;
-    if (!search) return data;
-    return data.filter((item: any) => {
-      if (activeTab === 'posyandu') {
-        return item.lokasi?.toLowerCase().includes(search.toLowerCase());
-      }
-      return item.warga?.nama?.toLowerCase().includes(search.toLowerCase()) ||
-             item.warga?.nik?.includes(search);
-    });
+    let data: (Monitoring | Posyandu | Stunting)[] = activeTab === 'monitoring' ? monitoringData :
+                activeTab === 'posyandu' ? posyanduData : stuntingData;
+
+    // Search filter
+    if (search) {
+      data = data.filter((item: Monitoring | Posyandu | Stunting) => {
+        if (activeTab === 'posyandu') {
+          return (item as Posyandu).lokasi?.toLowerCase().includes(search.toLowerCase());
+        }
+        return (item as Monitoring | Stunting).warga?.nama?.toLowerCase().includes(search.toLowerCase()) ||
+               (item as Monitoring | Stunting).warga?.nik?.includes(search);
+      });
+    }
+
+    // Date filter
+    if (filterDate) {
+      data = data.filter((item: Monitoring | Posyandu | Stunting) => {
+        const itemDate = new Date(item.tanggal).toISOString().split('T')[0];
+        return itemDate === filterDate;
+      });
+    }
+
+    // Status filter (for stunting)
+    if (filterStatus && activeTab === 'stunting') {
+      data = data.filter((item: Monitoring | Posyandu | Stunting) => (item as Stunting).kategori === filterStatus);
+    }
+
+    return data;
+  };
+
+  const handleExportCSV = () => {
+    const data = filteredData();
+    if (data.length === 0) {
+      alert('Tidak ada data untuk diexport');
+      return;
+    }
+
+    let csvContent = '';
+    
+    if (activeTab === 'monitoring') {
+      csvContent = 'No,NIK,Nama,Tanggal,Berat Badan (kg),Tinggi Badan (cm),Tensi Sistolik,Tensi Diastolik,Suhu (°C)\n';
+      data.forEach((item: any, i) => {
+        csvContent += `${i + 1},"${item.warga?.nik || ''}","${item.warga?.nama || ''}","${new Date(item.tanggal).toLocaleDateString('id-ID')}",${item.beratBadan || ''},${item.tinggiBadan || ''},${item.tensiSistolik || ''},${item.tensiDiastolik || ''},${item.suhu || ''}\n`;
+      });
+    } else if (activeTab === 'posyandu') {
+      csvContent = 'No,Tanggal,Lokasi,Jumlah Balita,Jumlah Imunisasi,Catatan\n';
+      data.forEach((item: any, i) => {
+        csvContent += `${i + 1},"${new Date(item.tanggal).toLocaleDateString('id-ID')}","${item.lokasi}",${item.jumlahBalita},${item.jumlahImunisasi},"${item.catatan || ''}"\n`;
+      });
+    } else if (activeTab === 'stunting') {
+      csvContent = 'No,NIK,Nama,Tanggal,Berat Badan (kg),Tinggi Badan (cm),Umur (bulan),Z-Score,Kategori,Rekomendasi\n';
+      data.forEach((item: any, i) => {
+        csvContent += `${i + 1},"${item.warga?.nik || ''}","${item.warga?.nama || ''}","${new Date(item.tanggal).toLocaleDateString('id-ID')}",${item.bb},${item.tb},${item.umurBulan},${item.zScore},"${item.kategori}","${item.rekomendasi || ''}"\n`;
+      });
+    }
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `data-${activeTab}-${new Date().toISOString().split('T')[0]}.csv`;
+    link.click();
   };
 
   return (
@@ -168,10 +225,154 @@ export default function DataKesehatanPage() {
         <StatCard label="Monitoring Bulan Ini" value={monitoringData.length} satuan="catatan" barColor="purple" progress={13} />
       </div>
 
+      {/* Charts Section */}
+      {showCharts && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {activeTab === 'monitoring' && (
+            <>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+                    <TrendingUp size={16} /> Trend Berat Badan Pasien
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ResponsiveContainer width="100%" height={200}>
+                    <LineChart data={monitoringData.slice(0, 10).map((m, i) => ({
+                      name: m.warga?.nama || `Pasien ${i + 1}`,
+                      berat: m.beratBadan || 0,
+                    }))}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                      <XAxis dataKey="name" tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                      <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                      <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                      <Line type="monotone" dataKey="berat" stroke="#00695c" strokeWidth={2} dot={{ r: 3 }} />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+                    <Activity size={16} /> Distribusi Tekanan Darah
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ResponsiveContainer width="100%" height={200}>
+                    <BarChart data={monitoringData.slice(0, 10).map((m) => ({
+                      name: m.warga?.nama?.substring(0, 10) || 'Unknown',
+                      sistolik: m.tensiSistolik || 0,
+                      diastolik: m.tensiDiastolik || 0,
+                    }))}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                      <XAxis dataKey="name" tick={{ fontSize: 8, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                      <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                      <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                      <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
+                      <Bar dataKey="sistolik" name="Sistolik" fill="#00695c" radius={[3, 3, 0, 0]} />
+                      <Bar dataKey="diastolik" name="Diastolik" fill="#4DB6AC" radius={[3, 3, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+            </>
+          )}
+          {activeTab === 'stunting' && (
+            <>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+                    <BarChart3 size={16} /> Distribusi Kategori Stunting
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ResponsiveContainer width="100%" height={200}>
+                    <PieChart>
+                      <Pie
+                        data={[
+                          { name: 'Normal', value: stuntingData.filter(s => s.kategori === 'Normal').length, color: '#4CAF50' },
+                          { name: 'Risiko Sedang', value: stuntingData.filter(s => s.kategori === 'RisikoSedang').length, color: '#FF9800' },
+                          { name: 'Risiko Tinggi', value: stuntingData.filter(s => s.kategori === 'RisikoTinggi').length, color: '#F44336' },
+                        ]}
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={40}
+                        outerRadius={70}
+                        paddingAngle={2}
+                        dataKey="value"
+                      >
+                        {[
+                          { name: 'Normal', value: stuntingData.filter(s => s.kategori === 'Normal').length, color: '#4CAF50' },
+                          { name: 'Risiko Sedang', value: stuntingData.filter(s => s.kategori === 'RisikoSedang').length, color: '#FF9800' },
+                          { name: 'Risiko Tinggi', value: stuntingData.filter(s => s.kategori === 'RisikoTinggi').length, color: '#F44336' },
+                        ].map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={entry.color} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                      <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+                    <TrendingUp size={16} /> Trend Berat Badan Balita
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <ResponsiveContainer width="100%" height={200}>
+                    <BarChart data={stuntingData.slice(0, 10).map((s, i) => ({
+                      name: s.warga?.nama?.substring(0, 8) || `Balita ${i + 1}`,
+                      bb: s.bb,
+                      zScore: s.zScore,
+                    }))}>
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                      <XAxis dataKey="name" tick={{ fontSize: 8, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                      <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                      <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                      <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
+                      <Bar dataKey="bb" name="Berat Badan (kg)" fill="#00695c" radius={[3, 3, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </CardContent>
+              </Card>
+            </>
+          )}
+          {activeTab === 'posyandu' && (
+            <Card className="lg:col-span-2">
+              <CardHeader>
+                <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+                  <Calendar size={16} /> Kehadiran Balita per Kegiatan
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ResponsiveContainer width="100%" height={200}>
+                  <BarChart data={posyanduData.map(p => ({
+                    name: new Date(p.tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' }),
+                    balita: p.jumlahBalita,
+                    imunisasi: p.jumlahImunisasi,
+                  }))}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                    <XAxis dataKey="name" tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                    <YAxis tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                    <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                    <Legend iconSize={8} wrapperStyle={{ fontSize: 10 }} />
+                    <Bar dataKey="balita" name="Balita Hadir" fill="#00695c" radius={[3, 3, 0, 0]} />
+                    <Bar dataKey="imunisasi" name="Imunisasi" fill="#4DB6AC" radius={[3, 3, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      )}
+
       <Card>
         <CardHeader>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               <button
                 onClick={() => setActiveTab('monitoring')}
                 className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-colors ${
@@ -197,7 +398,21 @@ export default function DataKesehatanPage() {
                 Data Stunting
               </button>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
+              <button
+                onClick={() => setShowCharts(!showCharts)}
+                className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-colors ${
+                  showCharts ? 'bg-purple-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                }`}
+              >
+                <BarChart3 size={12} className="inline mr-1" /> {showCharts ? 'Sembunyikan Grafik' : 'Tampilkan Grafik'}
+              </button>
+              <button
+                onClick={handleExportCSV}
+                className="px-3 py-1.5 text-xs bg-green-600 text-white rounded-lg hover:bg-green-700 flex items-center gap-1"
+              >
+                <FileSpreadsheet size={12} /> Export CSV
+              </button>
               <div className="relative">
                 <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
                 <input
@@ -215,6 +430,38 @@ export default function DataKesehatanPage() {
                 <UserPlus size={12} /> Tambah Data
               </button>
             </div>
+          </div>
+          {/* Advanced Filters */}
+          <div className="flex flex-wrap gap-2 mt-2">
+            <div className="flex items-center gap-2">
+              <Filter size={12} className="text-slate-400" />
+              <input
+                type="date"
+                value={filterDate}
+                onChange={e => setFilterDate(e.target.value)}
+                className="px-2 py-1 text-xs border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-300"
+              />
+            </div>
+            {activeTab === 'stunting' && (
+              <select
+                value={filterStatus}
+                onChange={e => setFilterStatus(e.target.value)}
+                className="px-2 py-1 text-xs border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-300"
+              >
+                <option value="">Semua Kategori</option>
+                <option value="Normal">Normal</option>
+                <option value="RisikoSedang">Risiko Sedang</option>
+                <option value="RisikoTinggi">Risiko Tinggi</option>
+              </select>
+            )}
+            {(filterDate || filterStatus) && (
+              <button
+                onClick={() => { setFilterDate(''); setFilterStatus(''); }}
+                className="px-2 py-1 text-xs text-red-600 hover:text-red-800"
+              >
+                Reset Filter
+              </button>
+            )}
           </div>
         </CardHeader>
         <CardContent>

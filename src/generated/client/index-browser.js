@@ -126,8 +126,10 @@ exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
+  username: 'username',
   password: 'password',
   role: 'role',
+  status: 'status',
   desaId: 'desaId',
   wargaId: 'wargaId',
   createdAt: 'createdAt',
@@ -443,6 +445,18 @@ exports.Prisma.ModuleRecordScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.UmkmScalarFieldEnum = {
+  id: 'id',
+  desaId: 'desaId',
+  nama: 'nama',
+  pemilik: 'pemilik',
+  bidang: 'bidang',
+  omset: 'omset',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -560,7 +574,8 @@ exports.Prisma.ModelName = {
   Siswa: 'Siswa',
   MonitoringDesa: 'MonitoringDesa',
   MasterDesaRecord: 'MasterDesaRecord',
-  ModuleRecord: 'ModuleRecord'
+  ModuleRecord: 'ModuleRecord',
+  Umkm: 'Umkm'
 };
 
 /**

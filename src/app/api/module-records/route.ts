@@ -43,23 +43,45 @@ function makeId() {
   return `modrec_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
 }
 
+function isDatabaseConfigured() {
+  return Boolean(process.env.DATABASE_URL?.replace(/^"|"$/g, "").trim());
+}
+
+function databaseUnavailableResponse(error?: unknown) {
+  const message = error instanceof Error ? error.message : "Database belum dikonfigurasi";
+  return NextResponse.json(
+    {
+      records: [],
+      error: "Database belum siap. Pastikan DATABASE_URL terisi dan database MySQL berjalan.",
+      detail: message,
+    },
+    { status: 503 }
+  );
+}
+
 export async function GET(req: NextRequest) {
   const modulePath = req.nextUrl.searchParams.get("path") || "";
   if (!modulePath.startsWith("/")) {
     return NextResponse.json({ error: "Path modul tidak valid" }, { status: 400 });
   }
 
-  await ensureModuleRecordTable();
+  if (!isDatabaseConfigured()) return databaseUnavailableResponse();
 
-  const records = await prisma.$queryRaw<ModuleRecordRow[]>`
-    SELECT id, modulePath, moduleName, title, category, description, valueText, status, createdBy, createdAt, updatedAt
-    FROM ModuleRecord
-    WHERE modulePath = ${modulePath}
-    ORDER BY createdAt DESC
-    LIMIT 50
-  `;
+  try {
+    await ensureModuleRecordTable();
 
-  return NextResponse.json({ records });
+    const records = await prisma.$queryRaw<ModuleRecordRow[]>`
+      SELECT id, modulePath, moduleName, title, category, description, valueText, status, createdBy, createdAt, updatedAt
+      FROM ModuleRecord
+      WHERE modulePath = ${modulePath}
+      ORDER BY createdAt DESC
+      LIMIT 50
+    `;
+
+    return NextResponse.json({ records });
+  } catch (error) {
+    return databaseUnavailableResponse(error);
+  }
 }
 
 export async function POST(req: NextRequest) {
@@ -78,14 +100,20 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Path modul dan judul wajib diisi" }, { status: 400 });
   }
 
-  await ensureModuleRecordTable();
+  if (!isDatabaseConfigured()) return databaseUnavailableResponse();
 
-  await prisma.$executeRaw`
-    INSERT INTO ModuleRecord (id, modulePath, moduleName, title, category, description, valueText, status, createdBy)
-    VALUES (${id}, ${modulePath}, ${moduleName}, ${title}, ${category}, ${description}, ${valueText}, ${status}, ${createdBy})
-  `;
+  try {
+    await ensureModuleRecordTable();
 
-  return NextResponse.json({ ok: true, id });
+    await prisma.$executeRaw`
+      INSERT INTO ModuleRecord (id, modulePath, moduleName, title, category, description, valueText, status, createdBy)
+      VALUES (${id}, ${modulePath}, ${moduleName}, ${title}, ${category}, ${description}, ${valueText}, ${status}, ${createdBy})
+    `;
+
+    return NextResponse.json({ ok: true, id });
+  } catch (error) {
+    return databaseUnavailableResponse(error);
+  }
 }
 
 export async function PATCH(req: NextRequest) {
@@ -102,19 +130,25 @@ export async function PATCH(req: NextRequest) {
     return NextResponse.json({ error: "Data update tidak valid" }, { status: 400 });
   }
 
-  await ensureModuleRecordTable();
+  if (!isDatabaseConfigured()) return databaseUnavailableResponse();
 
-  await prisma.$executeRaw`
-    UPDATE ModuleRecord
-    SET title = ${title},
-        category = ${category},
-        description = ${description},
-        valueText = ${valueText},
-        status = ${status}
-    WHERE id = ${id} AND modulePath = ${modulePath}
-  `;
+  try {
+    await ensureModuleRecordTable();
 
-  return NextResponse.json({ ok: true });
+    await prisma.$executeRaw`
+      UPDATE ModuleRecord
+      SET title = ${title},
+          category = ${category},
+          description = ${description},
+          valueText = ${valueText},
+          status = ${status}
+      WHERE id = ${id} AND modulePath = ${modulePath}
+    `;
+
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    return databaseUnavailableResponse(error);
+  }
 }
 
 export async function DELETE(req: NextRequest) {
@@ -125,12 +159,18 @@ export async function DELETE(req: NextRequest) {
     return NextResponse.json({ error: "Data hapus tidak valid" }, { status: 400 });
   }
 
-  await ensureModuleRecordTable();
+  if (!isDatabaseConfigured()) return databaseUnavailableResponse();
 
-  await prisma.$executeRaw`
-    DELETE FROM ModuleRecord
-    WHERE id = ${id} AND modulePath = ${modulePath}
-  `;
+  try {
+    await ensureModuleRecordTable();
 
-  return NextResponse.json({ ok: true });
+    await prisma.$executeRaw`
+      DELETE FROM ModuleRecord
+      WHERE id = ${id} AND modulePath = ${modulePath}
+    `;
+
+    return NextResponse.json({ ok: true });
+  } catch (error) {
+    return databaseUnavailableResponse(error);
+  }
 }

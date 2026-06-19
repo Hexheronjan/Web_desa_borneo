@@ -1,6 +1,6 @@
 "use server";
 import prisma from "@/lib/prisma";
-import { StatusWarga, JenisKelamin } from "@prisma/client";
+import { StatusWarga, JenisKelamin } from "@/generated/client";
 import { revalidatePath } from "next/cache";
 
 

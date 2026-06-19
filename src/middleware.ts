@@ -21,21 +21,22 @@ const roleRouteMap: Record<string, string> = {
 // Route-to-allowed-roles mapping
 const routeAccessMap: Record<string, string[]> = {
   "/admin": ["admin_super"],
-  "/operator-sid": ["operator_sid"],
-  "/pemdes": ["pemerintah_desa"],
-  "/bpd": ["bpd"],
-  "/adat": ["lembaga_adat"],
-  "/guru": ["guru_fasilitator"],
-  "/nakes": ["nakes_posyandu"],
-  "/warga": ["warga"],
-  "/dinas-pmd": ["dinas_pmd"],
-  "/peneliti": ["peneliti"],
+  "/operator-sid": ["operator_sid", "admin_super"],
+  "/pemdes": ["pemerintah_desa", "admin_super"],
+  "/bpd": ["bpd", "admin_super"],
+  "/adat": ["lembaga_adat", "admin_super"],
+  "/guru": ["guru_fasilitator", "admin_super"],
+  "/nakes": ["nakes_posyandu", "admin_super"],
+  "/warga": ["warga", "admin_super"],
+  "/dinas-pmd": ["dinas_pmd", "admin_super"],
+  "/peneliti": ["peneliti", "admin_super"],
   "/sustainability": ["pemerintah_desa", "admin_super", "dinas_pmd"],
 };
 
 export default auth((req) => {
-  const isLoggedIn = !!req.auth;
+  const isLoggedIn = !!req.auth?.user;
   const { pathname } = req.nextUrl;
+  const publicRoutes = ["/login", "/unauthorized"];
 
   // If logged in and on /login, redirect to role dashboard
   if (pathname === "/login" && isLoggedIn) {
@@ -45,8 +46,12 @@ export default auth((req) => {
     return NextResponse.redirect(url);
   }
 
+  if (publicRoutes.includes(pathname)) {
+    return NextResponse.next();
+  }
+
   // If not logged in and not on /login, redirect to /login
-  if (!isLoggedIn && pathname !== "/login") {
+  if (!isLoggedIn) {
     const url = req.nextUrl.clone();
     url.pathname = "/login";
     return NextResponse.redirect(url);

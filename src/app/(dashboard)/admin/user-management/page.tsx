@@ -6,6 +6,7 @@ import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { UserPlus, Search, Download, Edit, Trash2, Eye, Shield, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Document, Page, Text, View, StyleSheet, pdf } from '@react-pdf/renderer';
 
 const COLOR = '#1a237e';
 const ROLE_OPTIONS = ['Super Admin', 'Operator SID', 'Pemerintah Desa', 'BPD', 'Lembaga Adat', 'Guru/Fasilitator', 'Nakes/Posyandu', 'Warga', 'Dinas PMD', 'Peneliti/Akademisi'];
@@ -23,6 +24,25 @@ interface User {
   recordId?: string;
   operatorName?: string;
 }
+
+type PendingAddition = { nama: string; username: string; role: string; status: string; operatorName: string; recordId: string };
+type PendingEdit = { nama: string; role: string; status: string; operatorName: string; recordId: string };
+type PendingDeletion = { operatorName: string; recordId: string };
+type UserRecord = {
+  id: string;
+  title: string;
+  category: string | null;
+  valueText: string | null;
+  description: string | null;
+  status: string;
+  createdBy?: string | null;
+};
+type ParsedUserChange = {
+  nama?: string;
+  role?: string;
+  status?: string;
+  requestedBy?: string;
+};
 
 const usersData: User[] = [
   { id: 1, nama: 'Dr. Ahmad Surya', username: 'admin_super', password: '••••••••', role: 'Super Admin', status: 'Aktif', lastLogin: '11 Jun 2026, 09:15' },
@@ -57,7 +77,7 @@ export default function UserManagementPage() {
   const [simulatedRole, setSimulatedRole] = useState<'admin' | 'operator'>('admin');
   
   // Edit Dialog States
-  const [editUser, setEditUser] = useState<any>(null);
+  const [editUser, setEditUser] = useState<User | null>(null);
   const [editName, setEditName] = useState('');
   const [editRole, setEditRole] = useState('');
   const [editStatus, setEditStatus] = useState('');
@@ -73,9 +93,9 @@ export default function UserManagementPage() {
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' | 'error' } | null>(null);
   
   // Pending records from operator SID
-  const [pendingAdditions, setPendingAdditions] = useState<Record<string, { nama: string; username: string; role: string; status: string; operatorName: string; recordId: string }>>({});
-  const [pendingEdits, setPendingEdits] = useState<Record<string, { nama: string; role: string; status: string; operatorName: string; recordId: string }>>({});
-  const [pendingDeletions, setPendingDeletions] = useState<Record<string, { operatorName: string; recordId: string }>>({});
+  const [pendingAdditions, setPendingAdditions] = useState<Record<string, PendingAddition>>({});
+  const [pendingEdits, setPendingEdits] = useState<Record<string, PendingEdit>>({});
+  const [pendingDeletions, setPendingDeletions] = useState<Record<string, PendingDeletion>>({});
 
   const triggerToast = useCallback((message: string, type: 'success' | 'info' | 'error' = 'success') => {
     setToast({ message, type });
@@ -89,20 +109,20 @@ export default function UserManagementPage() {
       const res = await fetch(`/api/module-records?path=/admin/user-management`, { cache: 'no-store' });
       if (!res.ok) return;
       const data = await res.json();
-      const records = data.records || [];
+      const records = (data.records || []) as UserRecord[];
 
       // Start with original usersData
-      let currentUsers = [...usersData];
-      let pAdditions: Record<string, any> = {};
-      let pEdits: Record<string, any> = {};
-      let pDeletes: Record<string, any> = {};
+      const currentUsers = [...usersData];
+      const pAdditions: Record<string, PendingAddition> = {};
+      const pEdits: Record<string, PendingEdit> = {};
+      const pDeletes: Record<string, PendingDeletion> = {};
 
       // Process from oldest to newest to reconstruct final states
-      [...records].reverse().forEach((record: any) => {
+      [...records].reverse().forEach((record) => {
         const username = record.valueText;
         if (!username) return;
 
-        const parsed = (() => {
+        const parsed: ParsedUserChange = (() => {
           try {
             return JSON.parse(record.description || '{}');
           } catch {
@@ -189,7 +209,7 @@ export default function UserManagementPage() {
     return () => clearInterval(interval);
   }, [loadDatabaseUsers]);
 
-  const handleOpenEdit = (user: any) => {
+  const handleOpenEdit = (user: User) => {
     setEditUser(user);
     const pending = pendingEdits[user.username] || pendingAdditions[user.username];
     if (pending) {
@@ -253,7 +273,7 @@ export default function UserManagementPage() {
         triggerToast(`⏳ Pengajuan berhasil! Menunggu persetujuan Super Admin...`, 'info');
       }
       setOpenAddDialog(false);
-    } catch (error) {
+    } catch {
       triggerToast('❌ Gagal mendaftarkan user baru.', 'error');
     } finally {
       setSaving(false);
@@ -364,14 +384,14 @@ export default function UserManagementPage() {
         triggerToast(`⏳ Perubahan diajukan! Menunggu persetujuan dari Super Admin...`, 'info');
       }
       setEditUser(null);
-    } catch (error) {
+    } catch {
       triggerToast('❌ Gagal mengajukan edit user.', 'error');
     } finally {
       setSaving(false);
     }
   };
 
-  const handleDeleteUser = async (user: any) => {
+  const handleDeleteUser = async (user: User) => {
     if (user.isPendingAddition) {
       await handleRejectAddition(user.username);
       return;
@@ -409,7 +429,7 @@ export default function UserManagementPage() {
       } else {
         triggerToast(`⏳ Usulan hapus berhasil dikirim! Menunggu persetujuan Super Admin...`, 'info');
       }
-    } catch (error) {
+    } catch {
       triggerToast('❌ Gagal memproses penghapusan user.', 'error');
     }
   };
@@ -441,7 +461,7 @@ export default function UserManagementPage() {
       if (!res.ok) throw new Error('Gagal menyetujui pendaftaran');
       await loadDatabaseUsers();
       triggerToast(`✅ Pendaftaran user baru "${add.nama}" berhasil disetujui.`);
-    } catch (error) {
+    } catch {
       triggerToast('❌ Gagal menyetujui pendaftaran.', 'error');
     }
   };
@@ -458,7 +478,7 @@ export default function UserManagementPage() {
       if (!res.ok) throw new Error('Gagal menolak pendaftaran');
       await loadDatabaseUsers();
       triggerToast('❌ Usulan pendaftaran user baru ditolak.');
-    } catch (error) {
+    } catch {
       triggerToast('❌ Gagal menolak pendaftaran.', 'error');
     }
   };
@@ -490,7 +510,7 @@ export default function UserManagementPage() {
       if (!res.ok) throw new Error('Gagal menyetujui edit');
       await loadDatabaseUsers();
       triggerToast(`✅ Perubahan data user "${edit.nama}" berhasil disetujui.`);
-    } catch (error) {
+    } catch {
       triggerToast('❌ Gagal menyetujui edit.', 'error');
     }
   };
@@ -507,7 +527,7 @@ export default function UserManagementPage() {
       if (!res.ok) throw new Error('Gagal menolak edit');
       await loadDatabaseUsers();
       triggerToast('❌ Usulan perubahan data user ditolak.');
-    } catch (error) {
+    } catch {
       triggerToast('❌ Gagal menolak edit.', 'error');
     }
   };
@@ -536,7 +556,7 @@ export default function UserManagementPage() {
       if (!res.ok) throw new Error('Gagal menyetujui hapus');
       await loadDatabaseUsers();
       triggerToast(`✅ Penghapusan user "${username}" berhasil disetujui.`);
-    } catch (error) {
+    } catch {
       triggerToast('❌ Gagal menyetujui penghapusan.', 'error');
     }
   };
@@ -553,7 +573,7 @@ export default function UserManagementPage() {
       if (!res.ok) throw new Error('Gagal menolak hapus');
       await loadDatabaseUsers();
       triggerToast('❌ Usulan penghapusan user ditolak.');
-    } catch (error) {
+    } catch {
       triggerToast('❌ Gagal menolak penghapusan.', 'error');
     }
   };
@@ -588,6 +608,96 @@ export default function UserManagementPage() {
     u.username.toLowerCase().includes(search.toLowerCase()) ||
     u.role.toLowerCase().includes(search.toLowerCase())
   );
+
+  const handleExport = async () => {
+    const styles = StyleSheet.create({
+      page: {
+        padding: 30,
+        fontFamily: 'Helvetica',
+      },
+      title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        color: '#1a237e',
+      },
+      table: {
+        width: 'auto',
+        marginBottom: 10,
+      },
+      tableRow: {
+        flexDirection: 'row',
+      },
+      tableColHeader: {
+        width: '16.66%',
+        backgroundColor: '#1a237e',
+        color: 'white',
+        fontSize: 10,
+        fontWeight: 'bold',
+        padding: 8,
+        textAlign: 'center',
+      },
+      tableCol: {
+        width: '16.66%',
+        fontSize: 9,
+        padding: 6,
+        textAlign: 'center',
+        border: '1px solid #e0e0e0',
+      },
+      tableColEven: {
+        width: '16.66%',
+        fontSize: 9,
+        padding: 6,
+        textAlign: 'center',
+        border: '1px solid #e0e0e0',
+        backgroundColor: '#f5f5f5',
+      },
+    });
+
+    const UserPDF = () => (
+      <Document>
+        <Page size="A4" style={styles.page}>
+          <Text style={styles.title}>Laporan Manajemen Pengguna</Text>
+          <Text style={{ fontSize: 9, marginBottom: 15, color: '#666' }}>
+            Tanggal: {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+          </Text>
+          <View style={styles.table}>
+            <View style={styles.tableRow}>
+              <Text style={styles.tableColHeader}>No</Text>
+              <Text style={styles.tableColHeader}>Nama Lengkap</Text>
+              <Text style={styles.tableColHeader}>Username</Text>
+              <Text style={styles.tableColHeader}>Role</Text>
+              <Text style={styles.tableColHeader}>Status</Text>
+              <Text style={styles.tableColHeader}>Login Terakhir</Text>
+            </View>
+            {filtered.map((u, i) => (
+              <View key={u.id} style={styles.tableRow}>
+                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{i + 1}</Text>
+                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{u.nama}</Text>
+                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{u.username}</Text>
+                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{u.role}</Text>
+                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{u.status}</Text>
+                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{u.lastLogin}</Text>
+              </View>
+            ))}
+          </View>
+          <Text style={{ fontSize: 8, marginTop: 10, color: '#999' }}>
+            Total: {filtered.length} pengguna
+          </Text>
+        </Page>
+      </Document>
+    );
+
+    const blob = await pdf(<UserPDF />).toBlob();
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `user_management_${new Date().toISOString().split('T')[0]}.pdf`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <div className="flex flex-col gap-5">
@@ -669,7 +779,7 @@ export default function UserManagementPage() {
                 <UserPlus className="w-3.5 h-3.5" />
                 Tambah User
               </button>
-              <button className="px-3 py-2 border text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 text-slate-600">
+              <button onClick={handleExport} className="px-3 py-2 border text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 text-slate-600">
                 <Download className="w-3.5 h-3.5" />
                 Export
               </button>
@@ -750,7 +860,7 @@ export default function UserManagementPage() {
                                   <div className="grid grid-cols-1 gap-1 text-[9px]">
                                     <div>
                                       <span className="text-slate-500">📝 Nama Baru:</span>
-                                      <span className="font-bold text-slate-700 block">"{pendingEdits[u.username].nama}"</span>
+                                      <span className="font-bold text-slate-700 block">&quot;{pendingEdits[u.username].nama}&quot;</span>
                                     </div>
                                     <div>
                                       <span className="text-slate-500">👤 Role Baru:</span>
