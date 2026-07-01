@@ -47,12 +47,21 @@ export const authConfig = {
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) return null;
 
+        console.log("[AUTH] Login attempt for email:", credentials.email);
+        console.log("[AUTH] DATABASE_URL:", process.env.DATABASE_URL ? "SET" : "NOT SET");
+
         try {
           const user = await prisma.user.findUnique({
             where: { email: credentials.email as string }
           });
 
+          console.log("[AUTH] User found:", !!user);
+          if (user) {
+            console.log("[AUTH] User data:", { id: user.id, email: user.email, role: user.role, status: user.status });
+          }
+
           if (!user) {
+            console.log("[AUTH] User not found - throwing EMAIL_SALAH");
             throw new Error("EMAIL_SALAH");
           }
 
@@ -60,22 +69,29 @@ export const authConfig = {
           const inputPassword = credentials.password as string;
           let isPasswordValid = false;
 
+          console.log("[AUTH] Checking password...");
           // Try bcrypt comparison first (for hashed passwords)
           try {
             isPasswordValid = await bcrypt.compare(inputPassword, user.password);
+            console.log("[AUTH] Bcrypt comparison result:", isPasswordValid);
           } catch (e) {
+            console.log("[AUTH] Bcrypt failed, falling back to plain text:", (e as Error).message);
             // If bcrypt fails, fall back to plain text comparison (for migration)
             isPasswordValid = user.password === inputPassword;
+            console.log("[AUTH] Plain text comparison result:", isPasswordValid);
           }
 
           if (!isPasswordValid) {
+            console.log("[AUTH] Password invalid - throwing KATA_SANDI_SALAH");
             throw new Error("KATA_SANDI_SALAH");
           }
 
           if (user.status !== "Aktif") {
+            console.log("[AUTH] Account not active - throwing AKUN_NONAKTIF");
             throw new Error("AKUN_NONAKTIF");
           }
 
+          console.log("[AUTH] Login successful for:", user.email);
           return {
             id: user.id,
             name: user.name,
@@ -84,7 +100,8 @@ export const authConfig = {
             wargaId: user.wargaId,
           };
         } catch (error: any) {
-          console.error("Auth System Error:", error);
+          console.error("[AUTH] Auth System Error:", error.message);
+          console.error("[AUTH] Error stack:", error.stack);
           return null;
         }
       }
