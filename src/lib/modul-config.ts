@@ -405,7 +405,7 @@ roleConfig.peneliti.sidebarItems = [
   { label: "Dataset Assessment", path: "/peneliti/dataset-assessment", group: "RESEARCH OVERVIEW" },
   { label: "Analisis Readiness", path: "/peneliti/kuesioner-readiness", group: "ANALISIS FRAMEWORK" },
   { label: "Analisis Maturity", path: "/peneliti/penilaian-maturity", group: "ANALISIS FRAMEWORK" },
-  { label: "Analisis Quality of Life", path: "/peneliti/analisis-quality-of-life", group: "ANALISIS FRAMEWORK" },
+  { label: "Analisis Quality of Life", path: "/peneliti/analisis-qol", group: "ANALISIS FRAMEWORK" },
   { label: "SDGs Dashboard", path: "/peneliti/sdgs-dashboard", group: "ANALISIS FRAMEWORK" },
   { label: "Analisis DSS Recommendation", path: "/peneliti/pairwise-comparison", group: "ANALISIS FRAMEWORK" },
   { label: "Validasi Artefak", path: "/peneliti/validasi-artefak", group: "VALIDASI & EVALUASI" },
