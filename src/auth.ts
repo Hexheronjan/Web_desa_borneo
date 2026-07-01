@@ -1,9 +1,10 @@
 import NextAuth, { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/lib/prisma";
+import bcrypt from "bcryptjs";
 
 export const authConfig = {
-  trustHost: true,
+  trustHost: process.env.NODE_ENV === "production",
   secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || "slv-local-development-secret-change-in-production",
   pages: {
     signIn: "/login",
@@ -55,7 +56,19 @@ export const authConfig = {
             throw new Error("EMAIL_SALAH");
           }
 
-          if (user.password !== credentials.password) {
+          // Check password - support both hashed and plain text for migration
+          const inputPassword = credentials.password as string;
+          let isPasswordValid = false;
+
+          // Try bcrypt comparison first (for hashed passwords)
+          try {
+            isPasswordValid = await bcrypt.compare(inputPassword, user.password);
+          } catch (e) {
+            // If bcrypt fails, fall back to plain text comparison (for migration)
+            isPasswordValid = user.password === inputPassword;
+          }
+
+          if (!isPasswordValid) {
             throw new Error("KATA_SANDI_SALAH");
           }
 
