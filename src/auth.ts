@@ -4,8 +4,9 @@ import prisma from "@/lib/prisma";
 import bcrypt from "bcryptjs";
 
 export const authConfig = {
-  trustHost: process.env.NODE_ENV === "production",
+  trustHost: process.env.AUTH_TRUST_HOST === "true" || process.env.NODE_ENV === "production",
   secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || "slv-local-development-secret-change-in-production",
+  debug: process.env.NODE_ENV === "development",
   pages: {
     signIn: "/login",
   },
@@ -45,7 +46,12 @@ export const authConfig = {
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) return null;
+        console.log("[AUTH] Authorize called with credentials:", credentials);
+        
+        if (!credentials?.email || !credentials?.password) {
+          console.log("[AUTH] Missing credentials");
+          return null;
+        }
 
         console.log("[AUTH] Login attempt for email:", credentials.email);
         console.log("[AUTH] DATABASE_URL:", process.env.DATABASE_URL ? "SET" : "NOT SET");
@@ -75,10 +81,13 @@ export const authConfig = {
             isPasswordValid = await bcrypt.compare(inputPassword, user.password);
             console.log("[AUTH] Bcrypt comparison result:", isPasswordValid);
           } catch (e) {
-            console.log("[AUTH] Bcrypt failed, falling back to plain text:", (e as Error).message);
-            // If bcrypt fails, fall back to plain text comparison (for migration)
+            console.log("[AUTH] Bcrypt comparison threw error:", (e as Error).message);
+          }
+
+          // If bcrypt returned false or threw error, try falling back to plain text comparison (for migration/seed data)
+          if (!isPasswordValid) {
             isPasswordValid = user.password === inputPassword;
-            console.log("[AUTH] Plain text comparison result:", isPasswordValid);
+            console.log("[AUTH] Plain text fallback comparison result:", isPasswordValid);
           }
 
           if (!isPasswordValid) {
