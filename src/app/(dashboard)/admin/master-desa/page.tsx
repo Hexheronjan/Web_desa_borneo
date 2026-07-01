@@ -228,7 +228,7 @@ export default function MasterDesaPage() {
       </Card>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent>
+        <DialogContent data-real-action-root className="bg-white shadow-2xl border-2">
           <DialogHeader>
             <DialogTitle>{form.id ? 'Edit Desa' : 'Registrasi Desa'}</DialogTitle>
           </DialogHeader>

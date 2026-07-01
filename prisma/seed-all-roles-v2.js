@@ -91,6 +91,14 @@ async function main() {
       password: "password123",
       role: "peneliti",
       description: "Peneliti Smart Living Village"
+    },
+    {
+      email: "layanan@borneo.id",
+      name: "Andi Saputra",
+      username: "layanan_slv",
+      password: "password123",
+      role: "layanan_slv",
+      description: "Layanan SLV Smart Living Village"
     }
   ];
 

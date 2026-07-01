@@ -29,7 +29,7 @@ async function main() {
     { id: 'user-operator', name: 'Operator SID', email: 'operator@borneo.id', password: 'password123', role: 'operator_sid' as const },
     { id: 'user-dinas', name: 'Dinas PMD', email: 'dinas@borneo.id', password: 'password123', role: 'dinas_pmd' as const },
     { id: 'user-peneliti', name: 'Peneliti', email: 'peneliti@borneo.id', password: 'password123', role: 'peneliti' as const },
-    { id: 'user-layanan', name: 'Andi Saputra', email: 'layanan@borneo.id', password: 'password123', role: 'pengguna_layanan' as const },
+    { id: 'user-layanan', name: 'Andi Saputra', email: 'layanan@borneo.id', password: 'password123', role: 'layanan_slv' as const },
   ]
 
   for (const userData of users) {

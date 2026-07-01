@@ -21,6 +21,7 @@ export function RoleTabs() {
     bpd: "BPD",
     dinas_pmd: "Dinas PMD Regional",
     peneliti: "Peneliti",
+    layanan_slv: "Layanan SLV",
   };
 
   const userRoleLabel = roleLabels[userRole] || userRole;

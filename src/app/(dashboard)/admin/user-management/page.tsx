@@ -9,7 +9,7 @@ import { UserPlus, Search, Download, Edit, Trash2, Eye, Shield, CheckCircle2, Al
 import { Document, Page, Text, View, StyleSheet, pdf } from '@react-pdf/renderer';
 
 const COLOR = '#1a237e';
-const ROLE_OPTIONS = ['Super Admin', 'Operator SID', 'Pemerintah Desa', 'BPD', 'Lembaga Adat', 'Guru/Fasilitator', 'Nakes/Posyandu', 'Warga', 'Dinas PMD', 'Peneliti/Akademisi', 'Pengguna Layanan'];
+const ROLE_OPTIONS = ['Super Admin', 'Operator SID', 'Pemerintah Desa', 'BPD', 'Lembaga Adat', 'Guru/Fasilitator', 'Nakes/Posyandu', 'Warga', 'Dinas PMD', 'Peneliti/Akademisi', 'Layanan SLV'];
 const STATUS_OPTIONS = ['Aktif', 'Nonaktif'];
 
 interface User {
@@ -56,7 +56,7 @@ const usersData: User[] = [
   { id: 9, nama: 'Dinas PMD Joko', username: 'dinas_joko', password: '••••••••', role: 'Dinas PMD', status: 'Nonaktif', lastLogin: '05 Jun 2026, 09:00' },
   { id: 10, nama: 'Dr. Peneliti Andi', username: 'peneliti_andi', password: '••••••••', role: 'Peneliti/Akademisi', status: 'Aktif', lastLogin: '10 Jun 2026, 11:20' },
   { id: 11, nama: 'Operator SID Budi', username: 'operator_sid02', password: '••••••••', role: 'Operator SID', status: 'Aktif', lastLogin: '11 Jun 2026, 09:45' },
-  { id: 12, nama: 'Andi Saputra', username: 'layanan_andi', password: '••••••••', role: 'Pengguna Layanan', status: 'Aktif', lastLogin: '19 Jun 2026, 08:00' },
+  { id: 12, nama: 'Andi Saputra', username: 'layanan_andi', password: '••••••••', role: 'Layanan SLV', status: 'Aktif', lastLogin: '19 Jun 2026, 08:00' },
 ];
 
 const roleColors: Record<string, string> = {
@@ -70,7 +70,7 @@ const roleColors: Record<string, string> = {
   'Warga': 'bg-slate-100 text-slate-700',
   'Dinas PMD': 'bg-indigo-100 text-indigo-700',
   'Peneliti/Akademisi': 'bg-teal-100 text-teal-700',
-  'Pengguna Layanan': 'bg-emerald-100 text-emerald-700',
+  'Layanan SLV': 'bg-emerald-100 text-emerald-700',
 };
 
 export default function UserManagementPage() {
@@ -78,18 +78,13 @@ export default function UserManagementPage() {
   const [search, setSearch] = useState('');
   const [simulatedRole, setSimulatedRole] = useState<'admin' | 'operator'>('admin');
   
-  // Edit Dialog States
-  const [editUser, setEditUser] = useState<User | null>(null);
-  const [editName, setEditName] = useState('');
-  const [editRole, setEditRole] = useState('');
-  const [editStatus, setEditStatus] = useState('');
-  
-  // Add Dialog States
-  const [openAddDialog, setOpenAddDialog] = useState(false);
-  const [addName, setAddName] = useState('');
-  const [addUsername, setAddUsername] = useState('');
-  const [addRole, setAddRole] = useState('Warga');
-  const [addStatus, setAddStatus] = useState('Aktif');
+  // Unified Form Dialog States
+  const [openDialog, setOpenDialog] = useState(false);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [formName, setFormName] = useState('');
+  const [formUsername, setFormUsername] = useState('');
+  const [formRole, setFormRole] = useState('Warga');
+  const [formStatus, setFormStatus] = useState('Aktif');
 
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' | 'error' } | null>(null);
@@ -212,23 +207,25 @@ export default function UserManagementPage() {
   }, [loadDatabaseUsers]);
 
   const handleOpenEdit = (user: User) => {
-    setEditUser(user);
+    setEditingUser(user);
     const pending = pendingEdits[user.username] || pendingAdditions[user.username];
     if (pending) {
-      setEditName(pending.nama);
-      setEditRole(pending.role);
-      setEditStatus(pending.status);
+      setFormName(pending.nama);
+      setFormRole(pending.role);
+      setFormStatus(pending.status);
     } else {
-      setEditName(user.nama);
-      setEditRole(user.role);
-      setEditStatus(user.status);
+      setFormName(user.nama);
+      setFormRole(user.role);
+      setFormStatus(user.status);
     }
+    setFormUsername(user.username);
+    setOpenDialog(true);
   };
 
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
-    const trimmedUsername = addUsername.trim().toLowerCase();
-    if (addName.trim().length < 3 || trimmedUsername.length < 3) {
+    const trimmedUsername = formUsername.trim().toLowerCase();
+    if (formName.trim().length < 3 || trimmedUsername.length < 3) {
       triggerToast('Nama lengkap dan username minimal 3 karakter.', 'error');
       return;
     }
@@ -247,36 +244,59 @@ export default function UserManagementPage() {
         return;
       }
 
-      const res = await fetch('/api/module-records', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          modulePath: '/admin/user-management',
-          moduleName: 'User Management',
-          title: addName.trim(),
-          category: 'UserAdd',
-          valueText: trimmedUsername,
-          description: JSON.stringify({
-            nama: addName.trim(),
-            role: addRole,
-            status: addStatus,
-            requestedBy: createdBy,
-          }),
-          status,
-        }),
-      });
-
-      if (!res.ok) throw new Error('Gagal menambahkan user');
-      await loadDatabaseUsers();
-
       if (simulatedRole === 'admin') {
-        triggerToast(`✅ Berhasil! User baru "${addName}" berhasil didaftarkan langsung.`);
+        // Super Admin: Direct save to database
+        const userRes = await fetch('/api/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: formName.trim(),
+            username: trimmedUsername,
+            email: `${trimmedUsername}@example.com`,
+            password: 'password123',
+            role: formRole,
+            status: formStatus,
+          }),
+        });
+
+        if (!userRes.ok) {
+          const error = await userRes.json();
+          throw new Error(error.error || 'Gagal menyimpan user ke database');
+        }
+        await loadDatabaseUsers();
+        triggerToast(`✅ Berhasil! User baru "${formName}" berhasil ditambahkan ke database.`);
       } else {
+        // Operator SID: Use module-records for approval
+        const res = await fetch('/api/module-records', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            modulePath: '/admin/user-management',
+            moduleName: 'User Management',
+            title: formName.trim(),
+            category: 'UserAdd',
+            valueText: trimmedUsername,
+            description: JSON.stringify({
+              nama: formName.trim(),
+              role: formRole,
+              status: formStatus,
+              requestedBy: createdBy,
+            }),
+            status,
+          }),
+        });
+
+        if (!res.ok) throw new Error('Gagal menambahkan user');
+        await loadDatabaseUsers();
         triggerToast(`⏳ Pengajuan berhasil! Menunggu persetujuan Super Admin...`, 'info');
       }
-      setOpenAddDialog(false);
-    } catch {
-      triggerToast('❌ Gagal mendaftarkan user baru.', 'error');
+      setOpenDialog(false);
+      setFormName('');
+      setFormUsername('');
+      setFormRole('Warga');
+      setFormStatus('Aktif');
+    } catch (error: any) {
+      triggerToast(`❌ ${error.message}`, 'error');
     } finally {
       setSaving(false);
     }
@@ -284,16 +304,16 @@ export default function UserManagementPage() {
 
   const handleSaveEdit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!editUser || editName.trim().length < 3) return;
+    if (!editingUser || formName.trim().length < 3) return;
     setSaving(true);
 
     try {
       const status = simulatedRole === 'admin' ? 'Selesai' : 'Baru';
       const createdBy = simulatedRole === 'admin' ? 'Super Admin' : 'Operator SID';
-      const username = editUser.username;
+      const username = editingUser.username;
 
       // Check if it's a pending addition edit or a normal user edit
-      if (editUser.isPendingAddition) {
+      if (editingUser.isPendingAddition) {
         const pending = pendingAdditions[username];
         if (!pending) return;
 
@@ -303,13 +323,13 @@ export default function UserManagementPage() {
           body: JSON.stringify({
             id: pending.recordId,
             modulePath: '/admin/user-management',
-            title: editName.trim(),
+            title: formName.trim(),
             category: 'UserAdd',
             valueText: username,
             description: JSON.stringify({
-              nama: editName.trim(),
-              role: editRole,
-              status: editStatus,
+              nama: formName.trim(),
+              role: formRole,
+              status: formStatus,
               requestedBy: createdBy,
             }),
             status,
@@ -319,75 +339,96 @@ export default function UserManagementPage() {
         if (!res.ok) throw new Error('Gagal memperbarui usulan pendaftaran');
         await loadDatabaseUsers();
         triggerToast('✅ Berhasil memperbarui data usulan pendaftaran user baru.');
-        setEditUser(null);
+        setEditingUser(null);
+        setOpenDialog(false);
         return;
       }
 
       // Normal edit logic
       const pending = pendingEdits[username];
-      const baseName = pending ? pending.nama : editUser.nama;
-      const baseRole = pending ? pending.role : editUser.role;
-      const baseStatus = pending ? pending.status : editUser.status;
+      const baseName = pending ? pending.nama : editingUser.nama;
+      const baseRole = pending ? pending.role : editingUser.role;
+      const baseStatus = pending ? pending.status : editingUser.status;
 
-      const hasChanges = editName !== baseName || editRole !== baseRole || editStatus !== baseStatus;
+      const hasChanges = formName !== baseName || formRole !== baseRole || formStatus !== baseStatus;
       if (!hasChanges) {
         triggerToast('Tidak ada perubahan untuk disimpan.', 'info');
         setSaving(false);
         return;
       }
 
-      let res;
-      if (pending) {
-        res = await fetch('/api/module-records', {
-          method: 'PATCH',
+      if (simulatedRole === 'admin' && !pending) {
+        // Super Admin: Direct update to database
+        const userRes = await fetch('/api/users', {
+          method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            id: pending.recordId,
-            modulePath: '/admin/user-management',
-            title: editName.trim(),
-            category: 'UserEdit',
-            valueText: username,
-            description: JSON.stringify({
-              nama: editName.trim(),
-              role: editRole,
-              status: editStatus,
-              requestedBy: createdBy,
-            }),
-            status,
+            id: editingUser.id,
+            name: formName.trim(),
+            username: formUsername,
+            email: `${formUsername}@example.com`,
+            role: formRole,
+            status: formStatus,
           }),
         });
+
+        if (!userRes.ok) {
+          const error = await userRes.json();
+          throw new Error(error.error || 'Gagal update user di database');
+        }
+        await loadDatabaseUsers();
+        triggerToast(`✅ Berhasil! Data user "${editingUser.nama}" berhasil diubah di database.`);
       } else {
-        res = await fetch('/api/module-records', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            modulePath: '/admin/user-management',
-            moduleName: 'User Management',
-            title: editName.trim(),
-            category: 'UserEdit',
-            valueText: username,
-            description: JSON.stringify({
-              nama: editName.trim(),
-              role: editRole,
-              status: editStatus,
-              requestedBy: createdBy,
+        // Operator SID or pending edit: Use module-records for approval
+        let res;
+        if (pending) {
+          res = await fetch('/api/module-records', {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: pending.recordId,
+              modulePath: '/admin/user-management',
+              title: formName.trim(),
+              category: 'UserEdit',
+              valueText: username,
+              description: JSON.stringify({
+                nama: formName.trim(),
+                role: formRole,
+                status: formStatus,
+                requestedBy: createdBy,
+              }),
+              status,
             }),
-            status,
-          }),
-        });
-      }
+          });
+        } else {
+          res = await fetch('/api/module-records', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              modulePath: '/admin/user-management',
+              moduleName: 'User Management',
+              title: formName.trim(),
+              category: 'UserEdit',
+              valueText: username,
+              description: JSON.stringify({
+                nama: formName.trim(),
+                role: formRole,
+                status: formStatus,
+                requestedBy: createdBy,
+              }),
+              status,
+            }),
+          });
+        }
 
-      if (!res.ok) throw new Error('Gagal menyimpan perubahan');
-      await loadDatabaseUsers();
-
-      if (simulatedRole === 'admin') {
-        triggerToast(`✅ Berhasil! Data user "${editUser.nama}" diubah langsung (Instan).`);
-      } else {
+        if (!res.ok) throw new Error('Gagal menyimpan perubahan');
+        await loadDatabaseUsers();
         triggerToast(`⏳ Perubahan diajukan! Menunggu persetujuan dari Super Admin...`, 'info');
       }
-      setEditUser(null);
-    } catch {
-      triggerToast('❌ Gagal mengajukan edit user.', 'error');
+      setEditingUser(null);
+      setOpenDialog(false);
+    } catch (error: any) {
+      triggerToast(`❌ ${error.message}`, 'error');
     } finally {
       setSaving(false);
     }
@@ -399,40 +440,49 @@ export default function UserManagementPage() {
       return;
     }
 
-    if (!confirm(`Apakah Anda yakin ingin menghapus user "${user.nama}"?`)) return;
+    if (!confirm(`Apakah Anda yakin ingin menghapus user "${user.nama}"? Data tidak dapat dikembalikan.`)) return;
 
     try {
-      const status = simulatedRole === 'admin' ? 'Selesai' : 'Baru';
-      const createdBy = simulatedRole === 'admin' ? 'Super Admin' : 'Operator SID';
-
-      // If there's already a pending deletion, just update or reuse it
-      const res = await fetch('/api/module-records', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          modulePath: '/admin/user-management',
-          moduleName: 'User Management',
-          title: user.nama,
-          category: 'UserDelete',
-          valueText: user.username,
-          description: JSON.stringify({
-            nama: user.nama,
-            requestedBy: createdBy,
-          }),
-          status,
-        }),
-      });
-
-      if (!res.ok) throw new Error('Gagal mengajukan penghapusan');
-      await loadDatabaseUsers();
-
       if (simulatedRole === 'admin') {
-        triggerToast(`✅ Berhasil! User "${user.nama}" telah dihapus langsung.`);
+        // Super Admin: Direct delete from database
+        const userRes = await fetch(`/api/users?id=${user.id}`, {
+          method: 'DELETE',
+        });
+
+        if (!userRes.ok) {
+          const error = await userRes.json();
+          throw new Error(error.error || 'Gagal hapus user dari database');
+        }
+        await loadDatabaseUsers();
+        triggerToast(`✅ Berhasil! User "${user.nama}" telah dihapus dari database.`);
       } else {
+        // Operator SID: Use module-records for approval
+        const status = 'Baru';
+        const createdBy = 'Operator SID';
+
+        const res = await fetch('/api/module-records', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            modulePath: '/admin/user-management',
+            moduleName: 'User Management',
+            title: user.nama,
+            category: 'UserDelete',
+            valueText: user.username,
+            description: JSON.stringify({
+              nama: user.nama,
+              requestedBy: createdBy,
+            }),
+            status,
+          }),
+        });
+
+        if (!res.ok) throw new Error('Gagal mengajukan penghapusan');
+        await loadDatabaseUsers();
         triggerToast(`⏳ Usulan hapus berhasil dikirim! Menunggu persetujuan Super Admin...`, 'info');
       }
-    } catch {
-      triggerToast('❌ Gagal memproses penghapusan user.', 'error');
+    } catch (error: any) {
+      triggerToast(`❌ ${error.message}`, 'error');
     }
   };
 
@@ -441,6 +491,26 @@ export default function UserManagementPage() {
     if (!add) return;
 
     try {
+      // First, save to database User
+      const userRes = await fetch('/api/users', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: add.nama,
+          username: username,
+          email: `${username}@example.com`,
+          password: 'password123',
+          role: add.role,
+          status: add.status,
+        }),
+      });
+
+      if (!userRes.ok) {
+        const error = await userRes.json();
+        throw new Error(error.error || 'Gagal menyimpan user ke database');
+      }
+
+      // Then, update module-records to 'Selesai'
       const res = await fetch('/api/module-records', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -462,9 +532,9 @@ export default function UserManagementPage() {
 
       if (!res.ok) throw new Error('Gagal menyetujui pendaftaran');
       await loadDatabaseUsers();
-      triggerToast(`✅ Pendaftaran user baru "${add.nama}" berhasil disetujui.`);
-    } catch {
-      triggerToast('❌ Gagal menyetujui pendaftaran.', 'error');
+      triggerToast(`✅ Pendaftaran user baru "${add.nama}" berhasil disetujui dan disimpan ke database.`);
+    } catch (error: any) {
+      triggerToast(`❌ ${error.message}`, 'error');
     }
   };
 
@@ -490,6 +560,33 @@ export default function UserManagementPage() {
     if (!edit) return;
 
     try {
+      // Find the user in the database
+      const usersRes = await fetch('/api/users');
+      const usersData = await usersRes.json();
+      const user = usersData.data.find((u: any) => u.username === username);
+      
+      if (user) {
+        // Update the user in database
+        const userRes = await fetch('/api/users', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: user.id,
+            name: edit.nama,
+            username: username,
+            email: `${username}@example.com`,
+            role: edit.role,
+            status: edit.status,
+          }),
+        });
+
+        if (!userRes.ok) {
+          const error = await userRes.json();
+          throw new Error(error.error || 'Gagal update user di database');
+        }
+      }
+
+      // Then, update module-records to 'Selesai'
       const res = await fetch('/api/module-records', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -511,9 +608,9 @@ export default function UserManagementPage() {
 
       if (!res.ok) throw new Error('Gagal menyetujui edit');
       await loadDatabaseUsers();
-      triggerToast(`✅ Perubahan data user "${edit.nama}" berhasil disetujui.`);
-    } catch {
-      triggerToast('❌ Gagal menyetujui edit.', 'error');
+      triggerToast(`✅ Perubahan data user "${edit.nama}" berhasil disetujui dan disimpan ke database.`);
+    } catch (error: any) {
+      triggerToast(`❌ ${error.message}`, 'error');
     }
   };
 
@@ -539,6 +636,24 @@ export default function UserManagementPage() {
     if (!del) return;
 
     try {
+      // Find the user in the database
+      const usersRes = await fetch('/api/users');
+      const usersData = await usersRes.json();
+      const user = usersData.data.find((u: any) => u.username === username);
+      
+      if (user) {
+        // Delete the user from database
+        const userRes = await fetch(`/api/users?id=${user.id}`, {
+          method: 'DELETE',
+        });
+
+        if (!userRes.ok) {
+          const error = await userRes.json();
+          throw new Error(error.error || 'Gagal hapus user dari database');
+        }
+      }
+
+      // Then, update module-records to 'Selesai'
       const res = await fetch('/api/module-records', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -557,9 +672,9 @@ export default function UserManagementPage() {
 
       if (!res.ok) throw new Error('Gagal menyetujui hapus');
       await loadDatabaseUsers();
-      triggerToast(`✅ Penghapusan user "${username}" berhasil disetujui.`);
-    } catch {
-      triggerToast('❌ Gagal menyetujui penghapusan.', 'error');
+      triggerToast(`✅ Penghapusan user "${username}" berhasil disetujui dan dihapus dari database.`);
+    } catch (error: any) {
+      triggerToast(`❌ ${error.message}`, 'error');
     }
   };
 
@@ -770,11 +885,12 @@ export default function UserManagementPage() {
               </div>
               <button 
                 onClick={() => {
-                  setAddName('');
-                  setAddUsername('');
-                  setAddRole('Warga');
-                  setAddStatus('Aktif');
-                  setOpenAddDialog(true);
+                  setEditingUser(null);
+                  setFormName('');
+                  setFormUsername('');
+                  setFormRole('Warga');
+                  setFormStatus('Aktif');
+                  setOpenDialog(true);
                 }}
                 className="px-3 py-2 bg-indigo-600 text-white text-xs font-bold rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-1.5"
               >
@@ -985,173 +1101,66 @@ export default function UserManagementPage() {
         </CardContent>
       </Card>
 
-      {/* Edit User Dialog */}
-      <Dialog open={!!editUser} onOpenChange={(open) => !open && setEditUser(null)}>
-        <DialogContent className="max-w-md">
+      {/* Unified User Form Dialog */}
+      <Dialog open={openDialog} onOpenChange={(open) => !open && setOpenDialog(false)}>
+        <DialogContent data-real-action-root className="max-w-md bg-white shadow-2xl border-2">
           <DialogHeader>
             <DialogTitle className="flex items-center gap-2">
-              <Edit className="w-5 h-5 text-amber-500" />
-              Edit Data Pengguna: {editUser?.nama}
+              {editingUser ? <Edit className="w-5 h-5 text-amber-500" /> : <UserPlus className="w-5 h-5 text-indigo-600" />}
+              {editingUser ? `Edit Data Pengguna: ${editingUser.nama}` : 'Tambah Data Pengguna Baru'}
             </DialogTitle>
           </DialogHeader>
-          <form onSubmit={handleSaveEdit} className="space-y-4 pt-2">
+          <form onSubmit={editingUser ? handleSaveEdit : handleCreateUser} className="space-y-4 pt-2">
             <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 text-xs text-blue-800">
-              <span className="font-bold block mb-1">ℹ️ Info Perubahan:</span>
+              <span className="font-bold block mb-1">ℹ️ Info {editingUser ? 'Perubahan' : 'Pendaftaran'}:</span>
               <span className="block">
-                Anda sedang login sebagai <b>{simulatedRole === 'admin' ? '🔴 Super Admin' : '🔵 Operator SID'}</b>
-              </span>
-            </div>
-
-            <div>
-              <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Username (Tidak dapat diubah)</label>
-              <input
-                value={editUser?.username || ''}
-                disabled
-                className="w-full h-10 px-3 rounded-lg border bg-slate-100 text-slate-500 text-sm font-mono"
-              />
-            </div>
-
-            <div>
-              <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Nama Lengkap</label>
-              <div className="flex gap-2 items-center">
-                <span className="text-slate-500 text-xs">{editUser?.nama} →</span>
-                <input
-                  value={editName}
-                  onChange={(e) => setEditName(e.target.value)}
-                  required
-                  minLength={3}
-                  placeholder="Masukkan nama lengkap baru"
-                  className="flex-1 h-10 px-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm"
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Role</label>
-                <select
-                  value={editRole}
-                  onChange={(e) => setEditRole(e.target.value)}
-                  className="w-full h-10 px-3 rounded-lg border bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm"
-                >
-                  {ROLE_OPTIONS.map((role) => (
-                    <option key={role} value={role}>{role}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Status</label>
-                <select
-                  value={editStatus}
-                  onChange={(e) => setEditStatus(e.target.value)}
-                  className="w-full h-10 px-3 rounded-lg border bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm"
-                >
-                  {STATUS_OPTIONS.map((status) => (
-                    <option key={status} value={status}>{status}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {simulatedRole === 'admin' ? (
-              <div className="rounded-lg bg-green-50/50 border border-green-200 p-3 text-xs text-green-800 flex flex-col gap-1.5">
-                <span className="font-bold flex items-center gap-1">
-                  <CheckCircle2 className="w-4 h-4 text-green-600" />
-                  Akses Super Admin - Perubahan INSTAN
-                </span>
-                <span className="text-green-700">
-                  Perubahan yang Anda buat akan disimpan langsung dan segera tampil di sistem tanpa perlu persetujuan.
-                </span>
-              </div>
-            ) : (
-              <div className="rounded-lg bg-amber-50/50 border border-amber-200 p-3 text-xs text-amber-800 flex flex-col gap-1.5">
-                <span className="font-bold flex items-center gap-1">
-                  <AlertTriangle className="w-4 h-4 text-amber-600" />
-                  Akses Operator - Perubahan MENUNGGU PERSETUJUAN
-                </span>
-                <span className="text-amber-700">
-                  Perubahan akan diajukan ke database dan harus disetujui oleh Super Admin sebelum diterapkan ke sistem.
-                </span>
-              </div>
-            )}
-
-            <div className="flex gap-2 justify-end pt-4 border-t">
-              <button
-                type="button"
-                onClick={() => setEditUser(null)}
-                className="px-4 py-2 border rounded-lg text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors"
-              >
-                Batal
-              </button>
-              <button
-                type="submit"
-                disabled={saving}
-                className="px-4 py-2 rounded-lg text-xs font-bold text-white shadow-md transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ backgroundColor: simulatedRole === 'admin' ? '#10b981' : '#f59e0b' }}
-              >
-                {saving ? (
-                  <span className="flex items-center gap-1">
-                    ⏳ Menyimpan...
-                  </span>
-                ) : simulatedRole === 'admin' ? (
-                  <span>✅ Simpan Perubahan (Instan)</span>
-                ) : (
-                  <span>📤 Ajukan Perubahan</span>
-                )}
-              </button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
-
-      {/* Tambah User Dialog */}
-      <Dialog open={openAddDialog} onOpenChange={(open) => !open && setOpenAddDialog(false)}>
-        <DialogContent className="max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <UserPlus className="w-5 h-5 text-indigo-600" />
-              Tambah Data Pengguna Baru
-            </DialogTitle>
-          </DialogHeader>
-          <form onSubmit={handleCreateUser} className="space-y-4 pt-2">
-            <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 text-xs text-blue-800">
-              <span className="font-bold block mb-1">ℹ️ Info Pendaftaran:</span>
-              <span className="block">
-                Anda sedang mendaftarkan user sebagai <b>{simulatedRole === 'admin' ? '🔴 Super Admin' : '🔵 Operator SID'}</b>
+                Anda sedang {editingUser ? 'mengedit' : 'mendaftarkan'} user sebagai <b>{simulatedRole === 'admin' ? '🔴 Super Admin' : '🔵 Operator SID'}</b>
               </span>
             </div>
 
             <div>
               <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Nama Lengkap</label>
               <input
-                value={addName}
-                onChange={(e) => setAddName(e.target.value)}
+                value={formName}
+                onChange={(e) => setFormName(e.target.value)}
                 required
                 minLength={3}
-                placeholder="Masukkan nama lengkap"
+                placeholder={editingUser ? 'Masukkan nama lengkap baru' : 'Masukkan nama lengkap'}
                 className="w-full h-10 px-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm"
               />
             </div>
 
-            <div>
-              <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Username</label>
-              <input
-                value={addUsername}
-                onChange={(e) => setAddUsername(e.target.value)}
-                required
-                minLength={3}
-                placeholder="Masukkan username unik"
-                className="w-full h-10 px-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm font-mono"
-              />
-            </div>
+            {!editingUser && (
+              <div>
+                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Username</label>
+                <input
+                  value={formUsername}
+                  onChange={(e) => setFormUsername(e.target.value)}
+                  required
+                  minLength={3}
+                  placeholder="Masukkan username unik"
+                  className="w-full h-10 px-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm font-mono"
+                />
+              </div>
+            )}
+
+            {editingUser && (
+              <div>
+                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Username (Tidak dapat diubah)</label>
+                <input
+                  value={formUsername}
+                  disabled
+                  className="w-full h-10 px-3 rounded-lg border bg-slate-100 text-slate-500 text-sm font-mono"
+                />
+              </div>
+            )}
 
             <div className="grid grid-cols-2 gap-3">
               <div>
                 <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Role</label>
                 <select
-                  value={addRole}
-                  onChange={(e) => setAddRole(e.target.value)}
+                  value={formRole}
+                  onChange={(e) => setFormRole(e.target.value)}
                   className="w-full h-10 px-3 rounded-lg border bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm"
                 >
                   {ROLE_OPTIONS.map((role) => (
@@ -1163,8 +1172,8 @@ export default function UserManagementPage() {
               <div>
                 <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Status</label>
                 <select
-                  value={addStatus}
-                  onChange={(e) => setAddStatus(e.target.value)}
+                  value={formStatus}
+                  onChange={(e) => setFormStatus(e.target.value)}
                   className="w-full h-10 px-3 rounded-lg border bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm"
                 >
                   {STATUS_OPTIONS.map((status) => (
@@ -1178,20 +1187,26 @@ export default function UserManagementPage() {
               <div className="rounded-lg bg-green-50/50 border border-green-200 p-3 text-xs text-green-800 flex flex-col gap-1.5">
                 <span className="font-bold flex items-center gap-1">
                   <CheckCircle2 className="w-4 h-4 text-green-600" />
-                  Akses Super Admin - Pendaftaran INSTAN
+                  Akses Super Admin - {editingUser ? 'Perubahan' : 'Pendaftaran'} INSTAN
                 </span>
                 <span className="text-green-700">
-                  User akan didaftarkan langsung ke database dan segera muncul di daftar pengguna.
+                  {editingUser 
+                    ? 'Perubahan yang Anda buat akan disimpan langsung dan segera tampil di sistem tanpa perlu persetujuan.'
+                    : 'User akan didaftarkan langsung ke database dan segera muncul di daftar pengguna.'
+                  }
                 </span>
               </div>
             ) : (
               <div className="rounded-lg bg-amber-50/50 border border-amber-200 p-3 text-xs text-amber-800 flex flex-col gap-1.5">
                 <span className="font-bold flex items-center gap-1">
                   <AlertTriangle className="w-4 h-4 text-amber-600" />
-                  Akses Operator - Pendaftaran MENUNGGU PERSETUJUAN
+                  Akses Operator - {editingUser ? 'Perubahan' : 'Pendaftaran'} MENUNGGU PERSETUJUAN
                 </span>
                 <span className="text-amber-700">
-                  Usulan pendaftaran user baru akan dikirimkan dan menunggu persetujuan Super Admin.
+                  {editingUser
+                    ? 'Perubahan akan diajukan ke database dan harus disetujui oleh Super Admin sebelum diterapkan ke sistem.'
+                    : 'Usulan pendaftaran user baru akan dikirimkan dan menunggu persetujuan Super Admin.'
+                  }
                 </span>
               </div>
             )}
@@ -1199,7 +1214,7 @@ export default function UserManagementPage() {
             <div className="flex gap-2 justify-end pt-4 border-t">
               <button
                 type="button"
-                onClick={() => setOpenAddDialog(false)}
+                onClick={() => setOpenDialog(false)}
                 className="px-4 py-2 border rounded-lg text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors"
               >
                 Batal
@@ -1215,9 +1230,9 @@ export default function UserManagementPage() {
                     ⏳ Menyimpan...
                   </span>
                 ) : simulatedRole === 'admin' ? (
-                  <span>✅ Tambah User (Instan)</span>
+                  <span>{editingUser ? '✅ Simpan Perubahan (Instan)' : '✅ Tambah User (Instan)'}</span>
                 ) : (
-                  <span>📤 Ajukan Pendaftaran</span>
+                  <span>{editingUser ? '📤 Ajukan Perubahan' : '📤 Ajukan Pendaftaran'}</span>
                 )}
               </button>
             </div>

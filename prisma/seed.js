@@ -161,7 +161,7 @@ async function main() {
       email: 'layanan@borneo.id',
       username: 'layanan_andi',
       password: 'password123',
-      role: 'pengguna_layanan',
+      role: 'layanan_slv',
       status: 'Aktif',
       desaId: desa.id,
     },

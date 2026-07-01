@@ -12,7 +12,7 @@ export type RoleKey =
   | "warga"
   | "dinas_pmd"
   | "peneliti"
-  | "pengguna_layanan";
+  | "layanan_slv";
 
 export interface SidebarItem {
   label: string;
@@ -190,64 +190,65 @@ export const roleConfig: Record<RoleKey, RoleConfig> = {
     ],
   },
   
-  // === PENGGUNA LAYANAN (SDGs 3, 4 & 18) ===
-  pengguna_layanan: {
-    key: "pengguna_layanan",
-    nama: "Pengguna Layanan",
+  // === PENGGUNA LAYANAN / LAYANAN SLV (SDGs 3, 4 & 18 + Profil) ===
+  layanan_slv: {
+    key: "layanan_slv",
+    nama: "Layanan SLV",
     warna: "#2e7d32",
-    dashboardPath: "/pengguna-layanan",
+    dashboardPath: "/layanan-slv",
     sidebarItems: [
+      { label: "Dashboard Utama", path: "/layanan-slv", group: "DASHBOARD" },
       // SDGs 3 - DESA SEHAT
-      { label: "Posyandu Digital", path: "/sehat/posyandu", group: "SDGS 3 - DESA SEHAT" },
-      { label: "Jadwal Kesehatan", path: "/sehat/laporan-kesehatan", group: "SDGS 3 - DESA SEHAT" },
-      { label: "Monitoring Kesehatan Keluarga", path: "/sehat/monitoring", group: "SDGS 3 - DESA SEHAT" },
-      { label: "Riwayat Kesehatan", path: "/sehat/rekam-medis", group: "SDGS 3 - DESA SEHAT" },
-      { label: "Edukasi Kesehatan", path: "/sehat/stunting", group: "SDGS 3 - DESA SEHAT" },
-      { label: "Telekonsultasi", path: "/sehat/telemedicine", group: "SDGS 3 - DESA SEHAT" },
-      
+      { label: "Posyandu Digital", path: "/layanan-slv/posyandu-digital", group: "SDGS 3 - DESA SEHAT" },
+      { label: "Jadwal Kesehatan", path: "/layanan-slv/jadwal-kesehatan", group: "SDGS 3 - DESA SEHAT" },
+      { label: "Monitoring Kesehatan", path: "/layanan-slv/monitoring-kesehatan", group: "SDGS 3 - DESA SEHAT" },
+      { label: "Riwayat Kesehatan", path: "/layanan-slv/riwayat-kesehatan", group: "SDGS 3 - DESA SEHAT" },
+      { label: "Edukasi Kesehatan", path: "/layanan-slv/edukasi-kesehatan", group: "SDGS 3 - DESA SEHAT" },
+      { label: "Telekonsultasi", path: "/layanan-slv/telekonsultasi", group: "SDGS 3 - DESA SEHAT" },
+
       // SDGs 4 - PENDIDIKAN BERKUALITAS
-      { label: "Literasi Digital", path: "/belajar/e-learning", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
-      { label: "Kelas Desa", path: "/belajar/kelas-virtual", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
-      { label: "Pelatihan Online", path: "/belajar/platform-pembelajaran", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
-      { label: "Sertifikasi", path: "/belajar/laporan-pembelajaran", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
-      { label: "Riwayat Pelatihan", path: "/belajar/pelatihan-guru", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
-      { label: "Materi Pembelajaran", path: "/belajar/pusat-literasi", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
-      
+      { label: "Literasi Digital", path: "/layanan-slv/literasi-digital", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
+      { label: "Kelas Desa", path: "/layanan-slv/kelas-desa", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
+      { label: "Pelatihan Online", path: "/layanan-slv/pelatihan-online", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
+      { label: "Sertifikasi", path: "/layanan-slv/sertifikasi", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
+      { label: "Riwayat Pelatihan", path: "/layanan-slv/riwayat-pelatihan", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
+
       // SDGs 18 - KELEMBAGAAN & BUDAYA
-      { label: "Informasi Adat", path: "/adat/kelembagaan-adat", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
-      { label: "Kalender Adat", path: "/adat/kalender-adat", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
-      { label: "Arsip Budaya", path: "/adat/arsip", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
-      { label: "Forum Desa", path: "/warga/aspirasi", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
-      { label: "Musyawarah Digital", path: "/adat/musyawarah", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
-      { label: "Partisipasi Musyawarah", path: "/adat/musyawarah-adat", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
-      
+      { label: "Informasi Adat", path: "/layanan-slv/informasi-adat", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+      { label: "Kalender Adat", path: "/layanan-slv/kalender-adat", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+      { label: "Arsip Budaya", path: "/layanan-slv/arsip-budaya", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+      { label: "Forum Desa", path: "/layanan-slv/forum-desa", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+      { label: "Musyawarah Digital", path: "/layanan-slv/musyawarah-digital", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+      { label: "Partisipasi Musyawarah", path: "/layanan-slv/partisipasi-musyawarah", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+
       // PROFIL PENGGUNA
-      { label: "Profil Saya", path: "/warga/profil-desa", group: "PROFIL PENGGUNA" },
-      { label: "Riwayat Layanan", path: "/warga/survey-qol", group: "PROFIL PENGGUNA" },
-      { label: "Notifikasi", path: "/warga/notifikasi-desa", group: "PROFIL PENGGUNA" },
-      { label: "Bantuan & Panduan", path: "/warga/bantuan", group: "PROFIL PENGGUNA" },
+      { label: "Profil Saya", path: "/layanan-slv/profil-saya", group: "PROFIL PENGGUNA" },
+      { label: "Riwayat Layanan", path: "/layanan-slv/riwayat-layanan", group: "PROFIL PENGGUNA" },
+      { label: "Notifikasi", path: "/layanan-slv/notifikasi", group: "PROFIL PENGGUNA" },
+      { label: "Bantuan & Panduan", path: "/layanan-slv/bantuan-panduan", group: "PROFIL PENGGUNA" },
     ],
   },
 };
 
 roleConfig.admin_super.sidebarItems = [
+  { label: "Dashboard", path: "/admin", group: "FRAMEWORK & ASSESSMENT" },
   { label: "Master Framework", path: "/admin/master-framework", group: "FRAMEWORK & ASSESSMENT" },
   { label: "Framework Versioning", path: "/admin/framework-versioning", group: "FRAMEWORK & ASSESSMENT" },
   { label: "Manajemen Periode", path: "/admin/manajemen-periode", group: "FRAMEWORK & ASSESSMENT" },
-  { label: "Manajemen User & Role", path: "/admin/user-management", group: "FRAMEWORK & ASSESSMENT" },
   { label: "Validasi Data", path: "/admin/validasi-data", group: "FRAMEWORK & ASSESSMENT" },
-  { label: "Integrasi Data Desa", path: "/admin/integrasi-data-desa", group: "DATA & INTEGRASI" },
-  { label: "Audit Log", path: "/admin/audit-log", group: "DATA & INTEGRASI" },
-  { label: "Governance Management", path: "/admin/governance-management", group: "TATA KELOLA & DSS" },
-  { label: "DSS Knowledge Base", path: "/admin/dss-knowledge-base", group: "TATA KELOLA & DSS" },
-  { label: "Readiness, Maturity & QoL Analytics", path: "/admin/dashboard-analytics", group: "PENELITIAN & EVALUASI ARTEFAK" },
-  { label: "Evaluasi Artefak", path: "/admin/evaluasi-artefak", group: "PENELITIAN & EVALUASI ARTEFAK" },
-  { label: "Expert Validation", path: "/admin/expert-validation", group: "PENELITIAN & EVALUASI ARTEFAK" },
-  { label: "UAT Results (SUS & Feedback)", path: "/admin/uat-results", group: "PENELITIAN & EVALUASI ARTEFAK" },
-  { label: "Research Repository", path: "/admin/research-repository", group: "PENELITIAN & EVALUASI ARTEFAK" },
-  { label: "Konfigurasi Sistem", path: "/admin/konfigurasi-sistem", group: "SISTEM" },
-  { label: "Backup & Restore", path: "/admin/backup-restore", group: "SISTEM" },
-  { label: "Pengaturan Notifikasi", path: "/admin/pengaturan-notifikasi", group: "SISTEM" },
+  { label: "Integrasi Data Desa", path: "/admin/integrasi-data-desa", group: "FRAMEWORK & ASSESSMENT" },
+  { label: "Governance Management", path: "/admin/governance-management", group: "GOVERNANCE & DSS" },
+  { label: "DSS Knowledge Base", path: "/admin/dss-knowledge-base", group: "GOVERNANCE & DSS" },
+  { label: "DSS Recommendation", path: "/admin/dss-recommendation", group: "GOVERNANCE & DSS" },
+  { label: "Evaluasi Artefak", path: "/admin/evaluasi-artefak", group: "EVALUATION & RESEARCH" },
+  { label: "Expert Validation", path: "/admin/expert-validation", group: "EVALUATION & RESEARCH" },
+  { label: "UAT Results (SUS & Feedback)", path: "/admin/uat-results", group: "EVALUATION & RESEARCH" },
+  { label: "Research Repository", path: "/admin/research-repository", group: "EVALUATION & RESEARCH" },
+  { label: "Manajemen User & Role", path: "/admin/user-management", group: "ADMINISTRATION" },
+  { label: "Audit Log", path: "/admin/audit-log", group: "ADMINISTRATION" },
+  { label: "Sistem & Pengaturan", path: "/admin/konfigurasi-sistem", group: "ADMINISTRATION" },
+  { label: "Backup & Restore", path: "/admin/backup-restore", group: "ADMINISTRATION" },
+  { label: "Notifikasi Sistem", path: "/admin/pengaturan-notifikasi", group: "ADMINISTRATION" },
 ];
 
 roleConfig.operator_sid.sidebarItems = [
@@ -398,11 +399,14 @@ roleConfig.dinas_pmd.sidebarItems = [
 ];
 
 roleConfig.peneliti.sidebarItems = [
+  { label: "Dashboard - Ringkasan Penelitian", path: "/peneliti", group: "DASHBOARD" },
+  { label: "Smart Living Dashboard Analytics", path: "/peneliti/dashboard-analytics", group: "DASHBOARD ANALYTICS" },
   { label: "Research Overview", path: "/peneliti/research-overview", group: "RESEARCH OVERVIEW" },
   { label: "Dataset Assessment", path: "/peneliti/dataset-assessment", group: "RESEARCH OVERVIEW" },
   { label: "Analisis Readiness", path: "/peneliti/kuesioner-readiness", group: "ANALISIS FRAMEWORK" },
   { label: "Analisis Maturity", path: "/peneliti/penilaian-maturity", group: "ANALISIS FRAMEWORK" },
   { label: "Analisis Quality of Life", path: "/peneliti/analisis-quality-of-life", group: "ANALISIS FRAMEWORK" },
+  { label: "SDGs Dashboard", path: "/peneliti/sdgs-dashboard", group: "ANALISIS FRAMEWORK" },
   { label: "Analisis DSS Recommendation", path: "/peneliti/pairwise-comparison", group: "ANALISIS FRAMEWORK" },
   { label: "Validasi Artefak", path: "/peneliti/validasi-artefak", group: "VALIDASI & EVALUASI" },
   { label: "UAT & SUS Evaluation", path: "/peneliti/uat-sus", group: "VALIDASI & EVALUASI" },
@@ -423,8 +427,8 @@ export function getRoleKey(dbRole: string): RoleKey {
 // Get role config from path
 export function getRoleFromPath(pathname: string, userRole?: string): RoleConfig {
   // === PRIORITAS 1: Cek apakah path ada di sidebar role yang sedang login ===
-  // Ini memastikan pengguna_layanan (dan role lain) yang mengakses shared routes
-  // seperti /warga, /adat, /sehat, /belajar tetap mendapat sidebar yang benar.
+  // Ini memastikan layanan_slv (dan role lain) yang mengakses route modulnya
+  // tetap mendapat sidebar yang benar.
   if (userRole && userRole in roleConfig) {
     const userConfig = roleConfig[userRole as RoleKey];
 
@@ -464,7 +468,8 @@ export function getRoleFromPath(pathname: string, userRole?: string): RoleConfig
   if (pathname.startsWith("/warga")) return roleConfig.warga;
   if (pathname.startsWith("/dinas-pmd")) return roleConfig.dinas_pmd;
   if (pathname.startsWith("/peneliti")) return roleConfig.peneliti;
-  if (pathname.startsWith("/pengguna-layanan")) return roleConfig.pengguna_layanan;
+  if (pathname.startsWith("/layanan-slv")) return roleConfig.layanan_slv;
+  if (pathname.startsWith("/pengguna-layanan")) return roleConfig.layanan_slv;
   if (pathname.startsWith("/sustainability")) return roleConfig.admin_super;
 
   // === PRIORITAS 3: Kembalikan config userRole sebagai fallback terakhir ===
@@ -505,6 +510,253 @@ export function getModulFromPath(pathname: string): { nama: string; warna: strin
 }
 
 export function getFiturFromPath(pathname: string, modul: { sidebarItems: { label: string; path: string }[] }): string {
-  const item = modul.sidebarItems.find((i) => pathname === i.path || (i.path !== "/" && pathname.startsWith(i.path + "/")));
+  const sortedItems = [...modul.sidebarItems].sort((a, b) => b.path.length - a.path.length);
+  const item = sortedItems.find((i) => pathname === i.path || (i.path !== "/" && pathname.startsWith(i.path + "/")));
   return item?.label ?? "Dashboard";
 }
+
+export interface LayananSLVMetadata {
+  fieldDataUtama: string;
+  isiDataInformasi: string;
+  fungsiSistem: string;
+  output: string;
+  placeholderTitle: string;
+  placeholderCategory: string;
+  placeholderValue: string;
+  placeholderDescription: string;
+  readOnly?: boolean;
+}
+
+export const layananSLVMetadata: Record<string, LayananSLVMetadata> = {
+  "Posyandu Digital": {
+    fieldDataUtama: "Data Balita, Ibu Hamil",
+    isiDataInformasi: "Data Kesehatan",
+    fungsiSistem: "Pelayanan Posyandu",
+    output: "Riwayat Posyandu",
+    placeholderTitle: "Nama Balita / Ibu Hamil",
+    placeholderCategory: "Jenis Pelayanan (e.g. Imunisasi, Vitamin, Timbang)",
+    placeholderValue: "Hasil Pengukuran (e.g. BB 12kg, TB 90cm)",
+    placeholderDescription: "Catatan atau riwayat pemeriksaan posyandu",
+    readOnly: true
+  },
+  "Jadwal Kesehatan": {
+    fieldDataUtama: "Jadwal",
+    isiDataInformasi: "Agenda",
+    fungsiSistem: "Monitoring Jadwal",
+    output: "Jadwal",
+    placeholderTitle: "Nama Agenda Kegiatan Kesehatan",
+    placeholderCategory: "Kategori Agenda (e.g. Posyandu Bulanan, Vaksinasi Massal)",
+    placeholderValue: "Waktu & Tempat Pelaksanaan",
+    placeholderDescription: "Detail deskripsi jadwal dan persiapan kegiatan",
+    readOnly: true
+  },
+  "Monitoring Kesehatan": {
+    fieldDataUtama: "Pemeriksaan",
+    isiDataInformasi: "Riwayat",
+    fungsiSistem: "Monitoring",
+    output: "Status Kesehatan",
+    placeholderTitle: "Nama Pasien / Warga",
+    placeholderCategory: "Kategori Pemeriksaan (e.g. Tekanan Darah, Kolesterol)",
+    placeholderValue: "Status Kesehatan (e.g. Sehat, Perlu Rujukan)",
+    placeholderDescription: "Detail riwayat hasil pemeriksaan dan catatan dokter",
+    readOnly: true
+  },
+  "Riwayat Kesehatan": {
+    fieldDataUtama: "Rekam Medis",
+    isiDataInformasi: "Riwayat",
+    fungsiSistem: "Riwayat Layanan",
+    output: "Rekam Medis",
+    placeholderTitle: "Nomor RM / Nama Pasien",
+    placeholderCategory: "Jenis Layanan / Tindakan Medis",
+    placeholderValue: "Status Rekam Medis (e.g. Selesai, Tindak Lanjut)",
+    placeholderDescription: "Rincian diagnosa, resep obat, dan riwayat rekam medis",
+    readOnly: true
+  },
+  "Edukasi Kesehatan": {
+    fieldDataUtama: "Materi",
+    isiDataInformasi: "Video/PDF",
+    fungsiSistem: "Edukasi",
+    output: "Materi",
+    placeholderTitle: "Judul Materi Edukasi Kesehatan",
+    placeholderCategory: "Format Materi (e.g. Video, PDF, Infografis)",
+    placeholderValue: "Target Edukasi (e.g. Ibu Hamil, Remaja, Lansia)",
+    placeholderDescription: "Ringkasan konten edukasi atau link materi/sumber",
+    readOnly: true
+  },
+  "Telekonsultasi": {
+    fieldDataUtama: "Dokter, Jadwal",
+    isiDataInformasi: "Booking",
+    fungsiSistem: "Konsultasi",
+    output: "Jadwal Konsultasi",
+    placeholderTitle: "Nama Dokter / Tenaga Medis",
+    placeholderCategory: "Spesialisasi (e.g. Dokter Umum, Spesialis Anak)",
+    placeholderValue: "Jadwal Konsultasi (e.g. Senin 09:00 WIB)",
+    placeholderDescription: "Detail link konsultasi virtual, keluhan awal, atau booking ID",
+    readOnly: true
+  },
+  "Literasi Digital": {
+    fieldDataUtama: "Modul",
+    isiDataInformasi: "Materi",
+    fungsiSistem: "Pembelajaran",
+    output: "Progress",
+    placeholderTitle: "Nama Modul / Topik Literasi",
+    placeholderCategory: "Kategori Pembelajaran (e.g. Internet Sehat, Keamanan Data)",
+    placeholderValue: "Target Waktu Penyelesaian",
+    placeholderDescription: "Isi materi modul literasi digital singkat",
+    readOnly: true
+  },
+  "Kelas Desa": {
+    fieldDataUtama: "Jadwal",
+    isiDataInformasi: "Pelatihan",
+    fungsiSistem: "Registrasi",
+    output: "Peserta",
+    placeholderTitle: "Nama Kelas Virtual / Tatap Muka",
+    placeholderCategory: "Kategori Pelatihan (e.g. Bahasa Inggris, Microsoft Office)",
+    placeholderValue: "Kapasitas & Batas Registrasi",
+    placeholderDescription: "Daftar peserta yang terdaftar dan syarat kelas",
+    readOnly: true
+  },
+  "Pelatihan Online": {
+    fieldDataUtama: "Materi",
+    isiDataInformasi: "LMS",
+    fungsiSistem: "Pembelajaran",
+    output: "Progress",
+    placeholderTitle: "Judul Pelatihan Online",
+    placeholderCategory: "Materi Platform LMS (e.g. Video Sesi 1, Kuis)",
+    placeholderValue: "Progress Belajar (e.g. 75% Selesai)",
+    placeholderDescription: "Detail status pembelajaran LMS dan nilai kuis",
+    readOnly: true
+  },
+  "Sertifikasi": {
+    fieldDataUtama: "Nilai",
+    isiDataInformasi: "Sertifikat",
+    fungsiSistem: "Generate Sertifikat",
+    output: "Sertifikat",
+    placeholderTitle: "Nama Penerima Sertifikat",
+    placeholderCategory: "Nilai Kelulusan & Predikat (e.g. 95 - Sangat Memuaskan)",
+    placeholderValue: "Nomor Sertifikat / Tautan Unduh",
+    placeholderDescription: "Detail kompetensi yang disertifikasi",
+    readOnly: true
+  },
+  "Riwayat Pelatihan": {
+    fieldDataUtama: "Riwayat",
+    isiDataInformasi: "Data Pelatihan",
+    fungsiSistem: "Riwayat",
+    output: "History",
+    placeholderTitle: "Nama Program Pelatihan Diikuti",
+    placeholderCategory: "Penyelenggara / Narasumber",
+    placeholderValue: "Status Akhir (e.g. Lulus, Berjalan)",
+    placeholderDescription: "History detail tanggal mulai dan selesai pelatihan",
+    readOnly: true
+  },
+  "Informasi Adat": {
+    fieldDataUtama: "Artikel",
+    isiDataInformasi: "Informasi",
+    fungsiSistem: "Publikasi",
+    output: "Informasi",
+    placeholderTitle: "Judul Artikel / Informasi Adat",
+    placeholderCategory: "Kategori Adat (e.g. Upacara Adat, Silsilah Budaya)",
+    placeholderValue: "Status Publikasi (e.g. Diterbitkan, Draf)",
+    placeholderDescription: "Konten lengkap artikel informasi adat dan budaya",
+    readOnly: true
+  },
+  "Kalender Adat": {
+    fieldDataUtama: "Agenda",
+    isiDataInformasi: "Jadwal",
+    fungsiSistem: "Kalender",
+    output: "Kalender Adat",
+    placeholderTitle: "Nama Ritual / Acara Adat",
+    placeholderCategory: "Kategori Ritual (e.g. Ritual Keagamaan, Festival Tahunan)",
+    placeholderValue: "Jadwal Adat (e.g. Hari Pantang, Bulan Purnama)",
+    placeholderDescription: "Detail tata cara dan lokasi upacara adat",
+    readOnly: true
+  },
+  "Arsip Budaya": {
+    fieldDataUtama: "Dokumen",
+    isiDataInformasi: "Arsip",
+    fungsiSistem: "Dokumentasi",
+    output: "Arsip",
+    placeholderTitle: "Nama Dokumen / Aset Warisan Budaya",
+    placeholderCategory: "Kategori Dokumen (e.g. Naskah Kuno, Foto Sejarah)",
+    placeholderValue: "Status Dokumentasi (e.g. Digitalized, Hardcopy)",
+    placeholderDescription: "Deskripsi fisik, arti filosofis, dan penyimpanan arsip",
+    readOnly: true
+  },
+  "Forum Desa": {
+    fieldDataUtama: "Diskusi",
+    isiDataInformasi: "Forum",
+    fungsiSistem: "Interaksi",
+    output: "Forum",
+    placeholderTitle: "Topik Diskusi / Pertanyaan Warga",
+    placeholderCategory: "Kategori Forum (e.g. Gotong Royong, Usulan Infrastruktur)",
+    placeholderValue: "Status Interaksi (e.g. Aktif, Selesai)",
+    placeholderDescription: "Detail postingan diskusi dan rangkuman pendapat warga",
+    readOnly: true
+  },
+  "Musyawarah Digital": {
+    fieldDataUtama: "Agenda",
+    isiDataInformasi: "Voting",
+    fungsiSistem: "Musyawarah",
+    output: "Keputusan",
+    placeholderTitle: "Judul Agenda Musyawarah Desa",
+    placeholderCategory: "Status Voting (e.g. Terbuka, Ditutup)",
+    placeholderValue: "Target Keputusan / Resolusi",
+    placeholderDescription: "Detail hasil musyawarah dan keputusan mufakat",
+    readOnly: true
+  },
+  "Partisipasi Musyawarah": {
+    fieldDataUtama: "Voting",
+    isiDataInformasi: "Aspirasi",
+    fungsiSistem: "Partisipasi",
+    output: "Hasil Voting",
+    placeholderTitle: "Pilihan Opsi Voting / Referendum",
+    placeholderCategory: "Topik Aspirasi Warga",
+    placeholderValue: "Hasil Perolehan Suara (e.g. Setuju 80%, Tolak 20%)",
+    placeholderDescription: "Keterangan partisipasi suara warga",
+    readOnly: true
+  },
+  "Profil Saya": {
+    fieldDataUtama: "Biodata",
+    isiDataInformasi: "Data User",
+    fungsiSistem: "Update Profil",
+    output: "Profil",
+    placeholderTitle: "Nama Lengkap / Username",
+    placeholderCategory: "Informasi Identitas (e.g. NIK, Alamat RT/RW)",
+    placeholderValue: "Status Akun (e.g. Terverifikasi)",
+    placeholderDescription: "Detail data biodata lengkap Layanan SLV",
+    readOnly: true
+  },
+  "Riwayat Layanan": {
+    fieldDataUtama: "Seluruh Aktivitas",
+    isiDataInformasi: "Riwayat",
+    fungsiSistem: "Monitoring Aktivitas",
+    output: "History",
+    placeholderTitle: "Nama Layanan / Modul Yang Diakses",
+    placeholderCategory: "Jenis Aktivitas (e.g. Booking Telemedicine, Request Surat)",
+    placeholderValue: "Status Layanan (e.g. Selesai, Proses)",
+    placeholderDescription: "Detail log riwayat aktivitas lengkap",
+    readOnly: true
+  },
+  "Notifikasi": {
+    fieldDataUtama: "Pesan Sistem",
+    isiDataInformasi: "Informasi",
+    fungsiSistem: "Push Notification",
+    output: "Notifikasi",
+    placeholderTitle: "Subjek Notifikasi Sistem",
+    placeholderCategory: "Tingkat Prioritas (e.g. Penting, Info Biasa)",
+    placeholderValue: "Status Pengiriman (e.g. Terkirim)",
+    placeholderDescription: "Isi lengkap pesan notifikasi / pengumuman sistem",
+    readOnly: true
+  },
+  "Bantuan & Panduan": {
+    fieldDataUtama: "FAQ",
+    isiDataInformasi: "Bantuan",
+    fungsiSistem: "Help Center",
+    output: "Bantuan",
+    placeholderTitle: "Topik Pertanyaan / Kendala Sistem",
+    placeholderCategory: "Kategori Bantuan (e.g. Masalah Akun, Error Aplikasi)",
+    placeholderValue: "Tautan Panduan PDF/Video",
+    placeholderDescription: "Jawaban FAQ atau langkah panduan penyelesaian kendala",
+    readOnly: true
+  }
+};

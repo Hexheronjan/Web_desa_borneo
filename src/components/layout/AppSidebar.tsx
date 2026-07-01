@@ -143,8 +143,9 @@ export function AppSidebar({ onClose }: { onClose?: () => void }) {
                   "/warga",
                   "/dinas-pmd",
                   "/peneliti",
+                  "/layanan-slv",
                 ].includes(item.path);
-                const isActive = pathname === item.path || (!isRoot && pathname.startsWith(item.path));
+                const isActive = pathname === item.path || (!isRoot && pathname.startsWith(item.path + "/"));
 
                 return (
                   <Link

@@ -106,8 +106,8 @@ export async function POST(req: NextRequest) {
     await ensureModuleRecordTable();
 
     await prisma.$executeRaw`
-      INSERT INTO ModuleRecord (id, modulePath, moduleName, title, category, description, valueText, status, createdBy)
-      VALUES (${id}, ${modulePath}, ${moduleName}, ${title}, ${category}, ${description}, ${valueText}, ${status}, ${createdBy})
+      INSERT INTO ModuleRecord (id, modulePath, moduleName, title, category, description, valueText, status, createdBy, createdAt, updatedAt)
+      VALUES (${id}, ${modulePath}, ${moduleName}, ${title}, ${category}, ${description}, ${valueText}, ${status}, ${createdBy}, NOW(), NOW())
     `;
 
     return NextResponse.json({ ok: true, id });

@@ -394,6 +394,445 @@ model ModuleRecord {
   @@index([modulePath, createdAt])
 }
 
+model Umkm {
+  id        String   @id @default(cuid())
+  desaId    String
+  nama      String
+  pemilik   String
+  bidang    String
+  omset     Float?
+  status    String   @default("Aktif")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model MasterFramework {
+  id            String   @id @default(cuid())
+  namaFramework String
+  dimensi       String   @db.Text
+  indikator     String   @db.Text
+  bobot         String
+  status        String   @default("Aktif")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model FrameworkVersioning {
+  id        String   @id @default(cuid())
+  versi     String
+  tanggal   DateTime
+  status    String   @default("Non-Aktif")
+  createdAt DateTime @default(now())
+}
+
+model ManajemenPeriode {
+  id        String   @id @default(cuid())
+  tahun     String
+  semester  String
+  status    String   @default("Tutup")
+  createdAt DateTime @default(now())
+}
+
+model ValidasiData {
+  id             String   @id @default(cuid())
+  namaDataset    String
+  jumlahData     Int
+  statusValidasi String
+  tanggalUpload  DateTime
+  createdAt      DateTime @default(now())
+}
+
+model IntegrasiDataDesa {
+  id                   String   @id @default(cuid())
+  namaSumber           String
+  tipe                 String
+  apiEndpoint          String?
+  status               String   @default("Tidak Terhubung")
+  terakhirSinkronisasi String
+  createdAt            DateTime @default(now())
+}
+
+model GovernanceManagement {
+  id             String   @id @default(cuid())
+  namaGovernance String
+  kategori       String
+  deskripsi      String   @db.Text
+  status         String   @default("Aktif")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model DSSKnowledgeBase {
+  id        String   @id @default(cuid())
+  namaRule  String
+  kategori  String
+  bobot     Float
+  aturan    String   @db.Text
+  status    String   @default("Aktif")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model EvaluasiArtefak {
+  id              String   @id @default(cuid())
+  namaArtefak     String
+  jenis           String
+  nilaiEvaluasi   Float
+  kategori        String
+  tanggalEvaluasi DateTime
+  createdAt       DateTime @default(now())
+}
+
+model ExpertValidation {
+  id                String   @id @default(cuid())
+  namaValidator     String
+  keahlian          String
+  artefakDivalidasi String   @db.Text
+  nilaiValiditas    Float
+  status            String   @default("Pending")
+  createdAt         DateTime @default(now())
+}
+
+model UATResult {
+  id        String   @id @default(cuid())
+  namaUser  String
+  role      String
+  susScore  Float
+  kategori  String
+  feedback  String   @db.Text
+  tanggal   DateTime
+  createdAt DateTime @default(now())
+}
+
+model ResearchRepository {
+  id            String   @id @default(cuid())
+  judul         String
+  jenis         String
+  penulis       String
+  tahun         String
+  ukuran        String
+  tanggalUpload DateTime
+  createdAt     DateTime @default(now())
+}
+
+model KonfigurasiSistem {
+  id              String   @id @default(cuid())
+  namaSistem      String   @default("APL-SLV BORNEO Smart Living Village")
+  versiSistem     String   @default("v2.0")
+  urlSistem       String
+  emailAdmin      String
+  deskripsiSistem String   @db.Text
+  maxUploadSize   String   @default("50")
+  sessionTimeout  String   @default("60")
+  maintenanceMode Boolean  @default(false)
+  backupOtomatis  Boolean  @default(true)
+  backupSchedule  String   @default("02:00")
+  notifikasiEmail Boolean  @default(true)
+  notifikasiSms   Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model PengaturanNotifikasi {
+  id           String   @id @default(cuid())
+  judul        String
+  isi          String   @db.Text
+  target       String
+  tanggalKirim DateTime
+  status       String   @default("Terkirim")
+  createdAt    DateTime @default(now())
+}
+
+// === PENELITI MODELS ===
+
+model DatasetAssessment {
+  id            String   @id @default(cuid())
+  namaDataset   String
+  lokasi        String
+  jumlahSampel  Int
+  tanggalUpload DateTime
+  status        String   @default("Aktif")
+  deskripsi     String?  @db.Text
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model StatistikPenelitian {
+  id              String   @id @default(cuid())
+  datasetId       String
+  jenisStatistik  String
+  hasil           Json
+  tanggalAnalisis DateTime
+  createdAt       DateTime @default(now())
+}
+
+model VisualisasiData {
+  id          String   @id @default(cuid())
+  datasetId   String
+  jenisGrafik String
+  konfigurasi Json
+  tanggal     DateTime
+  createdAt   DateTime @default(now())
+}
+
+model SDGsDashboard {
+  id          String   @id @default(cuid())
+  desaId      String
+  sdg3Score   Float?
+  sdg4Score   Float?
+  sdg18Score  Float?
+  periode     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PublikasiSitasi {
+  id          String   @id @default(cuid())
+  judul       String
+  penulis     String
+  jurnal      String
+  tahun       String
+  doi         String?
+  sitasiCount Int      @default(0)
+  url         String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model LaporanPenelitian {
+  id          String   @id @default(cuid())
+  judul       String
+  jenis       String
+  periode     String
+  fileUrl     String
+  tanggal     DateTime
+  createdAt   DateTime @default(now())
+}
+
+// === LAYANAN SLV MODELS ===
+
+model JadwalKesehatan {
+  id          String   @id @default(cuid())
+  desaId      String
+  judul       String
+  kategori    String
+  tanggal     DateTime
+  waktu       String
+  lokasi      String
+  deskripsi   String?  @db.Text
+  status      String   @default("Terjadwal")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model EdukasiKesehatan {
+  id          String   @id @default(cuid())
+  judul       String
+  kategori    String
+  tipe        String
+  url         String
+  deskripsi   String?  @db.Text
+  target      String
+  status      String   @default("Aktif")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model KelasDesa {
+  id          String   @id @default(cuid())
+  desaId      String
+  nama        String
+  kategori    String
+  jadwal      String
+  kuota       Int
+  peserta     Int      @default(0)
+  status      String   @default("Pendaftaran")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PelatihanOnline {
+  id          String   @id @default(cuid())
+  judul       String
+  deskripsi   String   @db.Text
+  tipe        String
+  url         String
+  durasi      String
+  sertifikasi Boolean  @default(false)
+  status      String   @default("Aktif")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Sertifikasi {
+  id          String   @id @default(cuid())
+  wargaId     String
+  pelatihanId String
+  nilai       Float
+  tanggal     DateTime
+  fileUrl     String
+  status      String   @default("Lulus")
+  createdAt   DateTime @default(now())
+}
+
+model RiwayatPelatihan {
+  id          String   @id @default(cuid())
+  wargaId     String
+  pelatihanId String
+  tanggalMulai DateTime
+  tanggalSelesai DateTime?
+  progress    Float    @default(0)
+  status      String   @default("Berjalan")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model InformasiAdat {
+  id          String   @id @default(cuid())
+  judul       String
+  kategori    String
+  konten      String   @db.Text
+  gambar      String?
+  penulis     String?
+  tanggal     DateTime
+  status      String   @default("Publik")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model KalenderAdat {
+  id          String   @id @default(cuid())
+  desaId      String
+  namaAcara   String
+  tanggal     DateTime
+  deskripsi   String?  @db.Text
+  lokasi      String?
+  status      String   @default("Terjadwal")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ArsipBudaya {
+  id          String   @id @default(cuid())
+  desaId      String
+  judul       String
+  kategori    String
+  tipe        String
+  url         String
+  deskripsi   String?  @db.Text
+  tahun       Int?
+  status      String   @default("Tersedia")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ForumDesa {
+  id          String   @id @default(cuid())
+  desaId      String
+  judul       String
+  kategori    String
+  pembuat     String
+  konten      String   @db.Text
+  status      String   @default("Aktif")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model MusyawarahDigital {
+  id          String   @id @default(cuid())
+  desaId      String
+  judul       String
+  agenda      String   @db.Text
+  tanggalMulai DateTime
+  tanggalSelesai DateTime?
+  status      String   @default("Terjadwal")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PartisipasiMusyawarah {
+  id              String   @id @default(cuid())
+  musyawarahId    String
+  wargaId         String
+  statusPartisipasi String
+  tanggalPartisipasi DateTime
+  createdAt       DateTime @default(now())
+}
+
+model ProfilPengguna {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  foto        String?
+  bio         String?  @db.Text
+  alamat      String?
+  noHp        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model RiwayatLayanan {
+  id          String   @id @default(cuid())
+  userId      String
+  modul       String
+  aktivitas   String
+  tanggal     DateTime
+  status      String
+  createdAt   DateTime @default(now())
+}
+
+model BantuanPanduan {
+  id          String   @id @default(cuid())
+  kategori    String
+  pertanyaan  String
+  jawaban     String   @db.Text
+  urutan      Int
+  status      String   @default("Aktif")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// === SUPER ADMIN DASHBOARD MODELS ===
+
+model DashboardNasional {
+  id              String   @id @default(cuid())
+  totalDesa       Int
+  totalWarga      Int
+  avgReadiness    Float
+  avgMaturity     Float
+  avgQoL          Float
+  slvIndex        Float
+  sdg3Index       Float
+  sdg4Index       Float
+  sdg18Index      Float
+  periode         String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model DashboardPenelitian {
+  id              String   @id @default(cuid())
+  totalDataset    Int
+  totalArtefak    Int
+  avgReadiness    Float
+  avgMaturity     Float
+  avgQoL          Float
+  slvIndex        Float
+  periode         String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model DashboardLayananSLV {
+  id              String   @id @default(cuid())
+  userId          String   @unique
+  totalKesehatan  Int      @default(0)
+  totalPendidikan Int      @default(0)
+  totalAdat       Int      @default(0)
+  lastActivity    DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
 enum Role {
   warga
   pemerintah_desa
@@ -405,7 +844,7 @@ enum Role {
   bpd
   dinas_pmd
   peneliti
-  pengguna_layanan
+  layanan_slv
 }
 
 enum StatusWarga {
@@ -462,16 +901,4 @@ enum TipeHukumAdat {
   Aturan
   Kasus
   Putusan
-}
-
-model Umkm {
-  id        String   @id @default(cuid())
-  desaId    String
-  nama      String
-  pemilik   String
-  bidang    String
-  omset     Float?
-  status    String   @default("Aktif")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }

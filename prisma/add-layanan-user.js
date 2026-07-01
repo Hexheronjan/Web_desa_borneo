@@ -12,7 +12,13 @@ async function main() {
   // Check if user already exists
   const existing = await prisma.user.findFirst({ where: { email: 'layanan@borneo.id' } });
   if (existing) {
-    console.log('✅ User layanan@borneo.id sudah ada:', existing.name, '| Role:', existing.role);
+    // Update role ke layanan_slv jika masih pakai role lama
+    if (existing.role !== 'layanan_slv') {
+      await prisma.user.update({ where: { id: existing.id }, data: { role: 'layanan_slv' } });
+      console.log('✅ Role diupdate ke layanan_slv:', existing.email);
+    } else {
+      console.log('✅ User layanan@borneo.id sudah ada:', existing.name, '| Role:', existing.role);
+    }
     return;
   }
 
@@ -22,13 +28,13 @@ async function main() {
       email: 'layanan@borneo.id',
       username: 'layanan_andi',
       password: 'password123',
-      role: 'pengguna_layanan',
+      role: 'layanan_slv',
       status: 'Aktif',
       desaId: desa.id,
     },
   });
 
-  console.log('✅ Berhasil membuat user Pengguna Layanan:');
+  console.log('✅ Berhasil membuat user Layanan SLV:');
   console.log('   Nama   :', user.name);
   console.log('   Email  :', user.email);
   console.log('   Role   :', user.role);

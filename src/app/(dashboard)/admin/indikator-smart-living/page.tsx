@@ -30,7 +30,7 @@ const dimensions = [
     text: 'text-blue-600',
     indicators: [
       { name: 'Ketersediaan Jaringan Internet', value: 65 },
-      { name: 'Literasi Digital Pengguna Layanan', value: 48 },
+      { name: 'Literasi Digital Layanan SLV', value: 48 },
       { name: 'Integrasi Aplikasi Portal Warga', value: 88 }
     ]
   },

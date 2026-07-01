@@ -3,7 +3,7 @@
 import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { Database, Plus, RefreshCw, Trash2, CheckCircle2 } from "lucide-react";
-import { getFiturFromPath, getRoleFromPath } from "@/lib/modul-config";
+import { getFiturFromPath, getRoleFromPath, LayananSLVMetadata } from "@/lib/modul-config";
 import { useSession } from "next-auth/react";
 
 type ModuleRecord = {
@@ -19,7 +19,7 @@ type ModuleRecord = {
 
 const statusFlow = ["Baru", "Diproses", "Selesai"];
 
-export function ModuleRecordsPanel() {
+export function ModuleRecordsPanel({ metadata }: { metadata?: LayananSLVMetadata }) {
   const pathname = usePathname();
   const { data: session } = useSession();
   const roleInfo = useMemo(() => getRoleFromPath(pathname, session?.user?.role), [pathname, session?.user?.role]);
@@ -157,6 +157,8 @@ export function ModuleRecordsPanel() {
     triggerNotification("Berhasil! Data berhasil dihapus.");
   }
 
+  const isReadOnly = !!metadata?.readOnly;
+
   return (
     <section data-module-records-panel className="mb-6 border border-slate-200 bg-white rounded-lg shadow-sm overflow-hidden">
       <div className="flex flex-col gap-2 md:flex-row md:items-center md:justify-between px-4 py-3 border-b border-slate-100">
@@ -165,7 +167,9 @@ export function ModuleRecordsPanel() {
             <Database size={16} />
           </div>
           <div className="min-w-0">
-            <h2 className="text-sm font-bold text-slate-800 truncate">Fitur Data Modul: Tambah, Edit, Hapus</h2>
+            <h2 className="text-sm font-bold text-slate-800 truncate">
+              {isReadOnly ? `Informasi & ${metadata?.output || "Riwayat"}` : "Fitur Data Modul: Tambah, Edit, Hapus"}
+            </h2>
             <p className="text-xs text-slate-500 truncate">{roleInfo.nama} - {moduleName}</p>
           </div>
         </div>
@@ -179,85 +183,91 @@ export function ModuleRecordsPanel() {
         </button>
       </div>
 
-      <div className="grid gap-4 p-4 lg:grid-cols-[360px_1fr]">
-        <form onSubmit={handleSubmit} className="space-y-3">
-          <input
-            value={form.title}
-            onChange={(e) => setForm((prev) => ({ ...prev, title: e.target.value }))}
-            required
-            minLength={3}
-            placeholder={`Judul data ${moduleName}`}
-            className="w-full h-10 px-3 rounded-md border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300"
-          />
-          <div className="grid grid-cols-2 gap-2">
+      <div className={`grid gap-4 p-4 ${isReadOnly ? "lg:grid-cols-1" : "lg:grid-cols-[360px_1fr]"}`}>
+        {!isReadOnly && (
+          <form onSubmit={handleSubmit} className="space-y-3">
             <input
-              value={form.category}
-              onChange={(e) => setForm((prev) => ({ ...prev, category: e.target.value }))}
-              placeholder="Kategori"
+              value={form.title}
+              onChange={(e) => setForm((prev) => ({ ...prev, title: e.target.value }))}
+              required
+              minLength={3}
+              placeholder={metadata ? metadata.placeholderTitle : `Judul data ${moduleName}`}
               className="w-full h-10 px-3 rounded-md border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300"
             />
-            <input
-              value={form.valueText}
-              onChange={(e) => setForm((prev) => ({ ...prev, valueText: e.target.value }))}
-              placeholder="Nilai/target"
-              className="w-full h-10 px-3 rounded-md border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300"
+            <div className="grid grid-cols-2 gap-2">
+              <input
+                value={form.category}
+                onChange={(e) => setForm((prev) => ({ ...prev, category: e.target.value }))}
+                placeholder={metadata ? metadata.placeholderCategory : "Kategori"}
+                className="w-full h-10 px-3 rounded-md border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300"
+              />
+              <input
+                value={form.valueText}
+                onChange={(e) => setForm((prev) => ({ ...prev, valueText: e.target.value }))}
+                placeholder={metadata ? metadata.placeholderValue : "Nilai/target"}
+                className="w-full h-10 px-3 rounded-md border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300"
+              />
+            </div>
+            <textarea
+              value={form.description}
+              onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
+              placeholder={metadata ? metadata.placeholderDescription : "Keterangan atau isi data"}
+              rows={4}
+              className="w-full px-3 py-2 rounded-md border border-slate-200 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-slate-300"
             />
-          </div>
-          <textarea
-            value={form.description}
-            onChange={(e) => setForm((prev) => ({ ...prev, description: e.target.value }))}
-            placeholder="Keterangan atau isi data"
-            rows={4}
-            className="w-full px-3 py-2 rounded-md border border-slate-200 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-slate-300"
-          />
-          <div className="flex gap-2">
-            <select
-              value={form.status}
-              onChange={(e) => setForm((prev) => ({ ...prev, status: e.target.value }))}
-              className="h-10 px-3 rounded-md border border-slate-200 text-sm bg-white"
-            >
-              {statusFlow.map((status) => (
-                <option key={status} value={status}>{status}</option>
-              ))}
-            </select>
-            <button
-              type="submit"
-              disabled={saving}
-              className="flex-1 inline-flex items-center justify-center gap-1.5 h-10 rounded-md text-white text-sm font-semibold disabled:opacity-60"
-              style={{ backgroundColor: roleInfo.warna }}
-            >
-              <Plus size={16} />
-              {saving ? "Menyimpan..." : editingId ? "Update Data" : "Tambah Data"}
-            </button>
-          </div>
-          {editingId && (
-            <button
-              type="button"
-              onClick={cancelEdit}
-              className="w-full h-9 rounded-md border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50"
-            >
-              Batal Edit
-            </button>
-          )}
-          {error && <p className="text-xs font-medium text-red-600">{error}</p>}
-        </form>
+            <div className="flex gap-2">
+              <select
+                value={form.status}
+                onChange={(e) => setForm((prev) => ({ ...prev, status: e.target.value }))}
+                className="h-10 px-3 rounded-md border border-slate-200 text-sm bg-white"
+              >
+                {statusFlow.map((status) => (
+                  <option key={status} value={status}>{status}</option>
+                ))}
+              </select>
+              <button
+                type="submit"
+                disabled={saving}
+                className="flex-1 inline-flex items-center justify-center gap-1.5 h-10 rounded-md text-white text-sm font-semibold disabled:opacity-60"
+                style={{ backgroundColor: roleInfo.warna }}
+              >
+                <Plus size={16} />
+                {saving ? "Menyimpan..." : editingId ? "Update Data" : "Tambah Data"}
+              </button>
+            </div>
+            {editingId && (
+              <button
+                type="button"
+                onClick={cancelEdit}
+                className="w-full h-9 rounded-md border border-slate-200 text-xs font-semibold text-slate-600 hover:bg-slate-50"
+              >
+                Batal Edit
+              </button>
+            )}
+            {error && <p className="text-xs font-medium text-red-600">{error}</p>}
+          </form>
+        )}
 
         <div className="min-w-0">
           {records.length === 0 ? (
             <div className="h-full min-h-[220px] rounded-md border border-dashed border-slate-200 flex items-center justify-center text-center p-6">
-              <p className="text-sm text-slate-500">Belum ada data real untuk modul ini. Tambahkan data pertama lewat form di samping.</p>
+              <p className="text-sm text-slate-500">
+                {isReadOnly 
+                  ? `Belum ada data ${moduleName.toLowerCase()} yang tercatat untuk Anda saat ini.` 
+                  : "Belum ada data real untuk modul ini. Tambahkan data pertama lewat form di samping."}
+              </p>
             </div>
           ) : (
             <div className="overflow-x-auto rounded-md border border-slate-100">
               <table className="w-full text-sm">
                 <thead className="bg-slate-50 text-xs text-slate-500">
                   <tr>
-                    <th className="text-left p-3 min-w-[180px]">Judul</th>
-                    <th className="text-left p-3">Kategori</th>
-                    <th className="text-left p-3">Nilai</th>
+                    <th className="text-left p-3 min-w-[180px]">{metadata ? metadata.fieldDataUtama : "Judul"}</th>
+                    <th className="text-left p-3">{metadata ? metadata.isiDataInformasi : "Kategori"}</th>
+                    <th className="text-left p-3">{metadata ? metadata.fungsiSistem : "Nilai"}</th>
                     <th className="text-left p-3">Status</th>
-                    <th className="text-left p-3 min-w-[220px]">Keterangan</th>
-                    <th className="text-right p-3">Aksi</th>
+                    <th className="text-left p-3 min-w-[220px]">{metadata ? metadata.output : "Keterangan"}</th>
+                    {!isReadOnly && <th className="text-right p-3">Aksi</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -273,32 +283,34 @@ export function ModuleRecordsPanel() {
                         </span>
                       </td>
                       <td className="p-3 text-slate-500 max-w-[320px]">{record.description || "-"}</td>
-                      <td className="p-3">
-                        <div className="flex justify-end gap-1.5">
-                          <button
-                            type="button"
-                            onClick={() => startEdit(record)}
-                            className="px-2.5 py-1.5 rounded-md border text-xs font-semibold text-blue-600 hover:bg-blue-50"
-                          >
-                            Edit
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => updateStatus(record)}
-                            className="px-2.5 py-1.5 rounded-md border text-xs font-semibold text-slate-600 hover:bg-slate-50"
-                          >
-                            Status
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => deleteRecord(record)}
-                            className="p-1.5 rounded-md border text-red-600 hover:bg-red-50"
-                            title="Hapus"
-                          >
-                            <Trash2 size={14} />
-                          </button>
-                        </div>
-                      </td>
+                      {!isReadOnly && (
+                        <td className="p-3">
+                          <div className="flex justify-end gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => startEdit(record)}
+                              className="px-2.5 py-1.5 rounded-md border text-xs font-semibold text-blue-600 hover:bg-blue-50"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => updateStatus(record)}
+                              className="px-2.5 py-1.5 rounded-md border text-xs font-semibold text-slate-600 hover:bg-slate-50"
+                            >
+                              Status
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => deleteRecord(record)}
+                              className="p-1.5 rounded-md border text-red-600 hover:bg-red-50"
+                              title="Hapus"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          </div>
+                        </td>
+                      )}
                     </tr>
                   ))}
                 </tbody>

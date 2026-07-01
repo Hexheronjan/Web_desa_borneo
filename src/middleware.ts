@@ -16,7 +16,7 @@ const roleRouteMap: Record<string, string> = {
   warga: "/warga",
   dinas_pmd: "/dinas-pmd",
   peneliti: "/peneliti",
-  pengguna_layanan: "/pengguna-layanan",
+  layanan_slv: "/layanan-slv",
 };
 
 // Route-to-allowed-roles mapping
@@ -25,20 +25,15 @@ const routeAccessMap: Record<string, string[]> = {
   "/operator-sid": ["operator_sid", "admin_super"],
   "/pemdes": ["pemerintah_desa", "admin_super"],
   "/bpd": ["bpd", "admin_super"],
-  "/adat": ["lembaga_adat", "admin_super", "pengguna_layanan"],
+  "/adat": ["lembaga_adat", "admin_super"],
   "/guru": ["guru_fasilitator", "admin_super"],
   "/nakes": ["nakes_posyandu", "admin_super"],
-  "/sehat": ["nakes_posyandu", "admin_super", "pengguna_layanan"],
-  "/belajar": ["guru_fasilitator", "admin_super", "pengguna_layanan"],
-  "/warga/aspirasi": ["warga", "admin_super", "pengguna_layanan"],
-  "/warga/profil-desa": ["warga", "admin_super", "pengguna_layanan"],
-  "/warga/survey-qol": ["warga", "admin_super", "pengguna_layanan"],
-  "/warga/notifikasi-desa": ["warga", "admin_super", "pengguna_layanan"],
-  "/warga/bantuan": ["warga", "admin_super", "pengguna_layanan"],
+  "/sehat": ["nakes_posyandu", "admin_super"],
+  "/belajar": ["guru_fasilitator", "admin_super"],
   "/warga": ["warga", "admin_super"],
   "/dinas-pmd": ["dinas_pmd", "admin_super"],
   "/peneliti": ["peneliti", "admin_super"],
-  "/pengguna-layanan": ["pengguna_layanan", "admin_super"],
+  "/layanan-slv": ["layanan_slv", "admin_super"],
   "/sustainability": ["pemerintah_desa", "admin_super", "dinas_pmd"],
 };
 

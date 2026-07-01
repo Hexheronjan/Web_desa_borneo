@@ -78,7 +78,25 @@ export function AppHeader() {
         </Avatar>
         <div className="hidden md:block text-left">
           <p className="text-sm font-bold leading-tight text-slate-900">{userName}</p>
-          <p className="text-xs text-slate-500 leading-tight capitalize">{session?.user?.role?.replace(/_/g, " ") ?? "User"}</p>
+          <p className="text-xs text-slate-500 leading-tight capitalize">
+            {(() => {
+              const roleMap: Record<string, string> = {
+                admin_super: 'Super Admin',
+                operator_sid: 'Operator SID',
+                pemerintah_desa: 'Pemerintah Desa',
+                bpd: 'BPD',
+                lembaga_adat: 'Lembaga Adat',
+                guru_fasilitator: 'Guru Fasilitator',
+                nakes_posyandu: 'Nakes Posyandu',
+                warga: 'Warga',
+                dinas_pmd: 'Dinas PMD',
+                peneliti: 'Peneliti',
+                layanan_slv: 'Layanan SLV',
+              };
+              const role = session?.user?.role ?? '';
+              return roleMap[role] ?? role.replace(/_/g, ' ');
+            })()}
+          </p>
         </div>
         <ChevronDown size={16} className="hidden md:block text-slate-400" />
         <button

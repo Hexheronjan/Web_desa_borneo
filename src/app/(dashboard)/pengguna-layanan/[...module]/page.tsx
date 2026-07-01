@@ -1,5 +1,6 @@
-import { GenericModulePage } from "@/components/shared/GenericModulePage";
+import { redirect } from 'next/navigation';
 
-export default function Page() {
-  return <GenericModulePage />;
+// Route lama /pengguna-layanan/[...module] sudah diganti menjadi /layanan-slv
+export default function PenggunaLayananModuleRedirect() {
+  redirect('/layanan-slv');
 }
