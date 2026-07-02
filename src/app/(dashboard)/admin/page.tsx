@@ -1,609 +1,508 @@
 'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { PageTitle } from '@/components/shared/PageTitle';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  PieChart, Pie, Cell, LineChart, Line,
+  PieChart, Pie, Cell, LineChart, Line, Legend,
 } from 'recharts';
 import {
   MapPin, TrendingUp, Target, Heart, BookOpen, Landmark,
-  CheckCircle2, AlertTriangle, ArrowUpRight, Users,
-  FileText, Activity, Calendar, DollarSign, Shield, Clock,
+  CheckCircle2, AlertTriangle, ArrowUpRight, Users, ArrowUp, ArrowDown,
+  FileText, Activity, Calendar, Shield, Clock, Minus,
   Database, Server, Settings, Bell, Zap, Globe, BarChart3,
+  Cpu, RefreshCw, Archive, ClipboardList, Star, Award,
+  ChevronRight, Layers, GitBranch, Link2, Info,
 } from 'lucide-react';
-import Link from 'next/link';
+import NextLink from 'next/link';
 import { useState, useEffect } from 'react';
+import { useSession } from 'next-auth/react';
 
 const COLOR = '#1a237e';
 
-interface DashboardData {
-  totalDesa?: number;
-  totalWarga?: number;
-  avgReadiness?: number;
-  avgMaturity?: number;
-  avgQoL?: number;
-  slvIndex?: number;
-  sdg3Index?: number;
-  sdg4Index?: number;
-  sdg18Index?: number;
-  periode?: string;
+/* ─── DATA ─── */
+const trendData = [
+  { bulan: 'Jan 2026', readiness: 70.24, maturity: 62.11, qol: 69.02 },
+  { bulan: 'Feb 2026', readiness: 70.89, maturity: 63.25, qol: 69.67 },
+  { bulan: 'Mar 2026', readiness: 71.54, maturity: 65.53, qol: 70.11 },
+  { bulan: 'Apr 2026', readiness: 72.19, maturity: 67.13, qol: 69.02 },
+  { bulan: 'Mei 2026', readiness: 72.91, maturity: 69.02, qol: 71.88 },
+  { bulan: 'Jun 2026', readiness: 73.45, maturity: 71.88, qol: 73.45 },
+];
+
+const maturityPieData = [
+  { name: 'Level 1', value: 28, pct: 11.3, color: '#ef4444' },
+  { name: 'Level 2', value: 62, pct: 25.1, color: '#f97316' },
+  { name: 'Level 3', value: 98, pct: 39.7, color: '#eab308' },
+  { name: 'Level 4', value: 45, pct: 18.2, color: '#22c55e' },
+  { name: 'Level 5', value: 14, pct: 5.7,  color: '#3b82f6' },
+];
+
+const top5Desa = [
+  { nama: 'Jonggon Jaya',    nilai: 91.45 },
+  { nama: 'Kedang Ipil',     nilai: 85.32 },
+  { nama: 'Lung Anai',       nilai: 83.19 },
+  { nama: 'Desa Mulawarman', nilai: 79.11 },
+  { nama: 'Desa Bukit Raya', nilai: 77.08 },
+];
+
+const sparkBase = [60, 63, 66, 70, 72, 73.45];
+
+function MiniSparkline({ color = '#3b82f6' }: { color?: string }) {
+  const pts = sparkBase;
+  const min = Math.min(...pts); const max = Math.max(...pts);
+  const norm = (v: number) => ((v - min) / (max - min)) * 28;
+  const w = 60; const h = 32;
+  const xs = pts.map((_, i) => (i / (pts.length - 1)) * w);
+  const ys = pts.map(v => h - norm(v) - 2);
+  const d = xs.map((x, i) => `${i === 0 ? 'M' : 'L'}${x},${ys[i]}`).join(' ');
+  return (
+    <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`}>
+      <defs>
+        <linearGradient id={`sg${color.replace('#','')}`} x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor={color} stopOpacity={0.25} />
+          <stop offset="100%" stopColor={color} stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      <path d={d + ` L${xs[xs.length-1]},${h} L0,${h} Z`} fill={`url(#sg${color.replace('#','')})`} />
+      <path d={d} fill="none" stroke={color} strokeWidth={1.5} strokeLinecap="round" />
+    </svg>
+  );
 }
 
+const kpiCards = [
+  { label: 'Total Desa Terdaftar', value: '247', sub: '↑ 12 desa baru dari bulan lalu', icon: MapPin, color: '#1a237e', sparkColor: '#3b82f6' },
+  { label: 'Readiness Index Rata-rata Nasional', value: '73.45', sub: '↑ 3.21 poin dari bulan lalu', icon: TrendingUp, color: '#065f46', sparkColor: '#10b981' },
+  { label: 'Maturity Index Rata-rata Nasional', value: '2.85', sub: '↑ 0.32 level dari bulan lalu', icon: BarChart3, color: '#92400e', sparkColor: '#f59e0b' },
+  { label: 'Quality of Life Index Rata-rata Nasional', value: '71.2', sub: '↑ 2.18 poin dari bulan lalu', icon: Heart, color: '#7f1d1d', sparkColor: '#ef4444' },
+  { label: 'Smart Living Village Composite Index', value: '72.61', sub: '↑ 3.47 poin dari bulan lalu', icon: Star, color: '#1e3a5f', sparkColor: '#0ea5e9' },
+  { label: 'SDGs Achievement Rata-rata Nasional', value: '78.6%', sub: '↑ 4.12% dari bulan lalu', icon: Award, color: '#3b0764', sparkColor: '#8b5cf6' },
+];
+
+const pengumuman = [
+  { judul: 'Maintenance Sistem', tanggal: '26/06/2026', desc: 'Sistem akan maintenance pada 30 Juni 2026 pukul 00:00 - 02:00 WIB.' },
+  { judul: 'Rilis Fitur Baru', tanggal: '24/06/2026', desc: 'Fitur Dashboard SDGs Desa telah tersedia.' },
+  { judul: 'Update Data Nasional', tanggal: '23/06/2026', desc: 'Pembaruan data indikator nasional per Juni 2026.' },
+];
+
+const aktivitas = [
+  { aksi: 'Data desa Jonggon Jaya diperbarui', oleh: 'Admin', waktu: '08:45' },
+  { aksi: 'Assessment periode Juni 2026 dibuat', oleh: 'Dr. Ahmad Surya', waktu: '07:30' },
+  { aksi: 'Validator baru ditambahkan', oleh: 'Admin', waktu: 'Kemarin' },
+  { aksi: 'Rekomendasi DSS dijalankan', oleh: 'Sistem', waktu: 'Kemarin' },
+  { aksi: 'Backup sistem berhasil', oleh: 'Sistem', waktu: '2 hari lalu' },
+];
+
+const modulSistem = [
+  { icon: Layers,       title: 'Master Framework',    desc: 'Kelola framework readiness, maturity dan QoL.', link: '/admin/master-framework' },
+  { icon: GitBranch,    title: 'Framework Versioning', desc: 'Sistem rekomendasi versi dan pembaharuan framework.', link: '/admin/framework-versioning' },
+  { icon: Calendar,     title: 'Manajemen Periode',   desc: 'Kelola periode assessment dan evaluasi.', link: '/admin/manajemen-periode' },
+  { icon: Database,     title: 'Integrasi Data Desa', desc: 'Sinkronisasi & integrasi data multi-sumber.', link: '/admin/integrasi-data-desa' },
+  { icon: ClipboardList, title: 'DSS Recommendation', desc: 'Kelola rekomendasi berbasis A & aturan.', link: '/admin/dss-recommendation' },
+  { icon: Shield,       title: 'Evaluasi Artefak',    desc: 'Validasi instrumen dan artefak penelitian.', link: '/admin/evaluasi-artefak' },
+  { icon: Users,        title: 'Expert Validation',   desc: 'Validasi instrumen oleh pakar/ahli.', link: '/admin/expert-validation' },
+  { icon: CheckCircle2, title: 'UAT Results (SUS)',   desc: 'Kelola usability testing system oleh pengguna.', link: '/admin/uat-results' },
+];
+
+const researchTrend = [
+  { label: 'Readiness Index', nilai: '73.45', delta: '+3.21', pct: '+4.58%', up: true, color: '#3b82f6' },
+  { label: 'Maturity Index',  nilai: '2.85',  delta: '+0.32', pct: '+12.64%', up: true, color: '#f59e0b' },
+  { label: 'Quality of Life Index', nilai: '71.20', delta: '+2.18', pct: '+3.16%', up: true, color: '#ef4444' },
+  { label: 'SDGs Achievement', nilai: '78.6%', delta: '+4.12%', pct: '+4.12%', up: true, color: '#8b5cf6' },
+];
+
+const quickReports = [
+  { label: 'Village Report',   icon: Globe,       link: '/admin/master-desa' },
+  { label: 'DSS Report',       icon: ClipboardList, link: '/admin/dss-recommendation' },
+  { label: 'KPI Report',       icon: BarChart3,   link: '/admin/dashboard-analytics' },
+  { label: 'SDGs Report',      icon: Award,       link: '/admin/sdgs-desa' },
+  { label: 'Village Report',   icon: MapPin,      link: '/admin/master-desa' },
+  { label: 'Executive Report', icon: FileText,    link: '/admin/research-repository' },
+  { label: 'Monitoring Report',icon: Activity,    link: '/admin/monitoring-sistem' },
+];
+
 export default function AdminDashboardPage() {
-  const [loading, setLoading] = useState(true);
-  const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
-
-  useEffect(() => {
-    async function fetchDashboardData() {
-      try {
-        const response = await fetch('/api/dashboard-nasional');
-        if (response.ok) {
-          const data = await response.json();
-          setDashboardData(data);
-        }
-      } catch (error) {
-        console.error('Error fetching dashboard data:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchDashboardData();
-  }, []);
-
-  // Use API data if available, otherwise use mock data
-  const keyMetrics = dashboardData ? {
-    totalDesa: dashboardData.totalDesa || 247,
-    readinessIndex: dashboardData.avgReadiness || 73.45,
-    maturityIndex: dashboardData.avgMaturity || 2.85,
-    qualityOfLifeIndex: dashboardData.avgQoL || 71.20,
-    slvIndex: dashboardData.slvIndex || 72.61,
-    sdgsAchievement: dashboardData.sdg3Index || 78.6,
-  } : {
-    totalDesa: 247,
-    readinessIndex: 73.45,
-    maturityIndex: 2.85,
-    qualityOfLifeIndex: 71.20,
-    slvIndex: 72.61,
-    sdgsAchievement: 78.6,
-  };
-
-  // Mock data for ringkasan assessment
-  const ringkasanAssessment = {
-    jumlahDesa: 247,
-    jumlahAssessment: 247,
-    jumlahValidator: 36,
-    jumlahRekomendasiDSS: 1124,
-    jumlahSiklusAssessment: 3,
-    jumlahArtefak: 6,
-  };
-
-  // Mock data for status rekomendasi DSS
-  const statusRekomendasiDSS = {
-    priorityProgram: 245,
-    recommendationExecuted: 512,
-    recommendationPending: 612,
-  };
-
-  // Mock data for pengumuman sistem
-  const pengumumanSistem = [
-    { judul: 'Maintenance Sistem', tanggal: '26/06/2026', kategori: 'Info', deskripsi: 'Sistem akan maintenance pada 30 Juni 2026 pukul 00:00 - 02:00 WIB.' },
-    { judul: 'Rilis Fitur Baru', tanggal: '24/06/2026', kategori: 'Update', deskripsi: 'Four Dashboard SDGs Desa telah tersedia.' },
-    { judul: 'Update Data Nasional', tanggal: '23/06/2026', kategori: 'Info', deskripsi: 'Pembaharuan data indikator nasional per Juni 2026.' },
-  ];
-
-  // Mock data for aktivitas terbaru
-  const aktivitasTerbaru = [
-    { user: 'Admin', aksi: 'Data desa Jonggon Jaya diperbarui', waktu: '08:45', status: 'success' },
-    { user: 'Admin', aksi: 'Assessment periode Juni 2026 dibuat', waktu: '07:30', status: 'success' },
-    { user: 'Admin', aksi: 'Validator baru ditambahkan', waktu: 'Kemarin', status: 'success' },
-    { user: 'System', aksi: 'Rekomendasi DSS dijalankan', waktu: 'Sistem', status: 'success' },
-    { user: 'System', aksi: 'Backup sistem berhasil', waktu: '2 hari lalu', status: 'success' },
-  ];
-
-  // Mock data for statistik assessment
-  const statistikData = [
-    { name: 'Jumlah Desa', value: 247 },
-    { name: 'Jumlah Assessment', value: 247 },
-    { name: 'Jumlah Validator', value: 36 },
-    { name: 'Jumlah Rekomendasi DSS', value: 1124 },
-    { name: 'Jumlah Siklus Assessment', value: 3 },
-  ];
-
-  // Mock data for modul utama sistem
-  const modulSistem = [
-    { icon: Database, title: 'Master Framework', description: 'Kelola framework assessment', link: '/admin/master-framework' },
-    { icon: Activity, title: 'Framework Versioning', description: 'Versi dan rilis framework', link: '/admin/framework-versioning' },
-    { icon: Calendar, title: 'Manajemen Periode', description: 'Kelola periode assessment', link: '/admin/manajemen-periode' },
-    { icon: CheckCircle2, title: 'Validasi Data', description: 'Validasi data assessment', link: '/admin/validasi-data' },
-    { icon: Globe, title: 'Integrasi Data Desa', description: 'Integrasi data multi-desa', link: '/admin/integrasi-data-desa' },
-    { icon: Landmark, title: 'Governance Management', description: 'Manajemen tata kelola', link: '/admin/governance-management' },
-    { icon: BookOpen, title: 'DSS Knowledge Base', description: 'Basis pengetahuan DSS', link: '/admin/dss-knowledge-base' },
-    { icon: FileText, title: 'DSS Recommendation', description: 'Rekomendasi program', link: '/admin/dss-recommendation' },
-  ];
-
-  // Mock data for research insight trend
-  const researchTrendData = [
-    { bulan: 'Jan', readiness: 70.24, maturity: 2.53, qol: 69.02, sdgs: 74.48 },
-    { bulan: 'Feb', readiness: 70.89, maturity: 2.58, qol: 69.67, sdgs: 75.13 },
-    { bulan: 'Mar', readiness: 71.54, maturity: 2.63, qol: 70.32, sdgs: 75.78 },
-    { bulan: 'Apr', readiness: 72.19, maturity: 2.68, qol: 70.97, sdgs: 76.43 },
-    { bulan: 'Mei', readiness: 72.84, maturity: 2.73, qol: 71.62, sdgs: 77.08 },
-    { bulan: 'Jun', readiness: 73.45, maturity: 2.85, qol: 71.20, sdgs: 78.60 },
-  ];
-
-  // Sparkline data for each metric
-  const sparklineData = {
-    readiness: [70.24, 70.89, 71.54, 72.19, 72.84, 73.45],
-    maturity: [2.53, 2.58, 2.63, 2.68, 2.73, 2.85],
-    qol: [69.02, 69.67, 70.32, 70.97, 71.62, 71.20],
-    slv: [69.13, 69.78, 70.43, 71.08, 71.73, 72.61],
-    sdgs: [74.48, 75.13, 75.78, 76.43, 77.08, 78.60],
-  };
-
-  // Sebaran level maturity desa
-  const maturityLevelData = [
-    { level: 'Level 1', jumlah: 45, persentase: 18.2 },
-    { level: 'Level 2', jumlah: 78, persentase: 31.6 },
-    { level: 'Level 3', jumlah: 89, persentase: 36.0 },
-    { level: 'Level 4', jumlah: 28, persentase: 11.3 },
-    { level: 'Level 5', jumlah: 7, persentase: 2.8 },
-  ];
-
-  // Status sistem desa
-  const statusSistemDesa = [
-    { status: 'Online', jumlah: 235, persentase: 95.1, color: 'green' },
-    { status: 'Offline', jumlah: 8, persentase: 3.2, color: 'red' },
-    { status: 'Maintenance', jumlah: 4, persentase: 1.6, color: 'yellow' },
-  ];
-
-  // Top 5 desa (Quick Access)
-  const topDesa = [
-    { nama: 'Desa Jonggon Jaya', kecamatan: 'Tenggarong Seberang', readiness: 85.2, maturity: 4.2, rank: 1 },
-    { nama: 'Desa Loa Janan Ilir', kecamatan: 'Loa Janan', readiness: 82.7, maturity: 4.0, rank: 2 },
-    { nama: 'Desa Muara Muntai', kecamatan: 'Muara Muntai', readiness: 80.5, maturity: 3.8, rank: 3 },
-    { nama: 'Desa Tenggarong', kecamatan: 'Tenggarong', readiness: 78.9, maturity: 3.6, rank: 4 },
-    { nama: 'Desa Kutai Kartanegara', kecamatan: 'Kota Bangun', readiness: 76.3, maturity: 3.5, rank: 5 },
-  ];
-
-  // Mock data for keterkaitan artefak penelitian
-  const artefakFlow = [
-    { step: '1', label: 'Pedoman Wawancara', icon: FileText },
-    { step: '2', label: 'Hasil FGD', icon: Users },
-    { step: '3', label: 'Kuesioner Readiness', icon: CheckCircle2 },
-    { step: '4', label: 'Validasi Ahli', icon: Shield },
-    { step: '5', label: 'Observasi Desa', icon: MapPin },
-    { step: '6', label: 'APL-SLV Borneo', icon: Globe },
-  ];
-
-  // Mock data for prinsip pengembangan
-  const prinsipPengembangan = [
-    { icon: Database, title: 'Berbasis Data & Bukti', description: 'Keputusan berdasarkan data' },
-    { icon: Users, title: 'Partisipatif & Kolaboratif', description: 'Melibatkan semua stakeholder' },
-    { icon: Shield, title: 'Transparan & Akuntabel', description: 'Keterbukaan dalam pengelolaan' },
-    { icon: TrendingUp, title: 'Berkelanjutan & Adaptif', description: 'Terus berkembang dan beradaptasi' },
-    { icon: Heart, title: 'Berorientasi pada Kesejahteraan Desa', description: 'Fokus pada kesejahteraan' },
-  ];
-
-  if (loading) {
-    return <div className="p-5">Loading...</div>;
-  }
+  const { data: session } = useSession();
+  const [periode, setPeriode] = useState('Juni 2026');
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-4 pb-6">
+
+      {/* ── HEADER ── */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-slate-800">Dashboard Super Admin</h1>
-          <p className="text-sm text-slate-500 mt-1">Modul: APL-SLV BORNEO Smart Living Village</p>
+          <h1 className="text-xl font-bold text-slate-800">Dashboard Super Admin</h1>
+          <p className="text-xs text-slate-500">Modul: APL-SLV BORNEO Smart Living Village</p>
         </div>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2 px-4 py-2 bg-white rounded-lg border border-slate-200">
-            <Calendar size={16} className="text-slate-500" />
-            <span className="text-sm font-medium text-slate-700">Periode: Juni 2026</span>
-          </div>
+        <div className="flex items-center gap-2">
+          <select
+            value={periode}
+            onChange={e => setPeriode(e.target.value)}
+            className="h-8 px-3 rounded-lg border border-slate-200 text-xs font-semibold bg-white text-slate-700 focus:outline-none"
+          >
+            {['Juni 2026','Mei 2026','April 2026','Maret 2026'].map(p => (
+              <option key={p}>{p}</option>
+            ))}
+          </select>
         </div>
       </div>
 
-      {/* Key Metrics - 6 Cards */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-        <Card className="p-4 border-l-4 border-l-blue-600">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs text-slate-500 font-semibold">Total Desa Terintegrasi</p>
-            <MapPin size={16} className="text-blue-600" />
-          </div>
-          <p className="text-2xl font-bold text-slate-800">{keyMetrics.totalDesa}</p>
-          <p className="text-xs text-slate-500 mt-1">12 desa baru dari bulan lalu</p>
-        </Card>
-
-        <Card className="p-4 border-l-4 border-l-purple-600">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs text-slate-500 font-semibold">Readiness Index</p>
-            <Target size={16} className="text-purple-600" />
-          </div>
-          <p className="text-2xl font-bold text-slate-800">{keyMetrics.readinessIndex}</p>
-          <p className="text-xs text-slate-500 mt-1">Rata-rata Nasional</p>
-          <div className="flex items-center gap-2 mt-2">
-            <ResponsiveContainer width={80} height={30}>
-              <LineChart data={sparklineData.readiness.map((v, i) => ({ value: v }))}>
-                <Line type="monotone" dataKey="value" stroke="#8b5cf6" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-            <p className="text-xs text-green-600 flex items-center gap-1">
-              <ArrowUpRight size={10} /> ↑ 3.21 poin
-            </p>
-          </div>
-        </Card>
-
-        <Card className="p-4 border-l-4 border-l-green-600">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs text-slate-500 font-semibold">Maturity Index</p>
-            <TrendingUp size={16} className="text-green-600" />
-          </div>
-          <p className="text-2xl font-bold text-slate-800">{keyMetrics.maturityIndex}</p>
-          <p className="text-xs text-slate-500 mt-1">Rata-rata Nasional</p>
-          <div className="flex items-center gap-2 mt-2">
-            <ResponsiveContainer width={80} height={30}>
-              <LineChart data={sparklineData.maturity.map((v, i) => ({ value: v }))}>
-                <Line type="monotone" dataKey="value" stroke="#10b981" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-            <p className="text-xs text-green-600 flex items-center gap-1">
-              <ArrowUpRight size={10} /> ↑ 0.32 level
-            </p>
-          </div>
-        </Card>
-
-        <Card className="p-4 border-l-4 border-l-orange-600">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs text-slate-500 font-semibold">Quality of Life Index</p>
-            <Heart size={16} className="text-orange-600" />
-          </div>
-          <p className="text-2xl font-bold text-slate-800">{keyMetrics.qualityOfLifeIndex}</p>
-          <p className="text-xs text-slate-500 mt-1">Rata-rata Nasional</p>
-          <div className="flex items-center gap-2 mt-2">
-            <ResponsiveContainer width={80} height={30}>
-              <LineChart data={sparklineData.qol.map((v, i) => ({ value: v }))}>
-                <Line type="monotone" dataKey="value" stroke="#f97316" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-            <p className="text-xs text-green-600 flex items-center gap-1">
-              <ArrowUpRight size={10} /> ↑ 2.18 poin
-            </p>
-          </div>
-        </Card>
-
-        <Card className="p-4 border-l-4 border-l-blue-600">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs text-slate-500 font-semibold">Smart Living Village Index</p>
-            <Globe size={16} className="text-blue-600" />
-          </div>
-          <p className="text-2xl font-bold text-slate-800">{keyMetrics.slvIndex}</p>
-          <p className="text-xs text-slate-500 mt-1">Composite Index</p>
-          <div className="flex items-center gap-2 mt-2">
-            <ResponsiveContainer width={80} height={30}>
-              <LineChart data={sparklineData.slv.map((v, i) => ({ value: v }))}>
-                <Line type="monotone" dataKey="value" stroke="#3b82f6" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-            <p className="text-xs text-green-600 flex items-center gap-1">
-              <ArrowUpRight size={10} /> ↑ 3.47 poin
-            </p>
-          </div>
-        </Card>
-
-        <Card className="p-4 border-l-4 border-l-green-600">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs text-slate-500 font-semibold">SDGs Achievement</p>
-            <Landmark size={16} className="text-green-600" />
-          </div>
-          <p className="text-2xl font-bold text-slate-800">{keyMetrics.sdgsAchievement}%</p>
-          <p className="text-xs text-slate-500 mt-1">Rata-rata Nasional</p>
-          <div className="flex items-center gap-2 mt-2">
-            <ResponsiveContainer width={80} height={30}>
-              <LineChart data={sparklineData.sdgs.map((v, i) => ({ value: v }))}>
-                <Line type="monotone" dataKey="value" stroke="#10b981" strokeWidth={2} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-            <p className="text-xs text-green-600 flex items-center gap-1">
-              <ArrowUpRight size={10} /> ↑ 4.12%
-            </p>
-          </div>
-        </Card>
+      {/* ── ROW 1: 6 KPI CARDS ── */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-3">
+        {kpiCards.map((kpi, i) => {
+          const Icon = kpi.icon;
+          return (
+            <div key={i} className="bg-white rounded-xl border border-slate-100 shadow-sm p-3 flex flex-col justify-between min-h-[110px]">
+              <div className="flex items-start justify-between mb-1">
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: kpi.color + '18' }}>
+                  <Icon size={14} style={{ color: kpi.color }} />
+                </div>
+                <MiniSparkline color={kpi.sparkColor} />
+              </div>
+              <div>
+                <p className="text-[10px] text-slate-400 font-semibold leading-tight mb-0.5">{kpi.label}</p>
+                <p className="text-2xl font-black leading-none" style={{ color: kpi.color }}>{kpi.value}</p>
+                <p className="text-[10px] text-emerald-600 font-semibold mt-1 flex items-center gap-0.5">
+                  <ArrowUp size={9} />{kpi.sub}
+                </p>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
-      {/* Sebaran Level Maturity Desa & Status Sistem Desa */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <TrendingUp size={16} /> Sebaran Level Maturity Desa
+      {/* ── ROW 2: ASSESSMENT + DSS STATUS + PENGUMUMAN ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_260px_260px] gap-3">
+
+        {/* Ringkasan Assessment & Penelitian */}
+        <Card className="shadow-sm">
+          <CardHeader className="pb-2 pt-3 px-4">
+            <CardTitle className="text-xs font-bold flex items-center gap-1.5" style={{ color: COLOR }}>
+              <BarChart3 size={14} /> RINGKASAN ASSESSMENT &amp; PENELITIAN
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {maturityLevelData.map((item, index) => (
-                <div key={index} className="flex items-center gap-3">
-                  <div className="w-24 text-xs font-semibold text-slate-700">{item.level}</div>
-                  <div className="flex-1 h-6 bg-slate-100 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full rounded-full flex items-center justify-end pr-2"
-                      style={{ 
-                        width: `${item.persentase}%`,
-                        backgroundColor: index === 4 ? '#10b981' : index === 3 ? '#3b82f6' : index === 2 ? '#8b5cf6' : index === 1 ? '#f97316' : '#ef4444'
-                      }}
-                    >
-                      <span className="text-[10px] font-bold text-white">{item.persentase}%</span>
-                    </div>
-                  </div>
-                  <div className="w-16 text-xs text-slate-600 text-right">{item.jumlah} desa</div>
+          <CardContent className="px-4 pb-3">
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-3">
+              {[
+                { label: 'Jumlah Desa',        val: '247',   sub: 'Total Terdaftar' },
+                { label: 'Jumlah Assessment',   val: '247',   sub: 'Periode Aktif' },
+                { label: 'Validator',           val: '36',    sub: 'Ahli & Pakar' },
+                { label: 'Rekomendasi DSS',     val: '1.124', sub: 'Total Rekomendasi' },
+                { label: 'Siklus Assessment',   val: '3',     sub: 'Siklus Aktif' },
+                { label: 'Jumlah Artefak',      val: '6',     sub: 'Artefak Penelitian' },
+              ].map((item, i) => (
+                <div key={i} className="text-center">
+                  <p className="text-[10px] text-slate-400 font-semibold">{item.label}</p>
+                  <p className="text-2xl font-black text-slate-800 leading-tight">{item.val}</p>
+                  <p className="text-[10px] text-slate-500">{item.sub}</p>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Server size={16} /> Status Sistem Desa
+        {/* Status Rekomendasi DSS */}
+        <Card className="shadow-sm">
+          <CardHeader className="pb-2 pt-3 px-4">
+            <CardTitle className="text-xs font-bold flex items-center gap-1.5 text-amber-700">
+              <Zap size={14} /> STATUS REKOMENDASI DSS
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {statusSistemDesa.map((item, index) => (
-                <div key={index} className="flex items-center justify-between p-3 rounded-lg border">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-3 h-3 rounded-full ${
-                      item.color === 'green' ? 'bg-green-500' : 
-                      item.color === 'red' ? 'bg-red-500' : 'bg-yellow-500'
-                    }`} />
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">{item.status}</p>
-                      <p className="text-xs text-slate-500">{item.jumlah} desa</p>
-                    </div>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-lg font-bold text-slate-800">{item.persentase}%</p>
-                  </div>
-                </div>
-              ))}
+          <CardContent className="px-4 pb-3 space-y-2">
+            <div className="flex items-center gap-2 p-2 rounded-lg bg-amber-50 border border-amber-100">
+              <div className="w-6 h-6 rounded-md bg-amber-500 flex items-center justify-center flex-shrink-0">
+                <Target size={12} className="text-white" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[10px] text-amber-600 font-bold">Priority Program</p>
+                <p className="text-xl font-black text-amber-700 leading-none">245</p>
+                <p className="text-[9px] text-amber-500">Program Prioritas</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 p-2 rounded-lg bg-green-50 border border-green-100">
+              <div className="w-6 h-6 rounded-md bg-green-500 flex items-center justify-center flex-shrink-0">
+                <CheckCircle2 size={12} className="text-white" />
+              </div>
+              <div>
+                <p className="text-[10px] text-green-600 font-bold">Recommendation Executed</p>
+                <p className="text-xl font-black text-green-700 leading-none">512</p>
+                <p className="text-[9px] text-green-500">Sudah Dilaksanakan (45.4%)</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 p-2 rounded-lg bg-orange-50 border border-orange-100">
+              <div className="w-6 h-6 rounded-md bg-orange-400 flex items-center justify-center flex-shrink-0">
+                <Clock size={12} className="text-white" />
+              </div>
+              <div>
+                <p className="text-[10px] text-orange-600 font-bold">Recommendation Pending</p>
+                <p className="text-xl font-black text-orange-700 leading-none">612</p>
+                <p className="text-[9px] text-orange-500">Menunggu Eksekusi (54.4%)</p>
+              </div>
             </div>
           </CardContent>
         </Card>
-      </div>
 
-      {/* Quick Access - Top 5 Desa */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-            <MapPin size={16} /> Quick Access - Top 5 Desa
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-            {topDesa.map((desa, index) => (
-              <Link key={index} href={`/admin/master-desa`} className="block">
-                <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer border border-slate-200">
-                  <div className="flex items-center justify-between mb-2">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-bold ${
-                      index === 0 ? 'bg-yellow-500' : 
-                      index === 1 ? 'bg-slate-400' : 
-                      index === 2 ? 'bg-orange-600' : 'bg-slate-300'
-                    }`}>
-                      {desa.rank}
-                    </div>
-                    <div className="text-right">
-                      <p className="text-xs font-semibold text-green-600">↑ {desa.readiness}</p>
-                    </div>
-                  </div>
-                  <h3 className="text-xs font-bold text-slate-800 mb-1 line-clamp-2">{desa.nama}</h3>
-                  <p className="text-[10px] text-slate-500 mb-2">{desa.kecamatan}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-slate-600">Level {desa.maturity}</span>
-                    <TrendingUp size={12} className="text-green-600" />
-                  </div>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Ringkasan Assessment & Penelitian */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-            <Activity size={16} /> Ringkasan Assessment & Penelitian
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
-            <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <p className="text-xs text-slate-500 font-semibold mb-1">Jumlah Desa</p>
-              <p className="text-2xl font-bold text-slate-800">{ringkasanAssessment.jumlahDesa}</p>
-              <p className="text-[10px] text-slate-500 mt-1">Total Terdaftar</p>
-            </div>
-            <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-              <p className="text-xs text-slate-500 font-semibold mb-1">Jumlah Assessment</p>
-              <p className="text-2xl font-bold text-slate-800">{ringkasanAssessment.jumlahAssessment}</p>
-              <p className="text-[10px] text-slate-500 mt-1">Periode Aktif</p>
-            </div>
-            <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-              <p className="text-xs text-slate-500 font-semibold mb-1">Validator</p>
-              <p className="text-2xl font-bold text-slate-800">{ringkasanAssessment.jumlahValidator}</p>
-              <p className="text-[10px] text-slate-500 mt-1">Ahli & Pakar</p>
-            </div>
-            <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
-              <p className="text-xs text-slate-500 font-semibold mb-1">Rekomendasi DSS</p>
-              <p className="text-2xl font-bold text-slate-800">{ringkasanAssessment.jumlahRekomendasiDSS}</p>
-              <p className="text-[10px] text-slate-500 mt-1">Total Rekomendasi</p>
-            </div>
-            <div className="p-4 bg-teal-50 rounded-lg border border-teal-200">
-              <p className="text-xs text-slate-500 font-semibold mb-1">Siklus Assessment</p>
-              <p className="text-2xl font-bold text-slate-800">{ringkasanAssessment.jumlahSiklusAssessment}</p>
-              <p className="text-[10px] text-slate-500 mt-1">Siklus Aktif</p>
-            </div>
-            <div className="p-4 bg-indigo-50 rounded-lg border border-indigo-200">
-              <p className="text-xs text-slate-500 font-semibold mb-1">Jumlah Artefak</p>
-              <p className="text-2xl font-bold text-slate-800">{ringkasanAssessment.jumlahArtefak}</p>
-              <p className="text-[10px] text-slate-500 mt-1">Artefak Penelitian</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Status Rekomendasi DSS */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-            <BookOpen size={16} /> Status Rekomendasi DSS
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <p className="text-xs text-slate-500 font-semibold mb-1">Priority Program</p>
-              <p className="text-2xl font-bold text-slate-800">{statusRekomendasiDSS.priorityProgram}</p>
-              <p className="text-[10px] text-slate-500 mt-1">Program Prioritas</p>
-            </div>
-            <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-              <p className="text-xs text-slate-500 font-semibold mb-1">Recommendation Executed</p>
-              <p className="text-2xl font-bold text-slate-800">{statusRekomendasiDSS.recommendationExecuted}</p>
-              <p className="text-[10px] text-slate-500 mt-1">Telah Dieksekusi (45.4%)</p>
-            </div>
-            <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
-              <p className="text-xs text-slate-500 font-semibold mb-1">Recommendation Pending</p>
-              <p className="text-2xl font-bold text-slate-800">{statusRekomendasiDSS.recommendationPending}</p>
-              <p className="text-[10px] text-slate-500 mt-1">Menunggu Eksekusi (54.4%)</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Modul Utama Sistem - 8 Modules */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-            <Database size={16} /> Modul Utama Sistem
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {modulSistem.slice(0, 8).map((modul, index) => (
-              <Link key={index} href={modul.link} className="block">
-                <Card className="p-4 hover:shadow-md transition-shadow cursor-pointer border border-slate-200">
-                  <div className="flex flex-col items-center text-center gap-2">
-                    <div className="p-3 bg-indigo-100 rounded-lg">
-                      <modul.icon size={24} className="text-indigo-600" />
-                    </div>
-                    <div>
-                      <h3 className="text-xs font-semibold text-slate-800 mb-1">{modul.title}</h3>
-                    </div>
-                  </div>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         {/* Pengumuman Sistem */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Bell size={16} /> Pengumuman Sistem
+        <Card className="shadow-sm">
+          <CardHeader className="pb-2 pt-3 px-4">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-xs font-bold flex items-center gap-1.5 text-slate-700">
+                <Bell size={14} /> PENGUMUMAN SISTEM
+              </CardTitle>
+              <NextLink href="/admin/pengaturan-notifikasi" className="text-[10px] text-blue-600 hover:underline font-semibold">Lihat Semua</NextLink>
+            </div>
+          </CardHeader>
+          <CardContent className="px-4 pb-3 space-y-2">
+            {pengumuman.map((item, i) => (
+              <div key={i} className="flex items-start gap-2 pb-2 border-b border-slate-50 last:border-0 last:pb-0">
+                <div className="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0 mt-1.5" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-[11px] font-bold text-slate-700 leading-tight">{item.judul}</p>
+                  <p className="text-[10px] text-slate-400 leading-tight">{item.desc}</p>
+                </div>
+                <p className="text-[9px] text-slate-400 font-semibold flex-shrink-0">{item.tanggal}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* ── ROW 3: MODUL UTAMA + RESEARCH INSIGHT + AKTIVITAS TERBARU ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_220px_220px] gap-3">
+
+        {/* Modul Utama Sistem */}
+        <Card className="shadow-sm">
+          <CardHeader className="pb-2 pt-3 px-4">
+            <CardTitle className="text-xs font-bold flex items-center gap-1.5" style={{ color: COLOR }}>
+              <Cpu size={14} /> MODUL UTAMA SISTEM
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {pengumumanSistem.map((pengumuman, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors border border-slate-100">
-                  <div className="p-2 bg-blue-100 rounded-lg">
-                    <Bell size={14} className="text-blue-600" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-semibold text-slate-800">{pengumuman.judul}</p>
-                    <p className="text-xs text-slate-600 mt-1">{pengumuman.deskripsi}</p>
-                    <p className="text-[10px] text-slate-400 mt-1">{pengumuman.tanggal}</p>
-                  </div>
-                </div>
-              ))}
+          <CardContent className="px-4 pb-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              {modulSistem.map((m, i) => {
+                const Icon = m.icon;
+                return (
+                  <NextLink key={i} href={m.link}
+                    className="flex flex-col gap-1 p-3 rounded-lg border border-slate-100 bg-slate-50 hover:bg-blue-50 hover:border-blue-200 transition-all group">
+                    <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: COLOR + '15' }}>
+                      <Icon size={14} style={{ color: COLOR }} />
+                    </div>
+                    <p className="text-[11px] font-bold text-slate-800 leading-tight group-hover:text-blue-700">{m.title}</p>
+                    <p className="text-[10px] text-slate-400 leading-tight">{m.desc}</p>
+                    <ChevronRight size={11} className="text-slate-300 group-hover:text-blue-500 self-end" />
+                  </NextLink>
+                );
+              })}
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Research Insight */}
+        <Card className="shadow-sm">
+          <CardHeader className="pb-2 pt-3 px-4">
+            <CardTitle className="text-xs font-bold flex items-center gap-1.5 text-slate-700">
+              <TrendingUp size={14} /> RESEARCH INSIGHT (TREND UTAMA)
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-4 pb-3 space-y-2">
+            {researchTrend.map((item, i) => (
+              <div key={i} className="flex items-center justify-between p-2 rounded-lg bg-slate-50 border border-slate-100">
+                <div className="min-w-0 flex-1">
+                  <p className="text-[10px] text-slate-500 font-semibold truncate">{item.label}</p>
+                  <p className="text-base font-black text-slate-800 leading-none">{item.nilai}</p>
+                </div>
+                <div className="text-right flex-shrink-0">
+                  <div className={`flex items-center gap-0.5 justify-end ${item.up ? 'text-emerald-600' : 'text-red-500'}`}>
+                    {item.up ? <ArrowUp size={10} /> : <ArrowDown size={10} />}
+                    <p className="text-[10px] font-bold">{item.delta}</p>
+                  </div>
+                  <p className="text-[9px] font-semibold" style={{ color: item.color }}>{item.pct}</p>
+                </div>
+              </div>
+            ))}
           </CardContent>
         </Card>
 
         {/* Aktivitas Terbaru */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Clock size={16} /> Aktivitas Terbaru
+        <Card className="shadow-sm">
+          <CardHeader className="pb-2 pt-3 px-4">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-xs font-bold flex items-center gap-1.5 text-slate-700">
+                <Activity size={14} /> AKTIVITAS TERBARU
+              </CardTitle>
+              <NextLink href="/admin/audit-log" className="text-[10px] text-blue-600 hover:underline font-semibold">Lihat Semua</NextLink>
+            </div>
+          </CardHeader>
+          <CardContent className="px-4 pb-3 space-y-1.5">
+            {aktivitas.map((item, i) => (
+              <div key={i} className="flex items-start gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0 mt-1.5" />
+                <div className="flex-1 min-w-0">
+                  <p className="text-[11px] text-slate-700 font-semibold leading-tight">{item.aksi}</p>
+                  <p className="text-[9px] text-slate-400">oleh {item.oleh}</p>
+                </div>
+                <p className="text-[9px] text-slate-400 font-semibold flex-shrink-0">{item.waktu}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* ── ROW 4: CHART TREN + MATURITY PIE + TOP 5 DESA ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_220px_280px] gap-3">
+
+        {/* Tren Indeks Nasional */}
+        <Card className="shadow-sm">
+          <CardHeader className="pb-1 pt-3 px-4">
+            <CardTitle className="text-xs font-bold flex items-center gap-1.5" style={{ color: COLOR }}>
+              <TrendingUp size={14} /> TREN INDEKS NASIONAL (6 BULAN TERAKHIR)
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {aktivitasTerbaru.map((aktivitas, index) => (
-                <div key={index} className="flex items-start gap-3 p-3 rounded-lg hover:bg-slate-50 transition-colors border border-slate-100">
-                  <div className="p-2 bg-green-100 rounded-lg">
-                    <CheckCircle2 size={14} className="text-green-600" />
+          <CardContent className="px-2 pb-3">
+            <ResponsiveContainer width="100%" height={180}>
+              <LineChart data={trendData} margin={{ top: 5, right: 15, left: -20, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                <XAxis dataKey="bulan" tick={{ fontSize: 9, fill: '#94a3b8' }} />
+                <YAxis tick={{ fontSize: 9, fill: '#94a3b8' }} domain={[55, 80]} />
+                <Tooltip contentStyle={{ fontSize: 10, borderRadius: 8, border: '1px solid #e2e8f0' }} />
+                <Legend iconSize={8} wrapperStyle={{ fontSize: 9, paddingTop: 4 }} />
+                <Line type="monotone" dataKey="readiness" name="Readiness Index" stroke="#3b82f6" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="maturity"  name="Maturity Index"  stroke="#f59e0b" strokeWidth={2} dot={false} />
+                <Line type="monotone" dataKey="qol"       name="QoL Index"       stroke="#ef4444" strokeWidth={2} dot={false} />
+              </LineChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        {/* Sebaran Level Maturity Desa */}
+        <Card className="shadow-sm">
+          <CardHeader className="pb-1 pt-3 px-4">
+            <CardTitle className="text-xs font-bold flex items-center gap-1.5" style={{ color: COLOR }}>
+              <Layers size={14} /> SEBARAN LEVEL MATURITY DESA
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="px-3 pb-3">
+            <div className="flex flex-col items-center">
+              <div className="relative">
+                <ResponsiveContainer width={140} height={140}>
+                  <PieChart>
+                    <Pie data={maturityPieData} dataKey="value" cx="50%" cy="50%" innerRadius={38} outerRadius={60} stroke="none">
+                      {maturityPieData.map((entry, index) => (
+                        <Cell key={index} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Tooltip contentStyle={{ fontSize: 10, borderRadius: 8 }} formatter={(v: any, n: any) => [`${v} desa`, n]} />
+                  </PieChart>
+                </ResponsiveContainer>
+                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  <p className="text-lg font-black text-slate-800">247</p>
+                  <p className="text-[9px] text-slate-400">Total Desa</p>
+                </div>
+              </div>
+              <div className="w-full space-y-1 mt-1">
+                {maturityPieData.map((item, i) => (
+                  <div key={i} className="flex items-center justify-between text-[10px]">
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: item.color }} />
+                      <span className="text-slate-600 font-semibold">{item.name}</span>
+                    </div>
+                    <span className="text-slate-500">{item.value} ({item.pct}%)</span>
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-semibold text-slate-800">{aktivitas.aksi}</p>
-                    <p className="text-xs text-slate-500">{aktivitas.user}</p>
-                    <p className="text-[10px] text-slate-400 mt-1">{aktivitas.waktu}</p>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Top 5 Desa Readiness Tertinggi */}
+        <Card className="shadow-sm">
+          <CardHeader className="pb-1 pt-3 px-4">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-xs font-bold flex items-center gap-1.5" style={{ color: COLOR }}>
+                <Star size={14} /> TOP 5 DESA READINESS TERTINGGI
+              </CardTitle>
+              <span className="text-[10px] text-slate-500 font-semibold bg-slate-100 px-2 py-0.5 rounded">Top 5</span>
+            </div>
+          </CardHeader>
+          <CardContent className="px-4 pb-3 space-y-2">
+            {top5Desa.map((desa, i) => (
+              <div key={i} className="flex items-center gap-2">
+                <span className="text-[11px] font-black text-slate-500 w-3 flex-shrink-0">{i + 1}.</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center justify-between mb-0.5">
+                    <p className="text-[11px] font-semibold text-slate-700 truncate">{desa.nama}</p>
+                    <p className="text-[11px] font-black text-blue-700 ml-2 flex-shrink-0">{desa.nilai}</p>
+                  </div>
+                  <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full rounded-full bg-blue-500" style={{ width: `${desa.nilai}%` }} />
                   </div>
                 </div>
-              ))}
+              </div>
+            ))}
+            <div className="pt-1">
+              <ResponsiveContainer width="100%" height={80}>
+                <BarChart data={top5Desa} layout="vertical" margin={{ top: 0, right: 5, left: 0, bottom: 0 }}>
+                  <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 8 }} />
+                  <YAxis type="category" dataKey="nama" tick={{ fontSize: 9 }} width={90} />
+                  <Tooltip contentStyle={{ fontSize: 10, borderRadius: 6 }} />
+                  <Bar dataKey="nilai" fill="#3b82f6" radius={[0, 4, 4, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Research Insight - Trend Utama */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-            <BarChart3 size={16} /> Research Insight (Trend Utama)
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={researchTrendData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-              <XAxis dataKey="bulan" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
-              <Bar dataKey="readiness" fill="#8b5cf6" name="Readiness Index" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="maturity" fill="#10b981" name="Maturity Index" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="qol" fill="#f97316" name="Quality of Life" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="sdgs" fill="#3b82f6" name="SDGs Achievement" radius={[3, 3, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+      {/* ── STATUS SISTEM & INTEGRASI DATA ── */}
+      <div className="bg-white rounded-xl border border-slate-100 shadow-sm px-4 py-3">
+        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">STATUS SISTEM &amp; INTEGRASI DATA</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+          {[
+            { icon: Link2,      label: 'Integrasi Data',         val: 'Aktif',                  color: '#22c55e' },
+            { icon: Database,   label: 'Sumber Data',            val: '15 Sumber Terhubung',    color: '#3b82f6' },
+            { icon: RefreshCw,  label: 'Sinkronisasi Terakhir',  val: '27/06/2026 07:45 WIB',   color: '#f59e0b' },
+            { icon: Archive,    label: 'Status Backup',          val: 'Berhasil',               color: '#22c55e' },
+            { icon: Server,     label: 'Health System',          val: 'Optimal',                color: '#22c55e' },
+            { icon: Users,      label: 'Pengguna Aktif',         val: '12 Online',              color: '#8b5cf6' },
+          ].map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <div key={i} className="flex items-center gap-2">
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: item.color + '18' }}>
+                  <Icon size={13} style={{ color: item.color }} />
+                </div>
+                <div className="min-w-0">
+                  <p className="text-[9px] text-slate-400 font-semibold">{item.label}</p>
+                  <p className="text-[11px] font-bold truncate" style={{ color: item.color }}>{item.val}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
 
-      {/* Tren Indeks Nasional - 6 Bulan Terakhir */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-            <TrendingUp size={16} /> Tren Indeks Nasional (6 Bulan Terakhir)
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={researchTrendData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-              <XAxis dataKey="bulan" tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 11, fill: '#64748b' }} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={{ fontSize: 12, borderRadius: 8 }} />
-              <Bar dataKey="readiness" fill="#8b5cf6" name="Readiness" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="maturity" fill="#10b981" name="Maturity" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="qol" fill="#f97316" name="QoL" radius={[3, 3, 0, 0]} />
-              <Bar dataKey="sdgs" fill="#3b82f6" name="SDGs" radius={[3, 3, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </CardContent>
-      </Card>
+      {/* ── QUICK ACCESS REPORT ── */}
+      <div className="bg-white rounded-xl border border-slate-100 shadow-sm px-4 py-3">
+        <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider mb-2">QUICK ACCESS REPORT</p>
+        <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+          {quickReports.map((rep, i) => {
+            const Icon = rep.icon;
+            return (
+              <NextLink key={i} href={rep.link}
+                className="flex flex-col items-center gap-1.5 p-3 rounded-xl border border-slate-100 bg-slate-50 hover:bg-blue-50 hover:border-blue-200 transition-all group text-center">
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center" style={{ backgroundColor: COLOR + '10' }}>
+                  <Icon size={16} style={{ color: COLOR }} className="group-hover:text-blue-600" />
+                </div>
+                <p className="text-[10px] font-semibold text-slate-600 leading-tight group-hover:text-blue-700">{rep.label}</p>
+              </NextLink>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ── FOOTER ── */}
+      <p className="text-center text-[10px] text-slate-300 font-semibold">
+        © 2026 APL-SLV BORNEO - Smart Living Village. All rights reserved. &nbsp; Versi 2.1.0
+      </p>
     </div>
   );
 }

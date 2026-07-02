@@ -29,8 +29,8 @@ const lokasiSampel = [
 
 const informasiPenelitian = [
   { label: 'Judul Penelitian', nilai: 'Pengembangan Framework Smart Living Village Readiness berbasis DSR untuk Desa Adat Borneo', fullRow: true },
-  { label: 'Peneliti Utama', nilai: 'Dr. Peneliti Andi' },
-  { label: 'Institusi', nilai: 'Universitas Mulawarman' },
+  { label: 'Peneliti Utama', nilai: 'Joy Nashar' },
+  { label: 'Institusi', nilai: 'Binus University' },
   { label: 'Metode Penelitian', nilai: 'Design Science Research (DSR)' },
   { label: 'Pendekatan', nilai: 'Mixed Method (Kuantitatif & Kualitatif)' },
   { label: 'Periode Penelitian', nilai: 'Januari – Desember 2025' },
