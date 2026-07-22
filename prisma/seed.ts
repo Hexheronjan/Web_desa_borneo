@@ -60,6 +60,8 @@ async function main() {
         where: { id: existing.id },
         data: {
           name: userData.name,
+          email: userData.email,
+          username: userData.email.split('@')[0],
           role: userData.role,
           desaId: desa.id,
         }
