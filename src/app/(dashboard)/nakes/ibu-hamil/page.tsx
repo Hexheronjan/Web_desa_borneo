@@ -109,13 +109,21 @@ export default function IbuHamilPage() {
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Pantauan Ibu Hamil" modul="Nakes / Kader Posyandu" color={COLOR} />
+      <PageTitle fitur="Data Ibu dan Anak" modul="Tenaga Kesehatan" color={COLOR} />
+
+      {/* Banner Privasi Data Sensitif */}
+      <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2">
+        <span className="flex-shrink-0 mt-0.5">🔒</span>
+        <p className="font-semibold leading-relaxed">
+          <strong>Data Sensitif:</strong> Data individu bersifat sensitif dan hanya digunakan untuk tujuan pelayanan sesuai kewenangan. Informasi ibu hamil, ibu menyusui, bayi, dan balita tidak boleh dibagikan kepada pihak luar tanpa izin. Rujukan harus dilakukan tanpa membuka informasi berlebihan.
+        </p>
+      </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard label="Ibu Hamil Terdaftar" value={filtered.length} satuan="ibu" barColor="orange" progress={80} />
-        <StatCard label="Normal" value={filtered.length - alertCount} satuan="ibu" barColor="green" progress={filtered.length > 0 ? ((filtered.length - alertCount) / filtered.length) * 100 : 0} />
-        <StatCard label="Risiko Tinggi" value={alertCount} satuan="pantauan intensif" barColor="red" progress={filtered.length > 0 ? (alertCount / filtered.length) * 100 : 0} />
-        <StatCard label="Monitoring Bulan Ini" value={filtered.length} satuan="catatan" barColor="blue" progress={50} />
+        <StatCard label="Kondisi Normal" value={filtered.length - alertCount} satuan="ibu" barColor="green" progress={filtered.length > 0 ? ((filtered.length - alertCount) / filtered.length) * 100 : 0} />
+        <StatCard label="Risiko Tinggi" value={alertCount} satuan="butuh tindak lanjut" barColor="red" progress={filtered.length > 0 ? (alertCount / filtered.length) * 100 : 0} />
+        <StatCard label="Riwayat Layanan" value={filtered.length} satuan="catatan" barColor="blue" progress={50} />
       </div>
 
       <div className="grid grid-cols-1 gap-5">

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { Calendar, Clock, Users, CheckCircle2, RefreshCw, FileText } from "lucide-react";
@@ -45,7 +45,7 @@ export default function MusyawarahDigitalPage() {
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Musyawarah Digital" modul="Layanan SLV" color={COLOR} />
+      <PageTitle fitur="Musyawarah Digital" modul="Masyarakat Umum" color={COLOR} />
       <LayananSLVMetadataCards metadata={METADATA} color={COLOR} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">

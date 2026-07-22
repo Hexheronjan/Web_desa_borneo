@@ -40,21 +40,21 @@ const radarDesa = [
 
 // Stat cards
 const statCards = [
-  { label: 'Readiness Desa', value: '74,30', sub: 'Ujritai', cat: 'Kategori: Baik', icon: TrendingUp, color: '#276749', href: '/warga/hasil-readiness-desa' },
-  { label: 'Quality of Life Index', value: '71,28', sub: 'Bodgs', cat: 'Kategori: Baik', icon: Heart, color: '#2b6cb0', href: '/warga/hasil-quality-of-life-desa' },
-  { label: 'Program Berjalan', value: '16', sub: 'Program', cat: '', icon: ClipboardList, color: '#c05621', href: '/warga/program-desa', link: 'Lihat Program' },
-  { label: 'Aspirasi Diproses', value: '23', sub: 'Aspirasi', cat: '', icon: MessageSquare, color: '#6a1b9a', href: '/warga/aspirasi-masyarakat', link: 'Lihat Aspirasi' },
-  { label: 'Agenda Bulan Ini', value: '7', sub: 'Kegiatan', cat: '', icon: Calendar, color: '#c05621', href: '/warga/agenda-desa', link: 'Lihat Agenda' },
-  { label: 'Survei QoL, Olisi', value: '85%', sub: 'Partisipasi', cat: '', icon: Users, color: '#276749', href: '/warga/survei-quality-of-life', link: 'Isi Survei' },
+  { label: 'Ringkasan Skor Kesiapan Desa', value: '74,30', sub: 'Indeks Kesiapan', cat: 'Kategori: Baik', icon: TrendingUp, color: '#276749', href: '/warga/hasil-readiness-desa' },
+  { label: 'Skor Kualitas Hidup Masyarakat', value: '71,28', sub: 'Indeks Kualitas', cat: 'Kategori: Baik', icon: Heart, color: '#2b6cb0', href: '/warga/hasil-quality-of-life-desa' },
+  { label: 'Program Desa Berjalan', value: '16', sub: 'Program', cat: '', icon: ClipboardList, color: '#c05621', href: '/warga/program-desa', link: 'Lihat Program' },
+  { label: 'Aspirasi dalam Tindak Lanjut', value: '23', sub: '5 Baru · 8 Belum Ditanggapi', cat: '', icon: MessageSquare, color: '#6a1b9a', href: '/warga/aspirasi-masyarakat', link: 'Lihat Aspirasi' },
+  { label: 'Agenda dan Musyawarah Mendatang', value: '7', sub: 'Kegiatan', cat: '', icon: Calendar, color: '#c05621', href: '/warga/agenda-desa', link: 'Lihat Agenda' },
+  { label: 'Partisipasi Survei Masyarakat', value: '85%', sub: '85% Partisipasi (320 Warga)', cat: '', icon: Users, color: '#276749', href: '/warga/survei-quality-of-life', link: 'Isi Survei' },
 ];
 
 // Program Desa Berjalan
 const programBerjalan = [
-  { nama: 'Internet Desa', sub: 'Pemasangan Jaringan Internet', progress: 75, status: 'Berjalan', color: '#2b6cb0', emoji: '🌐' },
-  { nama: 'Posyandu Digital', sub: 'Layanan Kesehatan Ibu & Anak', progress: 80, status: 'Berjalan', color: '#276749', emoji: '🏥' },
+  { nama: 'Internet Desa (Prioritas Utama)', sub: 'Pemasangan Jaringan Internet', progress: 75, status: 'Berjalan', color: '#2b6cb0', emoji: '🌐' },
+  { nama: 'Posyandu Digital (Prioritas Utama)', sub: 'Layanan Kesehatan Ibu & Anak', progress: 80, status: 'Berjalan', color: '#276749', emoji: '🏥' },
   { nama: 'Literasi Digital Masyarakat', sub: 'Pelatihan Digital untuk Warga', progress: 60, status: 'Berjalan', color: '#276749', emoji: '💻' },
-  { nama: 'Pengelolaan Sampah Desa', sub: 'Program Lingkungan Bersih', progress: 50, status: 'Dalam Proses', color: '#c05621', emoji: '♻️' },
-  { nama: 'Penguatan UMKM Desa', sub: 'Pendampingan Usaha Masyarakat', progress: 40, status: 'Dalam Proses', color: '#c05621', emoji: '🛍️' },
+  { nama: 'Pengelolaan Sampah Desa', sub: 'Program Lingkungan Bersih', progress: 50, status: 'Ditunda', color: '#c05621', emoji: '♻️' },
+  { nama: 'Penguatan UMKM Desa', sub: 'Pendampingan Usaha Masyarakat', progress: 40, status: 'Terlambat', color: '#e53e3e', emoji: '🛍️' },
 ];
 
 // Aspirasi Masyarakat
@@ -74,21 +74,22 @@ const qolDimensi = [
   { dimensi: 'Lingkungan', skor: 69.30, kategori: 'Cukup' },
   { dimensi: 'Sosial Budaya', skor: 70.50, kategori: 'Baik' },
   { dimensi: 'Kelembagaan', skor: 71.20, kategori: 'Baik' },
+  { dimensi: 'Kepuasan Pelayanan', skor: 74.50, kategori: 'Baik' },
 ];
 
 // Pelaporan masalah
 const pelaporanMasalah = [
-  { judul: 'Jalan Rusak di Dusun Loa Kulu', kategori: 'Infrastruktur', status: 'Diproses', tgl: '20 Mei 2025', img: '🛣️', statusColor: 'bg-blue-100 text-blue-700' },
+  { judul: 'Jalan Rusak di Dusun Loa Kulu', kategori: 'Infrastruktur (Prioritas Utama)', status: 'Diproses', tgl: '20 Mei 2025', img: '🛣️', statusColor: 'bg-red-100 text-red-700' },
   { judul: 'Sampah Menumpuk di TPS', kategori: 'Lingkungan', status: 'Diterima', tgl: '19 Mei 2025', img: '🗑️', statusColor: 'bg-green-100 text-green-700' },
   { judul: 'Lampu Jalan Mati', kategori: 'Infrastruktur', status: 'Diproses', tgl: '18 Mei 2025', img: '💡', statusColor: 'bg-blue-100 text-blue-700' },
 ];
 
 // Agenda Desa
 const agendaDesa = [
-  { nama: 'Musrenbangdes 2025', sub: 'Balai Desa', tgl: '25', bln: 'MEI' },
-  { nama: 'Posyandu Balita', sub: 'Posyandu Desa', tgl: '27', bln: 'MEI', waktu: '08.00 - 11.00 WITA' },
-  { nama: 'Pelatihan Literasi Digital', sub: 'Balai Desa', tgl: '17', bln: 'JUL', waktu: '09.00 - 12.00 WITA' },
-  { nama: 'Kerja Bakti Desa', sub: 'Lingkungan Desa', tgl: '31', bln: 'MEI', waktu: '07.00 - 10.00 WITA' },
+  { nama: 'Musrenbangdes 2025 (Pembahasan RPJMDes & Usulan)', sub: 'Balai Desa', tgl: '25', bln: 'MEI' },
+  { nama: 'Posyandu Balita (Layanan Kesehatan KIA)', sub: 'Posyandu Desa', tgl: '27', bln: 'MEI', waktu: '08.00 - 11.00 WITA' },
+  { nama: 'Pelatihan Literasi Digital (Peningkatan Skill Warga)', sub: 'Balai Desa', tgl: '17', bln: 'JUL', waktu: '09.00 - 12.00 WITA' },
+  { nama: 'Kerja Bakti Desa (Gotong Royong Lingkungan)', sub: 'Lingkungan Desa', tgl: '31', bln: 'MEI', waktu: '07.00 - 10.00 WITA' },
 ];
 
 // Informasi Desa
@@ -96,7 +97,7 @@ const infoDesa = [
   { judul: 'Informasi Adat & Budaya', sub: 'Mengenal adat dan budaya Lung Anai untuk generasi mendatang.', emoji: '🏠', href: '/warga/informasi-adat-budaya' },
   { judul: 'Informasi Pendidikan', sub: 'Informasi sekolah, beasiswa, dan kegiatan pendidikan desa.', emoji: '📚', href: '/warga/informasi-pendidikan' },
   { judul: 'Informasi Kesehatan', sub: 'Layanan kesehatan, posyandu dan pola hidup sehat.', emoji: '🏥', href: '/warga/informasi-kesehatan' },
-  { judul: 'Informasi Lingkungan', sub: 'Informasi program lingkungan bersih dan pelestarian.', emoji: '🌿', href: '/warga/informasi-pendidikan' },
+  { judul: 'Informasi Pembangunan', sub: 'Informasi rencana pembangunan fisik, sarana prasarana, dan infrastruktur desa.', emoji: '🏗️', href: '/warga/profil-desa' },
 ];
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
@@ -122,7 +123,7 @@ export default function WargaDashboardPage() {
       <div className="rounded-xl overflow-hidden relative shadow-md bg-gradient-to-br from-green-800 via-green-700 to-green-500">
         <div className="p-5 flex items-center justify-between gap-4 text-white relative z-10">
           <div className="flex-1">
-            <h2 className="text-xl font-black leading-tight mb-1">Selamat datang, Warga Desa Lung Anai 👋</h2>
+            <h2 className="text-xl font-black leading-tight mb-1">Selamat datang, Tokoh/Perwakilan Masyarakat Desa Lung Anai 👋</h2>
             <p className="text-sm text-green-100 leading-relaxed">
               Bersama membangun desa yang cerdas, mandiri, berbudaya dan sejahtera.
             </p>
@@ -387,7 +388,7 @@ export default function WargaDashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Informasi Desa */}
         <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm p-4">
-          <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">Informasi Desa untuk Warga</h3>
+          <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-3">Informasi Publik & Pembangunan Desa</h3>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {infoDesa.map((info, i) => (
               <div key={i} className="rounded-lg border border-gray-100 overflow-hidden hover:shadow-md transition-shadow">

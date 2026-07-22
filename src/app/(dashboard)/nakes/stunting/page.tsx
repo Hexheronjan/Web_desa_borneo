@@ -113,13 +113,21 @@ export default function StuntingPage() {
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Pantauan Stunting" modul="Nakes / Kader Posyandu" color={COLOR} />
+      <PageTitle fitur="Monitoring Stunting" modul="Tenaga Kesehatan" color={COLOR} />
+
+      {/* Banner Privasi */}
+      <div className="p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 text-xs flex items-start gap-2">
+        <span className="flex-shrink-0 mt-0.5">🔒</span>
+        <p className="font-semibold leading-relaxed">
+          <strong>Privasi Data:</strong> Halaman ini hanya untuk penggunaan internal Tenaga Kesehatan. Hindari menampilkan nama anak atau keluarga pada peta dan dasbor agregat. Data individu bersifat sensitif dan hanya digunakan untuk tujuan pelayanan sesuai kewenangan.
+        </p>
+      </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Stunting Rate" value={`${stuntingRate.toFixed(1)}%`} satuan="skor pencapaian" barColor={stuntingRate <= 14 ? 'green' : 'red'} progress={stuntingRate <= 14 ? 100 : stuntingRate} />
+        <StatCard label="Cakupan Pengukuran" value={`${stuntingRate.toFixed(1)}%`} satuan="skor pencapaian" barColor={stuntingRate <= 14 ? 'green' : 'red'} progress={stuntingRate <= 14 ? 100 : stuntingRate} />
         <StatCard label="Target Nasional" value="< 14%" satuan="memenuhi target" barColor="green" progress={stuntingRate <= 14 ? 100 : (stuntingRate / 14) * 100} />
-        <StatCard label="Balita Terpantau" value={filtered.length} satuan="balita" barColor="orange" progress={90} />
-        <StatCard label="Kasus Ditangani" value={stuntingCount + riskCount} satuan="balita" barColor="blue" progress={100} />
+        <StatCard label="Sasaran Terpantau" value={filtered.length} satuan="balita" barColor="orange" progress={90} />
+        <StatCard label="Kasus Butuh Tindak Lanjut" value={stuntingCount + riskCount} satuan="balita" barColor="blue" progress={100} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">

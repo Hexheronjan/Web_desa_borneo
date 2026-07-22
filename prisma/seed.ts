@@ -8,10 +8,10 @@ async function main() {
   if (!desa) {
     desa = await prisma.desa.create({
       data: {
-        nama: 'Desa Adat Borneo',
-        kecamatan: 'Kecamatan Default',
-        kabupaten: 'Kabupaten Default',
-        provinsi: 'Kalimantan Tengah',
+        nama: 'Lung Anai',
+        kecamatan: 'Loa Kulu',
+        kabupaten: 'Kutai Kartanegara',
+        provinsi: 'Kalimantan Timur',
       }
     })
     console.log('Created default desa:', desa.nama)
@@ -19,8 +19,8 @@ async function main() {
 
   // Create test users
   const users = [
-    { id: 'user-warga', name: 'Budi Warga', email: 'warga@borneo.id', password: 'password123', role: 'warga' as const },
-    { id: 'user-admin', name: 'Admin Utama', email: 'admin@borneo.id', password: 'password123', role: 'admin_super' as const },
+    { id: 'user-warga', name: 'Tokoh/Perwakilan Masyarakat Desa Lung Anai', email: 'tokoh.masyarakat@contoh.id', password: 'password123', role: 'warga' as const },
+    { id: 'user-admin', name: 'Joy Nashar', email: 'admin@borneo.id', password: 'password123', role: 'admin_super' as const },
     { id: 'user-nakes', name: 'Bidan Siti', email: 'nakes@borneo.id', password: 'password123', role: 'nakes_posyandu' as const },
     { id: 'user-guru', name: 'Pak Guru Budi', email: 'guru@borneo.id', password: 'password123', role: 'guru_fasilitator' as const },
     { id: 'user-pemdes', name: 'Perangkat Desa', email: 'pemdes@borneo.id', password: 'password123', role: 'pemerintah_desa' as const },
@@ -28,12 +28,19 @@ async function main() {
     { id: 'user-bpd', name: 'Ketua BPD', email: 'bpd@borneo.id', password: 'password123', role: 'bpd' as const },
     { id: 'user-operator', name: 'Operator SID', email: 'operator@borneo.id', password: 'password123', role: 'operator_sid' as const },
     { id: 'user-dinas', name: 'Dinas PMD', email: 'dinas@borneo.id', password: 'password123', role: 'dinas_pmd' as const },
-    { id: 'user-peneliti', name: 'Peneliti', email: 'peneliti@borneo.id', password: 'password123', role: 'peneliti' as const },
+    { id: 'user-peneliti', name: 'Joy Nashar', email: 'peneliti@borneo.id', password: 'password123', role: 'peneliti' as const },
     { id: 'user-layanan', name: 'Andi Saputra', email: 'layanan@borneo.id', password: 'password123', role: 'layanan_slv' as const },
   ]
 
   for (const userData of users) {
-    const existing = await prisma.user.findFirst({ where: { email: userData.email } })
+    const existing = await prisma.user.findFirst({
+      where: {
+        OR: [
+          { id: userData.id },
+          { email: userData.email }
+        ]
+      }
+    })
     if (!existing) {
       await prisma.user.create({
         data: {
@@ -49,7 +56,15 @@ async function main() {
       })
       console.log('Created user:', userData.email)
     } else {
-      console.log('User already exists:', userData.email)
+      await prisma.user.update({
+        where: { id: existing.id },
+        data: {
+          name: userData.name,
+          role: userData.role,
+          desaId: desa.id,
+        }
+      })
+      console.log('Updated user details for:', userData.email)
     }
   }
 

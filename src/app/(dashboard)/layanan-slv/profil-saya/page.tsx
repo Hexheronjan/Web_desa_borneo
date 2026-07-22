@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { FormEvent, useState } from "react";
 import { useSession } from "next-auth/react";
@@ -52,7 +52,7 @@ export default function ProfilSayaPage() {
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Profil Saya" modul="Layanan SLV" color={COLOR} />
+      <PageTitle fitur="Profil Saya" modul="Masyarakat Umum" color={COLOR} />
       <LayananSLVMetadataCards metadata={METADATA} color={COLOR} />
 
       {/* Hero profil */}
@@ -68,7 +68,7 @@ export default function ProfilSayaPage() {
             </p>
             <div className="flex flex-wrap gap-2 mt-3">
               <span className="px-3 py-1 rounded-full bg-white/15 text-xs font-bold border border-white/20">
-                Layanan SLV
+                Masyarakat Umum
               </span>
               <span className="px-3 py-1 rounded-full bg-emerald-500/30 text-xs font-bold border border-emerald-300/30 flex items-center gap-1">
                 <CheckCircle2 size={12} /> Akun Terverifikasi
@@ -90,7 +90,7 @@ export default function ProfilSayaPage() {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-            <IdCard size={16} /> Biodata Layanan SLV
+            <IdCard size={16} /> Biodata Masyarakat Umum
           </CardTitle>
           {saved && (
             <span className="text-xs font-bold text-green-700 flex items-center gap-1">

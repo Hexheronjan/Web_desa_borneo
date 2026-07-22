@@ -1,1256 +1,367 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { UserPlus, Search, Download, Edit, Trash2, Eye, Shield, CheckCircle2, AlertTriangle } from 'lucide-react';
-import { Document, Page, Text, View, StyleSheet, pdf } from '@react-pdf/renderer';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { UserPlus, Search, Shield, CheckCircle2, Lock, Unlock, RefreshCw, Key, Ban, Eye, X, ShieldAlert } from 'lucide-react';
 
 const COLOR = '#1a237e';
-const ROLE_OPTIONS = ['Super Admin', 'Operator SID', 'Pemerintah Desa', 'BPD', 'Lembaga Adat', 'Guru/Fasilitator', 'Nakes/Posyandu', 'Warga', 'Dinas PMD', 'Peneliti/Akademisi', 'Layanan SLV'];
-const STATUS_OPTIONS = ['Aktif', 'Nonaktif'];
 
-interface User {
-  id: number;
-  nama: string;
-  username: string;
-  password: string;
-  role: string;
-  status: string;
-  lastLogin: string;
-  isPendingAddition?: boolean;
-  recordId?: string;
-  operatorName?: string;
-}
-
-type PendingAddition = { nama: string; username: string; role: string; status: string; operatorName: string; recordId: string };
-type PendingEdit = { nama: string; role: string; status: string; operatorName: string; recordId: string };
-type PendingDeletion = { operatorName: string; recordId: string };
-type UserRecord = {
-  id: string;
-  title: string;
-  category: string | null;
-  valueText: string | null;
-  description: string | null;
-  status: string;
-  createdBy?: string | null;
-};
-type ParsedUserChange = {
-  nama?: string;
-  role?: string;
-  status?: string;
-  requestedBy?: string;
-};
-
-const usersData: User[] = [
-  { id: 1, nama: 'Dr. Ahmad Surya', username: 'admin_super', password: '••••••••', role: 'Super Admin', status: 'Aktif', lastLogin: '11 Jun 2026, 09:15' },
-  { id: 2, nama: 'Siti Nurhaliza', username: 'operator_sid01', password: '••••••••', role: 'Operator SID', status: 'Aktif', lastLogin: '11 Jun 2026, 08:30' },
-  { id: 3, nama: 'Bapak Lurah Hasan', username: 'pemdes_hasan', password: '••••••••', role: 'Pemerintah Desa', status: 'Aktif', lastLogin: '10 Jun 2026, 14:20' },
-  { id: 4, nama: 'Ketua BPD Rina', username: 'bpd_rina', password: '••••••••', role: 'BPD', status: 'Aktif', lastLogin: '10 Jun 2026, 10:45' },
-  { id: 5, nama: 'Tetua Adat Buyung', username: 'adat_buyung', password: '••••••••', role: 'Lembaga Adat', status: 'Aktif', lastLogin: '09 Jun 2026, 16:30' },
-  { id: 6, nama: 'Guru Budaya Dewi', username: 'guru_dewi', password: '••••••••', role: 'Guru/Fasilitator', status: 'Aktif', lastLogin: '11 Jun 2026, 07:00' },
-  { id: 7, nama: 'Bidan Kartini', username: 'nakes_kartini', password: '••••••••', role: 'Nakes/Posyandu', status: 'Aktif', lastLogin: '11 Jun 2026, 08:00' },
-  { id: 8, nama: 'Warga Rudi', username: 'warga_rudi', password: '••••••••', role: 'Warga', status: 'Aktif', lastLogin: '08 Jun 2026, 12:15' },
-  { id: 9, nama: 'Dinas PMD Joko', username: 'dinas_joko', password: '••••••••', role: 'Dinas PMD', status: 'Nonaktif', lastLogin: '05 Jun 2026, 09:00' },
-  { id: 10, nama: 'Dr. Peneliti Andi', username: 'peneliti_andi', password: '••••••••', role: 'Peneliti/Akademisi', status: 'Aktif', lastLogin: '10 Jun 2026, 11:20' },
-  { id: 11, nama: 'Operator SID Budi', username: 'operator_sid02', password: '••••••••', role: 'Operator SID', status: 'Aktif', lastLogin: '11 Jun 2026, 09:45' },
-  { id: 12, nama: 'Andi Saputra', username: 'layanan_andi', password: '••••••••', role: 'Layanan SLV', status: 'Aktif', lastLogin: '19 Jun 2026, 08:00' },
+// 7 Peran Final yang disetujui di dokumen
+const ROLE_OPTIONS = [
+  'Administrator Sistem',
+  'Pemerintah Desa',
+  'Lembaga Adat',
+  'Tokoh Masyarakat',
+  'Guru/Tenaga Pendidikan',
+  'Tenaga Kesehatan',
+  'Masyarakat Umum'
 ];
 
-const roleColors: Record<string, string> = {
-  'Super Admin': 'bg-red-100 text-red-700',
-  'Operator SID': 'bg-blue-100 text-blue-700',
-  'Pemerintah Desa': 'bg-green-100 text-green-700',
-  'BPD': 'bg-purple-100 text-purple-700',
-  'Lembaga Adat': 'bg-amber-100 text-amber-700',
-  'Guru/Fasilitator': 'bg-cyan-100 text-cyan-700',
-  'Nakes/Posyandu': 'bg-rose-100 text-rose-700',
-  'Warga': 'bg-slate-100 text-slate-700',
-  'Dinas PMD': 'bg-indigo-100 text-indigo-700',
-  'Peneliti/Akademisi': 'bg-teal-100 text-teal-700',
-  'Layanan SLV': 'bg-emerald-100 text-emerald-700',
-};
+interface UserDemo {
+  id: string;
+  nama: string;
+  username: string;
+  peran: string[]; // multi-role
+  desaWilayah: 'Jonggon Jaya' | 'Kedang Ipil' | 'Lung Anai' | 'Semua Wilayah';
+  status: 'Aktif' | 'Nonaktif';
+  terkunci: boolean;
+  masaBerlaku: string; // YYYY-MM-DD
+  terakhirLogin: string;
+}
+
+const INITIAL_USERS: UserDemo[] = [
+  { id: 'USR-01', nama: 'Dr. Ahmad Surya', username: 'admin_super', peran: ['Administrator Sistem'], desaWilayah: 'Semua Wilayah', status: 'Aktif', terkunci: false, masaBerlaku: '2028-12-31', terakhirLogin: '18 Jul 2026, 12:05 WITA' },
+  { id: 'USR-02', nama: 'Bapak Lurah Hasan', username: 'pemdes_hasan', peran: ['Pemerintah Desa'], desaWilayah: 'Jonggon Jaya', status: 'Aktif', terkunci: false, masaBerlaku: '2027-06-30', terakhirLogin: '18 Jul 2026, 11:20 WITA' },
+  { id: 'USR-03', nama: 'Tetua Adat Buyung', username: 'adat_buyung', peran: ['Lembaga Adat'], desaWilayah: 'Kedang Ipil', status: 'Aktif', terkunci: false, masaBerlaku: '2027-12-31', terakhirLogin: '18 Jul 2026, 08:15 WITA' },
+  { id: 'USR-04', nama: 'Warga Rudi', username: 'layanan_slv', peran: ['Masyarakat Umum'], desaWilayah: 'Lung Anai', status: 'Aktif', terkunci: false, masaBerlaku: '2028-01-01', terakhirLogin: '17 Jul 2026, 17:40 WITA' },
+  { id: 'USR-05', nama: 'Bidan Kartini', username: 'nakes_kartini', peran: ['Tenaga Kesehatan'], desaWilayah: 'Jonggon Jaya', status: 'Aktif', terkunci: false, masaBerlaku: '2027-12-31', terakhirLogin: '18 Jul 2026, 09:30 WITA' },
+  { id: 'USR-06', nama: 'Guru Budaya Dewi', username: 'guru_dewi', peran: ['Guru/Tenaga Pendidikan'], desaWilayah: 'Kedang Ipil', status: 'Aktif', terkunci: false, masaBerlaku: '2027-12-31', terakhirLogin: '18 Jul 2026, 10:55 WITA' },
+  { id: 'USR-07', nama: 'Tokoh Adat Jafar', username: 'adat_jafar', peran: ['Tokoh Masyarakat', 'Lembaga Adat'], desaWilayah: 'Lung Anai', status: 'Aktif', terkunci: true, masaBerlaku: '2026-12-31', terakhirLogin: '15 Jul 2026, 11:45 WITA' },
+];
+
+const RIWAYAT_AKSES = [
+  { id: 'LOG-01', waktu: '18 Jul 2026, 12:05', perangkat: 'Chrome, Windows 11', ip: '192.168.1.100', modul: 'Jejak Audit', status: 'Sukses' },
+  { id: 'LOG-02', waktu: '18 Jul 2026, 11:30', perangkat: 'Safari, macOS', ip: '192.168.1.102', modul: 'Layanan Publik', status: 'Sukses' },
+  { id: 'LOG-03', waktu: '18 Jul 2026, 09:45', perangkat: 'Firefox, Linux', ip: '192.168.1.110', modul: 'Posyandu Digital', status: 'Sukses' },
+  { id: 'LOG-04', waktu: '15 Jul 2026, 11:45', perangkat: 'Chrome, Android', ip: '192.168.1.105', modul: 'Auth', status: 'Akun Terkunci (3x Gagal Login)' },
+];
 
 export default function UserManagementPage() {
-  const [users, setUsers] = useState<User[]>(usersData);
-  const [search, setSearch] = useState('');
-  const [simulatedRole, setSimulatedRole] = useState<'admin' | 'operator'>('admin');
-  
-  // Unified Form Dialog States
-  const [openDialog, setOpenDialog] = useState(false);
-  const [editingUser, setEditingUser] = useState<User | null>(null);
-  const [formName, setFormName] = useState('');
-  const [formUsername, setFormUsername] = useState('');
-  const [formRole, setFormRole] = useState('Warga');
-  const [formStatus, setFormStatus] = useState('Aktif');
+  const [users, setUsers] = useState<UserDemo[]>(INITIAL_USERS);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingItem, setEditingItem] = useState<UserDemo | null>(null);
+  const [selectedUserLogs, setSelectedUserLogs] = useState<UserDemo | null>(null);
+  const [notification, setNotification] = useState<string | null>(null);
 
-  const [saving, setSaving] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: 'success' | 'info' | 'error' } | null>(null);
-  
-  // Pending records from operator SID
-  const [pendingAdditions, setPendingAdditions] = useState<Record<string, PendingAddition>>({});
-  const [pendingEdits, setPendingEdits] = useState<Record<string, PendingEdit>>({});
-  const [pendingDeletions, setPendingDeletions] = useState<Record<string, PendingDeletion>>({});
+  // Form states
+  const [nama, setNama] = useState('');
+  const [username, setUsername] = useState('');
+  const [perans, setPerans] = useState<string[]>([]);
+  const [desaWilayah, setDesaWilayah] = useState<'Jonggon Jaya' | 'Kedang Ipil' | 'Lung Anai' | 'Semua Wilayah'>('Jonggon Jaya');
+  const [masaBerlaku, setMasaBerlaku] = useState('');
+  const [status, setStatus] = useState<'Aktif' | 'Nonaktif'>('Aktif');
 
-  const triggerToast = useCallback((message: string, type: 'success' | 'info' | 'error' = 'success') => {
-    setToast({ message, type });
-    setTimeout(() => {
-      setToast(null);
-    }, 4000);
-  }, []);
+  const openAdd = () => {
+    setEditingItem(null);
+    setNama(''); setUsername(''); setPerans([]); setDesaWilayah('Jonggon Jaya');
+    setMasaBerlaku('2027-12-31'); setStatus('Aktif');
+    setIsModalOpen(true);
+  };
 
-  const loadDatabaseUsers = useCallback(async () => {
-    try {
-      const res = await fetch(`/api/module-records?path=/admin/user-management`, { cache: 'no-store' });
-      if (!res.ok) return;
-      const data = await res.json();
-      const records = (data.records || []) as UserRecord[];
+  const openEdit = (item: UserDemo) => {
+    setEditingItem(item);
+    setNama(item.nama); setUsername(item.username); setPerans(item.peran);
+    setDesaWilayah(item.desaWilayah); setMasaBerlaku(item.masaBerlaku); setStatus(item.status);
+    setIsModalOpen(true);
+  };
 
-      // Start with original usersData
-      const currentUsers = [...usersData];
-      const pAdditions: Record<string, PendingAddition> = {};
-      const pEdits: Record<string, PendingEdit> = {};
-      const pDeletes: Record<string, PendingDeletion> = {};
+  const toggleRole = (role: string) => {
+    setPerans(prev => prev.includes(role) ? prev.filter(r => r !== role) : [...prev, role]);
+  };
 
-      // Process from oldest to newest to reconstruct final states
-      [...records].reverse().forEach((record) => {
-        const username = record.valueText;
-        if (!username) return;
-
-        const parsed: ParsedUserChange = (() => {
-          try {
-            return JSON.parse(record.description || '{}');
-          } catch {
-            return {};
-          }
-        })();
-
-        if (record.category === 'UserAdd') {
-          if (record.status === 'Selesai') {
-            const exists = currentUsers.some(u => u.username === username);
-            if (!exists) {
-              currentUsers.push({
-                id: currentUsers.length + 1,
-                nama: parsed.nama || record.title,
-                username: username,
-                password: '••••••••',
-                role: parsed.role || 'Warga',
-                status: parsed.status || 'Aktif',
-                lastLogin: 'Belum pernah',
-              });
-            }
-            delete pAdditions[username];
-          } else if (record.status === 'Baru') {
-            pAdditions[username] = {
-              nama: parsed.nama || record.title,
-              username: username,
-              role: parsed.role || 'Warga',
-              status: parsed.status || 'Aktif',
-              operatorName: parsed.requestedBy || record.createdBy || 'Operator SID',
-              recordId: record.id
-            };
-          }
-        } 
-        else if (record.category === 'UserEdit') {
-          const userIndex = currentUsers.findIndex(u => u.username === username);
-          if (record.status === 'Selesai') {
-            if (userIndex !== -1) {
-              currentUsers[userIndex] = {
-                ...currentUsers[userIndex],
-                nama: parsed.nama || record.title,
-                role: parsed.role || currentUsers[userIndex].role,
-                status: parsed.status || currentUsers[userIndex].status,
-              };
-            }
-            delete pEdits[username];
-          } else if (record.status === 'Baru') {
-            pEdits[username] = {
-              nama: parsed.nama || record.title,
-              role: parsed.role || (userIndex !== -1 ? currentUsers[userIndex].role : 'Warga'),
-              status: parsed.status || (userIndex !== -1 ? currentUsers[userIndex].status : 'Aktif'),
-              operatorName: parsed.requestedBy || record.createdBy || 'Operator SID',
-              recordId: record.id
-            };
-          }
-        } 
-        else if (record.category === 'UserDelete') {
-          const userIndex = currentUsers.findIndex(u => u.username === username);
-          if (record.status === 'Selesai') {
-            if (userIndex !== -1) {
-              currentUsers.splice(userIndex, 1);
-            }
-            delete pDeletes[username];
-          } else if (record.status === 'Baru') {
-            pDeletes[username] = {
-              operatorName: parsed.requestedBy || record.createdBy || 'Operator SID',
-              recordId: record.id
-            };
-          }
-        }
-      });
-
-      setUsers(currentUsers);
-      setPendingAdditions(pAdditions);
-      setPendingEdits(pEdits);
-      setPendingDeletions(pDeletes);
-    } catch (error) {
-      console.error('Failed to load users:', error);
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (perans.length === 0) {
+      alert('Pilih minimal satu peran pengguna!');
+      return;
     }
-  }, []);
-
-  useEffect(() => {
-    loadDatabaseUsers();
-    const interval = setInterval(loadDatabaseUsers, 2500);
-    return () => clearInterval(interval);
-  }, [loadDatabaseUsers]);
-
-  const handleOpenEdit = (user: User) => {
-    setEditingUser(user);
-    const pending = pendingEdits[user.username] || pendingAdditions[user.username];
-    if (pending) {
-      setFormName(pending.nama);
-      setFormRole(pending.role);
-      setFormStatus(pending.status);
+    const data = { nama, username, peran: perans, desaWilayah, masaBerlaku, status };
+    if (editingItem) {
+      setUsers(prev => prev.map(u => u.id === editingItem.id ? { ...u, ...data } : u));
+      setNotification('Akun pengguna berhasil diperbarui!');
     } else {
-      setFormName(user.nama);
-      setFormRole(user.role);
-      setFormStatus(user.status);
+      setUsers(prev => [...prev, {
+        id: `USR-0${prev.length + 1}`, ...data, terkunci: false, terakhirLogin: 'Belum pernah'
+      }]);
+      setNotification('Akun pengguna baru berhasil dibuat!');
     }
-    setFormUsername(user.username);
-    setOpenDialog(true);
+    setIsModalOpen(false);
+    setTimeout(() => setNotification(null), 3000);
   };
 
-  const handleCreateUser = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const trimmedUsername = formUsername.trim().toLowerCase();
-    if (formName.trim().length < 3 || trimmedUsername.length < 3) {
-      triggerToast('Nama lengkap dan username minimal 3 karakter.', 'error');
-      return;
-    }
-    setSaving(true);
+  const toggleStatus = (id: string) => {
+    setUsers(prev => prev.map(u => u.id === id ? { ...u, status: u.status === 'Aktif' ? 'Nonaktif' : 'Aktif' } : u));
+    setNotification('Status akun berhasil diubah!');
+    setTimeout(() => setNotification(null), 3000);
+  };
 
-    try {
-      const status = simulatedRole === 'admin' ? 'Selesai' : 'Baru';
-      const createdBy = simulatedRole === 'admin' ? 'Super Admin' : 'Operator SID';
+  const toggleLock = (id: string) => {
+    setUsers(prev => prev.map(u => u.id === id ? { ...u, terkunci: !u.terkunci } : u));
+    setNotification('Status kunci akun berhasil diubah!');
+    setTimeout(() => setNotification(null), 3000);
+  };
 
-      // Check for duplicate username
-      const exists = users.some(u => u.username.toLowerCase() === trimmedUsername) ||
-                     pendingAdditions[trimmedUsername];
-      if (exists) {
-        triggerToast('❌ Username ini sudah digunakan oleh akun lain.', 'error');
-        setSaving(false);
-        return;
-      }
-
-      if (simulatedRole === 'admin') {
-        // Super Admin: Direct save to database
-        const userRes = await fetch('/api/users', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name: formName.trim(),
-            username: trimmedUsername,
-            email: `${trimmedUsername}@example.com`,
-            password: 'password123',
-            role: formRole,
-            status: formStatus,
-          }),
-        });
-
-        if (!userRes.ok) {
-          const error = await userRes.json();
-          throw new Error(error.error || 'Gagal menyimpan user ke database');
-        }
-        await loadDatabaseUsers();
-        triggerToast(`✅ Berhasil! User baru "${formName}" berhasil ditambahkan ke database.`);
-      } else {
-        // Operator SID: Use module-records for approval
-        const res = await fetch('/api/module-records', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            modulePath: '/admin/user-management',
-            moduleName: 'User Management',
-            title: formName.trim(),
-            category: 'UserAdd',
-            valueText: trimmedUsername,
-            description: JSON.stringify({
-              nama: formName.trim(),
-              role: formRole,
-              status: formStatus,
-              requestedBy: createdBy,
-            }),
-            status,
-          }),
-        });
-
-        if (!res.ok) throw new Error('Gagal menambahkan user');
-        await loadDatabaseUsers();
-        triggerToast(`⏳ Pengajuan berhasil! Menunggu persetujuan Super Admin...`, 'info');
-      }
-      setOpenDialog(false);
-      setFormName('');
-      setFormUsername('');
-      setFormRole('Warga');
-      setFormStatus('Aktif');
-    } catch (error: any) {
-      triggerToast(`❌ ${error.message}`, 'error');
-    } finally {
-      setSaving(false);
+  const resetPassword = (username: string) => {
+    if (confirm(`Apakah Anda yakin ingin mengatur ulang kata sandi untuk user "${username}"? Password akan di-reset ke "password123".`)) {
+      setNotification(`Password untuk user "${username}" telah di-reset ke "password123".`);
+      setTimeout(() => setNotification(null), 4000);
     }
   };
 
-  const handleSaveEdit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!editingUser || formName.trim().length < 3) return;
-    setSaving(true);
-
-    try {
-      const status = simulatedRole === 'admin' ? 'Selesai' : 'Baru';
-      const createdBy = simulatedRole === 'admin' ? 'Super Admin' : 'Operator SID';
-      const username = editingUser.username;
-
-      // Check if it's a pending addition edit or a normal user edit
-      if (editingUser.isPendingAddition) {
-        const pending = pendingAdditions[username];
-        if (!pending) return;
-
-        const res = await fetch('/api/module-records', {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: pending.recordId,
-            modulePath: '/admin/user-management',
-            title: formName.trim(),
-            category: 'UserAdd',
-            valueText: username,
-            description: JSON.stringify({
-              nama: formName.trim(),
-              role: formRole,
-              status: formStatus,
-              requestedBy: createdBy,
-            }),
-            status,
-          }),
-        });
-
-        if (!res.ok) throw new Error('Gagal memperbarui usulan pendaftaran');
-        await loadDatabaseUsers();
-        triggerToast('✅ Berhasil memperbarui data usulan pendaftaran user baru.');
-        setEditingUser(null);
-        setOpenDialog(false);
-        return;
-      }
-
-      // Normal edit logic
-      const pending = pendingEdits[username];
-      const baseName = pending ? pending.nama : editingUser.nama;
-      const baseRole = pending ? pending.role : editingUser.role;
-      const baseStatus = pending ? pending.status : editingUser.status;
-
-      const hasChanges = formName !== baseName || formRole !== baseRole || formStatus !== baseStatus;
-      if (!hasChanges) {
-        triggerToast('Tidak ada perubahan untuk disimpan.', 'info');
-        setSaving(false);
-        return;
-      }
-
-      if (simulatedRole === 'admin' && !pending) {
-        // Super Admin: Direct update to database
-        const userRes = await fetch('/api/users', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: editingUser.id,
-            name: formName.trim(),
-            username: formUsername,
-            email: `${formUsername}@example.com`,
-            role: formRole,
-            status: formStatus,
-          }),
-        });
-
-        if (!userRes.ok) {
-          const error = await userRes.json();
-          throw new Error(error.error || 'Gagal update user di database');
-        }
-        await loadDatabaseUsers();
-        triggerToast(`✅ Berhasil! Data user "${editingUser.nama}" berhasil diubah di database.`);
-      } else {
-        // Operator SID or pending edit: Use module-records for approval
-        let res;
-        if (pending) {
-          res = await fetch('/api/module-records', {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              id: pending.recordId,
-              modulePath: '/admin/user-management',
-              title: formName.trim(),
-              category: 'UserEdit',
-              valueText: username,
-              description: JSON.stringify({
-                nama: formName.trim(),
-                role: formRole,
-                status: formStatus,
-                requestedBy: createdBy,
-              }),
-              status,
-            }),
-          });
-        } else {
-          res = await fetch('/api/module-records', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              modulePath: '/admin/user-management',
-              moduleName: 'User Management',
-              title: formName.trim(),
-              category: 'UserEdit',
-              valueText: username,
-              description: JSON.stringify({
-                nama: formName.trim(),
-                role: formRole,
-                status: formStatus,
-                requestedBy: createdBy,
-              }),
-              status,
-            }),
-          });
-        }
-
-        if (!res.ok) throw new Error('Gagal menyimpan perubahan');
-        await loadDatabaseUsers();
-        triggerToast(`⏳ Perubahan diajukan! Menunggu persetujuan dari Super Admin...`, 'info');
-      }
-      setEditingUser(null);
-      setOpenDialog(false);
-    } catch (error: any) {
-      triggerToast(`❌ ${error.message}`, 'error');
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const handleDeleteUser = async (user: User) => {
-    if (user.isPendingAddition) {
-      await handleRejectAddition(user.username);
-      return;
-    }
-
-    if (!confirm(`Apakah Anda yakin ingin menghapus user "${user.nama}"? Data tidak dapat dikembalikan.`)) return;
-
-    try {
-      if (simulatedRole === 'admin') {
-        // Super Admin: Direct delete from database
-        const userRes = await fetch(`/api/users?id=${user.id}`, {
-          method: 'DELETE',
-        });
-
-        if (!userRes.ok) {
-          const error = await userRes.json();
-          throw new Error(error.error || 'Gagal hapus user dari database');
-        }
-        await loadDatabaseUsers();
-        triggerToast(`✅ Berhasil! User "${user.nama}" telah dihapus dari database.`);
-      } else {
-        // Operator SID: Use module-records for approval
-        const status = 'Baru';
-        const createdBy = 'Operator SID';
-
-        const res = await fetch('/api/module-records', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            modulePath: '/admin/user-management',
-            moduleName: 'User Management',
-            title: user.nama,
-            category: 'UserDelete',
-            valueText: user.username,
-            description: JSON.stringify({
-              nama: user.nama,
-              requestedBy: createdBy,
-            }),
-            status,
-          }),
-        });
-
-        if (!res.ok) throw new Error('Gagal mengajukan penghapusan');
-        await loadDatabaseUsers();
-        triggerToast(`⏳ Usulan hapus berhasil dikirim! Menunggu persetujuan Super Admin...`, 'info');
-      }
-    } catch (error: any) {
-      triggerToast(`❌ ${error.message}`, 'error');
-    }
-  };
-
-  const handleApproveAddition = async (username: string) => {
-    const add = pendingAdditions[username];
-    if (!add) return;
-
-    try {
-      // First, save to database User
-      const userRes = await fetch('/api/users', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: add.nama,
-          username: username,
-          email: `${username}@example.com`,
-          password: 'password123',
-          role: add.role,
-          status: add.status,
-        }),
-      });
-
-      if (!userRes.ok) {
-        const error = await userRes.json();
-        throw new Error(error.error || 'Gagal menyimpan user ke database');
-      }
-
-      // Then, update module-records to 'Selesai'
-      const res = await fetch('/api/module-records', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: add.recordId,
-          modulePath: '/admin/user-management',
-          title: add.nama,
-          category: 'UserAdd',
-          valueText: username,
-          description: JSON.stringify({
-            nama: add.nama,
-            role: add.role,
-            status: add.status,
-            requestedBy: add.operatorName,
-          }),
-          status: 'Selesai',
-        }),
-      });
-
-      if (!res.ok) throw new Error('Gagal menyetujui pendaftaran');
-      await loadDatabaseUsers();
-      triggerToast(`✅ Pendaftaran user baru "${add.nama}" berhasil disetujui dan disimpan ke database.`);
-    } catch (error: any) {
-      triggerToast(`❌ ${error.message}`, 'error');
-    }
-  };
-
-  const handleRejectAddition = async (username: string) => {
-    const add = pendingAdditions[username];
-    if (!add) return;
-
-    try {
-      const res = await fetch(`/api/module-records?id=${add.recordId}&path=/admin/user-management`, {
-        method: 'DELETE',
-      });
-
-      if (!res.ok) throw new Error('Gagal menolak pendaftaran');
-      await loadDatabaseUsers();
-      triggerToast('❌ Usulan pendaftaran user baru ditolak.');
-    } catch {
-      triggerToast('❌ Gagal menolak pendaftaran.', 'error');
-    }
-  };
-
-  const handleApproveEdit = async (username: string) => {
-    const edit = pendingEdits[username];
-    if (!edit) return;
-
-    try {
-      // Find the user in the database
-      const usersRes = await fetch('/api/users');
-      const usersData = await usersRes.json();
-      const user = usersData.data.find((u: any) => u.username === username);
-      
-      if (user) {
-        // Update the user in database
-        const userRes = await fetch('/api/users', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: user.id,
-            name: edit.nama,
-            username: username,
-            email: `${username}@example.com`,
-            role: edit.role,
-            status: edit.status,
-          }),
-        });
-
-        if (!userRes.ok) {
-          const error = await userRes.json();
-          throw new Error(error.error || 'Gagal update user di database');
-        }
-      }
-
-      // Then, update module-records to 'Selesai'
-      const res = await fetch('/api/module-records', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: edit.recordId,
-          modulePath: '/admin/user-management',
-          title: edit.nama,
-          category: 'UserEdit',
-          valueText: username,
-          description: JSON.stringify({
-            nama: edit.nama,
-            role: edit.role,
-            status: edit.status,
-            requestedBy: edit.operatorName,
-          }),
-          status: 'Selesai',
-        }),
-      });
-
-      if (!res.ok) throw new Error('Gagal menyetujui edit');
-      await loadDatabaseUsers();
-      triggerToast(`✅ Perubahan data user "${edit.nama}" berhasil disetujui dan disimpan ke database.`);
-    } catch (error: any) {
-      triggerToast(`❌ ${error.message}`, 'error');
-    }
-  };
-
-  const handleRejectEdit = async (username: string) => {
-    const edit = pendingEdits[username];
-    if (!edit) return;
-
-    try {
-      const res = await fetch(`/api/module-records?id=${edit.recordId}&path=/admin/user-management`, {
-        method: 'DELETE',
-      });
-
-      if (!res.ok) throw new Error('Gagal menolak edit');
-      await loadDatabaseUsers();
-      triggerToast('❌ Usulan perubahan data user ditolak.');
-    } catch {
-      triggerToast('❌ Gagal menolak edit.', 'error');
-    }
-  };
-
-  const handleApproveDeletion = async (username: string) => {
-    const del = pendingDeletions[username];
-    if (!del) return;
-
-    try {
-      // Find the user in the database
-      const usersRes = await fetch('/api/users');
-      const usersData = await usersRes.json();
-      const user = usersData.data.find((u: any) => u.username === username);
-      
-      if (user) {
-        // Delete the user from database
-        const userRes = await fetch(`/api/users?id=${user.id}`, {
-          method: 'DELETE',
-        });
-
-        if (!userRes.ok) {
-          const error = await userRes.json();
-          throw new Error(error.error || 'Gagal hapus user dari database');
-        }
-      }
-
-      // Then, update module-records to 'Selesai'
-      const res = await fetch('/api/module-records', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id: del.recordId,
-          modulePath: '/admin/user-management',
-          title: username,
-          category: 'UserDelete',
-          valueText: username,
-          description: JSON.stringify({
-            requestedBy: del.operatorName,
-          }),
-          status: 'Selesai',
-        }),
-      });
-
-      if (!res.ok) throw new Error('Gagal menyetujui hapus');
-      await loadDatabaseUsers();
-      triggerToast(`✅ Penghapusan user "${username}" berhasil disetujui dan dihapus dari database.`);
-    } catch (error: any) {
-      triggerToast(`❌ ${error.message}`, 'error');
-    }
-  };
-
-  const handleRejectDeletion = async (username: string) => {
-    const del = pendingDeletions[username];
-    if (!del) return;
-
-    try {
-      const res = await fetch(`/api/module-records?id=${del.recordId}&path=/admin/user-management`, {
-        method: 'DELETE',
-      });
-
-      if (!res.ok) throw new Error('Gagal menolak hapus');
-      await loadDatabaseUsers();
-      triggerToast('❌ Usulan penghapusan user ditolak.');
-    } catch {
-      triggerToast('❌ Gagal menolak penghapusan.', 'error');
-    }
-  };
-
-  const allUsers = useMemo(() => {
-    const list = [...users];
-    
-    // Add pending additions as special user items so they render in the table
-    Object.keys(pendingAdditions).forEach((username) => {
-      const add = pendingAdditions[username];
-      if (!list.some(u => u.username === username)) {
-        list.push({
-          id: -Math.abs(username.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)),
-          nama: add.nama,
-          username: add.username,
-          password: '••••••••',
-          role: add.role,
-          status: add.status,
-          lastLogin: 'Belum pernah',
-          isPendingAddition: true,
-          recordId: add.recordId,
-          operatorName: add.operatorName,
-        });
-      }
-    });
-    
-    return list;
-  }, [users, pendingAdditions]);
-
-  const filtered = allUsers.filter(u =>
-    u.nama.toLowerCase().includes(search.toLowerCase()) ||
-    u.username.toLowerCase().includes(search.toLowerCase()) ||
-    u.role.toLowerCase().includes(search.toLowerCase())
+  const filteredUsers = users.filter(u =>
+    u.nama.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    u.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    u.peran.some(r => r.toLowerCase().includes(searchQuery.toLowerCase()))
   );
-
-  const handleExport = async () => {
-    const styles = StyleSheet.create({
-      page: {
-        padding: 30,
-        fontFamily: 'Helvetica',
-      },
-      title: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        color: '#1a237e',
-      },
-      table: {
-        width: 'auto',
-        marginBottom: 10,
-      },
-      tableRow: {
-        flexDirection: 'row',
-      },
-      tableColHeader: {
-        width: '16.66%',
-        backgroundColor: '#1a237e',
-        color: 'white',
-        fontSize: 10,
-        fontWeight: 'bold',
-        padding: 8,
-        textAlign: 'center',
-      },
-      tableCol: {
-        width: '16.66%',
-        fontSize: 9,
-        padding: 6,
-        textAlign: 'center',
-        border: '1px solid #e0e0e0',
-      },
-      tableColEven: {
-        width: '16.66%',
-        fontSize: 9,
-        padding: 6,
-        textAlign: 'center',
-        border: '1px solid #e0e0e0',
-        backgroundColor: '#f5f5f5',
-      },
-    });
-
-    const UserPDF = () => (
-      <Document>
-        <Page size="A4" style={styles.page}>
-          <Text style={styles.title}>Laporan Manajemen Pengguna</Text>
-          <Text style={{ fontSize: 9, marginBottom: 15, color: '#666' }}>
-            Tanggal: {new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
-          </Text>
-          <View style={styles.table}>
-            <View style={styles.tableRow}>
-              <Text style={styles.tableColHeader}>No</Text>
-              <Text style={styles.tableColHeader}>Nama Lengkap</Text>
-              <Text style={styles.tableColHeader}>Username</Text>
-              <Text style={styles.tableColHeader}>Role</Text>
-              <Text style={styles.tableColHeader}>Status</Text>
-              <Text style={styles.tableColHeader}>Login Terakhir</Text>
-            </View>
-            {filtered.map((u, i) => (
-              <View key={u.id} style={styles.tableRow}>
-                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{i + 1}</Text>
-                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{u.nama}</Text>
-                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{u.username}</Text>
-                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{u.role}</Text>
-                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{u.status}</Text>
-                <Text style={i % 2 === 0 ? styles.tableCol : styles.tableColEven}>{u.lastLogin}</Text>
-              </View>
-            ))}
-          </View>
-          <Text style={{ fontSize: 8, marginTop: 10, color: '#999' }}>
-            Total: {filtered.length} pengguna
-          </Text>
-        </Page>
-      </Document>
-    );
-
-    const blob = await pdf(<UserPDF />).toBlob();
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `user_management_${new Date().toISOString().split('T')[0]}.pdf`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-  };
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Manajemen Pengguna" modul="Modul 1: User Management" color={COLOR} />
+      <PageTitle fitur="Manajemen Pengguna dan Peran" modul="Administrasi Sistem" color={COLOR} />
 
-      {/* Role Simulator Switcher Banner */}
-      <div className="rounded-2xl border border-dashed border-indigo-200 bg-indigo-50/50 p-4 flex flex-col md:flex-row items-center justify-between gap-3 shadow-sm">
-        <div className="flex items-center gap-2">
-          <Shield className="w-5 h-5 text-indigo-600 animate-pulse" />
-          <div>
-            <span className="text-xs font-bold text-indigo-900 block">Mode Simulasi Pengujian Peran</span>
-            <span className="text-[10px] text-indigo-700 block mt-0.5">Ubah mode untuk melihat perbedaan alur persetujuan instant (Admin) vs usulan tertunda (Operator).</span>
-          </div>
-        </div>
-        <div className="flex gap-1.5 bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
-          <button
-            onClick={() => {
-              setSimulatedRole('admin');
-              triggerToast('Peran disimulasikan sebagai Super Admin (Edit instan).', 'success');
-            }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              simulatedRole === 'admin'
-                ? 'bg-red-600 text-white shadow-md'
-                : 'text-slate-600 hover:bg-slate-50'
-            }`}
-          >
-            🔴 Super Admin (Instan)
-          </button>
-          <button
-            onClick={() => {
-              setSimulatedRole('operator');
-              triggerToast('Peran disimulasikan sebagai Operator SID (Edit butuh persetujuan).', 'info');
-            }}
-            className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-              simulatedRole === 'operator'
-                ? 'bg-blue-600 text-white shadow-md'
-                : 'text-slate-600 hover:bg-slate-50'
-            }`}
-          >
-            🔵 Operator SID (Persetujuan)
-          </button>
-        </div>
-      </div>
-
+      {/* Ringkasan Metrik */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Total User" value={users.length} satuan="pengguna" barColor="blue" progress={85} />
-        <StatCard label="User Aktif" value={users.filter(u => u.status === 'Aktif').length} satuan="online/aktif" barColor="green" progress={94} />
-        <StatCard label="User Nonaktif" value={users.filter(u => u.status === 'Nonaktif').length} satuan="nonaktif" barColor="red" progress={6} />
-        <StatCard label="Role Terdaftar" value={10} satuan="jenis role" barColor="purple" progress={100} />
+        <StatCard label="Total Pengguna" value={users.length} satuan="akun terdaftar" barColor="blue" progress={80} />
+        <StatCard label="Pengguna Aktif" value={users.filter(u => u.status === 'Aktif').length} satuan="akun" barColor="green" progress={90} />
+        <StatCard label="Akun Terkunci" value={users.filter(u => u.terkunci).length} satuan="akun dinonaktifkan" barColor="red" progress={10} />
+        <StatCard label="Total Peran" value="7 Peran" satuan="peran terdefinisi" barColor="purple" progress={100} />
       </div>
 
       <Card>
-        <CardHeader>
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-            <CardTitle className="text-sm font-semibold" style={{ color: COLOR }}>
-              👥 Daftar Pengguna Sistem
-            </CardTitle>
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
-                <input
-                  type="text"
-                  placeholder="Cari pengguna..."
-                  value={search}
-                  onChange={e => setSearch(e.target.value)}
-                  className="pl-9 pr-4 py-2 text-xs border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-300 w-48"
-                />
-              </div>
-              <button 
-                onClick={() => {
-                  setEditingUser(null);
-                  setFormName('');
-                  setFormUsername('');
-                  setFormRole('Warga');
-                  setFormStatus('Aktif');
-                  setOpenDialog(true);
-                }}
-                className="px-3 py-2 bg-indigo-600 text-white text-xs font-bold rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-1.5"
-              >
-                <UserPlus className="w-3.5 h-3.5" />
-                Tambah User
-              </button>
-              <button onClick={handleExport} className="px-3 py-2 border text-xs font-bold rounded-lg hover:bg-slate-50 transition-colors flex items-center gap-1.5 text-slate-600">
-                <Download className="w-3.5 h-3.5" />
-                Export
-              </button>
-            </div>
-          </div>
+        <CardHeader className="py-3 px-4 flex flex-row items-center justify-between">
+          <CardTitle className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+            <Shield size={14} /> Daftar Pengguna &amp; Peran Sistem
+          </CardTitle>
+          <Button onClick={openAdd} size="sm" className="h-8 text-xs font-bold bg-indigo-600 hover:bg-indigo-700">
+            <UserPlus size={13} className="mr-1" /> Buat Akun Baru
+          </Button>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="text-left text-xs text-slate-500 uppercase tracking-wider border-b">
-                  <th className="pb-2 pr-4">No</th>
-                  <th className="pb-2 pr-4">Nama Lengkap</th>
-                  <th className="pb-2 pr-4">Username</th>
-                  <th className="pb-2 pr-4">Password</th>
-                  <th className="pb-2 pr-4">Role</th>
-                  <th className="pb-2 pr-4">Status</th>
-                  <th className="pb-2 pr-4">Login Terakhir</th>
-                  <th className="pb-2">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((u, i) => (
-                  <tr key={u.id} className={`border-b last:border-0 ${i % 2 === 0 ? 'bg-slate-50' : ''}`}>
-                    <td className="py-2.5 pr-4 text-slate-400">{i + 1}</td>
-                    <td className="py-2.5 pr-4">
-                      <div className="flex flex-col gap-1">
-                        {u.isPendingAddition ? (
-                          <div className="rounded-lg border-2 border-emerald-400 bg-emerald-50 p-2.5 text-[10px] shadow-md max-w-[280px]">
-                            <div className="flex items-start gap-2 mb-2">
-                              <UserPlus className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0 mt-0.5" />
-                              <div className="flex-1">
-                                <span className="font-bold text-emerald-900 block">
-                                  ⏳ Pendaftaran User Baru
-                                </span>
-                                <span className="text-[9px] text-slate-700 block mt-1">
-                                  Nama: <b>{u.nama}</b>
-                                </span>
-                              </div>
-                            </div>
-                            <span className="text-[8px] text-slate-500 font-medium block mb-2">
-                              📤 Diajukan oleh: <b>{u.operatorName}</b>
-                            </span>
-                            {simulatedRole === 'admin' && (
-                              <div className="flex gap-1.5">
-                                <button
-                                  onClick={() => handleApproveAddition(u.username)}
-                                  className="flex-1 px-2 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-[9px] font-extrabold shadow-sm active:scale-95 transition-all"
-                                >
-                                  ✅ Setujui
-                                </button>
-                                <button
-                                  onClick={() => handleRejectAddition(u.username)}
-                                  className="flex-1 px-2 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-[9px] font-extrabold shadow-sm active:scale-95 transition-all"
-                                >
-                                  ❌ Tolak
-                                </button>
-                              </div>
-                            )}
-                          </div>
-                        ) : (
-                          <>
-                            <span className={`font-semibold ${(pendingEdits[u.username] || pendingDeletions[u.username]) ? 'text-slate-500 line-through' : 'text-slate-700'}`}>
-                              {u.nama}
-                            </span>
-                            
-                            {pendingEdits[u.username] && (
-                              <div className="rounded-lg border-2 border-amber-400 bg-amber-50 p-2.5 text-[10px] shadow-md max-w-[280px]">
-                                <div className="flex items-start gap-2 mb-2">
-                                  <AlertTriangle className="w-3.5 h-3.5 text-amber-600 flex-shrink-0 mt-0.5" />
-                                  <div className="flex-1">
-                                    <span className="font-bold text-amber-900 block">
-                                      ⏳ Perubahan Menunggu Persetujuan
-                                    </span>
-                                  </div>
-                                </div>
-                                <div className="bg-white rounded p-2 mb-2 border border-amber-100">
-                                  <div className="grid grid-cols-1 gap-1 text-[9px]">
-                                    <div>
-                                      <span className="text-slate-500">📝 Nama Baru:</span>
-                                      <span className="font-bold text-slate-700 block">&quot;{pendingEdits[u.username].nama}&quot;</span>
-                                    </div>
-                                    <div>
-                                      <span className="text-slate-500">👤 Role Baru:</span>
-                                      <span className="font-bold text-slate-700">{pendingEdits[u.username].role}</span>
-                                    </div>
-                                    <div>
-                                      <span className="text-slate-500">⚡ Status Baru:</span>
-                                      <span className={`font-bold ${pendingEdits[u.username].status === 'Aktif' ? 'text-green-600' : 'text-red-600'}`}>
-                                        {pendingEdits[u.username].status}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                                <span className="text-[8px] text-slate-500 font-medium block mb-2">
-                                  📤 Diajukan oleh: <b>{pendingEdits[u.username].operatorName}</b>
-                                </span>
-                                {simulatedRole === 'admin' && (
-                                  <div className="flex gap-1.5">
-                                    <button
-                                      onClick={() => handleApproveEdit(u.username)}
-                                      className="flex-1 px-2 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-[9px] font-extrabold shadow-sm active:scale-95 transition-all"
-                                    >
-                                      ✅ Setujui
-                                    </button>
-                                    <button
-                                      onClick={() => handleRejectEdit(u.username)}
-                                      className="flex-1 px-2 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-[9px] font-extrabold shadow-sm active:scale-95 transition-all"
-                                    >
-                                      ❌ Tolak
-                                    </button>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-
-                            {pendingDeletions[u.username] && (
-                              <div className="rounded-lg border-2 border-red-400 bg-red-50 p-2.5 text-[10px] shadow-md max-w-[280px]">
-                                <div className="flex items-start gap-2 mb-2">
-                                  <AlertTriangle className="w-3.5 h-3.5 text-red-600 flex-shrink-0 mt-0.5" />
-                                  <div className="flex-1">
-                                    <span className="font-bold text-red-900 block">
-                                      ⏳ Usulan Penghapusan User
-                                    </span>
-                                  </div>
-                                </div>
-                                <span className="text-[8px] text-slate-500 font-medium block mb-2">
-                                  📤 Diajukan oleh: <b>{pendingDeletions[u.username].operatorName}</b>
-                                </span>
-                                {simulatedRole === 'admin' && (
-                                  <div className="flex gap-1.5">
-                                    <button
-                                      onClick={() => handleApproveDeletion(u.username)}
-                                      className="flex-1 px-2 py-1 bg-green-600 hover:bg-green-700 text-white rounded text-[9px] font-extrabold shadow-sm active:scale-95 transition-all"
-                                    >
-                                      ✅ Setujui
-                                    </button>
-                                    <button
-                                      onClick={() => handleRejectDeletion(u.username)}
-                                      className="flex-1 px-2 py-1 bg-red-600 hover:bg-red-700 text-white rounded text-[9px] font-extrabold shadow-sm active:scale-95 transition-all"
-                                    >
-                                      ❌ Tolak
-                                    </button>
-                                  </div>
-                                )}
-                              </div>
-                            )}
-                          </>
-                        )}
-                      </div>
-                    </td>
-                    <td className="py-2.5 pr-4 text-slate-600 font-mono text-xs">{u.username}</td>
-                    <td className="py-2.5 pr-4 text-slate-400">{u.password}</td>
-                    <td className="py-2.5 pr-4">
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${roleColors[u.role] || 'bg-slate-100 text-slate-600'}`}>
-                        {u.role}
-                      </span>
-                    </td>
-                    <td className="py-2.5 pr-4">
-                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${u.status === 'Aktif' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-                        {u.status}
-                      </span>
-                    </td>
-                    <td className="py-2.5 pr-4 text-xs text-slate-400">{u.lastLogin}</td>
-                    <td className="py-2.5">
-                      <div className="flex items-center gap-1">
-                        <button className="p-1.5 hover:bg-blue-50 rounded-lg transition-colors" title="Lihat">
-                          <Eye className="w-3.5 h-3.5 text-blue-500" />
-                        </button>
-                        <button 
-                          data-real-action-root
-                          onClick={() => handleOpenEdit(u)}
-                          className="p-1.5 hover:bg-amber-50 rounded-lg transition-colors" 
-                          title="Edit"
-                        >
-                          <Edit className="w-3.5 h-3.5 text-amber-500" />
-                        </button>
-                        <button 
-                          onClick={() => handleDeleteUser(u)}
-                          className="p-1.5 hover:bg-red-50 rounded-lg transition-colors" 
-                          title="Hapus"
-                        >
-                          <Trash2 className="w-3.5 h-3.5 text-red-500" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="flex items-center gap-2 mb-4">
+            <Search size={16} className="text-slate-400" />
+            <Input
+              placeholder="Cari nama, username, atau peran..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="max-w-md h-8 text-xs"
+            />
           </div>
-          <div className="mt-4 flex items-center justify-between text-xs text-slate-500">
-            <span>Menampilkan {filtered.length} dari {users.length} pengguna</span>
-            <div className="flex gap-1">
-              <button className="px-3 py-1 border rounded hover:bg-slate-50">← Prev</button>
-              <button className="px-3 py-1 bg-indigo-600 text-white rounded">1</button>
-              <button className="px-3 py-1 border rounded hover:bg-slate-50">2</button>
-              <button className="px-3 py-1 border rounded hover:bg-slate-50">Next →</button>
-            </div>
+
+          <div className="overflow-x-auto text-xs">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-slate-50">
+                  <TableHead className="font-bold text-slate-700">ID</TableHead>
+                  <TableHead className="font-bold text-slate-700">Nama Lengkap</TableHead>
+                  <TableHead className="font-bold text-slate-700">Username</TableHead>
+                  <TableHead className="font-bold text-slate-700">Peran Pengguna</TableHead>
+                  <TableHead className="font-bold text-slate-700">Desa / Wilayah</TableHead>
+                  <TableHead className="font-bold text-slate-700">Status</TableHead>
+                  <TableHead className="font-bold text-slate-700">Masa Berlaku</TableHead>
+                  <TableHead className="font-bold text-slate-700">Terakhir Login</TableHead>
+                  <TableHead className="text-right font-bold text-slate-700">Aksi Administrasi</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredUsers.map((u) => (
+                  <TableRow key={u.id} className="hover:bg-slate-50/50">
+                    <TableCell className="font-mono font-bold text-slate-500">{u.id}</TableCell>
+                    <TableCell className="font-bold text-slate-800 py-3">{u.nama}</TableCell>
+                    <TableCell className="font-mono">{u.username}</TableCell>
+                    <TableCell>
+                      <div className="flex flex-wrap gap-1">
+                        {u.peran.map((r, idx) => (
+                          <span key={idx} className="bg-indigo-50 text-indigo-700 border border-indigo-200 px-1.5 py-0.5 rounded text-[9px] font-bold">
+                            {r}
+                          </span>
+                        ))}
+                      </div>
+                    </TableCell>
+                    <TableCell className="font-semibold text-slate-700">{u.desaWilayah}</TableCell>
+                    <TableCell>
+                      <button onClick={() => toggleStatus(u.id)} className={`px-2 py-0.5 rounded text-[9px] font-bold border transition-all ${
+                        u.status === 'Aktif' ? 'bg-green-50 text-green-700 border-green-200' : 'bg-slate-100 text-slate-500 border-slate-200'
+                      }`}>
+                        {u.status}
+                      </button>
+                    </TableCell>
+                    <TableCell className="font-mono">{u.masaBerlaku}</TableCell>
+                    <TableCell className="text-slate-500">{u.terakhirLogin}</TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-1">
+                        <Button onClick={() => setSelectedUserLogs(u)} size="sm" variant="ghost" className="h-7 w-7 p-0" title="Riwayat Akses">
+                          <Eye size={13} className="text-slate-600" />
+                        </Button>
+                        <Button onClick={() => toggleLock(u.id)} size="sm" variant="ghost" className="h-7 w-7 p-0" title={u.terkunci ? 'Buka Kunci' : 'Kunci Akun'}>
+                          {u.terkunci ? <Lock size={13} className="text-red-600" /> : <Unlock size={13} className="text-green-600" />}
+                        </Button>
+                        <Button onClick={() => resetPassword(u.username)} size="sm" variant="ghost" className="h-7 w-7 p-0" title="Reset Sandi">
+                          <Key size={13} className="text-amber-600" />
+                        </Button>
+                        <Button onClick={() => openEdit(u)} size="sm" variant="ghost" className="h-7 w-7 p-0">
+                          <RefreshCw size={13} className="text-blue-600" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
           </div>
         </CardContent>
       </Card>
 
-      {/* Unified User Form Dialog */}
-      <Dialog open={openDialog} onOpenChange={(open) => !open && setOpenDialog(false)}>
-        <DialogContent data-real-action-root className="max-w-md bg-white shadow-2xl border-2">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              {editingUser ? <Edit className="w-5 h-5 text-amber-500" /> : <UserPlus className="w-5 h-5 text-indigo-600" />}
-              {editingUser ? `Edit Data Pengguna: ${editingUser.nama}` : 'Tambah Data Pengguna Baru'}
-            </DialogTitle>
-          </DialogHeader>
-          <form onSubmit={editingUser ? handleSaveEdit : handleCreateUser} className="space-y-4 pt-2">
-            <div className="rounded-lg bg-blue-50 border border-blue-200 p-3 text-xs text-blue-800">
-              <span className="font-bold block mb-1">ℹ️ Info {editingUser ? 'Perubahan' : 'Pendaftaran'}:</span>
-              <span className="block">
-                Anda sedang {editingUser ? 'mengedit' : 'mendaftarkan'} user sebagai <b>{simulatedRole === 'admin' ? '🔴 Super Admin' : '🔵 Operator SID'}</b>
-              </span>
-            </div>
+      {/* Modal Form Tambah/Edit */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-lg bg-white shadow-2xl border">
+            <CardHeader className="py-3 flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold text-slate-800">
+                {editingItem ? 'Edit Konfigurasi Akun Pengguna' : 'Buat Akun Pengguna Baru'}
+              </CardTitle>
+              <Button onClick={() => setIsModalOpen(false)} size="sm" variant="ghost" className="h-8 w-8 p-0">✕</Button>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSave} className="space-y-3.5 text-xs">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <Label className="font-bold text-slate-700">Nama Lengkap</Label>
+                    <Input required value={nama} onChange={e => setNama(e.target.value)} placeholder="Contoh: Andi Saputra" className="h-9 text-xs" />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="font-bold text-slate-700">Username</Label>
+                    <Input required value={username} onChange={e => setUsername(e.target.value)} placeholder="Contoh: andi_saputra" className="h-9 text-xs" />
+                  </div>
+                </div>
 
-            <div>
-              <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Nama Lengkap</label>
-              <input
-                value={formName}
-                onChange={(e) => setFormName(e.target.value)}
-                required
-                minLength={3}
-                placeholder={editingUser ? 'Masukkan nama lengkap baru' : 'Masukkan nama lengkap'}
-                className="w-full h-10 px-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm"
-              />
-            </div>
+                <div className="space-y-1">
+                  <Label className="font-bold text-slate-700">Peran Pengguna (Dapat menetapkan satu atau lebih peran)</Label>
+                  <div className="grid grid-cols-2 gap-2 border p-2.5 rounded-lg bg-slate-50">
+                    {ROLE_OPTIONS.map((role) => (
+                      <label key={role} className="flex items-center gap-2 cursor-pointer font-medium text-slate-700">
+                        <input
+                          type="checkbox"
+                          checked={perans.includes(role)}
+                          onChange={() => toggleRole(role)}
+                          className="rounded text-indigo-600 focus:ring-indigo-500 h-4 w-4"
+                        />
+                        {role}
+                      </label>
+                    ))}
+                  </div>
+                </div>
 
-            {!editingUser && (
-              <div>
-                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Username</label>
-                <input
-                  value={formUsername}
-                  onChange={(e) => setFormUsername(e.target.value)}
-                  required
-                  minLength={3}
-                  placeholder="Masukkan username unik"
-                  className="w-full h-10 px-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm font-mono"
-                />
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="space-y-1">
+                    <Label className="font-bold text-slate-700">Desa / Wilayah</Label>
+                    <select
+                      value={desaWilayah}
+                      onChange={e => setDesaWilayah(e.target.value as any)}
+                      className="w-full h-9 rounded-md border bg-white px-2 text-xs"
+                    >
+                      <option value="Jonggon Jaya">Jonggon Jaya</option>
+                      <option value="Kedang Ipil">Kedang Ipil</option>
+                      <option value="Lung Anai">Lung Anai</option>
+                      <option value="Semua Wilayah">Semua Wilayah</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="font-bold text-slate-700">Masa Berlaku</Label>
+                    <Input required type="date" value={masaBerlaku} onChange={e => setMasaBerlaku(e.target.value)} className="h-9 text-xs" />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="font-bold text-slate-700">Status Akun</Label>
+                    <select
+                      value={status}
+                      onChange={e => setStatus(e.target.value as any)}
+                      className="w-full h-9 rounded-md border bg-white px-2 text-xs"
+                    >
+                      <option value="Aktif">Aktif</option>
+                      <option value="Nonaktif">Nonaktif</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-2 pt-3 border-t">
+                  <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)} className="h-8 text-xs font-bold">Batal</Button>
+                  <Button type="submit" className="h-8 text-xs font-bold bg-indigo-600 hover:bg-indigo-700">Simpan Akun</Button>
+                </div>
+              </form>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Modal Riwayat Akses User */}
+      {selectedUserLogs && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-lg bg-white shadow-2xl border">
+            <CardHeader className="py-3 flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold text-slate-800 flex items-center gap-1.5">
+                <Eye size={16} className="text-indigo-600" /> Riwayat Akses &amp; Aktivitas User
+              </CardTitle>
+              <Button onClick={() => setSelectedUserLogs(null)} size="sm" variant="ghost" className="h-8 w-8 p-0">✕</Button>
+            </CardHeader>
+            <CardContent className="space-y-3 text-xs pb-4">
+              <p className="font-semibold text-slate-700">User: <strong className="text-slate-900">{selectedUserLogs.nama} ({selectedUserLogs.username})</strong></p>
+              
+              <div className="overflow-x-auto border rounded-xl">
+                <Table>
+                  <TableHeader>
+                    <TableRow className="bg-slate-50">
+                      <TableHead className="font-bold text-slate-700">Waktu</TableHead>
+                      <TableHead className="font-bold text-slate-700">Perangkat</TableHead>
+                      <TableHead className="font-bold text-slate-700">Alamat IP</TableHead>
+                      <TableHead className="font-bold text-slate-700">Modul</TableHead>
+                      <TableHead className="font-bold text-slate-700">Status</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {RIWAYAT_AKSES.map((log) => (
+                      <TableRow key={log.id}>
+                        <TableCell className="font-mono text-[10px] text-slate-500">{log.waktu}</TableCell>
+                        <TableCell className="text-slate-650">{log.perangkat}</TableCell>
+                        <TableCell className="font-mono text-[10px]">{log.ip}</TableCell>
+                        <TableCell className="font-bold text-indigo-700">{log.modul}</TableCell>
+                        <TableCell>
+                          <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${
+                            log.status.includes('Sukses') ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-755'
+                          }`}>
+                            {log.status}
+                          </span>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
-            )}
-
-            {editingUser && (
-              <div>
-                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Username (Tidak dapat diubah)</label>
-                <input
-                  value={formUsername}
-                  disabled
-                  className="w-full h-10 px-3 rounded-lg border bg-slate-100 text-slate-500 text-sm font-mono"
-                />
+              <div className="flex justify-end pt-2">
+                <Button onClick={() => setSelectedUserLogs(null)} className="h-8 text-xs font-bold">Tutup</Button>
               </div>
-            )}
+            </CardContent>
+          </Card>
+        </div>
+      )}
 
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Role</label>
-                <select
-                  value={formRole}
-                  onChange={(e) => setFormRole(e.target.value)}
-                  className="w-full h-10 px-3 rounded-lg border bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm"
-                >
-                  {ROLE_OPTIONS.map((role) => (
-                    <option key={role} value={role}>{role}</option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="text-xs font-bold text-slate-600 uppercase tracking-wider block mb-2">Status</label>
-                <select
-                  value={formStatus}
-                  onChange={(e) => setFormStatus(e.target.value)}
-                  className="w-full h-10 px-3 rounded-lg border bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300 text-sm"
-                >
-                  {STATUS_OPTIONS.map((status) => (
-                    <option key={status} value={status}>{status}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {simulatedRole === 'admin' ? (
-              <div className="rounded-lg bg-green-50/50 border border-green-200 p-3 text-xs text-green-800 flex flex-col gap-1.5">
-                <span className="font-bold flex items-center gap-1">
-                  <CheckCircle2 className="w-4 h-4 text-green-600" />
-                  Akses Super Admin - {editingUser ? 'Perubahan' : 'Pendaftaran'} INSTAN
-                </span>
-                <span className="text-green-700">
-                  {editingUser 
-                    ? 'Perubahan yang Anda buat akan disimpan langsung dan segera tampil di sistem tanpa perlu persetujuan.'
-                    : 'User akan didaftarkan langsung ke database dan segera muncul di daftar pengguna.'
-                  }
-                </span>
-              </div>
-            ) : (
-              <div className="rounded-lg bg-amber-50/50 border border-amber-200 p-3 text-xs text-amber-800 flex flex-col gap-1.5">
-                <span className="font-bold flex items-center gap-1">
-                  <AlertTriangle className="w-4 h-4 text-amber-600" />
-                  Akses Operator - {editingUser ? 'Perubahan' : 'Pendaftaran'} MENUNGGU PERSETUJUAN
-                </span>
-                <span className="text-amber-700">
-                  {editingUser
-                    ? 'Perubahan akan diajukan ke database dan harus disetujui oleh Super Admin sebelum diterapkan ke sistem.'
-                    : 'Usulan pendaftaran user baru akan dikirimkan dan menunggu persetujuan Super Admin.'
-                  }
-                </span>
-              </div>
-            )}
-
-            <div className="flex gap-2 justify-end pt-4 border-t">
-              <button
-                type="button"
-                onClick={() => setOpenDialog(false)}
-                className="px-4 py-2 border rounded-lg text-xs font-bold text-slate-600 hover:bg-slate-50 transition-colors"
-              >
-                Batal
-              </button>
-              <button
-                type="submit"
-                disabled={saving}
-                className="px-4 py-2 rounded-lg text-xs font-bold text-white shadow-md transition-all active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
-                style={{ backgroundColor: simulatedRole === 'admin' ? '#10b981' : '#f59e0b' }}
-              >
-                {saving ? (
-                  <span className="flex items-center gap-1">
-                    ⏳ Menyimpan...
-                  </span>
-                ) : simulatedRole === 'admin' ? (
-                  <span>{editingUser ? '✅ Simpan Perubahan (Instan)' : '✅ Tambah User (Instan)'}</span>
-                ) : (
-                  <span>{editingUser ? '📤 Ajukan Perubahan' : '📤 Ajukan Pendaftaran'}</span>
-                )}
-              </button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
-
-      {/* Floating Toast Notification */}
-      {toast && (
-        <div
-          className="fixed bottom-5 right-5 z-[9999] flex items-center gap-2.5 px-4 py-3 rounded-xl shadow-xl border bg-white text-xs font-bold transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
-          style={{
-            borderColor: toast.type === 'success' ? '#bbf7d0' : toast.type === 'info' ? '#bfdbfe' : '#fecaca',
-            color: toast.type === 'success' ? '#15803d' : toast.type === 'info' ? '#1d4ed8' : '#b91c1c',
-          }}
-        >
-          <CheckCircle2 size={16} className={toast.type === 'success' ? 'text-green-600' : toast.type === 'info' ? 'text-blue-600' : 'text-red-600'} />
-          <span>{toast.message}</span>
+      {notification && (
+        <div className="fixed bottom-5 right-5 z-[9999] flex items-center gap-2 px-4 py-3 rounded-xl shadow-lg border border-green-200 bg-white text-xs font-bold">
+          <CheckCircle2 className="text-green-600" size={16} /> {notification}
         </div>
       )}
     </div>

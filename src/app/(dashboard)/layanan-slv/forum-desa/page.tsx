@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { FormEvent, useState, useEffect } from "react";
 import { MessageSquare, Send, User, Clock, RefreshCw } from "lucide-react";
@@ -84,7 +84,7 @@ export default function ForumDesaPage() {
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Forum Desa" modul="Layanan SLV" color={COLOR} />
+      <PageTitle fitur="Forum Desa" modul="Masyarakat Umum" color={COLOR} />
       <LayananSLVMetadataCards metadata={METADATA} color={COLOR} />
 
       <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-4">

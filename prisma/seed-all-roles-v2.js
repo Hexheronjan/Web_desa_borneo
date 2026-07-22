@@ -14,7 +14,7 @@ async function main() {
   const users = [
     {
       email: "admin@borneo.id",
-      name: "Super Admin Pemerintah Desa",
+      name: "Joy Nashar",
       username: "admin_super",
       password: "password123",
       role: "admin_super",
@@ -69,12 +69,12 @@ async function main() {
       description: "Tenaga Kesehatan Posyandu"
     },
     {
-      email: "warga@borneo.id",
-      name: "Warga Desa Lung Anai",
+      email: "tokoh.masyarakat@contoh.id",
+      name: "Tokoh/Perwakilan Masyarakat Desa Lung Anai",
       username: "warga_desa",
       password: "password123",
       role: "warga",
-      description: "Warga Desa"
+      description: "Tokoh Masyarakat"
     },
     {
       email: "dinas.pmd@borneo.id",
@@ -86,7 +86,7 @@ async function main() {
     },
     {
       email: "peneliti@borneo.id",
-      name: "Peneliti SLV Borneo",
+      name: "Joy Nashar",
       username: "peneliti_slv",
       password: "password123",
       role: "peneliti",

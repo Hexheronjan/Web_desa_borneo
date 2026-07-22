@@ -82,10 +82,17 @@ export function AppSidebar({ onClose }: { onClose?: () => void }) {
   }
 
   const roleInfo = getRoleFromPath(pathname, session?.user?.role);
-  const sidebarItems = [
-    { label: "Dashboard", path: roleInfo.dashboardPath, group: "MENU UTAMA" },
-    ...roleInfo.sidebarItems.filter((item) => item.path !== roleInfo.dashboardPath),
-  ];
+  // Label dasbor diambil dari modul-config.ts per role (bukan hardcode "Dashboard")
+  const dashboardItem = roleInfo.sidebarItems.find((item) => item.path === roleInfo.dashboardPath);
+  const sidebarItems = dashboardItem
+    ? [
+        { label: dashboardItem.label, path: roleInfo.dashboardPath, group: "MENU UTAMA" },
+        ...roleInfo.sidebarItems.filter((item) => item.path !== roleInfo.dashboardPath),
+      ]
+    : [
+        { label: "Dashboard", path: roleInfo.dashboardPath, group: "MENU UTAMA" },
+        ...roleInfo.sidebarItems,
+      ];
 
   const groups: Record<string, typeof sidebarItems> = {};
   sidebarItems.forEach((item) => {

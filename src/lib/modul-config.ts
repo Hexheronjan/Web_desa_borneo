@@ -29,10 +29,10 @@ export interface RoleConfig {
 }
 
 export const roleConfig: Record<RoleKey, RoleConfig> = {
-  // === SUPER ADMIN (Modul 1–14) ===
+  // === ADMINISTRATOR SISTEM (Modul 1–14) ===
   admin_super: {
     key: "admin_super",
-    nama: "Super Admin",
+    nama: "Administrator Sistem",
     warna: "#1a237e",
     dashboardPath: "/admin",
     sidebarItems: [
@@ -74,7 +74,7 @@ export const roleConfig: Record<RoleKey, RoleConfig> = {
   // === PEMDES / KEPALA DESA (Modul 22–31) ===
   pemerintah_desa: {
     key: "pemerintah_desa",
-    nama: "Pemdes (Kepala Desa)",
+    nama: "Pemerintah Desa",
     warna: "#283593",
     dashboardPath: "/pemdes",
     sidebarItems: [
@@ -121,7 +121,7 @@ export const roleConfig: Record<RoleKey, RoleConfig> = {
   // === GURU (Modul 39–42) ===
   guru_fasilitator: {
     key: "guru_fasilitator",
-    nama: "Guru",
+    nama: "Guru/Tenaga Pendidikan",
     warna: "#1565c0",
     dashboardPath: "/guru",
     sidebarItems: [
@@ -135,7 +135,7 @@ export const roleConfig: Record<RoleKey, RoleConfig> = {
   // === NAKES (Modul 43–46) ===
   nakes_posyandu: {
     key: "nakes_posyandu",
-    nama: "Nakes",
+    nama: "Tenaga Kesehatan",
     warna: "#e65100",
     dashboardPath: "/nakes",
     sidebarItems: [
@@ -149,7 +149,7 @@ export const roleConfig: Record<RoleKey, RoleConfig> = {
   // === WARGA (Modul 47–50) ===
   warga: {
     key: "warga",
-    nama: "Warga",
+    nama: "Tokoh Masyarakat",
     warna: "#6a1b9a",
     dashboardPath: "/warga",
     sidebarItems: [
@@ -190,65 +190,81 @@ export const roleConfig: Record<RoleKey, RoleConfig> = {
     ],
   },
   
-  // === PENGGUNA LAYANAN / LAYANAN SLV (SDGs 3, 4 & 18 + Profil) ===
+  // === MASYARAKAT UMUM (SDGs 3, 4 & 18 + Profil) ===
   layanan_slv: {
     key: "layanan_slv",
-    nama: "Layanan SLV",
+    nama: "Masyarakat Umum",
     warna: "#2e7d32",
     dashboardPath: "/layanan-slv",
     sidebarItems: [
-      { label: "Dashboard Utama", path: "/layanan-slv", group: "DASHBOARD" },
-      // SDGs 3 - DESA SEHAT
-      { label: "Posyandu Digital", path: "/layanan-slv/posyandu-digital", group: "SDGS 3 - DESA SEHAT" },
-      { label: "Jadwal Kesehatan", path: "/layanan-slv/jadwal-kesehatan", group: "SDGS 3 - DESA SEHAT" },
-      { label: "Monitoring Kesehatan", path: "/layanan-slv/monitoring-kesehatan", group: "SDGS 3 - DESA SEHAT" },
-      { label: "Riwayat Kesehatan", path: "/layanan-slv/riwayat-kesehatan", group: "SDGS 3 - DESA SEHAT" },
-      { label: "Edukasi Kesehatan", path: "/layanan-slv/edukasi-kesehatan", group: "SDGS 3 - DESA SEHAT" },
-      { label: "Telekonsultasi", path: "/layanan-slv/telekonsultasi", group: "SDGS 3 - DESA SEHAT" },
+      // === Menu Utama ===
+      { label: "Dasbor Masyarakat", path: "/layanan-slv", group: "Menu Utama" },
+      { label: "Informasi Desa", path: "/layanan-slv/informasi-desa", group: "Menu Utama" },
+      { label: "Layanan Publik Desa", path: "/layanan-slv/layanan-publik", group: "Menu Utama" },
+      { label: "Agenda dan Kegiatan", path: "/layanan-slv/agenda-kegiatan", group: "Menu Utama" },
 
-      // SDGs 4 - PENDIDIKAN BERKUALITAS
-      { label: "Literasi Digital", path: "/layanan-slv/literasi-digital", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
-      { label: "Kelas Desa", path: "/layanan-slv/kelas-desa", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
-      { label: "Pelatihan Online", path: "/layanan-slv/pelatihan-online", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
-      { label: "Sertifikasi", path: "/layanan-slv/sertifikasi", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
-      { label: "Riwayat Pelatihan", path: "/layanan-slv/riwayat-pelatihan", group: "SDGS 4 - PENDIDIKAN BERKUALITAS" },
+      // === SDG Desa 3—Kesehatan ===
+      { label: "Posyandu Digital", path: "/layanan-slv/posyandu-digital", group: "SDG Desa 3—Kesehatan" },
+      { label: "Jadwal Kesehatan", path: "/layanan-slv/jadwal-kesehatan", group: "SDG Desa 3—Kesehatan" },
+      { label: "Informasi Kesehatan dan SDG Desa 3", path: "/layanan-slv/monitoring-kesehatan", group: "SDG Desa 3—Kesehatan" },
+      { label: "Riwayat Layanan Kesehatan Saya", path: "/layanan-slv/riwayat-kesehatan", group: "SDG Desa 3—Kesehatan" },
+      { label: "Edukasi Kesehatan", path: "/layanan-slv/edukasi-kesehatan", group: "SDG Desa 3—Kesehatan" },
+      { label: "Telekonsultasi", path: "/layanan-slv/telekonsultasi", group: "SDG Desa 3—Kesehatan" },
 
-      // SDGs 18 - KELEMBAGAAN & BUDAYA
-      { label: "Informasi Adat", path: "/layanan-slv/informasi-adat", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
-      { label: "Kalender Adat", path: "/layanan-slv/kalender-adat", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
-      { label: "Arsip Budaya", path: "/layanan-slv/arsip-budaya", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
-      { label: "Forum Desa", path: "/layanan-slv/forum-desa", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
-      { label: "Musyawarah Digital", path: "/layanan-slv/musyawarah-digital", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
-      { label: "Partisipasi Musyawarah", path: "/layanan-slv/partisipasi-musyawarah", group: "SDGS 18 - KELEMBAGAAN & BUDAYA" },
+      // === SDG Desa 4—Pendidikan ===
+      { label: "Literasi Digital", path: "/layanan-slv/literasi-digital", group: "SDG Desa 4—Pendidikan" },
+      { label: "Kelas Desa", path: "/layanan-slv/kelas-desa", group: "SDG Desa 4—Pendidikan" },
+      { label: "Pelatihan Online", path: "/layanan-slv/pelatihan-online", group: "SDG Desa 4—Pendidikan" },
+      { label: "Sertifikat Saya", path: "/layanan-slv/sertifikasi", group: "SDG Desa 4—Pendidikan" },
+      { label: "Riwayat Pelatihan", path: "/layanan-slv/riwayat-pelatihan", group: "SDG Desa 4—Pendidikan" },
 
-      // PROFIL PENGGUNA
-      { label: "Profil Saya", path: "/layanan-slv/profil-saya", group: "PROFIL PENGGUNA" },
-      { label: "Riwayat Layanan", path: "/layanan-slv/riwayat-layanan", group: "PROFIL PENGGUNA" },
-      { label: "Notifikasi", path: "/layanan-slv/notifikasi", group: "PROFIL PENGGUNA" },
-      { label: "Bantuan & Panduan", path: "/layanan-slv/bantuan-panduan", group: "PROFIL PENGGUNA" },
+      // === SDG Desa 18—Kelembagaan dan Kebudayaan ===
+      { label: "Informasi Budaya Publik dan SDG Desa 18", path: "/layanan-slv/informasi-budaya", group: "SDG Desa 18—Kelembagaan dan Kebudayaan" },
+      { label: "Kalender Adat", path: "/layanan-slv/kalender-adat", group: "SDG Desa 18—Kelembagaan dan Kebudayaan" },
+      { label: "Arsip Budaya Publik", path: "/layanan-slv/arsip-budaya", group: "SDG Desa 18—Kelembagaan dan Kebudayaan" },
+
+      // === Partisipasi ===
+      { label: "Forum Desa", path: "/layanan-slv/forum-desa", group: "Partisipasi" },
+      { label: "Musyawarah dan Partisipasi Desa", path: "/layanan-slv/musyawarah-digital", group: "Partisipasi" },
+      { label: "Aspirasi dan Pengaduan", path: "/layanan-slv/aspirasi-pengaduan", group: "Partisipasi" },
+      { label: "Status Usulan", path: "/layanan-slv/status-usulan", group: "Partisipasi" },
+
+      // === Pengguna ===
+      { label: "Profil Saya", path: "/layanan-slv/profil-saya", group: "Pengguna" },
+      { label: "Riwayat Layanan Saya", path: "/layanan-slv/riwayat-layanan", group: "Pengguna" },
+      { label: "Notifikasi", path: "/layanan-slv/notifikasi", group: "Pengguna" },
+      { label: "Bantuan dan Panduan", path: "/layanan-slv/bantuan-panduan", group: "Pengguna" },
     ],
   },
 };
 
 roleConfig.admin_super.sidebarItems = [
-  { label: "Dashboard", path: "/admin", group: "FRAMEWORK & ASSESSMENT" },
-  { label: "Master Framework", path: "/admin/master-framework", group: "FRAMEWORK & ASSESSMENT" },
-  { label: "Framework Versioning", path: "/admin/framework-versioning", group: "FRAMEWORK & ASSESSMENT" },
-  { label: "Manajemen Periode", path: "/admin/manajemen-periode", group: "FRAMEWORK & ASSESSMENT" },
-  { label: "Validasi Data", path: "/admin/validasi-data", group: "FRAMEWORK & ASSESSMENT" },
-  { label: "Integrasi Data Desa", path: "/admin/integrasi-data-desa", group: "FRAMEWORK & ASSESSMENT" },
-  { label: "Governance Management", path: "/admin/governance-management", group: "GOVERNANCE & DSS" },
-  { label: "DSS Knowledge Base", path: "/admin/dss-knowledge-base", group: "GOVERNANCE & DSS" },
-  { label: "DSS Recommendation", path: "/admin/dss-recommendation", group: "GOVERNANCE & DSS" },
-  { label: "Evaluasi Artefak", path: "/admin/evaluasi-artefak", group: "EVALUATION & RESEARCH" },
-  { label: "Expert Validation", path: "/admin/expert-validation", group: "EVALUATION & RESEARCH" },
-  { label: "UAT Results (SUS & Feedback)", path: "/admin/uat-results", group: "EVALUATION & RESEARCH" },
-  { label: "Research Repository", path: "/admin/research-repository", group: "EVALUATION & RESEARCH" },
-  { label: "Manajemen User & Role", path: "/admin/user-management", group: "ADMINISTRATION" },
-  { label: "Audit Log", path: "/admin/audit-log", group: "ADMINISTRATION" },
-  { label: "Sistem & Pengaturan", path: "/admin/konfigurasi-sistem", group: "ADMINISTRATION" },
-  { label: "Backup & Restore", path: "/admin/backup-restore", group: "ADMINISTRATION" },
-  { label: "Notifikasi Sistem", path: "/admin/pengaturan-notifikasi", group: "ADMINISTRATION" },
+  { label: "Dasbor Operasional Sistem", path: "/admin", group: "MENU UTAMA" },
+  
+  // Kerangka dan Penilaian
+  { label: "Master Kerangka Kesiapan", path: "/admin/master-framework", group: "Kerangka dan Penilaian" },
+  { label: "Versi Kerangka", path: "/admin/framework-versioning", group: "Kerangka dan Penilaian" },
+  { label: "Manajemen Periode", path: "/admin/manajemen-periode", group: "Kerangka dan Penilaian" },
+  { label: "Validasi Teknis dan Kualitas Data", path: "/admin/validasi-data", group: "Kerangka dan Penilaian" },
+  { label: "Integrasi Data Desa", path: "/admin/integrasi-data-desa", group: "Kerangka dan Penilaian" },
+
+  // Tata Kelola dan DSS
+  { label: "Konfigurasi Tata Kelola Sistem", path: "/admin/governance-management", group: "Tata Kelola dan DSS" },
+  { label: "Basis Pengetahuan DSS", path: "/admin/dss-knowledge-base", group: "Tata Kelola dan DSS" },
+  { label: "Monitoring Rekomendasi DSS", path: "/admin/dss-recommendation", group: "Tata Kelola dan DSS" },
+
+  // Penelitian dan Evaluasi
+  { label: "Evaluasi Artefak", path: "/admin/evaluasi-artefak", group: "Penelitian dan Evaluasi" },
+  { label: "Validasi Pakar", path: "/admin/expert-validation", group: "Penelitian dan Evaluasi" },
+  { label: "Hasil UAT, SUS, dan Umpan Balik", path: "/admin/uat-results", group: "Penelitian dan Evaluasi" },
+  { label: "Repositori Penelitian", path: "/admin/research-repository", group: "Penelitian dan Evaluasi" },
+
+  // Administrasi Sistem
+  { label: "Manajemen Pengguna dan Peran", path: "/admin/user-management", group: "Administrasi Sistem" },
+  { label: "Jejak Audit", path: "/admin/audit-log", group: "Administrasi Sistem" },
+  { label: "Sistem dan Pengaturan", path: "/admin/konfigurasi-sistem", group: "Administrasi Sistem" },
+  { label: "Pencadangan dan Pemulihan", path: "/admin/backup-restore", group: "Administrasi Sistem" },
+  { label: "Notifikasi Sistem", path: "/admin/pengaturan-notifikasi", group: "Administrasi Sistem" },
 ];
 
 roleConfig.operator_sid.sidebarItems = [
@@ -273,23 +289,34 @@ roleConfig.operator_sid.sidebarItems = [
 ];
 
 roleConfig.pemerintah_desa.sidebarItems = [
-  { label: "Profil Desa Lung Anai", path: "/pemdes/profil-desa", group: "INFORMASI DESA" },
-  { label: "Data Desa Ringkas", path: "/pemdes/data-desa-ringkas", group: "INFORMASI DESA" },
-  { label: "Statistik Desa", path: "/pemdes/statistik-desa", group: "INFORMASI DESA" },
-  { label: "Readiness Assessment", path: "/pemdes/readiness-assessment", group: "ASSESSMENT" },
-  { label: "Maturity Assessment", path: "/pemdes/maturity-assessment", group: "ASSESSMENT" },
-  { label: "Quality of Life Assessment", path: "/pemdes/quality-of-life", group: "ASSESSMENT" },
-  { label: "Hasil Assessment Desa", path: "/pemdes/hasil-assessment-desa", group: "ASSESSMENT" },
-  { label: "DSS Recommendation", path: "/pemdes/dss-recommendation", group: "DECISION SUPPORT SYSTEM" },
-  { label: "Roadmap Smart Living Village", path: "/pemdes/roadmap-smart-living-village", group: "PERENCANAAN & TINDAK LANJUT" },
-  { label: "Rencana Tindak Lanjut (RTL)", path: "/pemdes/rkpdes", group: "PERENCANAAN & TINDAK LANJUT" },
-  { label: "Monitoring Program", path: "/pemdes/monitoring-program", group: "MONITORING & EVALUASI" },
-  { label: "Progress Indikator", path: "/pemdes/kpi-dashboard", group: "MONITORING & EVALUASI" },
-  { label: "Upload Evidence", path: "/pemdes/upload-evidence", group: "MONITORING & EVALUASI" },
-  { label: "Evaluasi Capaian", path: "/pemdes/evaluasi-capaian", group: "MONITORING & EVALUASI" },
-  { label: "Laporan Desa", path: "/pemdes/laporan-desa", group: "LAPORAN & DOKUMENTASI" },
-  { label: "Dokumentasi Kegiatan", path: "/pemdes/dokumentasi-kegiatan", group: "LAPORAN & DOKUMENTASI" },
-  { label: "Notifikasi Program Prioritas", path: "/pemdes/notifikasi-program-prioritas", group: "NOTIFIKASI" },
+  // === Menu Utama ===
+  { label: "Dasbor Strategis", path: "/pemdes", group: "Menu Utama" },
+  { label: "Profil Desa", path: "/pemdes/profil-desa", group: "Menu Utama" },
+  { label: "Data Desa Terintegrasi", path: "/pemdes/data-desa-terintegrasi", group: "Menu Utama" },
+  { label: "Statistik Desa", path: "/pemdes/statistik-desa", group: "Menu Utama" },
+  // === Penilaian dan Pemantauan ===
+  { label: "Penilaian Kesiapan", path: "/pemdes/penilaian-kesiapan", group: "Penilaian dan Pemantauan" },
+  { label: "Penilaian Kematangan Implementasi", path: "/pemdes/penilaian-kematangan", group: "Penilaian dan Pemantauan" },
+  { label: "Penilaian Kualitas Hidup", path: "/pemdes/quality-of-life", group: "Penilaian dan Pemantauan" },
+  { label: "Hasil Penilaian Desa", path: "/pemdes/hasil-assessment-desa", group: "Penilaian dan Pemantauan" },
+  { label: "Pemantauan SDG Desa 3, 4, dan 18", path: "/pemdes/pemantauan-sdgs", group: "Penilaian dan Pemantauan" },
+  { label: "Kualitas dan Keterbaruan Data", path: "/pemdes/kualitas-data", group: "Penilaian dan Pemantauan" },
+  // === Keputusan dan Perencanaan ===
+  { label: "Rekomendasi DSS", path: "/pemdes/dss-recommendation", group: "Keputusan dan Perencanaan" },
+  { label: "Musyawarah dan Keputusan", path: "/pemdes/musyawarah-keputusan", group: "Keputusan dan Perencanaan" },
+  { label: "Roadmap Smart Living Village", path: "/pemdes/roadmap-smart-living-village", group: "Keputusan dan Perencanaan" },
+  { label: "Program dan Rencana Tindak Lanjut", path: "/pemdes/rkpdes", group: "Keputusan dan Perencanaan" },
+  // === Monitoring dan Evaluasi ===
+  { label: "Pemantauan Program", path: "/pemdes/monitoring-program", group: "Monitoring dan Evaluasi" },
+  { label: "Progres Indikator", path: "/pemdes/kpi-dashboard", group: "Monitoring dan Evaluasi" },
+  { label: "Unggah Bukti", path: "/pemdes/upload-evidence", group: "Monitoring dan Evaluasi" },
+  { label: "Evaluasi Capaian", path: "/pemdes/evaluasi-capaian", group: "Monitoring dan Evaluasi" },
+  // === Partisipasi ===
+  { label: "Aspirasi dan Partisipasi Masyarakat", path: "/pemdes/aspirasi-partisipasi", group: "Partisipasi" },
+  // === Laporan ===
+  { label: "Laporan Desa", path: "/pemdes/laporan-desa", group: "Laporan" },
+  { label: "Dokumentasi Kegiatan", path: "/pemdes/dokumentasi-kegiatan", group: "Laporan" },
+  { label: "Notifikasi dan Peringatan", path: "/pemdes/notifikasi-peringatan", group: "Sistem" },
 ];
 
 roleConfig.bpd.sidebarItems = [
@@ -309,75 +336,115 @@ roleConfig.bpd.sidebarItems = [
 ];
 
 roleConfig.lembaga_adat.sidebarItems = [
-  { label: "Profil Adat Desa Lung Anai", path: "/adat/profil-adat", group: "BUDAYA DAN ADAT" },
-  { label: "Data Lembaga Adat", path: "/adat/kelembagaan-adat", group: "BUDAYA DAN ADAT" },
-  { label: "Data Tokoh Adat", path: "/adat/data-tokoh-adat", group: "BUDAYA DAN ADAT" },
-  { label: "Warisan Budaya", path: "/adat/arsip", group: "BUDAYA DAN ADAT" },
-  { label: "Pengetahuan Lokal", path: "/adat/huma-betang", group: "BUDAYA DAN ADAT" },
-  { label: "Monitoring Ketahanan Budaya", path: "/adat/monitoring-ketahanan-budaya", group: "BUDAYA DAN ADAT" },
-  { label: "Monitoring Kearifan Lokal", path: "/adat/monitoring-kearifan-lokal", group: "BUDAYA DAN ADAT" },
-  { label: "Dampak Program terhadap Budaya", path: "/adat/dampak-program-budaya", group: "BUDAYA DAN ADAT" },
-  { label: "Validasi Program Desa", path: "/adat/validasi-program-desa", group: "BUDAYA DAN ADAT" },
-  { label: "Aspirasi Masyarakat Adat", path: "/adat/aspirasi-masyarakat-adat", group: "BUDAYA DAN ADAT" },
-  { label: "Dokumentasi Adat", path: "/adat/arsip", group: "BUDAYA DAN ADAT" },
-  { label: "Kalender Adat", path: "/adat/kalender-adat", group: "BUDAYA DAN ADAT" },
-  { label: "Laporan Adat", path: "/adat/laporan-kelembagaan", group: "BUDAYA DAN ADAT" },
+  { label: "Dasbor Kebudayaan dan SDG Desa 18", path: "/adat", group: "Dasbor" },
+  { label: "Profil Adat Desa", path: "/adat/profil-adat", group: "Profil & Lembaga" },
+  { label: "Data Lembaga Adat", path: "/adat/kelembagaan-adat", group: "Profil & Lembaga" },
+  { label: "Data Tokoh Adat", path: "/adat/data-tokoh-adat", group: "Profil & Lembaga" },
+  { label: "Warisan Budaya", path: "/adat/arsip", group: "Budaya & Pengetahuan" },
+  { label: "Pengetahuan dan Praktik Lokal", path: "/adat/huma-betang", group: "Budaya & Pengetahuan" },
+  { label: "Persetujuan dan Klasifikasi Data Budaya", path: "/adat/persetujuan-data", group: "Pemantauan & Persetujuan" },
+  { label: "Monitoring Ketahanan Budaya", path: "/adat/monitoring-ketahanan-budaya", group: "Pemantauan & Persetujuan" },
+  { label: "Monitoring SDG Desa 18", path: "/adat/monitoring-kearifan-lokal", group: "Pemantauan & Persetujuan" },
+  { label: "Musyawarah dan Keputusan Adat", path: "/adat/musyawarah-adat", group: "Keputusan & Validasi" },
+  { label: "Telaah Dampak Program terhadap Budaya", path: "/adat/dampak-program-budaya", group: "Keputusan & Validasi" },
+  { label: "Pertimbangan Kesesuaian Program", path: "/adat/telaah-adat", group: "Keputusan & Validasi" },
+  { label: "Aspirasi Masyarakat Adat", path: "/adat/aspirasi-masyarakat-adat", group: "Partisipasi & Laporan" },
+  { label: "Dokumentasi Adat", path: "/adat/arsip", group: "Partisipasi & Laporan" },
+  { label: "Kalender Adat", path: "/adat/kalender-adat", group: "Partisipasi & Laporan" },
+  { label: "Laporan", path: "/adat/laporan-kelembagaan", group: "Partisipasi & Laporan" },
+  { label: "Notifikasi", path: "/adat/notifikasi", group: "Partisipasi & Laporan" },
 ];
 
 roleConfig.guru_fasilitator.sidebarItems = [
-  { label: "Profil Pendidikan Desa", path: "/guru/profil-pendidikan-desa", group: "DATA PENDIDIKAN" },
-  { label: "Data Pendidikan Desa", path: "/guru/data-siswa", group: "DATA PENDIDIKAN" },
-  { label: "Monitoring Pendidikan", path: "/guru/monitoring-pendidikan", group: "DATA PENDIDIKAN" },
-  { label: "Literasi Digital", path: "/guru/literasi-digital", group: "DATA PENDIDIKAN" },
-  { label: "Pelatihan & Sertifikasi", path: "/guru/pelatihan-sertifikasi", group: "PENGEMBANGAN SDM" },
-  { label: "Monitoring SDM Desa", path: "/guru/monitoring-sdm-desa", group: "PENGEMBANGAN SDM" },
-  { label: "Program Pendidikan Desa", path: "/guru/program-pendidikan-desa", group: "PENGEMBANGAN SDM" },
-  { label: "Dampak Pendidikan", path: "/guru/dampak-pendidikan", group: "EVALUASI & DAMPAK" },
-  { label: "Kontribusi ke Readiness", path: "/guru/kontribusi-readiness", group: "EVALUASI & DAMPAK" },
-  { label: "Kontribusi ke QoL", path: "/guru/kontribusi-qol", group: "EVALUASI & DAMPAK" },
-  { label: "Kontribusi ke Maturity", path: "/guru/kontribusi-maturity", group: "EVALUASI & DAMPAK" },
-  { label: "Aspirasi Pendidikan", path: "/guru/aspirasi-pendidikan", group: "PARTISIPASI & DOKUMENTASI" },
-  { label: "Dokumentasi Pendidikan", path: "/guru/dokumentasi-pendidikan", group: "PARTISIPASI & DOKUMENTASI" },
-  { label: "Kalender Pendidikan", path: "/guru/kalender-pendidikan", group: "PARTISIPASI & DOKUMENTASI" },
-  { label: "Laporan Pendidikan Desa", path: "/guru/laporan-pendidikan-desa", group: "PARTISIPASI & DOKUMENTASI" },
+  // 1
+  { label: "Dasbor Pendidikan", path: "/guru", group: "Dasbor" },
+  // 2
+  { label: "Profil Pendidikan Desa", path: "/guru/profil-pendidikan-desa", group: "Data Pendidikan" },
+  // 3
+  { label: "Data Pendidikan Desa", path: "/guru/data-pendidikan-desa", group: "Data Pendidikan" },
+  // 4
+  { label: "Monitoring Pendidikan dan SDG Desa 4", path: "/guru/monitoring-pendidikan", group: "Monitoring & Analisis" },
+  // 5
+  { label: "Literasi Digital", path: "/guru/literasi-digital", group: "Monitoring & Analisis" },
+  // 6
+  { label: "Kompetensi dan Pengembangan SDM Pendidikan", path: "/guru/kompetensi-sdm", group: "Monitoring & Analisis" },
+  // 7
+  { label: "Pelatihan dan Sertifikasi", path: "/guru/pelatihan-sertifikasi", group: "Pengembangan & Pelatihan" },
+  // 8
+  { label: "Program dan Tindak Lanjut", path: "/guru/program-tindak-lanjut", group: "Pengembangan & Pelatihan" },
+  // 9
+  { label: "Rekomendasi Pendidikan", path: "/guru/rekomendasi", group: "Pengembangan & Pelatihan" },
+  // 10
+  { label: "Laporan", path: "/guru/laporan", group: "Dokumentasi & Laporan" },
+  // 11
+  { label: "Notifikasi", path: "/guru/notifikasi", group: "Dokumentasi & Laporan" },
 ];
 
+
 roleConfig.nakes_posyandu.sidebarItems = [
-  { label: "Profil Kesehatan Desa", path: "/nakes/profil-kesehatan-desa", group: "DATA KESEHATAN" },
-  { label: "Data Kesehatan Desa", path: "/nakes/data-kesehatan-desa", group: "DATA KESEHATAN" },
-  { label: "Monitoring Kesehatan", path: "/nakes/monitoring-kesehatan", group: "DATA KESEHATAN" },
-  { label: "Posyandu Digital", path: "/nakes/posyandu", group: "DATA KESEHATAN" },
-  { label: "Data Ibu & Anak", path: "/nakes/ibu-hamil", group: "DATA KESEHATAN" },
-  { label: "Monitoring Stunting", path: "/nakes/stunting", group: "DATA KESEHATAN" },
-  { label: "Penyakit Prioritas", path: "/nakes/penyakit-prioritas", group: "DATA KESEHATAN" },
-  { label: "Program Kesehatan Desa", path: "/nakes/program-kesehatan-desa", group: "PROGRAM KESEHATAN" },
-  { label: "Kader Kesehatan", path: "/nakes/kader-kesehatan", group: "PROGRAM KESEHATAN" },
-  { label: "Edukasi Kesehatan", path: "/nakes/edukasi-kesehatan", group: "PROGRAM KESEHATAN" },
-  { label: "DSS Kesehatan", path: "/nakes/dss-kesehatan", group: "ANALISIS & REKOMENDASI" },
-  { label: "Health Gap Analysis", path: "/nakes/health-gap-analysis", group: "ANALISIS & REKOMENDASI" },
-  { label: "Target QoL Kesehatan", path: "/nakes/target-qol-kesehatan", group: "ANALISIS & REKOMENDASI" },
-  { label: "Dokumentasi Kesehatan", path: "/nakes/dokumentasi-kesehatan", group: "DOKUMENTASI & LAPORAN" },
-  { label: "Kalender Kesehatan", path: "/nakes/kalender-kesehatan", group: "DOKUMENTASI & LAPORAN" },
-  { label: "Laporan Kesehatan Desa", path: "/nakes/laporan-kesehatan-desa", group: "DOKUMENTASI & LAPORAN" },
+  // 1
+  { label: "Dasbor Kesehatan", path: "/nakes", group: "Dasbor" },
+  // 2
+  { label: "Profil Kesehatan Desa", path: "/nakes/profil-kesehatan-desa", group: "Data Kesehatan" },
+  // 3
+  { label: "Data Kesehatan Desa", path: "/nakes/data-kesehatan-desa", group: "Data Kesehatan" },
+  // 4
+  { label: "Monitoring Kesehatan dan SDG Desa 3", path: "/nakes/monitoring-kesehatan", group: "Monitoring & Analisis" },
+  // 5
+  { label: "Posyandu Digital", path: "/nakes/posyandu", group: "Layanan Kesehatan" },
+  // 6
+  { label: "Data Ibu dan Anak", path: "/nakes/ibu-hamil", group: "Layanan Kesehatan" },
+  // 7
+  { label: "Monitoring Stunting", path: "/nakes/stunting", group: "Layanan Kesehatan" },
+  // 8
+  { label: "Penyakit Prioritas", path: "/nakes/penyakit-prioritas", group: "Layanan Kesehatan" },
+  // 9
+  { label: "Program Kesehatan Desa", path: "/nakes/program-kesehatan-desa", group: "Program & Rekomendasi" },
+  // 10
+  { label: "Kader Kesehatan", path: "/nakes/kader-kesehatan", group: "Program & Rekomendasi" },
+  // 11
+  { label: "Edukasi Kesehatan", path: "/nakes/edukasi-kesehatan", group: "Program & Rekomendasi" },
+  // 12
+  { label: "Rekomendasi/DSS Kesehatan", path: "/nakes/dss-kesehatan", group: "Program & Rekomendasi" },
+  // 13
+  { label: "Analisis Kesenjangan Kesehatan", path: "/nakes/health-gap-analysis", group: "Monitoring & Analisis" },
+  // 14
+  { label: "Target Hasil Kesehatan dan Kualitas Hidup", path: "/nakes/target-qol-kesehatan", group: "Monitoring & Analisis" },
+  // 15
+  { label: "Dokumentasi", path: "/nakes/dokumentasi-kesehatan", group: "Dokumentasi & Laporan" },
+  // 16
+  { label: "Kalender Kesehatan", path: "/nakes/kalender-kesehatan", group: "Dokumentasi & Laporan" },
+  // 17
+  { label: "Laporan", path: "/nakes/laporan-kesehatan-desa", group: "Dokumentasi & Laporan" },
+  // 18
+  { label: "Notifikasi", path: "/nakes/notifikasi", group: "Dokumentasi & Laporan" },
 ];
 
 roleConfig.warga.sidebarItems = [
-  { label: "Profil Desa Lung Anai", path: "/warga/profil-desa", group: "INFORMASI DESA" },
-  { label: "Hasil Readiness Desa", path: "/warga/hasil-readiness-desa", group: "INFORMASI DESA" },
-  { label: "Hasil Quality of Life Desa", path: "/warga/hasil-quality-of-life-desa", group: "INFORMASI DESA" },
-  { label: "Roadmap Desa", path: "/warga/roadmap-desa", group: "INFORMASI DESA" },
-  { label: "Aspirasi Masyarakat", path: "/warga/aspirasi", group: "PARTISIPASI MASYARAKAT" },
-  { label: "Survei Readiness", path: "/warga/survei-readiness", group: "PARTISIPASI MASYARAKAT" },
-  { label: "Survei Quality of Life", path: "/warga/survey-qol", group: "PARTISIPASI MASYARAKAT" },
-  { label: "Usulan Program Desa", path: "/warga/usulan-program-desa", group: "PARTISIPASI MASYARAKAT" },
-  { label: "Program Desa", path: "/warga/program-desa", group: "MONITORING PROGRAM" },
-  { label: "Status Program", path: "/warga/status-program", group: "MONITORING PROGRAM" },
-  { label: "Pelaporan Masalah Desa", path: "/warga/pengaduan", group: "MONITORING PROGRAM" },
-  { label: "Agenda Desa", path: "/warga/agenda-desa", group: "INFORMASI PUBLIK" },
-  { label: "Informasi Adat & Budaya", path: "/warga/informasi-adat-budaya", group: "INFORMASI PUBLIK" },
-  { label: "Informasi Pendidikan", path: "/warga/informasi-pendidikan", group: "INFORMASI PUBLIK" },
-  { label: "Informasi Kesehatan", path: "/warga/informasi-kesehatan", group: "INFORMASI PUBLIK" },
-  { label: "Notifikasi Desa", path: "/warga/notifikasi-desa", group: "INFORMASI PUBLIK" },
+  // === KONDISI DESA ===
+  { label: "Profil dan Kondisi Desa", path: "/warga/profil-desa", group: "KONDISI DESA" },
+  { label: "Ringkasan Kesiapan Desa", path: "/warga/hasil-readiness-desa", group: "KONDISI DESA" },
+  { label: "Ringkasan Kualitas Hidup Masyarakat", path: "/warga/hasil-quality-of-life-desa", group: "KONDISI DESA" },
+  { label: "Roadmap Smart Living Village", path: "/warga/roadmap-desa", group: "KONDISI DESA" },
+  // === ASPIRASI & KEBUTUHAN ===
+  { label: "Aspirasi Masyarakat", path: "/warga/aspirasi", group: "ASPIRASI & KEBUTUHAN" },
+  { label: "Pemantauan Masalah Masyarakat", path: "/warga/pemantauan-masalah", group: "ASPIRASI & KEBUTUHAN" },
+  { label: "Prioritas Kebutuhan Masyarakat", path: "/warga/prioritas-kebutuhan", group: "ASPIRASI & KEBUTUHAN" },
+  { label: "Usulan Program Desa", path: "/warga/usulan-program-desa", group: "ASPIRASI & KEBUTUHAN" },
+  // === MUSYAWARAH & KEPUTUSAN ===
+  { label: "Agenda dan Musyawarah Desa", path: "/warga/agenda-musyawarah", group: "MUSYAWARAH & KEPUTUSAN" },
+  { label: "Masukan dan Partisipasi Masyarakat", path: "/warga/masukan-partisipasi", group: "MUSYAWARAH & KEPUTUSAN" },
+  { label: "Hasil Keputusan dan Tindak Lanjut", path: "/warga/hasil-keputusan", group: "MUSYAWARAH & KEPUTUSAN" },
+  // === MONITORING ===
+  { label: "Program dan Status Pelaksanaan", path: "/warga/pemantauan-program-desa", group: "MONITORING" },
+  { label: "Survei Persepsi Kesiapan", path: "/warga/survei-readiness", group: "MONITORING" },
+  { label: "Survei Kualitas Hidup Masyarakat", path: "/warga/survey-qol", group: "MONITORING" },
+  // === INFORMASI PUBLIK ===
+  { label: "Informasi Kesehatan dan SDG Desa 3", path: "/warga/informasi-kesehatan", group: "INFORMASI PUBLIK" },
+  { label: "Informasi Pendidikan dan SDG Desa 4", path: "/warga/informasi-pendidikan", group: "INFORMASI PUBLIK" },
+  { label: "Informasi Budaya Publik dan SDG Desa 18", path: "/warga/informasi-budaya", group: "INFORMASI PUBLIK" },
+  { label: "Agenda dan Informasi Publik", path: "/warga/agenda-informasi-publik", group: "INFORMASI PUBLIK" },
+  { label: "Notifikasi dan Tindak Lanjut", path: "/warga/notifikasi", group: "INFORMASI PUBLIK" },
 ];
 
 roleConfig.dinas_pmd.sidebarItems = [
@@ -723,7 +790,7 @@ export const layananSLVMetadata: Record<string, LayananSLVMetadata> = {
     placeholderTitle: "Nama Lengkap / Username",
     placeholderCategory: "Informasi Identitas (e.g. NIK, Alamat RT/RW)",
     placeholderValue: "Status Akun (e.g. Terverifikasi)",
-    placeholderDescription: "Detail data biodata lengkap Layanan SLV",
+    placeholderDescription: "Detail data biodata lengkap Masyarakat Umum",
     readOnly: true
   },
   "Riwayat Layanan": {

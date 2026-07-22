@@ -19,7 +19,7 @@ async function main() {
     },
     create: {
       email: "admin@borneo.id",
-      name: "Admin Pemerintah Desa",
+      name: "Joy Nashar",
       password: "password123", 
       role: "admin_super",
       desaId: desa.id,

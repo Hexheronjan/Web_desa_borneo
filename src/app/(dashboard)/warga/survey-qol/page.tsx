@@ -31,7 +31,7 @@ export default function SurveyQoLPage() {
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Survei Kualitas Hidup (QoL)" modul="Warga Adat Borneo" color={COLOR} />
+      <PageTitle fitur="Survei Kualitas Hidup Masyarakat" modul="Tokoh Masyarakat" color={COLOR} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard label="Indeks QoL Desa" value="76.80" satuan="Skor Baik" barColor="purple" progress={77} />
@@ -115,24 +115,28 @@ export default function SurveyQoLPage() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4 text-xs text-slate-600 leading-normal">
-            <p>Pengukuran QoL Desa Adat Borneo didasarkan pada 5 dimensi kepuasan hidup:</p>
+            <p>Pengukuran QoL Desa Adat Borneo didasarkan pada dimensi kepuasan hidup agregat:</p>
             <div className="space-y-2">
               {[
-                { name: 'Kesehatan (KIA & Posyandu)', val: '4.35 / 5.0' },
-                { name: 'Pendidikan (Literasi & Sekolah)', val: '4.10 / 5.0' },
-                { name: 'Sosial (Gotong Royong & Adat)', val: '4.00 / 5.0' },
-                { name: 'Lingkungan (Air & Sampah)', val: '3.80 / 5.0' },
-                { name: 'Ekonomi (Pendapatan & UMKM)', val: '3.80 / 5.0' }
+                { name: 'Kesehatan (KIA & Posyandu)', val: '4.35 / 5.0', diff: '+2.4%' },
+                { name: 'Pendidikan (Literasi & Sekolah)', val: '4.10 / 5.0', diff: '+1.8%' },
+                { name: 'Sosial (Gotong Royong & Adat)', val: '4.00 / 5.0', diff: '0.0%' },
+                { name: 'Lingkungan (Air & Sampah)', val: '3.80 / 5.0', diff: '-1.2%' },
+                { name: 'Ekonomi (Pendapatan & UMKM)', val: '3.80 / 5.0', diff: '+0.5%' }
               ].map((item, i) => (
-                <div key={i} className="flex justify-between border-b pb-1 text-[11px]">
+                <div key={i} className="flex justify-between items-center border-b pb-1 text-[11px]">
                   <span className="text-slate-500">{item.name}</span>
-                  <span className="font-bold text-slate-700">{item.val}</span>
+                  <div className="flex gap-2 items-center">
+                    <span className="font-bold text-slate-700">{item.val}</span>
+                    <span className={`text-[9px] font-bold ${item.diff.startsWith('+') ? 'text-green-600' : item.diff.startsWith('-') ? 'text-red-600' : 'text-slate-400'}`}>({item.diff})</span>
+                  </div>
                 </div>
               ))}
             </div>
-            <p className="pt-2 border-t text-[10px] text-slate-400">
-              *Tanggapan Anda membantu Kepala Desa dalam menyusun Rencana Anggaran Pembangunan Desa (RKPDes) tahun depan.
-            </p>
+            <div className="pt-2 border-t text-[10px] text-slate-400">
+              <p className="font-semibold text-slate-500">Perubahan Antarperiode:</p>
+              <p>Indeks QoL agregat meningkat <b>+2.50%</b> dibandingkan semester sebelumnya.</p>
+            </div>
           </CardContent>
         </Card>
       </div>

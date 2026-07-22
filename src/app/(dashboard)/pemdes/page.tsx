@@ -2,662 +2,422 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
+import { StatCard } from '@/components/shared/StatCard';
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  LineChart, Line, Legend, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar,
+  RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer,
+  PieChart, Pie, Cell, Tooltip, Legend
 } from 'recharts';
 import {
   TrendingUp, AlertTriangle, CheckCircle2, Clock, DollarSign,
   FileText, Activity, Shield, Target, Users, MessageSquare,
-  ArrowUpRight, ArrowDownRight, Bell, Zap, Heart, Calendar,
+  ArrowUpRight, ArrowDownRight, Bell, Zap, Heart, Calendar, Landmark,
+  FolderOpen, Gavel, HelpCircle, ShieldCheck, Download, Plus, Sparkles, PlusCircle, ArrowRight,
+  RefreshCw, Compass, BarChart2, Upload
 } from 'lucide-react';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const COLOR = '#283593';
 
-export default function PemdesPage() {
-  const [loading, setLoading] = useState(false);
+// 6 Dimensi Kesiapan Final
+const RADAR_DATA = [
+  { dimension: 'SDM & Literasi', value: 52.4 },
+  { dimension: 'Budaya & Tata Kelola Adat', value: 68.2 },
+  { dimension: 'Layanan & Kualitas Hidup', value: 58.7 },
+  { dimension: 'Data & Sistem Informasi', value: 48.9 },
+  { dimension: 'Tata Kelola', value: 55.6 },
+  { dimension: 'Ekonomi', value: 44.1 },
+];
 
-  useEffect(() => {
-    setLoading(false);
-  }, []);
+// Status Rapat / Musyawarah Donut
+const PIE_DATA = [
+  { name: 'Diterima', value: 2, color: '#10b981' },
+  { name: 'Diterima dengan Perubahan', value: 1, color: '#3b82f6' },
+  { name: 'Ditunda', value: 1, color: '#f59e0b' },
+  { name: 'Ditolak', value: 0, color: '#ef4444' },
+];
 
-  // Mock data for key metrics
-  const keyMetrics = {
-    readinessIndex: 74.20,
-    maturityIndex: 2.95,
-    maturityLabel: 'Berkembang',
-    qualityOfLifeIndex: 72.35,
-    qualityOfLifeLabel: 'Baik',
-    progressRTL: 67.80,
-    totalProgram: 9,
-    programTerlambat: 2,
-    programSelesai: 15,
+export default function PemdesDashboardPage() {
+  const [importing, setImporting] = useState(false);
+
+  const handleImport = () => {
+    setImporting(true);
+    setTimeout(() => {
+      setImporting(false);
+      alert('✅ Penilaian Kesiapan Smart Living Village terbaru berhasil di-import dari pusat data.');
+    }, 1500);
   };
-
-  // Mock data for notifications
-  const notifications = [
-    { id: 1, type: 'warning', title: 'Program "Internet Desa" tertunda', message: 'Realisasi hanya 45% dari target', time: '2 jam lalu' },
-    { id: 2, type: 'info', title: 'Dokumentasi program lengkap', message: '5 program telah terverifikasi', time: '5 jam lalu' },
-    { id: 3, type: 'alert', title: 'Verifikasi evidence pending', message: '3 program butuh verifikasi', time: '1 hari lalu' },
-    { id: 4, type: 'success', title: 'DSS Recommendation selesai', message: '12 rekomendasi telah ditindaklanjuti', time: '2 hari lalu' },
-  ];
-
-  // Mock data for DSS monitoring
-  const dssMonitoring = [
-    { id: 1, rekomendasi: 'Peningkatan infrastruktur digital', status: 'Selesai', progress: 100 },
-    { id: 2, rekomendasi: 'Pelatihan SDM digital', status: 'Berjalan', progress: 75 },
-    { id: 3, rekomendasi: 'Integrasi sistem layanan', status: 'Berjalan', progress: 60 },
-    { id: 4, rekomendasi: 'Penguatan governance', status: 'Pending', progress: 0 },
-  ];
-
-  // Mock data for program monitoring
-  const programDesa = [
-    { id: 1, nama: 'Internet Desa', anggaran: 150000000, realisasi: 67500000, progress: 45, status: 'Terlambat' },
-    { id: 2, nama: 'Digitalisasi Layanan Desa', anggaran: 200000000, realisasi: 160000000, progress: 80, status: 'Berjalan' },
-    { id: 3, nama: 'Pelatihan Digital Perangkat Desa', anggaran: 50000000, realisasi: 50000000, progress: 100, status: 'Selesai' },
-    { id: 4, nama: 'Posyandu Digital', anggaran: 75000000, realisasi: 56250000, progress: 75, status: 'Berjalan' },
-    { id: 5, nama: 'Bank Sampah Digital', anggaran: 30000000, realisasi: 18000000, progress: 60, status: 'Berjalan' },
-  ];
-
-  // Mock data for program impact
-  const programImpact = [
-    { program: 'Internet Desa', readiness: 5.2, maturity: 0.8, qol: 3.5 },
-    { program: 'Digitalisasi Layanan', readiness: 8.5, maturity: 1.2, qol: 6.8 },
-    { program: 'Pelatihan Digital', readiness: 4.3, maturity: 0.9, qol: 2.1 },
-    { program: 'Posyandu Digital', readiness: 6.7, maturity: 1.1, qol: 5.4 },
-    { program: 'Bank Sampah Digital', readiness: 3.8, maturity: 0.6, qol: 2.9 },
-  ];
-
-  // Mock data for evidence monitoring
-  const evidenceProgram = [
-    { id: 1, program: 'Internet Desa', evidence: 'Foto instalasi', status: 'Terverifikasi', verifiedBy: 'Admin' },
-    { id: 2, program: 'Digitalisasi Layanan', evidence: 'Screenshot aplikasi', status: 'Terverifikasi', verifiedBy: 'Admin' },
-    { id: 3, program: 'Pelatihan Digital', evidence: 'Dokumentasi pelatihan', status: 'Pending', verifiedBy: '-' },
-    { id: 4, program: 'Posyandu Digital', evidence: 'Laporan bulanan', status: 'Terverifikasi', verifiedBy: 'Admin' },
-  ];
-
-  // Mock data for aspirasi masyarakat
-  const aspirasiData = [
-    { name: 'Infrastruktur', value: 4, color: '#283593' },
-    { name: 'Pendidikan', value: 3, color: '#5E35B1' },
-    { name: 'Kesehatan', value: 2, color: '#7B1FA2' },
-    { name: 'Lingkungan', value: 2, color: '#9C27B0' },
-    { name: 'Budaya', value: 1, color: '#BA68C8' },
-  ];
-
-  // Mock data for budget transparency
-  const budgetData = [
-    { program: 'Internet Desa', anggaran: 150, realisasi: 67.5 },
-    { program: 'Digitalisasi Layanan', anggaran: 200, realisasi: 160 },
-    { program: 'Pelatihan Digital', anggaran: 50, realisasi: 50 },
-    { program: 'Posyandu Digital', anggaran: 75, realisasi: 56.25 },
-    { program: 'Bank Sampah', anggaran: 30, realisasi: 18 },
-  ];
-
-  // Mock data for Readiness Assessment (radar chart)
-  const readinessData = [
-    { dimension: 'SDM', value: 75 },
-    { dimension: 'Tata Kelola', value: 80 },
-    { dimension: 'Ekonomi', value: 65 },
-    { dimension: 'Lingkungan', value: 70 },
-    { dimension: 'Infrastruktur', value: 72 },
-    { dimension: 'Teknologi', value: 68 },
-  ];
-
-  // Mock data for Trend Assessment (line chart)
-  const trendData = [
-    { period: 'Q1 2024', readiness: 68.5, maturity: 2.3, qol: 65.2 },
-    { period: 'Q2 2024', readiness: 70.2, maturity: 2.5, qol: 67.8 },
-    { period: 'Q3 2024', readiness: 72.1, maturity: 2.7, qol: 69.5 },
-    { period: 'Q4 2024', readiness: 74.2, maturity: 2.95, qol: 72.35 },
-  ];
-
-  // Mock data for Program Prioritas DSS
-  const programPrioritas = [
-    { id: 1, program: 'Internet Desa', skor: 8.5, dampak: 'Tinggi', prioritas: 'P1' },
-    { id: 2, program: 'Digitalisasi Layanan', skor: 7.8, dampak: 'Tinggi', prioritas: 'P2' },
-    { id: 3, program: 'Pelatihan SDM', skor: 7.2, dampak: 'Sedang', prioritas: 'P3' },
-    { id: 4, program: 'Posyandu Digital', skor: 6.8, dampak: 'Sedang', prioritas: 'P4' },
-    { id: 5, program: 'Bank Sampah Digital', skor: 6.2, dampak: 'Rendah', prioritas: 'P5' },
-  ];
-
-  // Mock data for Progress Implementasi Program (donut chart)
-  const progressImplementasi = [
-    { name: 'Belum Dimulai', value: 3, color: '#ef4444' },
-    { name: 'Berjalan', value: 5, color: '#3b82f6' },
-    { name: 'Selesai', value: 7, color: '#22c55e' },
-  ];
-
-  // Mock data for Roadmap
-  const roadmapData = {
-    tahun1: [
-      { program: 'Internet Desa', status: 'Berjalan', progress: 45 },
-      { program: 'Digitalisasi Layanan', status: 'Berjalan', progress: 80 },
-      { program: 'Pelatihan SDM', status: 'Selesai', progress: 100 },
-    ],
-    tahun2: [
-      { program: 'Posyandu Digital', status: 'Berjalan', progress: 75 },
-      { program: 'Bank Sampah Digital', status: 'Berjalan', progress: 60 },
-      { program: 'Smart Agriculture', status: 'Belum', progress: 0 },
-    ],
-    tahun3: [
-      { program: 'Smart Tourism', status: 'Belum', progress: 0 },
-      { program: 'Digital Governance', status: 'Belum', progress: 0 },
-      { program: 'AI Integration', status: 'Belum', progress: 0 },
-    ],
-  };
-
-  // Mock data for Agenda Terdekat
-  const agendaData = [
-    { id: 1, judul: 'Rapat Koordinasi Program', tanggal: '20 Jun 2026', waktu: '09:00', lokasi: 'Balai Desa' },
-    { id: 2, judul: 'Monitoring Internet Desa', tanggal: '22 Jun 2026', waktu: '10:00', lokasi: 'Lokasi Tower' },
-    { id: 3, judul: 'Evaluasi Q2', tanggal: '25 Jun 2026', waktu: '13:00', lokasi: 'Aula Desa' },
-  ];
-
-  // Mock data for Upload Evidence Terbaru
-  const evidenceTerbaru = [
-    { id: 1, program: 'Internet Desa', deskripsi: 'Foto instalasi tower', tanggal: '18 Jun 2026', status: 'Terverifikasi' },
-    { id: 2, program: 'Digitalisasi Layanan', deskripsi: 'Screenshot aplikasi', tanggal: '17 Jun 2026', status: 'Terverifikasi' },
-    { id: 3, program: 'Pelatihan SDM', deskripsi: 'Dokumentasi pelatihan', tanggal: '15 Jun 2026', status: 'Pending' },
-  ];
-
-  // Mock data for Progress Tindak Lanjut Rekomendasi
-  const progressRekomendasi = [
-    { tahap: 'DSS Recommendations', total: 12, selesai: 12, progress: 100 },
-    { tahap: 'Implementation', total: 9, selesai: 6, progress: 67 },
-    { tahap: 'Completion', total: 9, selesai: 4, progress: 44 },
-  ];
-
-  // Mock data for Laporan Desa Terbaru
-  const laporanDesa = [
-    { id: 1, judul: 'Laporan Q2 2026', tanggal: '15 Jun 2026', ukuran: '2.5 MB', tipe: 'PDF' },
-    { id: 2, judul: 'Laporan Readiness Assessment', tanggal: '10 Jun 2026', ukuran: '1.8 MB', tipe: 'PDF' },
-    { id: 3, judul: 'Laporan Monitoring Program', tanggal: '05 Jun 2026', ukuran: '3.2 MB', tipe: 'PDF' },
-  ];
-
-  if (loading) {
-    return <div className="p-5">Loading...</div>;
-  }
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Dashboard Pemerintah Desa" modul="Smart Living Village" color={COLOR} />
-
-      {/* Key Metrics */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="p-4 border-l-4 border-l-blue-600">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs text-missing required error components, refreshing...slate-500 font-semibold">Readiness Index</p>
-            <TrendingUp size={16} className="text-blue-600" />
+      
+      {/* HEADER DASBOR STRATEGIS */}
+      <div className="flex justify-between items-start flex-wrap gap-4 border-b pb-4">
+        <div>
+          <h1 className="text-xl font-black text-slate-800 tracking-tight uppercase">PEMERINTAH DESA</h1>
+          <p className="text-xs text-slate-500 font-semibold mt-0.5">Dasbor Strategis Pemerintah Desa | Smart Living Village</p>
+        </div>
+        <div className="flex items-center gap-3 text-right text-[11px] text-slate-500 font-semibold bg-slate-50 p-2.5 rounded-xl border">
+          <div>
+            <p>Periode Data: <span className="text-indigo-700">Januari – Juni 2026</span></p>
+            <p className="text-[10px] text-slate-400 mt-0.5">Kamis, 18 Juli 2026, 10:24 WIB</p>
           </div>
-          <p className="text-2xl font-bold text-slate-800">{keyMetrics.readinessIndex}</p>
-          <p className="text-xs text-green-600 flex items-center gap-1 mt-1">
-            <ArrowUpRight size={12} /> +2.3% dari bulan lalu
+          <RefreshCw size={14} className="text-indigo-700 animate-spin" />
+        </div>
+      </div>
+
+      {/* TOP CARDS / 5 KEY METRICS */}
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+        
+        {/* 1. Skor Kesiapan SLV */}
+        <Card className="p-4 border-l-4 border-l-blue-600 shadow-sm">
+          <div className="flex items-center justify-between mb-1.5">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Skor Kesiapan SLV</p>
+            <Target size={15} className="text-blue-600" />
+          </div>
+          <p className="text-2xl font-black text-slate-800">53,50</p>
+          <span className="text-[9px] font-bold bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded">Cukup Siap</span>
+          <p className="text-[9px] text-green-600 flex items-center gap-0.5 mt-1.5 font-bold">
+            <ArrowUpRight size={10} /> +1,25% dari Des 2025
           </p>
         </Card>
 
-        <Card className="p-4 border-l-4 border-l-purple-600">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs text-slate-500 font-semibold">Maturity Index</p>
-            <Target size={16} className="text-purple-600" />
+        {/* 2. Tingkat Kematangan */}
+        <Card className="p-4 border-l-4 border-l-purple-600 shadow-sm">
+          <div className="flex items-center justify-between mb-1.5">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Tingkat Kematangan</p>
+            <Compass size={15} className="text-purple-600" />
           </div>
-          <p className="text-2xl font-bold text-slate-800">{keyMetrics.maturityIndex}</p>
-          <p className="text-xs text-purple-600 font-medium mt-1">{keyMetrics.maturityLabel}</p>
+          <p className="text-2xl font-black text-slate-800">2,10</p>
+          <span className="text-[9px] font-bold bg-purple-50 text-purple-700 px-1.5 py-0.5 rounded">Berkembang</span>
+          <p className="text-[9px] text-purple-600 flex items-center gap-0.5 mt-1.5 font-bold">
+            <ArrowUpRight size={10} /> +0,10% dari Des 2025
+          </p>
         </Card>
 
-        <Card className="p-4 border-l-4 border-l-green-600">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs text-slate-500 font-semibold">Quality of Life Index</p>
-            <Heart size={16} className="text-green-600" />
+        {/* 3. Skor Kualitas Hidup */}
+        <Card className="p-4 border-l-4 border-l-green-600 shadow-sm">
+          <div className="flex items-center justify-between mb-1.5">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Skor Kualitas Hidup</p>
+            <Heart size={15} className="text-green-600" />
           </div>
-          <p className="text-2xl font-bold text-slate-800">{keyMetrics.qualityOfLifeIndex}</p>
-          <p className="text-xs text-green-600 font-medium mt-1">{keyMetrics.qualityOfLifeLabel}</p>
+          <p className="text-2xl font-black text-slate-800">61,80</p>
+          <span className="text-[9px] font-bold bg-green-50 text-green-700 px-1.5 py-0.5 rounded">Baik</span>
+          <p className="text-[9px] text-green-600 flex items-center gap-0.5 mt-1.5 font-bold">
+            <ArrowUpRight size={10} /> +1,02% dari Des 2025
+          </p>
         </Card>
 
-        <Card className="p-4 border-l-4 border-l-orange-600">
-          <div className="flex items-center justify-between mb-2">
-            <p className="text-xs text-slate-500 font-semibold">Progress RTL</p>
-            <Activity size={16} className="text-orange-600" />
+        {/* 4. Progres Tindak Lanjut */}
+        <Card className="p-4 border-l-4 border-l-orange-600 shadow-sm">
+          <div className="flex items-center justify-between mb-1.5">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Progres Rencana Tindak Lanjut</p>
+            <Activity size={15} className="text-orange-600" />
           </div>
-          <p className="text-2xl font-bold text-slate-800">{keyMetrics.progressRTL}%</p>
-          <div className="w-full h-1.5 bg-slate-200 rounded-full mt-2">
-            <div className="h-full rounded-full bg-orange-600" style={{ width: `${keyMetrics.progressRTL}%` }} />
+          <p className="text-2xl font-black text-slate-800">67,8%</p>
+          <div className="w-full bg-slate-100 rounded-full h-1 mt-1.5">
+            <div className="bg-orange-600 h-1 rounded-full" style={{ width: '67.8%' }} />
+          </div>
+          <p className="text-[9px] text-slate-500 font-semibold mt-1">24 program berjalan</p>
+        </Card>
+
+        {/* 5. Kualitas Data */}
+        <Card className="p-4 border-l-4 border-l-teal-600 shadow-sm">
+          <div className="flex items-center justify-between mb-1.5">
+            <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Kualitas Data</p>
+            <FolderOpen size={15} className="text-teal-600" />
+          </div>
+          <p className="text-2xl font-black text-slate-800">82%</p>
+          <div className="text-[8px] text-slate-450 mt-1 font-semibold space-y-0.5 grid grid-cols-2">
+            <span>Lengkap: 82%</span>
+            <span>Diperbarui: 74%</span>
+            <span>Terverifikasi: 68%</span>
+            <span>Konsisten: 81%</span>
           </div>
         </Card>
+
       </div>
 
+      {/* MIDDLE ROW: SDGs & NOTIFIKASI */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Hasil Readiness Assessment - Radar Chart */}
+        
+        {/* SDGs PEMANTAUAN */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Target size={16} /> Hasil Readiness Assessment
+            <CardTitle className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+              <Sparkles size={14} className="text-indigo-700" /> Pemantauan SDG Desa Prioritas
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={250}>
-              <RadarChart data={readinessData}>
-                <PolarGrid stroke="#e2e8f0" />
-                <PolarAngleAxis dataKey="dimension" tick={{ fontSize: 10, fill: '#64748b' }} />
-                <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fontSize: 9, fill: '#94a3b8' }} />
-                <Radar name="Skor" dataKey="value" stroke={COLOR} fill={COLOR} fillOpacity={0.3} strokeWidth={2} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
-              </RadarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-
-        {/* Trend Assessment Desa - Line Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <TrendingUp size={16} /> Trend Assessment Desa
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={250}>
-              <LineChart data={trendData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="period" tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
-                <Legend iconSize={8} wrapperStyle={{ fontSize: 9 }} />
-                <Line type="monotone" dataKey="readiness" stroke="#3b82f6" strokeWidth={2} name="Readiness" />
-                <Line type="monotone" dataKey="maturity" stroke="#8b5cf6" strokeWidth={2} name="Maturity" />
-                <Line type="monotone" dataKey="qol" stroke="#22c55e" strokeWidth={2} name="QoL" />
-              </LineChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Kategori Kesiapan Desa */}
-      <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm font-semibold text-slate-600 mb-1">Kategori Kesiapan Desa</p>
-              <p className="text-3xl font-bold text-slate-800">Siap</p>
-              <p className="text-xs text-slate-500 mt-1">Readiness Index: {keyMetrics.readinessIndex}</p>
-            </div>
-            <div className="text-right">
-              <div className="w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center">
-                <span className="text-white text-2xl font-bold">{keyMetrics.readinessIndex}</span>
+          <CardContent className="space-y-3.5 text-xs">
+            
+            {/* SDG 3 */}
+            <div className="p-3 bg-red-50/50 border border-red-100 rounded-xl flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <Heart size={16} className="text-red-650" />
+                <div>
+                  <p className="font-bold text-slate-800">SDG Desa 3 — Kesehatan</p>
+                  <p className="text-[10px] text-slate-500">Program Penanganan Stunting & Ibu Hamil</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="font-black text-slate-800 text-[13px]">64,2</p>
+                <span className="text-[9px] font-bold text-green-700">Baik (+2,1 dari Des 2025)</span>
               </div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Program Prioritas DSS */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Zap size={16} /> Program Prioritas DSS
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {programPrioritas.map((item) => (
-                <div key={item.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white ${
-                      item.prioritas === 'P1' ? 'bg-red-500' :
-                      item.prioritas === 'P2' ? 'bg-orange-500' :
-                      item.prioritas === 'P3' ? 'bg-yellow-500' :
-                      'bg-green-500'
-                    }`}>
-                      {item.prioritas}
-                    </div>
-                    <div>
-                      <p className="text-sm font-semibold text-slate-800">{item.program}</p>
-                      <p className="text-xs text-slate-500">Skor: {item.skor} | Dampak: {item.dampak}</p>
-                    </div>
-                  </div>
+            {/* SDG 4 */}
+            <div className="p-3 bg-blue-50/50 border border-blue-100 rounded-xl flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <Users size={16} className="text-blue-600" />
+                <div>
+                  <p className="font-bold text-slate-800">SDG Desa 4 — Pendidikan</p>
+                  <p className="text-[10px] text-slate-500">Kelas Literasi Digital & PAUD Adat</p>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Progress Implementasi Program - Donut Chart */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Activity size={16} /> Progress Implementasi Program
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col items-center">
-            <ResponsiveContainer width="100%" height={200}>
-              <PieChart>
-                <Pie
-                  data={progressImplementasi}
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={50}
-                  outerRadius={80}
-                  paddingAngle={2}
-                  dataKey="value"
-                  label={({ name, value }) => `${value}`}
-                  labelLine={false}
-                >
-                  {progressImplementasi.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
-                </Pie>
-                <Tooltip formatter={(v: any) => [`${v} program`, '']} />
-              </PieChart>
-            </ResponsiveContainer>
-            <div className="w-full space-y-1.5 mt-2">
-              {progressImplementasi.map((item, i) => (
-                <div key={i} className="flex justify-between text-xs">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }} />
-                    <span className="text-slate-600">{item.name}</span>
-                  </div>
-                  <span className="font-bold text-slate-700">{item.value}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Roadmap Smart Living Village Desa */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-            <FileText size={16} /> Roadmap Smart Living Village Desa Lung Anai
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-              <h4 className="text-sm font-bold text-blue-800 mb-3">Tahun 1 (2025)</h4>
-              <div className="space-y-2">
-                {roadmapData.tahun1.map((item, i) => (
-                  <div key={i} className="text-xs">
-                    <div className="flex justify-between mb-1">
-                      <span className="text-slate-700">{item.program}</span>
-                      <span className={`font-bold ${
-                        item.status === 'Selesai' ? 'text-green-600' :
-                        item.status === 'Berjalan' ? 'text-blue-600' :
-                        'text-slate-400'
-                      }`}>{item.status}</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-slate-200 rounded-full">
-                      <div
-                        className="h-full rounded-full bg-blue-600"
-                        style={{ width: `${item.progress}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
+              </div>
+              <div className="text-right">
+                <p className="font-black text-slate-800 text-[13px]">58,7</p>
+                <span className="text-[9px] font-bold text-green-700">Cukup Baik (+1,9 dari Des 2025)</span>
               </div>
             </div>
-            <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-              <h4 className="text-sm font-bold text-purple-800 mb-3">Tahun 2 (2026)</h4>
-              <div className="space-y-2">
-                {roadmapData.tahun2.map((item, i) => (
-                  <div key={i} className="text-xs">
-                    <div className="flex justify-between mb-1">
-                      <span className="text-slate-700">{item.program}</span>
-                      <span className={`font-bold ${
-                        item.status === 'Selesai' ? 'text-green-600' :
-                        item.status === 'Berjalan' ? 'text-blue-600' :
-                        'text-slate-400'
-                      }`}>{item.status}</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-slate-200 rounded-full">
-                      <div
-                        className="h-full rounded-full bg-purple-600"
-                        style={{ width: `${item.progress}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
+
+            {/* SDG 18 */}
+            <div className="p-3 bg-emerald-50/50 border border-emerald-100 rounded-xl flex items-center justify-between gap-4">
+              <div className="flex items-center gap-2">
+                <Landmark size={16} className="text-emerald-700" />
+                <div>
+                  <p className="font-bold text-slate-800">SDG Desa 18 — Kelembagaan & Kebudayaan</p>
+                  <p className="text-[10px] text-slate-500">Digitalisasi Hukum Adat & Huma Betang</p>
+                </div>
+              </div>
+              <div className="text-right">
+                <p className="font-black text-slate-800 text-[13px]">55,1</p>
+                <span className="text-[9px] font-bold text-green-700">Cukup Baik (+1,3 dari Des 2025)</span>
               </div>
             </div>
-            <div className="p-4 bg-green-50 rounded-lg border border-green-200">
-              <h4 className="text-sm font-bold text-green-800 mb-3">Tahun 3 (2027)</h4>
-              <div className="space-y-2">
-                {roadmapData.tahun3.map((item, i) => (
-                  <div key={i} className="text-xs">
-                    <div className="flex justify-between mb-1">
-                      <span className="text-slate-700">{item.program}</span>
-                      <span className={`font-bold ${
-                        item.status === 'Selesai' ? 'text-green-600' :
-                        item.status === 'Berjalan' ? 'text-blue-600' :
-                        'text-slate-400'
-                      }`}>{item.status}</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-slate-200 rounded-full">
-                      <div
-                        className="h-full rounded-full bg-green-600"
-                        style={{ width: `${item.progress}%` }}
-                      />
-                    </div>
-                  </div>
-                ))}
+
+          </CardContent>
+        </Card>
+
+        {/* NOTIFIKASI & PERINGATAN */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+              <Bell size={14} className="text-indigo-700" /> Peringatan & Notifikasi
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3 text-xs">
+            
+            <div className="flex items-start gap-2 p-2 bg-yellow-50 border border-yellow-200 rounded-lg text-yellow-800">
+              <AlertTriangle size={14} className="flex-shrink-0 mt-0.5 text-yellow-600" />
+              <div className="flex-1">
+                <p className="font-bold text-[11px]">WiFi Belum Diperbarui</p>
+                <p className="text-[10px] text-yellow-750">Access point WiFi Balai Adat belum diperpanjang langganan bulan ini.</p>
               </div>
+              <span className="text-[9px] text-slate-400">10:15</span>
             </div>
-          </div>
-        </CardContent>
-      </Card>
 
-      {/* Monitoring Program Berjalan */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-            <Activity size={16} /> Monitoring Program Berjalan
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-slate-200">
-                  <th className="text-left py-2 px-3 text-xs font-bold text-slate-500">Program</th>
-                  <th className="text-left py-2 px-3 text-xs font-bold text-slate-500">Status</th>
-                  <th className="text-left py-2 px-3 text-xs font-bold text-slate-500">Progress</th>
-                  <th className="text-left py-2 px-3 text-xs font-bold text-slate-500">Target Selesai</th>
-                  <th className="text-left py-2 px-3 text-xs font-bold text-slate-500">Dampak</th>
-                </tr>
-              </thead>
-              <tbody>
-                {programDesa.map((prog) => (
-                  <tr key={prog.id} className="border-b border-slate-100">
-                    <td className="py-3 px-3 font-semibold text-slate-700">{prog.nama}</td>
-                    <td className="py-3 px-3">
-                      <span className={`text-xs font-bold px-2 py-1 rounded-full ${
-                        prog.status === 'Selesai' ? 'bg-green-100 text-green-700' :
-                        prog.status === 'Terlambat' ? 'bg-red-100 text-red-700' :
-                        'bg-blue-100 text-blue-700'
-                      }`}>
-                        {prog.status}
-                      </span>
-                    </td>
-                    <td className="py-3 px-3">
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 h-2 bg-slate-200 rounded-full overflow-hidden">
-                          <div
-                            className="h-full rounded-full"
-                            style={{
-                              width: `${prog.progress}%`,
-                              backgroundColor: prog.status === 'Selesai' ? '#22c55e' : prog.status === 'Terlambat' ? '#ef4444' : '#3b82f6'
-                            }}
-                          />
-                        </div>
-                        <span className="text-xs text-slate-600">{prog.progress}%</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-3 text-slate-600 text-xs">Des 2026</td>
-                    <td className="py-3 px-3 text-xs font-bold text-green-600">Tinggi</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Notifikasi Program Prioritas */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Bell size={16} /> Notifikasi Program Prioritas
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {notifications.map((notif) => (
-                <div key={notif.id} className={`p-3 rounded-lg border ${
-                  notif.type === 'warning' ? 'bg-yellow-50 border-yellow-200' :
-                  notif.type === 'alert' ? 'bg-red-50 border-red-200' :
-                  notif.type === 'success' ? 'bg-green-50 border-green-200' :
-                  'bg-blue-50 border-blue-200'
-                }`}>
-                  <div className="flex items-start gap-3">
-                    {notif.type === 'warning' && <AlertTriangle size={16} className="text-yellow-600 mt-0.5" />}
-                    {notif.type === 'alert' && <AlertTriangle size={16} className="text-red-600 mt-0.5" />}
-                    {notif.type === 'success' && <CheckCircle2 size={16} className="text-green-600 mt-0.5" />}
-                    {notif.type === 'info' && <Bell size={16} className="text-blue-600 mt-0.5" />}
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold text-slate-800">{notif.title}</p>
-                      <p className="text-xs text-slate-600">{notif.message}</p>
-                      <p className="text-[10px] text-slate-400 mt-1">{notif.time}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="flex items-start gap-2 p-2 bg-indigo-50 border border-indigo-200 rounded-lg text-indigo-800">
+              <Calendar size={14} className="flex-shrink-0 mt-0.5 text-indigo-600" />
+              <div className="flex-1">
+                <p className="font-bold text-[11px]">Musyawarah Desa (Musdes)</p>
+                <p className="text-[10px] text-indigo-750">Agenda RKP Desa Tahun 2027 dijadwalkan tanggal 25 Juli 2026.</p>
+              </div>
+              <span className="text-[9px] text-slate-400">09:00</span>
             </div>
+
+            <div className="flex items-start gap-2 p-2 bg-green-50 border border-green-200 rounded-lg text-green-800">
+              <CheckCircle2 size={14} className="flex-shrink-0 mt-0.5 text-green-600" />
+              <div className="flex-1">
+                <p className="font-bold text-[11px]">2 Program Mencapai Target</p>
+                <p className="text-[10px] text-green-750">Program sekolah adat & BUMDes digital tuntas 100%.</p>
+              </div>
+              <span className="text-[9px] text-slate-400">Kemarin</span>
+            </div>
+
+            <div className="flex items-start gap-2 p-2 bg-red-50 border border-red-200 rounded-lg text-red-800">
+              <Clock size={14} className="flex-shrink-0 mt-0.5 text-red-650" />
+              <div className="flex-1">
+                <p className="font-bold text-[11px]">1 Program Terlambat</p>
+                <p className="text-[10px] text-red-750">Pemasangan tower internet Dusun C terlambat karena kendala vendor.</p>
+              </div>
+              <span className="text-[9px] text-slate-400">Kemarin</span>
+            </div>
+
           </CardContent>
         </Card>
 
-        {/* Agenda Terdekat */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Calendar size={16} /> Agenda Terdekat
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {agendaData.map((item) => (
-                <div key={item.id} className="p-3 border rounded-lg bg-slate-50">
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 bg-blue-100 rounded-lg">
-                      <Clock size={16} className="text-blue-600" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold text-slate-800">{item.judul}</p>
-                      <p className="text-xs text-slate-600">{item.tanggal} • {item.waktu}</p>
-                      <p className="text-xs text-slate-500">{item.lokasi}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Upload Evidence Terbaru */}
-        <Card>
+      {/* BOTTOM ROW: RADAR, DSS, PIE, ASPIRASI */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
+        
+        {/* RADAR KESIAPAN */}
+        <Card className="lg:col-span-1">
           <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Shield size={16} /> Upload Evidence Terbaru
+            <CardTitle className="text-[11px] font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
+              <BarChart2 size={13} /> Radar Kesiapan (6 Dimensi)
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              {evidenceTerbaru.map((item) => (
-                <div key={item.id} className="p-3 border rounded-lg bg-slate-50">
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 bg-indigo-100 rounded-lg">
-                      <FileText size={16} className="text-indigo-600" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold text-slate-800">{item.program}</p>
-                      <p className="text-xs text-slate-600">{item.deskripsi}</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-[10px] text-slate-400">{item.tanggal}</span>
-                        <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${
-                          item.status === 'Terverifikasi' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
-                        }`}>
-                          {item.status}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+          <CardContent className="flex justify-center items-center">
+            <div className="h-[200px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <RadarChart data={RADAR_DATA}>
+                  <PolarGrid stroke="#e2e8f0" />
+                  <PolarAngleAxis dataKey="dimension" tick={{ fontSize: 7, fill: '#64748b' }} />
+                  <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fontSize: 6 }} />
+                  <Radar name="Skor" dataKey="value" stroke={COLOR} fill={COLOR} fillOpacity={0.25} strokeWidth={1.5} />
+                </RadarChart>
+              </ResponsiveContainer>
             </div>
           </CardContent>
         </Card>
 
-        {/* Progress Tindak Lanjut Rekomendasi */}
-        <Card>
+        {/* REKOMENDASI DSS TERATAS */}
+        <Card className="lg:col-span-1">
           <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Zap size={16} /> Progress Tindak Lanjut Rekomendasi
+            <CardTitle className="text-[11px] font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
+              <Activity size={13} /> Rekomendasi DSS Teratas
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              {progressRekomendasi.map((item, index) => (
-                <div key={index}>
-                  <div className="flex justify-between mb-1">
-                    <span className="text-xs font-semibold text-slate-700">{item.tahap}</span>
-                    <span className="text-xs text-slate-500">{item.selesai}/{item.total}</span>
-                  </div>
-                  <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-indigo-600"
-                      style={{ width: `${item.progress}%` }}
-                    />
-                  </div>
-                  <p className="text-xs text-slate-500 mt-1">{item.progress}% selesai</p>
+          <CardContent className="space-y-3.5 text-xs">
+            {[
+              { nama: 'Peningkatan Layanan Kesehatan Dasar', skor: 0.234 },
+              { nama: 'Penguatan Literasi Digital & Pendidikan', skor: 0.197 },
+              { nama: 'Penguatan Kelembagaan Adat & Budaya', skor: 0.182 }
+            ].map((d, i) => (
+              <div key={i} className="p-2 border rounded-lg bg-slate-50/50 space-y-1">
+                <p className="font-bold text-slate-800 text-[11px] leading-snug">{d.nama}</p>
+                <div className="flex justify-between items-center text-[10px]">
+                  <span className="text-slate-400 font-semibold">Skor Preferensi:</span>
+                  <span className="font-bold text-indigo-700">{d.skor}</span>
                 </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Laporan Desa Terbaru */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-            <FileText size={16} /> Laporan Desa Terbaru
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {laporanDesa.map((item) => (
-              <div key={item.id} className="flex items-center justify-between p-3 border rounded-lg bg-slate-50 hover:bg-slate-100 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="p-2 bg-red-100 rounded-lg">
-                    <FileText size={16} className="text-red-600" />
-                  </div>
-                  <div>
-                    <p className="text-sm font-semibold text-slate-800">{item.judul}</p>
-                    <p className="text-xs text-slate-500">{item.tanggal} • {item.ukuran} • {item.tipe}</p>
-                  </div>
-                </div>
-                <button className="px-3 py-1.5 bg-blue-600 text-white text-xs font-semibold rounded-lg hover:bg-blue-700 transition-colors">
-                  Download
-                </button>
               </div>
             ))}
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+
+        {/* STATUS MUSYAWARAH */}
+        <Card className="lg:col-span-1">
+          <CardHeader>
+            <CardTitle className="text-[11px] font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
+              <Gavel size={13} /> Status Musyawarah & Keputusan
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col justify-center items-center space-y-2">
+            <div className="h-[120px] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie data={PIE_DATA} innerRadius={35} outerRadius={50} paddingAngle={2} dataKey="value">
+                    {PIE_DATA.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip contentStyle={{ fontSize: 9 }} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="text-[9px] grid grid-cols-2 gap-x-3 gap-y-1 text-slate-500 font-semibold">
+              <span className="flex items-center gap-1"><span className="w-2 h-2 bg-green-500 rounded-full" /> Diterima (2)</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 bg-blue-500 rounded-full" /> Perubahan (1)</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 bg-amber-500 rounded-full" /> Ditunda (1)</span>
+              <span className="flex items-center gap-1"><span className="w-2 h-2 bg-red-500 rounded-full" /> Ditolak (0)</span>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* ASPIRASI WARGA */}
+        <Card className="lg:col-span-1">
+          <CardHeader>
+            <CardTitle className="text-[11px] font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1">
+              <MessageSquare size={13} /> Aspirasi Masyarakat
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3.5 text-xs">
+            
+            {/* STATS COUNT */}
+            <div className="grid grid-cols-4 gap-1 text-center font-bold">
+              {[
+                { label: 'Baru', val: 5, bg: 'bg-sky-50 text-sky-700 border-sky-100' },
+                { label: 'Bahas', val: 8, bg: 'bg-orange-50 text-orange-700 border-orange-100' },
+                { label: 'Proses', val: 12, bg: 'bg-blue-50 text-blue-700 border-blue-100' },
+                { label: 'Selesai', val: 23, bg: 'bg-green-50 text-green-700 border-green-100' },
+              ].map((s, i) => (
+                <div key={i} className={`p-1.5 border rounded-lg ${s.bg}`}>
+                  <p className="text-[13px]">{s.val}</p>
+                  <p className="text-[8px] uppercase">{s.label}</p>
+                </div>
+              ))}
+            </div>
+
+            {/* ISU TERATAS LIST */}
+            <div className="space-y-1">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Isu Teratas:</p>
+              {[
+                'Penyediaan Layanan Kesehatan',
+                'Peningkatan Infrastruktur Jalan',
+                'Akses Internet & Sinyal',
+                'Pendidikan & Pelatihan',
+                'Air Bersih & Sanitasi'
+              ].map((isu, idx) => (
+                <div key={idx} className="flex justify-between items-center py-0.5 border-b text-[10px] text-slate-650">
+                  <span className="truncate">{isu}</span>
+                  <span className="font-bold text-indigo-700">{5 - idx}</span>
+                </div>
+              ))}
+            </div>
+
+          </CardContent>
+        </Card>
+
+      </div>
+
+      {/* QUICK ACTIONS BUTTONS */}
+      <div className="space-y-2">
+        <h3 className="text-xs font-bold text-slate-600 uppercase tracking-wider">Aksi Cepat</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-2">
+          
+          <button onClick={handleImport} disabled={importing} className="p-2 border rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-[10px] font-bold flex flex-col items-center justify-center text-center gap-1 shadow-sm transition-colors min-h-[56px]">
+            <Download size={14} className="text-indigo-700" />
+            <span>{importing ? 'Mengimport...' : 'Import Penilaian'}</span>
+          </button>
+
+          <Link href="/pemdes/dss-recommendation" className="p-2 border rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-[10px] font-bold flex flex-col items-center justify-center text-center gap-1 shadow-sm transition-colors min-h-[56px]">
+            <Activity size={14} className="text-indigo-700" />
+            <span>Lihat Rekomendasi DSS</span>
+          </Link>
+
+          <Link href="/pemdes/musyawarah-keputusan" className="p-2 border rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-[10px] font-bold flex flex-col items-center justify-center text-center gap-1 shadow-sm transition-colors min-h-[56px]">
+            <Gavel size={14} className="text-indigo-700" />
+            <span>Buat Agenda Musyawarah</span>
+          </Link>
+
+          <Link href="/pemdes/rkpdes" className="p-2 border rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-[10px] font-bold flex flex-col items-center justify-center text-center gap-1 shadow-sm transition-colors min-h-[56px]">
+            <PlusCircle size={14} className="text-indigo-700" />
+            <span>Tambah Program RTL</span>
+          </Link>
+
+          <Link href="/pemdes/upload-evidence" className="p-2 border rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-[10px] font-bold flex flex-col items-center justify-center text-center gap-1 shadow-sm transition-colors min-h-[56px]">
+            <Upload size={14} className="text-indigo-700" />
+            <span>Unggah Bukti Kegiatan</span>
+          </Link>
+
+          <Link href="/pemdes/laporan-desa" className="p-2 border rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-[10px] font-bold flex flex-col items-center justify-center text-center gap-1 shadow-sm transition-colors min-h-[56px]">
+            <FileText size={14} className="text-indigo-700" />
+            <span>Lihat Laporan</span>
+          </Link>
+
+          <Link href="/pemdes/aspirasi-partisipasi" className="p-2 border rounded-xl bg-white hover:bg-slate-50 text-slate-700 text-[10px] font-bold flex flex-col items-center justify-center text-center gap-1 shadow-sm transition-colors min-h-[56px]">
+            <MessageSquare size={14} className="text-indigo-700" />
+            <span>Balas Aspirasi</span>
+          </Link>
+
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between text-[11px] text-slate-400 p-2.5 border border-dashed rounded-lg bg-slate-50/50">
+        <span className="flex items-center gap-1"><RefreshCw size={12} /> Seluruh data merupakan agregat dan dikelola untuk simulasi terkendali smart village</span>
+        <span>Terakhir Diperbarui: 18 Juli 2026</span>
+      </div>
     </div>
   );
 }

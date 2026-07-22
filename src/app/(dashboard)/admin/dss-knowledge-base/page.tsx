@@ -108,12 +108,12 @@ export default function DSSKnowledgeBasePage() {
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="DSS Knowledge Base" modul="Governance & DSS" color={COLOR} />
+      <PageTitle fitur="Basis Pengetahuan DSS" modul="Tata Kelola &amp; DSS" color={COLOR} />
 
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-sm font-semibold" style={{ color: COLOR }}>
-            Rule DSS
+            Daftar Aturan (Rule) Basis Pengetahuan DSS
           </CardTitle>
           <Button onClick={handleAdd} data-real-action-root size="sm" className="bg-indigo-600 hover:bg-indigo-700">
             <Plus size={16} className="mr-2" /> Tambah Rule

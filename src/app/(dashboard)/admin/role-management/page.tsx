@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,7 +9,7 @@ import { Shield, Edit, Eye, Settings, CheckCircle2, XCircle } from 'lucide-react
 const COLOR = '#1a237e';
 
 const rolesData = [
-  { id: 1, role: 'Super Admin', kode: 'admin_super', hakAkses: 14, deskripsi: 'Akses penuh ke semua modul sistem', status: 'Aktif', jumlahUser: 2 },
+  { id: 1, role: 'Administrator Sistem', kode: 'admin_super', hakAkses: 14, deskripsi: 'Akses penuh ke semua modul sistem', status: 'Aktif', jumlahUser: 2 },
   { id: 2, role: 'Operator SID', kode: 'operator_sid', hakAkses: 7, deskripsi: 'Mengelola data Sistem Informasi Desa', status: 'Aktif', jumlahUser: 5 },
   { id: 3, role: 'Pemerintah Desa', kode: 'pemerintah_desa', hakAkses: 10, deskripsi: 'Monitoring indeks, tata kelola, SDGs, DSS, QoL, dan KPI desa', status: 'Aktif', jumlahUser: 3 },
   { id: 4, role: 'BPD', kode: 'bpd', hakAkses: 3, deskripsi: 'Pengawasan program, APBDes, dan aspirasi masyarakat', status: 'Aktif', jumlahUser: 4 },

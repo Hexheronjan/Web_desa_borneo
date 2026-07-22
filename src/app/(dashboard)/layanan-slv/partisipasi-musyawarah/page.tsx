@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect } from "react";
 import { Vote, CheckCircle2, Users, RefreshCw } from "lucide-react";
@@ -85,7 +85,7 @@ export default function PartisipasiMusyawarahPage() {
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Partisipasi Musyawarah" modul="Layanan SLV" color={COLOR} />
+      <PageTitle fitur="Partisipasi Musyawarah" modul="Masyarakat Umum" color={COLOR} />
       <LayananSLVMetadataCards metadata={METADATA} color={COLOR} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">

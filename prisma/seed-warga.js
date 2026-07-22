@@ -50,11 +50,11 @@ async function main() {
   // 3. Buat Akun Login User untuk Warga
   // Catatan: Karena ini prototype, kita simpan password apa adanya atau sesuai sistem auth Anda
   const userBudi = await prisma.user.upsert({
-    where: { email: "warga@borneo.id" },
-    update: { wargaId: budiWarga.id },
+    where: { email: "tokoh.masyarakat@contoh.id" },
+    update: { wargaId: budiWarga.id, name: "Tokoh/Perwakilan Masyarakat Desa Lung Anai" },
     create: {
-      email: "warga@borneo.id",
-      name: "Budi Santoso",
+      email: "tokoh.masyarakat@contoh.id",
+      name: "Tokoh/Perwakilan Masyarakat Desa Lung Anai",
       password: "password123", 
       role: "warga",
       desaId: desa.id,
@@ -124,7 +124,7 @@ async function main() {
   });
 
   console.log("Seeding selesai! Silakan login dengan:");
-  console.log("Email: warga@borneo.id");
+  console.log("Email: tokoh.masyarakat@contoh.id");
   console.log("Pass : password123");
 }
 

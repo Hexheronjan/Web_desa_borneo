@@ -6,193 +6,186 @@ import { PageTitle } from '@/components/shared/PageTitle';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Plus, Pencil, Trash2, X, Landmark } from 'lucide-react';
+import { Plus, Pencil, Trash2, ShieldAlert, CheckCircle2, Landmark } from 'lucide-react';
 
 const COLOR = '#1a237e';
 
-interface Governance {
+interface TataKelola {
   id: string;
-  namaGovernance: string;
-  deskripsi: string;
-  kategori: string;
-  status: 'Aktif' | 'Non-Aktif';
+  pemilikData: string;
+  pengelola: string;
+  verifikator: string;
+  pemberiPersetujuan: string;
+  jadwalPembaruan: string;
+  masaPenyimpanan: string;
+  klasifikasi: 'Publik' | 'Terbatas' | 'Rahasia';
+  prosedurPenggunaan: string;
+  prosedurPublikasi: string;
 }
 
+const MOCK: TataKelola[] = [
+  { id: 'TK-01', pemilikData: 'Pemerintah Desa Jonggon Jaya', pengelola: 'Operator SID', verifikator: 'Pemerintah Desa', pemberiPersetujuan: 'Kepala Desa', jadwalPembaruan: 'Setiap bulan', masaPenyimpanan: '5 tahun', klasifikasi: 'Terbatas', prosedurPenggunaan: 'SK Desa No. 12/2025', prosedurPublikasi: 'Rapat Musyawarah Desa' },
+  { id: 'TK-02', pemilikData: 'Lembaga Adat Dayak Benuaq', pengelola: 'Ketua Lembaga Adat', verifikator: 'Lembaga Adat', pemberiPersetujuan: 'Majelis Adat', jadwalPembaruan: 'Per event budaya', masaPenyimpanan: 'Permanen', klasifikasi: 'Publik', prosedurPenggunaan: 'Peraturan Adat 01/2024', prosedurPublikasi: 'Portal Budaya Desa' },
+];
+
 export default function GovernanceManagementPage() {
-  const [governances, setGovernances] = useState<Governance[]>([
-    { id: '1', namaGovernance: 'Tata Kelola Desa Digital', deskripsi: 'Framework tata kelola untuk transformasi digital desa', kategori: 'Digital Governance', status: 'Aktif' },
-    { id: '2', namaGovernance: 'Tata Kelola Keuangan Desa', deskripsi: 'Standar pengelolaan keuangan desa yang transparan', kategori: 'Financial Governance', status: 'Aktif' },
-    { id: '3', namaGovernance: 'Tata Kelola Partisipasi Warga', deskripsi: 'Mekanisme partisipasi masyarakat dalam pembangunan desa', kategori: 'Participatory Governance', status: 'Aktif' },
-  ]);
+  const [items, setItems] = useState<TataKelola[]>(MOCK);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<Governance | null>(null);
-  const [formData, setFormData] = useState<Partial<Governance>>({});
+  const [editingItem, setEditingItem] = useState<TataKelola | null>(null);
+  const [notification, setNotification] = useState<string | null>(null);
 
-  const handleAdd = () => {
+  // Form states
+  const [pemilikData, setPemilikData] = useState('');
+  const [pengelola, setPengelola] = useState('');
+  const [verifikator, setVerifikator] = useState('');
+  const [pemberiPersetujuan, setPemberiPersetujuan] = useState('');
+  const [jadwalPembaruan, setJadwalPembaruan] = useState('');
+  const [masaPenyimpanan, setMasaPenyimpanan] = useState('');
+  const [klasifikasi, setKlasifikasi] = useState<'Publik' | 'Terbatas' | 'Rahasia'>('Terbatas');
+  const [prosedurPenggunaan, setProsedurPenggunaan] = useState('');
+  const [prosedurPublikasi, setProsedurPublikasi] = useState('');
+
+  const openAdd = () => {
     setEditingItem(null);
-    setFormData({ namaGovernance: '', deskripsi: '', kategori: '', status: 'Aktif' });
+    setPemilikData(''); setPengelola(''); setVerifikator(''); setPemberiPersetujuan('');
+    setJadwalPembaruan(''); setMasaPenyimpanan(''); setKlasifikasi('Terbatas');
+    setProsedurPenggunaan(''); setProsedurPublikasi('');
     setIsModalOpen(true);
   };
 
-  const handleEdit = (item: Governance) => {
+  const openEdit = (item: TataKelola) => {
     setEditingItem(item);
-    setFormData(item);
+    setPemilikData(item.pemilikData); setPengelola(item.pengelola); setVerifikator(item.verifikator);
+    setPemberiPersetujuan(item.pemberiPersetujuan); setJadwalPembaruan(item.jadwalPembaruan);
+    setMasaPenyimpanan(item.masaPenyimpanan); setKlasifikasi(item.klasifikasi);
+    setProsedurPenggunaan(item.prosedurPenggunaan); setProsedurPublikasi(item.prosedurPublikasi);
     setIsModalOpen(true);
   };
 
-  const handleSave = () => {
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
+    const data = { pemilikData, pengelola, verifikator, pemberiPersetujuan, jadwalPembaruan, masaPenyimpanan, klasifikasi, prosedurPenggunaan, prosedurPublikasi };
     if (editingItem) {
-      setGovernances(governances.map(g => g.id === editingItem.id ? { ...formData, id: editingItem.id } as Governance : g));
+      setItems(prev => prev.map(x => x.id === editingItem.id ? { ...x, ...data } : x));
+      setNotification('Konfigurasi tata kelola berhasil diperbarui!');
     } else {
-      const newGovernance: Governance = {
-        id: Date.now().toString(),
-        namaGovernance: formData.namaGovernance || '',
-        deskripsi: formData.deskripsi || '',
-        kategori: formData.kategori || '',
-        status: formData.status || 'Aktif',
-      };
-      setGovernances([...governances, newGovernance]);
+      setItems(prev => [...prev, { id: `TK-0${prev.length + 1}`, ...data }]);
+      setNotification('Konfigurasi tata kelola baru berhasil ditambahkan!');
     }
     setIsModalOpen(false);
-    setFormData({});
-    setEditingItem(null);
+    setTimeout(() => setNotification(null), 3000);
   };
 
   const handleDelete = (id: string) => {
-    if (confirm('Apakah Anda yakin ingin menghapus governance ini?')) {
-      setGovernances(governances.filter(g => g.id !== id));
+    if (confirm('Hapus konfigurasi tata kelola ini?')) {
+      setItems(prev => prev.filter(x => x.id !== id));
     }
   };
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Governance Management" modul="Governance & DSS" color={COLOR} />
+      <PageTitle fitur="Konfigurasi Tata Kelola Sistem" modul="Governance &amp; DSS" color={COLOR} />
+
+      {/* Banner batasan */}
+      <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2.5">
+        <ShieldAlert size={15} className="text-amber-700 flex-shrink-0 mt-0.5" />
+        <p className="font-semibold leading-relaxed">
+          ⚠️ <strong>Batas Kewenangan:</strong> Administrator menerapkan konfigurasi tata kelola yang telah disetujui. Admin tidak menetapkan sendiri kewenangan pemerintah desa atau lembaga adat.
+        </p>
+      </div>
 
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-sm font-semibold" style={{ color: COLOR }}>
-            Master Governance
+        <CardHeader className="py-3 px-4 flex flex-row items-center justify-between">
+          <CardTitle className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+            <Landmark size={14} /> Master Konfigurasi Tata Kelola Sistem
           </CardTitle>
-          <Button onClick={handleAdd} data-real-action-root size="sm" className="bg-indigo-600 hover:bg-indigo-700">
-            <Plus size={16} className="mr-2" /> Tambah Governance
+          <Button onClick={openAdd} size="sm" className="h-8 text-xs font-bold">
+            <Plus size={13} className="mr-1" /> Tambah Konfigurasi
           </Button>
         </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Nama Governance</TableHead>
-                <TableHead>Kategori</TableHead>
-                <TableHead>Deskripsi</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Aksi</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {governances.map((governance) => (
-                <TableRow key={governance.id}>
-                  <TableCell className="font-medium flex items-center gap-2">
-                    <Landmark size={16} className="text-indigo-600" />
-                    {governance.namaGovernance}
-                  </TableCell>
-                  <TableCell>
-                    <span className="px-2 py-1 rounded bg-slate-100 text-slate-700 text-xs font-medium">
-                      {governance.kategori}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-sm text-slate-600 max-w-xs truncate">{governance.deskripsi}</TableCell>
-                  <TableCell>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                      governance.status === 'Aktif' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'
-                    }`}>
-                      {governance.status}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button onClick={() => handleEdit(governance)} data-real-action-root size="sm" variant="ghost" className="h-8 w-8 p-0">
-                        <Pencil size={16} className="text-blue-600" />
-                      </Button>
-                      <Button onClick={() => handleDelete(governance.id)} size="sm" variant="ghost" className="h-8 w-8 p-0">
-                        <Trash2 size={16} className="text-red-600" />
-                      </Button>
-                    </div>
-                  </TableCell>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto text-xs">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-slate-50">
+                  {['ID', 'Pemilik Data', 'Pengelola', 'Verifikator', 'Pemberi Persetujuan', 'Jadwal Pembaruan', 'Masa Penyimpanan', 'Klasifikasi', 'Prosedur Penggunaan', 'Prosedur Publikasi', 'Aksi'].map(h => (
+                    <TableHead key={h} className="font-bold text-slate-700">{h}</TableHead>
+                  ))}
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {items.map(item => (
+                  <TableRow key={item.id} className="hover:bg-slate-50/50">
+                    <TableCell className="font-mono font-bold text-slate-500">{item.id}</TableCell>
+                    <TableCell className="font-bold text-slate-800">{item.pemilikData}</TableCell>
+                    <TableCell>{item.pengelola}</TableCell>
+                    <TableCell>{item.verifikator}</TableCell>
+                    <TableCell>{item.pemberiPersetujuan}</TableCell>
+                    <TableCell>{item.jadwalPembaruan}</TableCell>
+                    <TableCell>{item.masaPenyimpanan}</TableCell>
+                    <TableCell>
+                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${item.klasifikasi === 'Publik' ? 'bg-green-50 text-green-700 border-green-200' : item.klasifikasi === 'Terbatas' ? 'bg-amber-50 text-amber-700 border-amber-200' : 'bg-red-50 text-red-700 border-red-200'}`}>
+                        {item.klasifikasi}
+                      </span>
+                    </TableCell>
+                    <TableCell className="max-w-[120px] truncate" title={item.prosedurPenggunaan}>{item.prosedurPenggunaan}</TableCell>
+                    <TableCell className="max-w-[120px] truncate" title={item.prosedurPublikasi}>{item.prosedurPublikasi}</TableCell>
+                    <TableCell>
+                      <div className="flex gap-1">
+                        <Button onClick={() => openEdit(item)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Pencil size={13} className="text-blue-600" /></Button>
+                        <Button onClick={() => handleDelete(item.id)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Trash2 size={13} className="text-red-600" /></Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
 
-      {/* Modal Form */}
+      {/* Modal */}
       {isModalOpen && (
-        <div data-real-action-root className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <Card className="w-full max-w-lg mx-4 bg-white shadow-2xl border-2">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-base font-semibold" style={{ color: COLOR }}>
-                {editingItem ? 'Edit Data Governance' : 'Tambah Data Governance'}
-              </CardTitle>
-              <Button onClick={() => setIsModalOpen(false)} size="sm" variant="ghost" className="h-8 w-8 p-0">
-                <X size={16} />
-              </Button>
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-lg bg-white shadow-2xl border max-h-[90vh] overflow-y-auto">
+            <CardHeader className="py-3 flex flex-row items-center justify-between sticky top-0 bg-white border-b">
+              <CardTitle className="text-sm font-bold text-slate-800">{editingItem ? 'Edit Konfigurasi Tata Kelola' : 'Tambah Konfigurasi Tata Kelola'}</CardTitle>
+              <Button variant="ghost" size="sm" className="h-8 w-8 p-0" onClick={() => setIsModalOpen(false)}>✕</Button>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Form ini digunakan untuk {editingItem ? 'mengedit' : 'menambahkan'} data governance yang akan ditampilkan pada Master Governance.
-              </p>
-              <div className="space-y-2">
-                <Label htmlFor="namaGovernance">Nama Governance</Label>
-                <Input
-                  id="namaGovernance"
-                  value={formData.namaGovernance || ''}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, namaGovernance: e.target.value })}
-                  placeholder="Contoh: Tata Kelola Desa Digital"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="kategori">Kategori</Label>
-                <Input
-                  id="kategori"
-                  value={formData.kategori || ''}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, kategori: e.target.value })}
-                  placeholder="Contoh: Digital Governance, Financial Governance"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="deskripsi">Deskripsi</Label>
-                <Textarea
-                  id="deskripsi"
-                  value={formData.deskripsi || ''}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, deskripsi: e.target.value })}
-                  placeholder="Masukkan deskripsi governance"
-                  className="min-h-[80px]"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="status">Status</Label>
-                <select
-                  id="status"
-                  value={formData.status || 'Aktif'}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, status: e.target.value as 'Aktif' | 'Non-Aktif' })}
-                  className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
-                >
-                  <option value="Aktif">Aktif</option>
-                  <option value="Non-Aktif">Non-Aktif</option>
-                </select>
-              </div>
-              <div className="flex justify-end gap-2 pt-4">
-                <Button onClick={() => setIsModalOpen(false)} variant="outline">
-                  Batal
-                </Button>
-                <Button onClick={handleSave} data-real-action-root className="bg-indigo-600 hover:bg-indigo-700">
-                  Simpan
-                </Button>
-              </div>
+            <CardContent className="p-4">
+              <form onSubmit={handleSave} className="space-y-3 text-xs">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1"><Label className="font-bold text-slate-700">Pemilik Data</Label><Input required value={pemilikData} onChange={e => setPemilikData(e.target.value)} className="h-9 text-xs" placeholder="Contoh: Pemerintah Desa" /></div>
+                  <div className="space-y-1"><Label className="font-bold text-slate-700">Pengelola</Label><Input required value={pengelola} onChange={e => setPengelola(e.target.value)} className="h-9 text-xs" placeholder="Contoh: Operator SID" /></div>
+                  <div className="space-y-1"><Label className="font-bold text-slate-700">Verifikator</Label><Input required value={verifikator} onChange={e => setVerifikator(e.target.value)} className="h-9 text-xs" placeholder="Contoh: Pemerintah Desa" /></div>
+                  <div className="space-y-1"><Label className="font-bold text-slate-700">Pemberi Persetujuan</Label><Input required value={pemberiPersetujuan} onChange={e => setPemberiPersetujuan(e.target.value)} className="h-9 text-xs" placeholder="Contoh: Kepala Desa" /></div>
+                  <div className="space-y-1"><Label className="font-bold text-slate-700">Jadwal Pembaruan</Label><Input value={jadwalPembaruan} onChange={e => setJadwalPembaruan(e.target.value)} className="h-9 text-xs" placeholder="Setiap bulan" /></div>
+                  <div className="space-y-1"><Label className="font-bold text-slate-700">Masa Penyimpanan</Label><Input value={masaPenyimpanan} onChange={e => setMasaPenyimpanan(e.target.value)} className="h-9 text-xs" placeholder="5 tahun" /></div>
+                </div>
+                <div className="space-y-1">
+                  <Label className="font-bold text-slate-700">Klasifikasi Data</Label>
+                  <select value={klasifikasi} onChange={e => setKlasifikasi(e.target.value as any)} className="w-full p-2 border rounded-lg h-9 focus:outline-none bg-white">
+                    <option value="Publik">Publik</option>
+                    <option value="Terbatas">Terbatas</option>
+                    <option value="Rahasia">Rahasia</option>
+                  </select>
+                </div>
+                <div className="space-y-1"><Label className="font-bold text-slate-700">Prosedur Penggunaan</Label><Input value={prosedurPenggunaan} onChange={e => setProsedurPenggunaan(e.target.value)} className="h-9 text-xs" placeholder="Contoh: SK Desa No. 12/2025" /></div>
+                <div className="space-y-1"><Label className="font-bold text-slate-700">Prosedur Publikasi</Label><Input value={prosedurPublikasi} onChange={e => setProsedurPublikasi(e.target.value)} className="h-9 text-xs" placeholder="Contoh: Rapat Musyawarah Desa" /></div>
+                <div className="flex justify-end gap-2 pt-2 border-t">
+                  <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)} className="h-8 text-xs font-bold">Batal</Button>
+                  <Button type="submit" className="h-8 text-xs font-bold">Simpan</Button>
+                </div>
+              </form>
             </CardContent>
           </Card>
+        </div>
+      )}
+
+      {notification && (
+        <div className="fixed bottom-5 right-5 z-[9999] flex items-center gap-2 px-4 py-3 rounded-xl shadow-lg border border-green-200 bg-white text-xs font-bold">
+          <CheckCircle2 className="text-green-600" size={16} /> {notification}
         </div>
       )}
     </div>

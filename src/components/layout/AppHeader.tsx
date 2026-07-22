@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -43,6 +43,11 @@ export function AppHeader() {
     }).format(date)} WIB`;
   }, [now]);
 
+  const displayFitur = (roleInfo.key === "warga" && fitur === "Dashboard") ? "Dasbor Partisipasi" : fitur;
+  const displaySubtitle = (roleInfo.key === "warga" && pathname === "/warga")
+    ? "Dasbor Partisipasi dan Pengawasan Sosial"
+    : `${displayFitur} - Smart Living Village`;
+
   return (
     <header className="bg-white text-slate-900 flex items-center justify-between gap-4 px-4 md:px-6 py-3 border-b border-slate-200 z-10 flex-shrink-0">
       <div>
@@ -50,7 +55,7 @@ export function AppHeader() {
           {roleInfo.nama}
         </h1>
         <p className="hidden sm:block text-xs md:text-sm text-slate-600 font-medium">
-          {fitur} - Smart Living Village
+          {displaySubtitle}
         </p>
       </div>
 
@@ -81,17 +86,17 @@ export function AppHeader() {
           <p className="text-xs text-slate-500 leading-tight capitalize">
             {(() => {
               const roleMap: Record<string, string> = {
-                admin_super: 'Super Admin',
+                admin_super: 'Administrator Sistem',
                 operator_sid: 'Operator SID',
                 pemerintah_desa: 'Pemerintah Desa',
                 bpd: 'BPD',
                 lembaga_adat: 'Lembaga Adat',
                 guru_fasilitator: 'Guru Fasilitator',
                 nakes_posyandu: 'Nakes Posyandu',
-                warga: 'Warga',
+                warga: 'Tokoh Masyarakat',
                 dinas_pmd: 'Dinas PMD',
                 peneliti: 'Peneliti',
-                layanan_slv: 'Layanan SLV',
+                layanan_slv: 'Masyarakat Umum',
               };
               const role = session?.user?.role ?? '';
               return roleMap[role] ?? role.replace(/_/g, ' ');

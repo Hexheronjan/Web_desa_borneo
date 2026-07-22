@@ -8,10 +8,10 @@ async function main() {
   // Create Desa
   const desa = await prisma.desa.create({
     data: {
-      nama: 'Desa Adat Borneo',
-      kecamatan: 'Kecamatan Adat',
-      kabupaten: 'Kabupaten Borneo',
-      provinsi: 'Kalimantan Tengah',
+      nama: 'Lung Anai',
+      kecamatan: 'Loa Kulu',
+      kabupaten: 'Kutai Kartanegara',
+      provinsi: 'Kalimantan Timur',
       luasWilayah: 5000.5,
       sejarah: 'Desa adat dengan budaya Dayak yang kaya.',
     },
@@ -66,7 +66,7 @@ async function main() {
   // Create Users sesuai Excel
   const users = [
     {
-      name: 'Dr. Ahmad Surya',
+      name: 'Joy Nashar',
       email: 'admin@borneo.id',
       username: 'admin_super',
       password: 'password123',
@@ -148,7 +148,7 @@ async function main() {
       desaId: desa.id,
     },
     {
-      name: 'Dr. Peneliti Andi',
+      name: 'Joy Nashar',
       email: 'peneliti@borneo.id',
       username: 'peneliti_andi',
       password: 'password123',

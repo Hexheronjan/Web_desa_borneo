@@ -11,15 +11,15 @@ import { ShieldCheck, Leaf, Users, Map, Eye, EyeOff } from "lucide-react";
 const DEMO_ACCOUNTS = [
   { label: 'ADMIN',       email: 'admin@borneo.id',    border: 'border-blue-100 hover:border-blue-400',     badge: 'bg-blue-100 text-blue-700' },
   { label: 'OPERATOR',    email: 'operator@borneo.id', border: 'border-teal-100 hover:border-teal-400',     badge: 'bg-teal-100 text-teal-700' },
-  { label: 'PEMDES',      email: 'pemdes@borneo.id',   border: 'border-indigo-100 hover:border-indigo-400', badge: 'bg-indigo-100 text-indigo-700' },
+  { label: 'PEMERINTAH DESA', email: 'pemdes@borneo.id',   border: 'border-indigo-100 hover:border-indigo-400', badge: 'bg-indigo-100 text-indigo-700' },
   { label: 'BPD',         email: 'bpd@borneo.id',      border: 'border-violet-100 hover:border-violet-400', badge: 'bg-violet-100 text-violet-700' },
   { label: 'ADAT',        email: 'adat@borneo.id',      border: 'border-emerald-100 hover:border-emerald-400', badge: 'bg-emerald-100 text-emerald-700' },
   { label: 'GURU',        email: 'guru@borneo.id',      border: 'border-purple-100 hover:border-purple-400', badge: 'bg-purple-100 text-purple-700' },
   { label: 'NAKES',       email: 'nakes@borneo.id',     border: 'border-orange-100 hover:border-orange-400', badge: 'bg-orange-100 text-orange-700' },
-  { label: 'WARGA',       email: 'warga@borneo.id',     border: 'border-pink-100 hover:border-pink-400',    badge: 'bg-pink-100 text-pink-700' },
+  { label: 'TOKOH MASYARAKAT', email: 'tokoh.masyarakat@contoh.id', border: 'border-pink-100 hover:border-pink-400', badge: 'bg-pink-100 text-pink-700' },
   { label: 'DINAS PMD',   email: 'dinas@borneo.id',     border: 'border-sky-100 hover:border-sky-400',      badge: 'bg-sky-100 text-sky-700' },
   { label: 'PENELITI',    email: 'peneliti@borneo.id',  border: 'border-slate-200 hover:border-slate-400',  badge: 'bg-slate-100 text-slate-700' },
-  { label: 'LAYANAN SLV', email: 'layanan@borneo.id',   border: 'border-green-100 hover:border-green-500',  badge: 'bg-green-100 text-green-700', full: true },
+  { label: 'MASYARAKAT UMUM', email: 'layanan@borneo.id',   border: 'border-green-100 hover:border-green-500',  badge: 'bg-green-100 text-green-700', full: true },
 ];
 
 export default function LoginPage() {
@@ -146,7 +146,7 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoComplete="email"
-                placeholder="cth: warga@borneo.id"
+                placeholder="cth: tokoh.masyarakat@contoh.id"
                 className={`h-12 w-full rounded-lg border bg-slate-50 px-3 text-sm outline-none transition-colors
                   focus:border-emerald-500 focus:ring-2 focus:ring-emerald-200
                   ${emailError ? 'border-red-500 ring-2 ring-red-100' : 'border-slate-200'}`}

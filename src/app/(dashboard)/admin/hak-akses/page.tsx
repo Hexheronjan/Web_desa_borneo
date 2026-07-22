@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
@@ -8,7 +8,7 @@ import { Check, X, ShieldAlert, Lock } from 'lucide-react';
 const COLOR = '#1a237e';
 
 const roleList = [
-  { key: 'admin_super', name: 'Super Admin', modules: 'Modul 1-14' },
+  { key: 'admin_super', name: 'Administrator Sistem', modules: 'Modul 1-14' },
   { key: 'operator_sid', name: 'Operator SID', modules: 'Modul 15-21' },
   { key: 'pemerintah_desa', name: 'Pemdes (Kades)', modules: 'Modul 22-31' },
   { key: 'bpd', name: 'BPD', modules: 'Modul 32-34' },
@@ -109,7 +109,7 @@ export default function HakAksesPage() {
             <Lock className="w-5 h-5 text-indigo-600 flex-shrink-0" />
             <p className="text-xs text-slate-500 leading-relaxed">
               <strong>Catatan Sistem:</strong> Matriks hak akses di atas dikunci secara <i>hard-coded</i> untuk memelihara integritas prototype program.
-              Perubahan pada skema database otorisasi memerlukan approval dari Super Admin dan sinkronisasi dengan <code>next-auth</code> middleware.
+              Perubahan pada skema database otorisasi memerlukan approval dari Administrator Sistem dan sinkronisasi dengan <code>next-auth</code> middleware.
             </p>
           </div>
         </CardContent>

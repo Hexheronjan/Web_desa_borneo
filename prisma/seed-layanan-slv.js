@@ -146,7 +146,7 @@ async function main() {
       description: "Panduan penggunaan internet yang aman untuk keluarga",
       valueText: "Progress: 100% | Sertifikat: Tersedia",
       status: "Selesai",
-      createdBy: "guru_fasilitator"
+      createdBy: "guru_fasilitator" 
     },
     {
       modulePath: "/layanan-slv/literasi-digital",

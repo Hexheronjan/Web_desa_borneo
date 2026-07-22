@@ -5,524 +5,348 @@ import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
   ResponsiveContainer, Tooltip,
 } from 'recharts';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   AlertTriangle, CheckCircle2, Info, Bell, ArrowUpRight,
   ChevronRight, Activity, ShieldCheck, FileText, TrendingUp,
   RefreshCw, Award, Target, Zap, BookOpen, Calendar,
   Users, Landmark, Camera, Film, Image, FileCheck,
-  MessageSquare, ClipboardList, BarChart2, Heart,
+  MessageSquare, ClipboardList, BarChart2, Heart, ShieldAlert, CheckSquare, Plus, FileSpreadsheet
 } from 'lucide-react';
 
-// ─── Warna tema Lembaga Adat ─────────────────────────────────────────────────
-const C = {
-  primary: '#5c3d11',      // cokelat kayu
-  secondary: '#b7791f',    // emas
-  green: '#276749',
-  red: '#c81e1e',
-  blue: '#1a56db',
-  bg: '#fefce8',           // krem hangat
-};
+const COLOR = '#5c3d11'; // Cokelat Kayu Adat
 
-// ─── DATA MOCK ───────────────────────────────────────────────────────────────
-
-const pengumuman = [
-  { id: 1, type: 'event', teks: 'Rapat Besar Lembaga Adat: Membahas Festival Hudoq 2025', tgl: '20/06/2025' },
-  { id: 2, type: 'event', teks: 'Upacara Adat Ngerun Tahun: Akan dilaksanakan pada 10 Juli 2025', tgl: '18/06/2025' },
-  { id: 3, type: 'info', teks: 'Pelatihan Pemandu Wisata Budaya Berbasis Kearifan Lokal', tgl: '17/06/2025' },
-  { id: 4, type: 'warning', teks: 'Verifikasi Program Wisata Desa: Perlu penyesuaian dengan nilai adat', tgl: '16/06/2025' },
+const PENGUMUMAN_DATA = [
+  { id: 1, type: 'event', teks: 'Rapat Besar Lembaga Adat: Membahas Festival Hudoq 2026', tgl: '20/06/2026' },
+  { id: 2, type: 'event', teks: 'Upacara Adat Ngerun Tahun: Akan dilaksanakan pada 10 Juli 2026', tgl: '18/06/2026' },
+  { id: 3, type: 'info', teks: 'Pelatihan Pemandu Wisata Budaya Berbasis Kearifan Lokal', tgl: '17/06/2026' },
+  { id: 4, type: 'warning', teks: 'Verifikasi Program Wisata Desa: Perlu telaah program & persetujuan adat', tgl: '16/06/2026' },
 ];
 
-// Radar ketahanan budaya
-const radarData = [
-  { aspek: 'Tradisi & Upacara', nilai: 74 },
-  { aspek: 'Bahasa Lokal', nilai: 72 },
-  { aspek: 'Ritual Adat', nilai: 75 },
+const RADAR_DATA = [
   { aspek: 'Kelembagaan Adat', nilai: 78 },
-  { aspek: 'Pengetahuan Lokal', nilai: 73 },
-  { aspek: 'Seni & Budaya', nilai: 69 },
+  { aspek: 'Musyawarah & Gotong Royong', nilai: 75 },
+  { aspek: 'Praktik & Seni Budaya', nilai: 74 },
+  { aspek: 'Tata Kelola Data Budaya', nilai: 72 },
+  { aspek: 'Bahasa Lokal', nilai: 73 },
+  { aspek: 'Hukum Adat', nilai: 79 },
 ];
 
-// Monitoring kearifan lokal
-const kearifanLokal = [
-  { dimensi: 'Pengelolaan Sumber Daya Alam', skor: 76.0, kategori: 'Tinggi' },
-  { dimensi: 'Sistem Gotong Royong', skor: 78.5, kategori: 'Tinggi' },
-  { dimensi: 'Hukum Adat', skor: 74.0, kategori: 'Tinggi' },
-  { dimensi: 'Kearifan Ekonomi Lokal', skor: 71.0, kategori: 'Sedang' },
-  { dimensi: 'Pengobatan Tradisional', skor: 69.5, kategori: 'Sedang' },
+const KEARIFAN_LOKAL_DATA = [
+  { dimensi: 'Pengelolaan Hutan & SDA', skor: 78.0, kategori: 'Tinggi' },
+  { dimensi: 'Sistem Gotong Royong Betang', skor: 79.5, kategori: 'Tinggi' },
+  { dimensi: 'Hukum Adat Betutu', skor: 74.0, kategori: 'Tinggi' },
+  { dimensi: 'Kearifan Ekonomi Kreatif', skor: 71.0, kategori: 'Sedang' },
+  { dimensi: 'Sistem Medis Tradisional', skor: 69.5, kategori: 'Sedang' },
 ];
 
-// Validasi program desa
-const validasiProgram = [
-  { program: 'Pembangunan Internet Desa', status: 'Sesuai Adat', ket: 'Mendukung pendidikan dan komunikasi', statusColor: 'bg-green-100 text-green-700' },
-  { program: 'Pengembangan Wisata Desa', status: 'Perlu Penyesuaian', ket: 'Perlu pengaturan asosiasi situs adat', statusColor: 'bg-orange-100 text-orange-700' },
-  { program: 'Pelatihan Digital Masyarakat', status: 'Sesuai Adat', ket: 'Mendukung peningkatan kapasitas', statusColor: 'bg-green-100 text-green-700' },
-  { program: 'Pengelolaan Sampah Desa', status: 'Sesuai Adat', ket: 'Tidak bertentangan dengan nilai adat', statusColor: 'bg-green-100 text-green-700' },
-  { program: 'Pembangunan Gedung Serbaguna', status: 'Perlu Penyesuaian', ket: 'Perlu musyawarah adat lebih lanjut', statusColor: 'bg-orange-100 text-orange-700' },
+const TELAAH_PROGRAM_DATA = [
+  { program: 'Pembangunan Internet Desa', status: 'sesuai nilai adat', ket: 'Mendukung komunikasi tanpa merusak situs keramat', statusColor: 'bg-green-50 text-green-700 border-green-200' },
+  { program: 'Pengembangan Wisata Desa Baru', status: 'sesuai dengan penyesuaian', ket: 'Perlu zonasi ketat di sekitar wilayah Betang', statusColor: 'bg-blue-50 text-blue-700 border-blue-200' },
+  { program: 'Pelatihan Digital UMKM', status: 'sesuai nilai adat', ket: 'Mendukung peningkatan ekonomi kerajinan lokal', statusColor: 'bg-green-50 text-green-700 border-green-200' },
+  { program: 'Pembangunan Gedung Serbaguna', status: 'perlu musyawarah', ket: 'Lokasi rencana bersinggungan dengan hutan adat', statusColor: 'bg-amber-50 text-amber-700 border-amber-200' },
 ];
 
-// Dampak program terhadap budaya
-const dampakProgram = [
-  { program: 'Pengembangan Wisata Desa', dampak: '+3,80', ket: 'Meningkatkan promosi budaya lokal' },
-  { program: 'Pelatihan Digital Masyarakat', dampak: '+2,40', ket: 'Mendukung pelestarian melalui digitalisasi' },
-  { program: 'Festival Budaya & Adat', dampak: '+5,00', ket: 'Sangat meningkatkan ketahanan budaya' },
-  { program: 'Internet Desa', dampak: '+1,20', ket: 'Dampak netral terhadap budaya' },
-  { program: 'Bank Sampah Digital', dampak: '+1,00', ket: 'Mendukung nilai gotong royong' },
+const DAMPAK_PROGRAM_DATA = [
+  { program: 'Pengembangan Wisata Desa', dampak: '+4,20', ket: 'Promosi produk kerajinan anyaman & tari lokal' },
+  { program: 'Pelatihan Digital UMKM', dampak: '+2,80', ket: 'Mendukung pemasaran kerajinan secara online' },
+  { program: 'Festival Hudoq Tahunan', dampak: '+5,00', ket: 'Puncak ketahanan budaya & partisipasi publik' },
+  { program: 'Pembangunan Gedung Adat', dampak: '+3,50', ket: 'Memperkokoh ruang rapat kelembagaan adat' },
 ];
 
-// Dokumentasi terbaru
-const dokumentasi = [
-  { judul: 'Upacara Hudoq', tgl: '15/06/2025', tipe: 'Video', emoji: '🎭' },
-  { judul: 'Ritual Ngerun Tahun', tgl: '05/06/2025', tipe: 'Foto', emoji: '🕯️' },
-  { judul: 'Tari Gong', tgl: '08/06/2025', tipe: 'Foto', emoji: '🪘' },
-  { judul: 'Naskah Lokal', tgl: '01/06/2025', tipe: 'Dokumen', emoji: '📜' },
-  { judul: 'Rumah Lamin', tgl: '28/05/2025', tipe: 'Foto', emoji: '🏠' },
+const DOKUMENTASI_DATA = [
+  { judul: 'Tari Gong Dayak', tgl: '15/06/2026', tipe: 'Video', emoji: '🎭' },
+  { judul: 'Ritual Mecaq Undat', tgl: '05/06/2026', tipe: 'Foto', emoji: '🕯️' },
+  { judul: 'Hukum Adat Dayak', tgl: '01/06/2026', tipe: 'Dokumen', emoji: '📜' },
+  { judul: 'Konstruksi Betang', tgl: '28/05/2026', tipe: 'Foto', emoji: '🏠' },
 ];
-
-// Kalender adat
-const kalenderAdat = [
-  { nama: 'Upacara Ngerun Tahun', sub: 'Ritual ucapan syukur', tgl: '10 JUL 2025' },
-  { nama: 'Festival Hudoq', sub: 'Pertunjukan seni dan budaya Hudoq', tgl: '22 JUL 2025' },
-  { nama: 'Musyawarah Adat', sub: 'Rapat adat membahas program desa', tgl: '05 AGT 2025' },
-  { nama: 'Baliean Adat', sub: 'Upacara pembersihan kampung', tgl: '20 AGT 2025' },
-];
-
-// Aspirasi masyarakat adat
-const aspirasi = [
-  { judul: 'Pelestarian Bahasa Dayak Kenyah', kategori: 'Bahasa', status: 'Diproses', tgl: '16/06/2025', statusColor: 'bg-blue-100 text-blue-700' },
-  { judul: 'Pembangunan Balai Adat', kategori: 'Kelembagaan', status: 'Diproses', tgl: '15/06/2025', statusColor: 'bg-blue-100 text-blue-700' },
-  { judul: 'Perlindungan Hutan Adat', kategori: 'Lingkungan', status: 'Selesai', tgl: '14/06/2025', statusColor: 'bg-green-100 text-green-700' },
-  { judul: 'Pengembangan Kerajinan Lokal', kategori: 'Ekonomi', status: 'Diproses', tgl: '13/06/2025', statusColor: 'bg-blue-100 text-blue-700' },
-  { judul: 'Program Pendidikan Budaya Lokal', kategori: 'Pendidikan', status: 'Diproses', tgl: '12/06/2025', statusColor: 'bg-blue-100 text-blue-700' },
-];
-
-// Siklus peran lembaga adat
-const siklusPeran = [
-  { no: 1, judul: 'Assessment', sub: 'Kondisi desa (Readiness, Maturity, QoL, Budaya)', icon: ClipboardList, done: true },
-  { no: 2, judul: 'Validasi Nilai Adat', sub: 'Memastikan kesesuaian program dengan nilai adat', icon: ShieldCheck, done: true, tgl: '08/06/2025' },
-  { no: 3, judul: 'Rekomendasi Adat', sub: 'Memberikan masukan rekomendasi berbasis kearifan lokal', icon: BookOpen, done: true },
-  { no: 4, judul: 'Implementasi Program', sub: 'Program dilaksanakan dengan memperhatikan nilai adat', icon: Zap, active: true },
-  { no: 5, judul: 'Monitoring Dampak Budaya', sub: 'Memantau dampak program terhadap budaya dan kearifan lokal', icon: Activity, done: false },
-  { no: 6, judul: 'Evaluasi & Perbaikan', sub: 'Evaluasi bersama untuk keberlanjutan budaya dan pembangunan', icon: TrendingUp, done: false },
-  { no: 7, judul: 'Reassessment', sub: 'Penilaian ulang untuk peningkatan berkelanjutan', icon: RefreshCw, done: false },
-];
-
-// ─── HELPER COMPONENTS ────────────────────────────────────────────────────────
-
-function SectionHeader({ title, href, label = 'Lihat Semua →' }: { title: string; href?: string; label?: string }) {
-  return (
-    <div className="flex items-center justify-between mb-3">
-      <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider">{title}</h3>
-      {href && (
-        <Link href={href} className="text-[11px] font-semibold text-amber-700 hover:text-amber-900 transition-colors">
-          {label}
-        </Link>
-      )}
-    </div>
-  );
-}
-
-function ScoreBadge({ kategori }: { kategori: string }) {
-  const map: Record<string, string> = {
-    'Tinggi': 'bg-green-100 text-green-700',
-    'Sedang': 'bg-yellow-100 text-yellow-700',
-    'Rendah': 'bg-red-100 text-red-700',
-  };
-  return <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${map[kategori] ?? 'bg-gray-100 text-gray-600'}`}>{kategori}</span>;
-}
-
-function ProgressBar({ value, max = 100, color = '#5c3d11' }: { value: number; max?: number; color?: string }) {
-  return (
-    <div className="flex items-center gap-2">
-      <div className="flex-1 h-2 bg-gray-100 rounded-full overflow-hidden">
-        <div className="h-full rounded-full" style={{ width: `${(value / max) * 100}%`, backgroundColor: color }} />
-      </div>
-      <span className="text-[10px] text-gray-500 w-8 text-right">{value.toFixed(1)}</span>
-    </div>
-  );
-}
-
-// ─── MAIN PAGE ────────────────────────────────────────────────────────────────
 
 export default function AdatDashboardPage() {
   return (
-    <div className="flex flex-col gap-4 pb-8">
+    <div className="flex flex-col gap-4 pb-8 text-xs">
+      
+      {/* ── WELCOME & TITLE ── */}
+      <div className="flex justify-between items-center border-b pb-3 flex-wrap gap-2">
+        <div>
+          <h1 className="text-xl font-black text-slate-800 tracking-tight">Dasbor Kebudayaan, Tata Kelola Adat, dan SDG Desa 18</h1>
+          <p className="text-xs text-slate-500 font-semibold mt-0.5">Portal Monitoring Nilai Adat, Kearifan Lokal, &amp; Perlindungan Budaya</p>
+        </div>
+        <div className="text-right text-[10px] text-slate-400 font-bold bg-slate-50 p-2 border rounded-xl flex items-center gap-1.5">
+          <span>Tahun Evaluasi: 2026</span>
+          <span className="w-1.5 h-1.5 bg-amber-600 rounded-full" />
+          <span>Wilayah: Desa Lung Anai</span>
+        </div>
+      </div>
 
-      {/* ── WELCOME + PENGUMUMAN ─────────────────────────────────────────── */}
+      {/* ── ROW BANNER UTAMA & PENGUMUMAN ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Welcome banner */}
-        <div className="lg:col-span-2 rounded-xl overflow-hidden relative shadow-md"
-          style={{ background: 'linear-gradient(135deg, #5c3d11 0%, #92400e 50%, #b45309 100%)' }}>
-          <div className="p-5 flex items-center justify-between gap-4 text-white relative z-10">
-            <div className="flex-1">
-              <h2 className="text-lg font-black leading-tight mb-1">Selamat datang, Ketua Lembaga Adat 🏛️</h2>
-              <p className="text-sm text-amber-100 leading-relaxed">
-                Berikut ringkasan kondisi ketahanan budaya dan kearifan lokal<br />
-                Desa Lung Anai untuk mendukung Smart Living Village berbasis nilai adat.
-              </p>
-            </div>
-            <div className="hidden sm:flex items-center justify-center w-36 h-24 rounded-xl bg-white/10 border border-white/20 overflow-hidden flex-shrink-0">
-              <div className="text-center">
-                <div className="text-4xl">🏠</div>
-                <p className="text-[10px] font-bold mt-1 text-amber-100">DESA LUNG ANAI</p>
-              </div>
-            </div>
+        <div className="lg:col-span-2 rounded-xl overflow-hidden relative shadow-md p-5 flex flex-col justify-between text-white"
+          style={{ background: 'linear-gradient(135deg, #5c3d11 0%, #7c2d12 50%, #9a3412 100%)' }}>
+          <div className="relative z-10 space-y-2">
+            <h2 className="text-lg font-black leading-tight">Selamat datang, Ketua Lembaga Adat 🏛️</h2>
+            <p className="text-xs text-amber-100 leading-relaxed max-w-xl">
+              Portal data adat ini memfasilitasi perlindungan warisan budaya, penataan hukum adat, dan telaah program pembangunan agar berjalan selaras dengan adat istiadat di Desa Lung Anai.
+            </p>
           </div>
-          {/* Dekorasi batik */}
-          <div className="absolute -right-6 -top-6 w-32 h-32 rounded-full bg-white/5" />
-          <div className="absolute -left-4 -bottom-6 w-24 h-24 rounded-full bg-white/5" />
-        </div>
-
-        {/* Pengumuman & Informasi Adat */}
-        <div className="rounded-xl border border-amber-200 bg-white shadow-sm p-4">
-          <div className="flex items-center justify-between mb-3">
-            <p className="text-xs font-bold text-gray-700 uppercase tracking-wider">Pengumuman &amp; Informasi Adat</p>
-            <Link href="/adat/kalender-adat" className="text-[11px] font-semibold text-amber-700 hover:text-amber-900">Lihat Semua →</Link>
+          <div className="flex flex-wrap gap-2 pt-4 relative z-10 text-[10px] font-bold">
+            <span className="bg-white/10 px-2.5 py-1 rounded-full border border-white/20">Kelembagaan Adat</span>
+            <span className="bg-white/10 px-2.5 py-1 rounded-full border border-white/20">Musyawarah Komunitas</span>
+            <span className="bg-white/10 px-2.5 py-1 rounded-full border border-white/20">Perlindungan Data Budaya</span>
           </div>
-          <div className="space-y-2">
-            {pengumuman.map((n) => {
-              const iconMap = {
-                event: <Calendar size={13} className="text-amber-600 flex-shrink-0 mt-0.5" />,
-                info: <Info size={13} className="text-blue-500 flex-shrink-0 mt-0.5" />,
-                warning: <AlertTriangle size={13} className="text-orange-500 flex-shrink-0 mt-0.5" />,
-              };
-              return (
-                <div key={n.id} className="flex items-start gap-2 p-2 rounded-lg bg-amber-50 border border-amber-100">
-                  {iconMap[n.type as keyof typeof iconMap]}
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[11px] text-gray-700 leading-snug">{n.teks}</p>
-                    <p className="text-[10px] text-gray-400 mt-0.5">{n.tgl}</p>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="absolute right-4 bottom-4 opacity-10 text-9xl">🏠</div>
+        </div>
+
+        {/* Pengumuman bertanggal 2026 */}
+        <div className="rounded-xl border border-amber-200 bg-white shadow-sm p-4 flex flex-col justify-between">
+          <div className="flex items-center justify-between mb-3 border-b pb-1.5">
+            <p className="text-xs font-bold text-gray-700 uppercase tracking-wider flex items-center gap-1"><Bell size={13} /> Berita &amp; Rapat Adat (2026)</p>
           </div>
-        </div>
-      </div>
-
-      {/* ── KARTU INDEKS ─────────────────────────────────────────────────── */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-        {/* Readiness Index */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex flex-col gap-1">
-          <div className="flex items-center gap-1.5 mb-1">
-            <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ backgroundColor: '#5c3d11' }}>
-              <BarChart2 size={12} className="text-white" />
-            </div>
-            <span className="text-[10px] font-semibold text-gray-500 uppercase leading-none">Readiness Index</span>
-          </div>
-          <p className="text-2xl font-black text-gray-900">74,20</p>
-          <p className="text-[10px] text-gray-500">Kategori</p>
-          <span className="text-[11px] font-bold text-amber-700">Siap</span>
-          <Link href="/adat/monitoring-ketahanan-budaya" className="text-[10px] text-amber-600 hover:underline mt-1">Lihat Detail →</Link>
-        </div>
-
-        {/* Cultural Resilience Index */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex flex-col gap-1">
-          <div className="flex items-center gap-1.5 mb-1">
-            <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ backgroundColor: '#92400e' }}>
-              <Landmark size={12} className="text-white" />
-            </div>
-            <span className="text-[10px] font-semibold text-gray-500 uppercase leading-none">Cultural Resilience Index</span>
-          </div>
-          <p className="text-2xl font-black text-gray-900">72,80</p>
-          <p className="text-[10px] text-gray-500">Kategori</p>
-          <span className="text-[11px] font-bold text-amber-600">Tinggi</span>
-          <Link href="/adat/monitoring-ketahanan-budaya" className="text-[10px] text-amber-600 hover:underline mt-1">Lihat Detail →</Link>
-        </div>
-
-        {/* Local Wisdom Index */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex flex-col gap-1">
-          <div className="flex items-center gap-1.5 mb-1">
-            <div className="w-6 h-6 rounded-md flex items-center justify-center" style={{ backgroundColor: '#276749' }}>
-              <BookOpen size={12} className="text-white" />
-            </div>
-            <span className="text-[10px] font-semibold text-gray-500 uppercase leading-none">Local Wisdom Index</span>
-          </div>
-          <p className="text-2xl font-black text-gray-900">75,60</p>
-          <p className="text-[10px] text-gray-500">Kategori</p>
-          <span className="text-[11px] font-bold text-green-700">Tinggi</span>
-          <Link href="/adat/monitoring-kearifan-lokal" className="text-[10px] text-amber-600 hover:underline mt-1">Lihat Detail →</Link>
-        </div>
-
-        {/* Program Terverifikasi Adat */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex flex-col gap-1">
-          <div className="flex items-center gap-1.5 mb-1">
-            <div className="w-6 h-6 rounded-md bg-blue-600 flex items-center justify-center">
-              <ShieldCheck size={12} className="text-white" />
-            </div>
-            <span className="text-[10px] font-semibold text-gray-500 uppercase leading-none">Program Terverifikasi Adat</span>
-          </div>
-          <p className="text-2xl font-black text-gray-900">11</p>
-          <p className="text-[10px] text-gray-500">Program</p>
-          <span className="text-[11px] font-bold text-blue-600">&nbsp;</span>
-          <Link href="/adat/validasi-program-desa" className="text-[10px] text-amber-600 hover:underline mt-1">Lihat Detail →</Link>
-        </div>
-
-        {/* Kegiatan Adat Aktif */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex flex-col gap-1">
-          <div className="flex items-center gap-1.5 mb-1">
-            <div className="w-6 h-6 rounded-md bg-purple-600 flex items-center justify-center">
-              <Calendar size={12} className="text-white" />
-            </div>
-            <span className="text-[10px] font-semibold text-gray-500 uppercase leading-none">Kegiatan Adat Aktif</span>
-          </div>
-          <p className="text-2xl font-black text-gray-900">8</p>
-          <p className="text-[10px] text-gray-500">Kegiatan</p>
-          <span className="text-[11px] font-bold text-purple-600">&nbsp;</span>
-          <Link href="/adat/kalender-adat" className="text-[10px] text-amber-600 hover:underline mt-1">Lihat Detail →</Link>
-        </div>
-
-        {/* Aspirasi Masuk */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3 flex flex-col gap-1">
-          <div className="flex items-center gap-1.5 mb-1">
-            <div className="w-6 h-6 rounded-md bg-rose-600 flex items-center justify-center">
-              <MessageSquare size={12} className="text-white" />
-            </div>
-            <span className="text-[10px] font-semibold text-gray-500 uppercase leading-none">Aspirasi Masuk</span>
-          </div>
-          <p className="text-2xl font-black text-gray-900">14</p>
-          <p className="text-[10px] text-gray-500">Masukan</p>
-          <span className="text-[11px] font-bold text-rose-600">&nbsp;</span>
-          <Link href="/adat/aspirasi-masyarakat-adat" className="text-[10px] text-amber-600 hover:underline mt-1">Lihat Detail →</Link>
-        </div>
-      </div>
-
-      {/* ── MONITORING BUDAYA + KEARIFAN + VALIDASI + DAMPAK ────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-
-        {/* Monitoring Ketahanan Budaya — Radar */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
-          <SectionHeader title="Monitoring Ketahanan Budaya" href="/adat/monitoring-ketahanan-budaya" label="Lihat Detail Ketahanan Budaya →" />
-          <ResponsiveContainer width="100%" height={200}>
-            <RadarChart data={radarData} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
-              <PolarGrid stroke="#fde68a" />
-              <PolarAngleAxis dataKey="aspek" tick={{ fontSize: 9, fill: '#78350f' }} />
-              <PolarRadiusAxis angle={30} domain={[60, 85]} tick={{ fontSize: 8, fill: '#a16207' }} />
-              <Radar name="Nilai" dataKey="nilai" stroke="#92400e" fill="#92400e" fillOpacity={0.25} strokeWidth={2} />
-              <Tooltip contentStyle={{ fontSize: 10, borderRadius: 6 }} formatter={(v: any) => [`${v}`, 'Nilai']} />
-            </RadarChart>
-          </ResponsiveContainer>
-          <Link href="/adat/monitoring-ketahanan-budaya" className="mt-1 flex items-center gap-1 text-[11px] text-amber-700 hover:text-amber-900 font-semibold">
-            Lihat Detail Ketahanan Budaya <ArrowUpRight size={11} />
-          </Link>
-        </div>
-
-        {/* Monitoring Kearifan Lokal */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
-          <SectionHeader title="Monitoring Kearifan Lokal" href="/adat/monitoring-kearifan-lokal" />
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="border-b border-gray-100">
-                <th className="text-left py-1.5 pr-2 text-[10px] font-bold text-gray-400 uppercase">Dimensi</th>
-                <th className="text-left py-1.5 pr-1 text-[10px] font-bold text-gray-400 uppercase">Skor</th>
-                <th className="text-left py-1.5 text-[10px] font-bold text-gray-400 uppercase">Kategori</th>
-              </tr>
-            </thead>
-            <tbody>
-              {kearifanLokal.map((row, i) => (
-                <tr key={i} className="border-b border-gray-50">
-                  <td className="py-2 pr-2 font-medium text-gray-700 leading-snug" style={{ maxWidth: 100, whiteSpace: 'normal' }}>
-                    {row.dimensi}
-                  </td>
-                  <td className="py-2 pr-2">
-                    <ProgressBar value={row.skor} color="#92400e" />
-                  </td>
-                  <td className="py-2 whitespace-nowrap">
-                    <ScoreBadge kategori={row.kategori} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <Link href="/adat/monitoring-kearifan-lokal" className="mt-3 flex items-center gap-1 text-[11px] text-amber-700 hover:text-amber-900 font-semibold">
-            Lihat Detail Kearifan Lokal <ArrowUpRight size={11} />
-          </Link>
-        </div>
-
-        {/* Validasi Program Desa */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
-          <SectionHeader title="Validasi Program Desa oleh Lembaga Adat" href="/adat/validasi-program-desa" />
-          <div className="space-y-2">
-            {validasiProgram.map((row, i) => (
-              <div key={i} className="p-2 border border-gray-100 rounded-lg">
-                <div className="flex items-start justify-between gap-2 mb-1">
-                  <p className="text-[11px] font-semibold text-gray-800 leading-snug">{row.program}</p>
-                  <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold whitespace-nowrap flex-shrink-0 ${row.statusColor}`}>
-                    {row.status}
-                  </span>
-                </div>
-                <p className="text-[10px] text-gray-400 leading-snug">{row.ket}</p>
-              </div>
-            ))}
-          </div>
-          <Link href="/adat/validasi-program-desa" className="mt-3 flex items-center gap-1 text-[11px] text-amber-700 hover:text-amber-900 font-semibold">
-            Lihat Semua Validasi Program <ArrowUpRight size={11} />
-          </Link>
-        </div>
-
-        {/* Dampak Program terhadap Budaya */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
-          <SectionHeader title="Dampak Program terhadap Budaya" href="/adat/dampak-program-budaya" label="Lihat Analisis Dampak →" />
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="border-b border-gray-100">
-                <th className="text-left py-1.5 pr-2 text-[10px] font-bold text-gray-400 uppercase">Program</th>
-                <th className="text-left py-1.5 pr-2 text-[10px] font-bold text-amber-600 uppercase">Dampak Budaya</th>
-                <th className="text-left py-1.5 text-[10px] font-bold text-gray-400 uppercase">Keterangan</th>
-              </tr>
-            </thead>
-            <tbody>
-              {dampakProgram.map((row, i) => (
-                <tr key={i} className="border-b border-gray-50">
-                  <td className="py-2 pr-2 font-medium text-gray-700 leading-snug" style={{ maxWidth: 90, whiteSpace: 'normal' }}>{row.program}</td>
-                  <td className="py-2 pr-2 font-black text-amber-700 whitespace-nowrap">{row.dampak}</td>
-                  <td className="py-2 text-[10px] text-gray-400 leading-snug">{row.ket}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <Link href="/adat/dampak-program-budaya" className="mt-3 flex items-center gap-1 text-[11px] text-amber-700 hover:text-amber-900 font-semibold">
-            Lihat Analisis Dampak <ArrowUpRight size={11} />
-          </Link>
-        </div>
-      </div>
-
-      {/* ── DOKUMENTASI + KALENDER + ASPIRASI ───────────────────────────── */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-
-        {/* Dokumentasi Adat Terbaru */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
-          <SectionHeader title="Dokumentasi Adat Terbaru" href="/adat/arsip" />
-          <div className="flex gap-2 overflow-x-auto pb-1">
-            {dokumentasi.map((dok, i) => (
-              <div key={i} className="flex-shrink-0 w-24">
-                <div className="w-24 h-20 rounded-lg flex items-center justify-center text-3xl mb-1.5"
-                  style={{ backgroundColor: '#fef3c7', border: '1px solid #fde68a' }}>
-                  {dok.emoji}
-                </div>
-                <p className="text-[10px] font-semibold text-gray-700 leading-tight truncate">{dok.judul}</p>
-                <p className="text-[9px] text-gray-400">{dok.tgl}</p>
-                <span className={`inline-flex items-center gap-0.5 text-[9px] font-bold px-1.5 py-0.5 rounded mt-0.5 ${
-                  dok.tipe === 'Video' ? 'bg-red-100 text-red-700' :
-                  dok.tipe === 'Dokumen' ? 'bg-blue-100 text-blue-700' :
-                  'bg-green-100 text-green-700'
-                }`}>
-                  {dok.tipe === 'Video' ? <Film size={8} /> : dok.tipe === 'Dokumen' ? <FileText size={8} /> : <Image size={8} />}
-                  {dok.tipe}
-                </span>
-              </div>
-            ))}
-          </div>
-          <Link href="/adat/arsip" className="mt-3 flex items-center gap-1 text-[11px] text-amber-700 hover:text-amber-900 font-semibold">
-            Lihat Semua Dokumentasi <ArrowUpRight size={11} />
-          </Link>
-        </div>
-
-        {/* Kalender Adat */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
-          <SectionHeader title="Kalender Adat" href="/adat/kalender-adat" label="Lihat Kalender Lengkap →" />
-          <div className="space-y-2">
-            {kalenderAdat.map((kal, i) => (
-              <div key={i} className="flex items-start gap-3 p-2.5 border border-amber-100 rounded-lg bg-amber-50">
-                <div className="flex-shrink-0 text-center w-12 p-1 rounded-lg bg-amber-100">
-                  <p className="text-[9px] font-bold text-amber-700 leading-none">
-                    {kal.tgl.split(' ')[1]} {kal.tgl.split(' ')[2]}
-                  </p>
-                  <p className="text-base font-black text-amber-800 leading-none mt-0.5">
-                    {kal.tgl.split(' ')[0]}
-                  </p>
-                </div>
+          <div className="space-y-2.5">
+            {PENGUMUMAN_DATA.map((n) => (
+              <div key={n.id} className="flex gap-2 p-2 rounded-lg bg-amber-50/50 border border-amber-100/50">
+                <span className="text-amber-800 text-xs">📢</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[11px] font-semibold text-gray-800 leading-snug">{kal.nama}</p>
-                  <p className="text-[10px] text-gray-500 leading-snug">{kal.sub}</p>
+                  <p className="font-semibold text-slate-800 leading-snug">{n.teks}</p>
+                  <p className="text-[9px] text-slate-400 mt-1 font-mono">{n.tgl}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
+      </div>
 
-        {/* Aspirasi Masyarakat Adat */}
-        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
-          <SectionHeader title="Aspirasi Masyarakat Adat" href="/adat/aspirasi-masyarakat-adat" />
-          <table className="w-full text-xs">
-            <thead>
-              <tr className="border-b border-gray-100">
-                <th className="text-left py-1.5 pr-1 text-[10px] font-bold text-gray-400 uppercase">Aspirasi</th>
-                <th className="text-left py-1.5 pr-1 text-[10px] font-bold text-gray-400 uppercase">Kategori</th>
-                <th className="text-left py-1.5 pr-1 text-[10px] font-bold text-gray-400 uppercase">Status</th>
-                <th className="text-left py-1.5 text-[10px] font-bold text-gray-400 uppercase">Tanggal</th>
-              </tr>
-            </thead>
-            <tbody>
-              {aspirasi.map((row, i) => (
-                <tr key={i} className="border-b border-gray-50">
-                  <td className="py-2 pr-1 font-medium text-gray-700 leading-snug" style={{ maxWidth: 100, whiteSpace: 'normal' }}>{row.judul}</td>
-                  <td className="py-2 pr-1 text-gray-500 whitespace-nowrap">{row.kategori}</td>
-                  <td className="py-2 pr-1 whitespace-nowrap">
-                    <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${row.statusColor}`}>{row.status}</span>
-                  </td>
-                  <td className="py-2 text-[10px] text-gray-400 whitespace-nowrap">{row.tgl}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <Link href="/adat/aspirasi-masyarakat-adat" className="mt-3 flex items-center gap-1 text-[11px] text-amber-700 hover:text-amber-900 font-semibold">
-            Lihat Semua Aspirasi <ArrowUpRight size={11} />
-          </Link>
+      {/* ── ROW KARTU INDEKS & CAPAIAN SDG 18 (5 KARTU) ── */}
+      <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
+        {/* Capaian SDG Desa 18 */}
+        <div className="bg-amber-50 rounded-xl border border-amber-200 shadow-sm p-3.5 flex flex-col justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            <Award size={16} className="text-amber-800" />
+            <span className="text-[10px] font-bold text-amber-900 uppercase tracking-wide leading-none">Capaian SDG Desa 18</span>
+          </div>
+          <div>
+            <p className="text-2xl font-black text-amber-900 leading-none">84.5%</p>
+            <p className="text-[9px] text-amber-700 font-semibold mt-1">Kategori: Sangat Tinggi</p>
+          </div>
+          <div className="w-full h-1 bg-amber-200 rounded-full overflow-hidden">
+            <div className="h-full bg-amber-700" style={{ width: '84.5%' }} />
+          </div>
+        </div>
+
+        {/* Skor Kesiapan Budaya */}
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3.5 flex flex-col justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            <Landmark size={15} className="text-indigo-600" />
+            <span className="text-[9px] font-bold text-slate-500 uppercase leading-none">Kesiapan Budaya &amp; Adat</span>
+          </div>
+          <div>
+            <p className="text-xl font-black text-slate-800 leading-none">74,20</p>
+            <p className="text-[9px] text-indigo-700 font-bold mt-1">Status: Siap / Lestari</p>
+          </div>
+          <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
+            <div className="h-full bg-indigo-600" style={{ width: '74.2%' }} />
+          </div>
+        </div>
+
+        {/* Skor Ketahanan Budaya */}
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3.5 flex flex-col justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            <Activity size={15} className="text-rose-600" />
+            <span className="text-[9px] font-bold text-slate-500 uppercase leading-none">Skor Ketahanan Budaya</span>
+          </div>
+          <div>
+            <p className="text-xl font-black text-slate-800 leading-none">72,80</p>
+            <p className="text-[9px] text-rose-700 font-bold mt-1">Status: Tinggi</p>
+          </div>
+          <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
+            <div className="h-full bg-rose-600" style={{ width: '72.8%' }} />
+          </div>
+        </div>
+
+        {/* Skor Keberlanjutan Pengetahuan Lokal */}
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3.5 flex flex-col justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            <BookOpen size={15} className="text-emerald-600" />
+            <span className="text-[9px] font-bold text-slate-500 uppercase leading-none">Keberlanjutan Pengetahuan</span>
+          </div>
+          <div>
+            <p className="text-xl font-black text-slate-800 leading-none">75,60</p>
+            <p className="text-[9px] text-emerald-700 font-bold mt-1">Status: Terpelihara</p>
+          </div>
+          <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
+            <div className="h-full bg-emerald-600" style={{ width: '75.6%' }} />
+          </div>
+        </div>
+
+        {/* Usulan Aspirasi Masuk */}
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3.5 flex flex-col justify-between gap-2">
+          <div className="flex items-center gap-1.5">
+            <MessageSquare size={15} className="text-purple-600" />
+            <span className="text-[9px] font-bold text-slate-500 uppercase leading-none">Aspirasi Masuk</span>
+          </div>
+          <div>
+            <p className="text-xl font-black text-slate-800 leading-none">14 Usulan</p>
+            <p className="text-[9px] text-purple-700 font-bold mt-1">4 Menunggu Telaah</p>
+          </div>
+          <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
+            <div className="h-full bg-purple-600" style={{ width: '80%' }} />
+          </div>
         </div>
       </div>
 
-      {/* ── SIKLUS PERAN LEMBAGA ADAT ────────────────────────────────────── */}
-      <div className="bg-white rounded-xl border border-amber-200 shadow-sm p-5">
-        <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider mb-4">
-          Peran Lembaga Adat dalam Siklus Smart Living Village
-        </h3>
-        <div className="flex flex-wrap items-start gap-0">
-          {siklusPeran.map((step, i) => {
-            const Icon = step.icon;
-            const isActive = step.active;
-            const isDone = step.done;
-            const isLast = i === siklusPeran.length - 1;
-            return (
-              <div key={i} className="flex items-center gap-0 flex-1 min-w-0">
-                <div className="flex flex-col items-center text-center flex-shrink-0 w-24 sm:w-28">
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center shadow-sm mb-2 border-2 transition-all ${
-                    isActive
-                      ? 'border-amber-600 shadow-amber-200 shadow-md'
-                      : isDone
-                      ? 'border-green-500'
-                      : 'bg-gray-100 border-gray-200'
-                  }`} style={isActive ? { backgroundColor: '#92400e' } : isDone ? { backgroundColor: '#276749' } : {}}>
-                    {isDone && !isActive
-                      ? <CheckCircle2 size={16} className="text-white" />
-                      : <Icon size={16} className={isActive || isDone ? 'text-white' : 'text-gray-400'} />
-                    }
-                  </div>
-                  <p className={`text-[10px] font-bold leading-tight mb-0.5 ${
-                    isActive ? 'text-amber-800' : isDone ? 'text-green-700' : 'text-gray-400'
-                  }`}>
-                    {i + 1}. {step.judul}
-                  </p>
-                  {'tgl' in step && step.tgl && (
-                    <p className="text-[9px] text-amber-600 font-semibold">{step.tgl}</p>
-                  )}
-                  <p className="text-[9px] text-gray-400 leading-snug hidden sm:block">{step.sub}</p>
-                </div>
-                {!isLast && (
-                  <div className="flex-1 flex items-center justify-center pb-6">
-                    <div className={`h-0.5 w-full ${isDone ? 'bg-green-300' : 'bg-gray-200'}`} />
-                    <ChevronRight size={12} className={`flex-shrink-0 -ml-1 ${isDone ? 'text-green-400' : 'text-gray-300'}`} />
-                  </div>
-                )}
+      {/* ── ROW EMPAT INDIKATOR UTAMA D6 (EKSPLISIT) ── */}
+      <Card className="border border-amber-250 bg-amber-50/10">
+        <CardHeader className="py-2.5 px-4 bg-amber-50/30 border-b">
+          <CardTitle className="text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
+            <Landmark size={14} /> Kinerja Empat Indikator Utama (Sub-Dimensi D6: Budaya &amp; Lembaga Adat)
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-4 grid grid-cols-1 md:grid-cols-4 gap-4">
+          {[
+            { label: 'Kelembagaan & Kewenangan Adat', val: '78.0 / 100', status: 'Kuat', desc: 'Struktur adat memiliki wewenang penuh penyelesaian sengketa lokal.' },
+            { label: 'Musyawarah & Partisipasi Komunitas', val: '75.2 / 100', status: 'Aktif', desc: 'Rapat adat Rumah Betang melibatkan pemuda & perwakilan wanita Dayak.' },
+            { label: 'Keberlanjutan Praktik Budaya', val: '74.0 / 100', status: 'Lestari', desc: 'Transfer kearifan lokal kerajinan mandau & seni tari Gong terjaga.' },
+            { label: 'Tata Kelola & Perlindungan Data', val: '72.4 / 100', status: 'Terlindungi', desc: 'Naskah adat digital tersimpan rapi dengan klasifikasi terbatas.' },
+          ].map((ind, idx) => (
+            <div key={idx} className="p-3 bg-white border border-amber-100 rounded-xl space-y-1.5">
+              <p className="font-bold text-slate-800 text-[11px] leading-snug">{ind.label}</p>
+              <div className="flex justify-between items-baseline pt-1">
+                <span className="text-sm font-black text-amber-800">{ind.val}</span>
+                <span className="text-[9px] font-bold text-green-700 bg-green-50 px-1.5 py-0.2 rounded border border-green-200">{ind.status}</span>
               </div>
-            );
-          })}
+              <p className="text-[10px] text-slate-500 font-semibold leading-normal pt-1 border-t border-slate-50">{ind.desc}</p>
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+
+      {/* ── ROW AKSI CEPAT / QUICK ACTIONS ── */}
+      <div className="space-y-2">
+        <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Aksi Cepat Administrasi Adat</h3>
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-3">
+          {[
+            { label: 'Periksa Data Budaya', desc: 'Arsip & Warisan', path: '/adat/arsip', color: 'hover:bg-amber-50 hover:border-amber-300 text-amber-900' },
+            { label: 'Tetapkan Klasifikasi', desc: 'Persetujuan Akses', path: '/adat/persetujuan-data', color: 'hover:bg-indigo-50 hover:border-indigo-300 text-indigo-900' },
+            { label: 'Berikan Persetujuan', desc: 'Program & Nilai Adat', path: '/adat/persetujuan-data', color: 'hover:bg-green-50 hover:border-green-300 text-green-900' },
+            { label: 'Jadwalkan Musyawarah', desc: 'Rapat Betang', path: '/adat/musyawarah-adat', color: 'hover:bg-purple-50 hover:border-purple-300 text-purple-900' },
+            { label: 'Telaah Program', desc: 'Evaluasi APBDes', path: '/adat/telaah-adat', color: 'hover:bg-sky-50 hover:border-sky-300 text-sky-900' },
+            { label: 'Buat Laporan Adat', desc: 'Dokumen Tahunan', path: '/adat/laporan-kelembagaan', color: 'hover:bg-rose-50 hover:border-rose-300 text-rose-900' },
+          ].map((act, i) => (
+            <Link
+              key={i}
+              href={act.path}
+              className={`p-3 bg-white border border-slate-200 rounded-2xl flex flex-col justify-between gap-1 shadow-sm transition-all group ${act.color}`}
+            >
+              <p className="font-bold text-slate-805 leading-snug group-hover:text-amber-800">{act.label}</p>
+              <p className="text-[9px] text-slate-400 font-semibold">{act.desc}</p>
+            </Link>
+          ))}
         </div>
       </div>
 
-      {/* ── FOOTER ──────────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between text-[10px] text-gray-400 pt-2 border-t border-gray-100">
-        <span>APL-SLV Borneo © 2025 · Smart Living Village for Borneo</span>
-        <span>Desa Lung Anai, Kecamatan Loa Kuluu, Kabupaten Kutai Kartanegara, Kalimantan Timur</span>
+      {/* ── ROW GRID DATA MONITORING & KETAHANAN ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        
+        {/* Radar Ketahanan */}
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+          <div className="flex justify-between items-center mb-3">
+            <p className="text-xs font-bold text-gray-700 uppercase tracking-wider">Radar Ketahanan Budaya</p>
+            <Link href="/adat/monitoring-ketahanan-budaya" className="text-[10px] text-amber-700 font-bold hover:underline">Detail →</Link>
+          </div>
+          <div className="h-[200px] w-full">
+            <ResponsiveContainer width="100%" height="100%">
+              <RadarChart data={RADAR_DATA}>
+                <PolarGrid stroke="#fde68a" />
+                <PolarAngleAxis dataKey="aspek" tick={{ fontSize: 8, fill: '#78350f' }} />
+                <PolarRadiusAxis angle={30} domain={[60, 85]} tick={{ fontSize: 8 }} />
+                <Radar name="Nilai Kinerja" dataKey="nilai" stroke="#7c2d12" fill="#7c2d12" fillOpacity={0.2} strokeWidth={2} />
+              </RadarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Telaah Program & Kesesuaian Adat */}
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+          <div className="flex justify-between items-center mb-3">
+            <p className="text-xs font-bold text-gray-700 uppercase tracking-wider">Kesesuaian Program Desa dengan Nilai Adat</p>
+            <Link href="/adat/telaah-adat" className="text-[10px] text-amber-700 font-bold hover:underline">Detail →</Link>
+          </div>
+          <div className="space-y-2">
+            {TELAAH_PROGRAM_DATA.map((tp, idx) => (
+              <div key={idx} className="p-2 border rounded-lg bg-slate-50/50 space-y-1">
+                <div className="flex justify-between items-start gap-1">
+                  <p className="font-bold text-slate-805 leading-snug">{tp.program}</p>
+                  <span className={`px-1.5 py-0.5 rounded text-[8px] font-bold border capitalize flex-shrink-0 ${tp.statusColor}`}>{tp.status}</span>
+                </div>
+                <p className="text-[10px] text-slate-550 leading-relaxed font-semibold">{tp.ket}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Dampak Program & Monitoring Kearifan Lokal */}
+        <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4 flex flex-col justify-between">
+          <div>
+            <div className="flex justify-between items-center mb-3">
+              <p className="text-xs font-bold text-gray-700 uppercase tracking-wider">Dampak Program terhadap Kebudayaan</p>
+              <Link href="/adat/dampak-program-budaya" className="text-[10px] text-amber-700 font-bold hover:underline">Detail →</Link>
+            </div>
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="border-b border-slate-100 text-left text-slate-400">
+                  <th className="pb-1.5">Program Kerja</th>
+                  <th className="pb-1.5 text-center text-amber-800">Dampak</th>
+                  <th className="pb-1.5">Keterangan</th>
+                </tr>
+              </thead>
+              <tbody>
+                {DAMPAK_PROGRAM_DATA.map((dp, idx) => (
+                  <tr key={idx} className="border-b border-slate-50">
+                    <td className="py-2 font-semibold text-slate-800 leading-snug">{dp.program}</td>
+                    <td className="py-2 text-center font-black text-amber-700">{dp.dampak}</td>
+                    <td className="py-2 text-[10px] text-slate-450 leading-snug">{dp.ket}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      {/* ── ROW DOKUMENTASI & PERLINDUNGAN DATA ── */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        
+        {/* Dokumentasi Berkas Adat */}
+        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 shadow-sm p-4">
+          <div className="flex justify-between items-center mb-3">
+            <p className="text-xs font-bold text-gray-700 uppercase tracking-wider">Dokumentasi Warisan Budaya &amp; Berkas (2026)</p>
+            <Link href="/adat/arsip" className="text-[10px] text-amber-700 font-bold hover:underline">Arsip Berkas →</Link>
+          </div>
+          <div className="grid grid-cols-4 gap-3">
+            {DOKUMENTASI_DATA.map((d, i) => (
+              <div key={i} className="p-3 border rounded-xl bg-slate-50/50 flex flex-col justify-between gap-1 text-center">
+                <span className="text-3xl">{d.emoji}</span>
+                <p className="font-bold text-slate-800 truncate leading-tight mt-1">{d.judul}</p>
+                <p className="text-[8px] text-slate-400 mt-0.5">{d.tgl}</p>
+                <span className="text-[8px] font-bold bg-amber-100 text-amber-800 px-1 py-0.2 rounded border border-amber-200 mt-1">{d.tipe}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Informasi Perlindungan Budaya Tetap */}
+        <Card className="border-red-200 bg-red-50/10">
+          <CardHeader className="py-2.5 bg-red-50/30 border-b border-red-100">
+            <CardTitle className="text-xs font-bold text-red-900 uppercase tracking-wider flex items-center gap-1.5">
+              <ShieldCheck size={14} className="text-red-700" /> Perlindungan Data Budaya
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-3.5 space-y-2 text-[11px] text-slate-650 leading-relaxed font-semibold">
+            <p>🔒 <strong>Informasi Keamanan:</strong></p>
+            <p>Data budaya dikelola berdasarkan kewenangan komunitas, klasifikasi, tujuan penggunaan, persetujuan, dan jejak audit.</p>
+            <p>Dashboard publik hanya boleh menampilkan data budaya yang telah ditetapkan sebagai informasi publik.</p>
+          </CardContent>
+        </Card>
       </div>
 
     </div>

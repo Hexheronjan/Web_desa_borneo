@@ -8,226 +8,234 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Plus, Send, Trash2, Bell, Users, Globe, Pencil, X } from 'lucide-react';
+import { Plus, Send, Trash2, Bell, Users, Globe, Pencil, X, CheckCircle2, ShieldAlert } from 'lucide-react';
 
 const COLOR = '#1a237e';
 
-interface Notifikasi {
+interface NotifSistem {
   id: string;
   judul: string;
   isi: string;
-  target: 'Semua User' | 'Admin' | 'Operator SID' | 'Pemerintah Desa' | 'Nakes' | 'Guru' | 'Warga';
-  tanggalKirim: string;
+  jenis: 'layanan tidak tersedia' | 'sinkronisasi gagal' | 'pencadangan gagal' | 'kapasitas hampir penuh' | 'login berulang gagal' | 'akun tidak aktif' | 'akses tanpa izin' | 'perubahan konfigurasi' | 'data menunggu validasi' | 'pembaruan versi';
+  target: 'Semua Peran' | 'Administrator Sistem' | 'Pemerintah Desa' | 'Lembaga Adat' | 'Tenaga Kesehatan' | 'Masyarakat Umum';
+  tanggal: string;
   status: 'Terkirim' | 'Terjadwal' | 'Draft';
 }
 
+const INITIAL_NOTIFS: NotifSistem[] = [
+  { id: 'NT-01', judul: 'Peringatan Kapasitas Cloud Storage Hampir Penuh', isi: 'Kapasitas penyimpanan server AWS sudah mencapai 88%. Pembersihan log backup lama akan otomatis berjalan.', jenis: 'kapasitas hampir penuh', target: 'Administrator Sistem', tanggal: '2026-07-18', status: 'Terkirim' },
+  { id: 'NT-02', judul: 'Percobaan Login Gagal Berulang Kali', isi: 'Akun adat_jafar telah dikunci sementara karena salah password 3 kali berturut-turut.', jenis: 'login berulang gagal', target: 'Administrator Sistem', tanggal: '2026-07-15', status: 'Terkirim' },
+  { id: 'NT-03', judul: 'Data SDGs & Kesiapan Menunggu Validasi Teknis', isi: 'Dataset Jonggon Jaya v2.0 semester I telah diunggah dan membutuhkan validasi dari Admin.', jenis: 'data menunggu validasi', target: 'Administrator Sistem', tanggal: '2026-07-18', status: 'Terjadwal' },
+  { id: 'NT-04', judul: 'Pencadangan Otomatis PostgreSQL Gagal', isi: 'Pencadangan database terjadwal tanggal 16 Juli gagal dikarenakan server timeout.', jenis: 'pencadangan gagal', target: 'Administrator Sistem', tanggal: '2026-07-16', status: 'Terkirim' },
+  { id: 'NT-05', judul: 'Pembaruan Aplikasi ke Versi v2.1', isi: 'Sistem SLV Borneo telah berhasil diperbarui ke versi v2.1 dengan penyempurnaan fitur administrasi.', jenis: 'pembaruan versi', target: 'Semua Peran', tanggal: '2026-07-18', status: 'Terkirim' },
+];
+
 export default function PengaturanNotifikasiPage() {
-  const [notifikasi, setNotifikasi] = useState<Notifikasi[]>([
-    { id: '1', judul: 'Maintenance System', isi: 'Sistem akan melakukan maintenance pada tanggal 30 Januari 2025 pukul 02:00 WIB', target: 'Semua User', tanggalKirim: '2025-01-20', status: 'Terkirim' },
-    { id: '2', judul: 'Update Fitur Baru', isi: 'Fitur dashboard analytics baru telah tersedia untuk semua role', target: 'Admin', tanggalKirim: '2025-01-18', status: 'Terkirim' },
-    { id: '3', judul: 'Reminder Assessment', isi: 'Mohon selesaikan assessment periode 2025 semester 1 sebelum tanggal 28 Februari 2025', target: 'Operator SID', tanggalKirim: '2025-01-25', status: 'Terjadwal' },
-  ]);
+  const [notifikasis, setNotifikasis] = useState<NotifSistem[]>(INITIAL_NOTIFS);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingItem, setEditingItem] = useState<Notifikasi | null>(null);
-  const [formData, setFormData] = useState<Partial<Notifikasi>>({});
+  const [editingItem, setEditingItem] = useState<NotifSistem | null>(null);
+  const [formData, setFormData] = useState<Partial<NotifSistem>>({});
+  const [notification, setNotification] = useState<string | null>(null);
 
   const handleAdd = () => {
     setEditingItem(null);
-    setFormData({ judul: '', isi: '', target: 'Semua User', tanggalKirim: new Date().toISOString().split('T')[0], status: 'Terkirim' });
+    setFormData({ judul: '', isi: '', jenis: 'layanan tidak tersedia', target: 'Semua Peran', tanggal: new Date().toISOString().split('T')[0], status: 'Terkirim' });
     setIsModalOpen(true);
   };
 
-  const handleEdit = (item: Notifikasi) => {
+  const handleEdit = (item: NotifSistem) => {
     setEditingItem(item);
     setFormData(item);
     setIsModalOpen(true);
   };
 
-  const handleSave = () => {
+  const handleSave = (e: React.FormEvent) => {
+    e.preventDefault();
     if (editingItem) {
-      setNotifikasi(notifikasi.map(n => n.id === editingItem.id ? { ...formData, id: editingItem.id } as Notifikasi : n));
+      setNotifikasis(prev => prev.map(n => n.id === editingItem.id ? { ...formData, id: editingItem.id } as NotifSistem : n));
+      setNotification('Notifikasi sistem berhasil diperbarui!');
     } else {
-      const newNotifikasi: Notifikasi = {
-        id: Date.now().toString(),
+      const newNotif: NotifSistem = {
+        id: `NT-0${notifikasis.length + 1}`,
         judul: formData.judul || '',
         isi: formData.isi || '',
-        target: formData.target || 'Semua User',
-        tanggalKirim: formData.tanggalKirim || new Date().toISOString().split('T')[0],
+        jenis: formData.jenis || 'layanan tidak tersedia',
+        target: formData.target || 'Semua Peran',
+        tanggal: formData.tanggal || new Date().toISOString().split('T')[0],
         status: formData.status || 'Terkirim',
       };
-      setNotifikasi([newNotifikasi, ...notifikasi]);
+      setNotifikasis([newNotif, ...notifikasis]);
+      setNotification('Notifikasi sistem baru berhasil dibuat!');
     }
     setIsModalOpen(false);
-    setFormData({});
-    setEditingItem(null);
+    setTimeout(() => setNotification(null), 3000);
   };
 
   const handleDelete = (id: string) => {
     if (confirm('Apakah Anda yakin ingin menghapus notifikasi ini?')) {
-      setNotifikasi(notifikasi.filter(n => n.id !== id));
-    }
-  };
-
-  const getTargetIcon = (target: string) => {
-    switch (target) {
-      case 'Semua User': return <Globe size={16} className="text-indigo-600" />;
-      case 'Admin': return <Bell size={16} className="text-purple-600" />;
-      default: return <Users size={16} className="text-blue-600" />;
-    }
-  };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Terkirim': return 'bg-green-100 text-green-700';
-      case 'Terjadwal': return 'bg-blue-100 text-blue-700';
-      case 'Draft': return 'bg-gray-100 text-gray-700';
-      default: return 'bg-gray-100 text-gray-700';
+      setNotifikasis(prev => prev.filter(n => n.id !== id));
+      setNotification('Notifikasi berhasil dihapus.');
+      setTimeout(() => setNotification(null), 3000);
     }
   };
 
   return (
-    <div className="flex flex-col gap-5">
-      <PageTitle fitur="Pengaturan Notifikasi" modul="Administration" color={COLOR} />
+    <div className="flex flex-col gap-5 text-xs">
+      <PageTitle fitur="Notifikasi Sistem" modul="Administrasi Sistem" color={COLOR} />
 
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
-          <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-            <Bell size={16} /> Riwayat Notifikasi
+        <CardHeader className="py-3 px-4 flex flex-row items-center justify-between">
+          <CardTitle className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+            <Bell size={14} /> Riwayat Log Notifikasi &amp; Kejadian Sistem
           </CardTitle>
-          <Button onClick={handleAdd} data-real-action-root size="sm" className="bg-indigo-600 hover:bg-indigo-700">
-            <Plus size={16} className="mr-2" /> Buat Notifikasi
+          <Button onClick={handleAdd} size="sm" className="h-8 text-xs font-bold bg-indigo-600 hover:bg-indigo-700">
+            <Plus size={13} className="mr-1" /> Buat Notifikasi Baru
           </Button>
         </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Judul</TableHead>
-                <TableHead>Target</TableHead>
-                <TableHead>Isi</TableHead>
-                <TableHead>Tanggal Kirim</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Aksi</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {notifikasi.map((notif) => (
-                <TableRow key={notif.id}>
-                  <TableCell className="font-medium">{notif.judul}</TableCell>
-                  <TableCell>
-                    <div className="flex items-center gap-2">
-                      {getTargetIcon(notif.target)}
-                      <span className="text-sm">{notif.target}</span>
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-sm text-slate-600 max-w-xs truncate">{notif.isi}</TableCell>
-                  <TableCell>{notif.tanggalKirim}</TableCell>
-                  <TableCell>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(notif.status)}`}>
-                      {notif.status}
-                    </span>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button onClick={() => handleEdit(notif)} data-real-action-root size="sm" variant="ghost" className="h-8 w-8 p-0">
-                        <Pencil size={16} className="text-blue-600" />
-                      </Button>
-                      <Button onClick={() => handleDelete(notif.id)} size="sm" variant="ghost" className="h-8 w-8 p-0">
-                        <Trash2 size={16} className="text-red-600" />
-                      </Button>
-                    </div>
-                  </TableCell>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow className="bg-slate-50">
+                  <TableHead className="font-bold text-slate-700">ID</TableHead>
+                  <TableHead className="font-bold text-slate-700">Judul Pengumuman</TableHead>
+                  <TableHead className="font-bold text-slate-700">Jenis Notifikasi Sistem</TableHead>
+                  <TableHead className="font-bold text-slate-700">Target Peran</TableHead>
+                  <TableHead className="font-bold text-slate-700">Isi Pesan</TableHead>
+                  <TableHead className="font-bold text-slate-700">Tanggal</TableHead>
+                  <TableHead className="font-bold text-slate-700">Status</TableHead>
+                  <TableHead className="text-right font-bold text-slate-700">Aksi</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {notifikasis.map((n) => (
+                  <TableRow key={n.id} className="hover:bg-slate-50/50">
+                    <TableCell className="font-mono font-bold text-slate-500">{n.id}</TableCell>
+                    <TableCell className="font-bold text-slate-800">{n.judul}</TableCell>
+                    <TableCell>
+                      <span className={`px-2 py-0.5 rounded text-[9px] font-bold border capitalize whitespace-nowrap ${
+                        n.jenis.includes('gagal') || n.jenis.includes('tidak tersedia') || n.jenis.includes('tanpa izin')
+                          ? 'bg-red-50 text-red-700 border-red-200' 
+                          : n.jenis.includes('penuh') || n.jenis.includes('menunggu') 
+                          ? 'bg-amber-50 text-amber-700 border-amber-200' 
+                          : 'bg-indigo-50 text-indigo-700 border-indigo-200'
+                      }`}>
+                        {n.jenis}
+                      </span>
+                    </TableCell>
+                    <TableCell className="font-semibold text-slate-700 whitespace-nowrap">{n.target}</TableCell>
+                    <TableCell className="text-slate-650 max-w-xs truncate" title={n.isi}>{n.isi}</TableCell>
+                    <TableCell className="font-mono">{n.tanggal}</TableCell>
+                    <TableCell>
+                      <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold border ${
+                        n.status === 'Terkirim' ? 'bg-green-50 text-green-700 border-green-200' : 'bg-blue-50 text-blue-700 border-blue-200'
+                      }`}>
+                        {n.status}
+                      </span>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-1">
+                        <Button onClick={() => handleEdit(n)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Pencil size={13} className="text-blue-650" /></Button>
+                        <Button onClick={() => handleDelete(n.id)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Trash2 size={13} className="text-red-650" /></Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </CardContent>
       </Card>
 
       {/* Modal Form */}
       {isModalOpen && (
-        <div data-real-action-root className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <Card className="w-full max-w-lg mx-4 bg-white shadow-2xl border-2">
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-base font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-                <Send size={16} /> {editingItem ? 'Edit Notifikasi' : 'Buat Notifikasi Baru'}
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <Card className="w-full max-w-lg bg-white shadow-2xl border">
+            <CardHeader className="py-3 flex flex-row items-center justify-between">
+              <CardTitle className="text-sm font-bold text-slate-800">
+                {editingItem ? 'Edit Notifikasi Sistem' : 'Buat Notifikasi Sistem Baru'}
               </CardTitle>
-              <Button onClick={() => setIsModalOpen(false)} size="sm" variant="ghost" className="h-8 w-8 p-0">
-                <X size={16} />
-              </Button>
+              <Button onClick={() => setIsModalOpen(false)} size="sm" variant="ghost" className="h-8 w-8 p-0">✕</Button>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                Form ini digunakan untuk {editingItem ? 'mengedit' : 'membuat'} notifikasi yang akan dikirim ke target penerima.
-              </p>
-              <div className="space-y-2">
-                <Label htmlFor="judul">Judul Notifikasi</Label>
-                <Input
-                  id="judul"
-                  value={formData.judul || ''}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, judul: e.target.value })}
-                  placeholder="Masukkan judul notifikasi"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="isi">Isi Notifikasi</Label>
-                <Textarea
-                  id="isi"
-                  value={formData.isi || ''}
-                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setFormData({ ...formData, isi: e.target.value })}
-                  placeholder="Masukkan isi notifikasi"
-                  className="min-h-[100px]"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="target">Target Penerima</Label>
-                <select
-                  id="target"
-                  value={formData.target || 'Semua User'}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, target: e.target.value as any })}
-                  className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
-                >
-                  <option value="Semua User">Semua User</option>
-                  <option value="Admin">Admin</option>
-                  <option value="Operator SID">Operator SID</option>
-                  <option value="Pemerintah Desa">Pemerintah Desa</option>
-                  <option value="Nakes">Nakes</option>
-                  <option value="Guru">Guru</option>
-                  <option value="Warga">Warga</option>
-                </select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="tanggalKirim">Tanggal Kirim</Label>
-                <Input
-                  id="tanggalKirim"
-                  type="date"
-                  value={formData.tanggalKirim || ''}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({ ...formData, tanggalKirim: e.target.value })}
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="status">Status</Label>
-                <select
-                  id="status"
-                  value={formData.status || 'Terkirim'}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setFormData({ ...formData, status: e.target.value as 'Terkirim' | 'Terjadwal' | 'Draft' })}
-                  className="w-full h-10 rounded-md border border-input bg-background px-3 py-2 text-sm"
-                >
-                  <option value="Terkirim">Terkirim</option>
-                  <option value="Terjadwal">Terjadwal</option>
-                  <option value="Draft">Draft</option>
-                </select>
-              </div>
-              <div className="flex justify-end gap-2 pt-4">
-                <Button onClick={() => setIsModalOpen(false)} variant="outline">
-                  Batal
-                </Button>
-                <Button onClick={handleSave} data-real-action-root className="bg-indigo-600 hover:bg-indigo-700">
-                  <Send size={16} className="mr-2" /> Kirim Notifikasi
-                </Button>
-              </div>
+            <CardContent>
+              <form onSubmit={handleSave} className="space-y-3.5 text-xs">
+                <div className="space-y-1">
+                  <Label className="font-bold text-slate-700">Judul Pengumuman</Label>
+                  <Input required value={formData.judul || ''} onChange={e => setFormData({ ...formData, judul: e.target.value })} placeholder="Contoh: Pemeliharaan Server Terjadwal" className="h-9 text-xs" />
+                </div>
+                <div className="space-y-1">
+                  <Label className="font-bold text-slate-700">Isi Pengumuman / Pesan</Label>
+                  <Textarea required value={formData.isi || ''} onChange={e => setFormData({ ...formData, isi: e.target.value })} placeholder="Tuliskan deskripsi notifikasi..." className="min-h-[70px] text-xs" />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <Label className="font-bold text-slate-700">Jenis Kejadian Sistem</Label>
+                    <select
+                      value={formData.jenis || 'layanan tidak tersedia'}
+                      onChange={e => setFormData({ ...formData, jenis: e.target.value as any })}
+                      className="w-full h-9 rounded-md border bg-white px-2 text-xs"
+                    >
+                      <option value="layanan tidak tersedia">layanan tidak tersedia</option>
+                      <option value="sinkronisasi gagal">sinkronisasi gagal</option>
+                      <option value="pencadangan gagal">pencadangan gagal</option>
+                      <option value="kapasitas hampir penuh">kapasitas hampir penuh</option>
+                      <option value="login berulang gagal">login berulang gagal</option>
+                      <option value="akun tidak aktif">akun tidak aktif</option>
+                      <option value="akses tanpa izin">akses tanpa izin</option>
+                      <option value="perubahan konfigurasi">perubahan konfigurasi</option>
+                      <option value="data menunggu validasi">data menunggu validasi</option>
+                      <option value="pembaruan versi">pembaruan versi</option>
+                    </select>
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="font-bold text-slate-700">Target Peran Penerima</Label>
+                    <select
+                      value={formData.target || 'Semua Peran'}
+                      onChange={e => setFormData({ ...formData, target: e.target.value as any })}
+                      className="w-full h-9 rounded-md border bg-white px-2 text-xs"
+                    >
+                      <option value="Semua Peran">Semua Peran</option>
+                      <option value="Administrator Sistem">Administrator Sistem</option>
+                      <option value="Pemerintah Desa">Pemerintah Desa</option>
+                      <option value="Lembaga Adat">Lembaga Adat</option>
+                      <option value="Tenaga Kesehatan">Tenaga Kesehatan</option>
+                      <option value="Masyarakat Umum">Masyarakat Umum</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="space-y-1">
+                    <Label className="font-bold text-slate-700">Tanggal Pengiriman</Label>
+                    <Input required type="date" value={formData.tanggal || ''} onChange={e => setFormData({ ...formData, tanggal: e.target.value })} className="h-9 text-xs" />
+                  </div>
+                  <div className="space-y-1">
+                    <Label className="font-bold text-slate-700">Status Awal</Label>
+                    <select
+                      value={formData.status || 'Terkirim'}
+                      onChange={e => setFormData({ ...formData, status: e.target.value as any })}
+                      className="w-full h-9 rounded-md border bg-white px-2 text-xs"
+                    >
+                      <option value="Terkirim">Terkirim</option>
+                      <option value="Terjadwal">Terjadwal</option>
+                      <option value="Draft">Draft</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-2 pt-3 border-t">
+                  <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)} className="h-8 font-bold">Batal</Button>
+                  <Button type="submit" className="h-8 bg-indigo-600 hover:bg-indigo-700 text-white font-bold"><Send size={12} className="mr-1" /> Simpan &amp; Kirim</Button>
+                </div>
+              </form>
             </CardContent>
           </Card>
+        </div>
+      )}
+
+      {notification && (
+        <div className="fixed bottom-5 right-5 z-[9999] flex items-center gap-2 px-4 py-3 rounded-xl shadow-lg border border-green-200 bg-white text-xs font-bold">
+          <CheckCircle2 className="text-green-600" size={16} /> {notification}
         </div>
       )}
     </div>

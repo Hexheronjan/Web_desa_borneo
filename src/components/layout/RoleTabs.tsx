@@ -16,12 +16,12 @@ export function RoleTabs() {
     lembaga_adat: "Lembaga Adat",
     nakes_posyandu: "Nakes",
     guru_fasilitator: "Guru",
-    admin_super: "Super Admin",
+    admin_super: "Administrator Sistem",
     operator_sid: "Operator SID",
     bpd: "BPD",
     dinas_pmd: "Dinas PMD Regional",
     peneliti: "Peneliti",
-    layanan_slv: "Layanan SLV",
+    layanan_slv: "Masyarakat Umum",
   };
 
   const userRoleLabel = roleLabels[userRole] || userRole;

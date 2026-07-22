@@ -3,77 +3,100 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
-import { Smile, Heart, GraduationCap, Users, ShieldAlert, Sparkles } from 'lucide-react';
+import {
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
+} from 'recharts';
+import {
+  Heart, AlertTriangle, CheckCircle2, ShieldCheck, RefreshCw, BarChart2
+} from 'lucide-react';
+import { useState } from 'react';
 
 const COLOR = '#283593';
 
-const qolMetrics = [
-  { name: 'Kesehatan Masyarakat', value: 4.35, max: 5.0, icon: Heart, color: 'text-red-500', bg: 'bg-red-50' },
-  { name: 'Pendidikan & Literasi', value: 4.10, max: 5.0, icon: GraduationCap, color: 'text-blue-500', bg: 'bg-blue-50' },
-  { name: 'Keterikatan Sosial Adat', value: 4.00, max: 5.0, icon: Users, color: 'text-purple-500', bg: 'bg-purple-50' },
-  { name: 'Kebersihan Lingkungan', value: 3.80, max: 5.0, icon: ShieldAlert, color: 'text-green-500', bg: 'bg-green-50' },
-  { name: 'Kemakmuran Ekonomi', value: 3.80, max: 5.0, icon: Sparkles, color: 'text-amber-500', bg: 'bg-amber-50' }
+const KUALITAS_HIDUP_DATA = [
+  { aspek: 'Akses Pelayanan', skor: 78, keterangan: 'Kemudahan menjangkau fasilitas kesehatan, pendidikan, dan balai desa' },
+  { aspek: 'Kualitas Pelayanan', skor: 82, keterangan: 'Tingkat kepuasan layanan administrasi & kebersihan fasilitas publik' },
+  { aspek: 'Kemudahan Informasi', skor: 85, keterangan: 'Kecepatan warga mendapat info pengumuman & transparansi APBDes' },
+  { aspek: 'Kondisi Kesehatan', skor: 70, keterangan: 'Tingkat kebersihan air, angka stunting, dan partisipasi posyandu' },
+  { aspek: 'Akses Pendidikan', skor: 76, keterangan: 'Ketersediaan kuota sekolah, beasiswa desa, dan fasilitas TBM' },
+  { aspek: 'Partisipasi Warga', skor: 80, keterangan: 'Kehadiran dan masukan dalam musyawarah adat maupun musdes' },
+  { aspek: 'Keamanan Sosial', skor: 90, keterangan: 'Tingkat kerukunan antardusun, zero kriminalitas dalam 1 tahun terakhir' },
+  { aspek: 'Keberlanjutan Budaya', skor: 88, keterangan: 'Pelestarian bahasa Kenyah, upacara adat Belian, dan tari Dayak' },
+  { aspek: 'Manfaat Sistem (SID)', skor: 74, keterangan: 'Tingkat efisiensi pengurusan surat mandiri via portal SLV' },
 ];
 
-export default function PemdesQoLPage() {
+export default function PenilaianKualitasHidupPage() {
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Quality of Life Index" modul="Pemdes / Kepala Desa" color={COLOR} />
+      <PageTitle fitur="Penilaian Kualitas Hidup" modul="Pemerintah Desa" color={COLOR} />
+
+      {/* TERMINOLOGY WARNING BANNER */}
+      <div className="p-3.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 text-xs flex items-start gap-2.5">
+        <AlertTriangle size={16} className="text-blue-700 flex-shrink-0 mt-0.5" />
+        <div>
+          <p className="font-bold">Ketentuan Istilah Skor Kualitas Hidup</p>
+          <p className="text-blue-700 mt-0.5 font-medium leading-relaxed">
+            Halaman ini menggunakan istilah <strong>Skor Kualitas Hidup</strong>, bukan *Indeks Kualitas Hidup*, sesuai ketentuan validasi formula yang disetujui Bappeda/Dinas PMD.
+          </p>
+        </div>
+      </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="QoL Index Desa" value="76.80" satuan="Skor Baik" barColor="purple" progress={77} />
-        <StatCard label="Indikator Terbaik" value="Kesehatan" satuan="4.35 / 5.0" barColor="green" progress={87} />
-        <StatCard label="Total Responden" value={146} satuan="kepala keluarga" barColor="blue" progress={90} />
-        <StatCard label="Margin of Error" value="4.8%" satuan="sangat presisi" barColor="green" progress={95} />
+        <StatCard label="Rata-rata Skor QoL" value="71.28" satuan="Skor (Baik)" barColor="green" progress={71} />
+        <StatCard label="Aspek Dinilai" value="9 Aspek" satuan="Kategori Penilaian" barColor="purple" progress={100} />
+        <StatCard label="Aspek Tertinggi" value="Keamanan Sosial" satuan="Skor: 90" barColor="blue" progress={90} />
+        <StatCard label="Aspek Terendah" value="Kondisi Kesehatan" satuan="Skor: 70" barColor="orange" progress={70} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        
+        {/* CHART UTAMA */}
         <Card className="lg:col-span-2">
           <CardHeader>
             <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Smile size={16} /> Skor Kualitas Hidup Warga per Kategori Penilaian
+              <BarChart2 size={16} /> Grafik Rincian Skor Kualitas Hidup
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {qolMetrics.map((item, i) => (
-              <div key={i} className="flex items-center gap-4">
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${item.bg} flex-shrink-0`}>
-                  <item.icon className={`w-5 h-5 ${item.color}`} />
+          <CardContent>
+            <div className="h-[300px]">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={KUALITAS_HIDUP_DATA} layout="vertical">
+                  <CartesianGrid strokeDasharray="3 3" horizontal={false} stroke="#e2e8f0" />
+                  <XAxis type="number" domain={[0, 100]} tick={{ fontSize: 9, fill: '#64748b' }} />
+                  <YAxis dataKey="aspek" type="category" width={120} tick={{ fontSize: 9, fill: '#64748b' }} />
+                  <Tooltip contentStyle={{ fontSize: 10, borderRadius: 8 }} />
+                  <Bar dataKey="skor" fill={COLOR} radius={[0, 4, 4, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* DAFTAR ASPEK KUALITAS HIDUP */}
+        <Card className="lg:col-span-1">
+          <CardHeader>
+            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
+              <Heart size={16} /> Detail Aspek & Keterangan
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3.5 text-xs max-h-[300px] overflow-y-auto pr-1">
+            {KUALITAS_HIDUP_DATA.map((k, i) => (
+              <div key={i} className="p-2.5 border rounded-lg bg-slate-50/50">
+                <div className="flex justify-between items-center font-bold text-slate-800 mb-1">
+                  <span>{k.aspek}</span>
+                  <span className="text-purple-700">{k.skor}</span>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex justify-between text-xs font-semibold text-slate-700 mb-1">
-                    <span>{item.name}</span>
-                    <span>{item.value.toFixed(2)} / {item.max.toFixed(1)}</span>
-                  </div>
-                  <div className="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-                    <div className={`h-full rounded-full ${COLOR === '#283593' ? 'bg-indigo-700' : 'bg-teal-600'} transition-all`} style={{ width: `${(item.value / item.max) * 100}%` }} />
-                  </div>
-                </div>
-                <span className="text-xs font-bold font-mono text-slate-700 w-10 text-right">
-                  {Math.round((item.value / item.max) * 100)}%
-                </span>
+                <p className="text-[10px] text-slate-500 leading-snug">{k.keterangan}</p>
               </div>
             ))}
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-sm font-semibold flex items-center gap-2" style={{ color: COLOR }}>
-              <Users size={16} /> Survei Kepuasan Warga
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3 text-xs text-slate-600 leading-normal">
-            <p>Hasil survei berkala (Modul 50) yang diisi secara online oleh warga membuktikan:</p>
-            <div className="p-3 bg-indigo-50 border border-indigo-100 rounded-lg space-y-1">
-              <p className="font-bold text-indigo-900">Kesimpulan Kualitatif:</p>
-              <p>Kepuasan hidup tergolong <strong>BAIK</strong>. Pelayanan administrasi surat online (Modul 48) dan monitoring Posyandu (Modul 45) adalah pendorong kepuasan utama.</p>
-            </div>
-            <p className="pt-2 text-[10px] text-slate-400">
-              *Survei dijalankan secara anonim demi menjamin objektivitas tanggapan warga.
-            </p>
-          </CardContent>
-        </Card>
+      </div>
+
+      <div className="flex items-center justify-between text-[11px] text-slate-400 p-2.5 border border-dashed rounded-lg bg-slate-50/50">
+        <span className="flex items-center gap-1"><RefreshCw size={12} className="animate-pulse" /> Data dihitung secara periodik berdasarkan survei QoL masyarakat</span>
+        <span>Terakhir Diperbarui: 18 Juli 2026</span>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ async function main() {
   }
 
   const roles = [
-    { email: "admin@borneo.id", name: "Admin Super", role: "admin_super", password: "password123" },
+    { email: "admin@borneo.id", name: "Joy Nashar", role: "admin_super", password: "password123" },
     { email: "pemdes@borneo.id", name: "Pemerintah Desa", role: "pemerintah_desa", password: "password123" },
     { email: "operator@borneo.id", name: "Operator SID", role: "operator_sid", password: "password123" },
     { email: "bpd@borneo.id", name: "Badan Permusyawaratan Desa", role: "bpd", password: "password123" },
@@ -21,7 +21,7 @@ async function main() {
     { email: "nakes@borneo.id", name: "Nakes Posyandu", role: "nakes_posyandu", password: "password123" },
     { email: "warga@borneo.id", name: "Warga Desa", role: "warga", password: "password123" },
     { email: "dinas@borneo.id", name: "Dinas PMD", role: "dinas_pmd", password: "password123" },
-    { email: "peneliti@borneo.id", name: "Peneliti", role: "peneliti", password: "password123" },
+    { email: "peneliti@borneo.id", name: "Joy Nashar", role: "peneliti", password: "password123" },
   ];
 
   for (const userData of roles) {
