@@ -1,0 +1,10 @@
+﻿node_modules
+node_modules/**
+.next
+.next/**
+src/generated
+src/generated/**
+*.log
+*.zip
+scratch
+.git

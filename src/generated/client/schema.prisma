@@ -1,7 +1,7 @@
 generator client {
   provider      = "prisma-client-js"
   output        = "../src/generated/client"
-  binaryTargets = ["native", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "linux-musl-openssl-3.0.x", "rhel-openssl-1.0.x", "rhel-openssl-1.1.x", "rhel-openssl-3.0.x"]
+  binaryTargets = ["native", "debian-openssl-1.0.x", "debian-openssl-1.1.x", "debian-openssl-3.0.x", "linux-musl-openssl-3.0.x", "rhel-openssl-1.0.x", "rhel-openssl-1.1.x", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
@@ -294,6 +294,140 @@ model Laporan {
   periode   String
   fileUrl   String?
   createdAt DateTime @default(now())
+}
+
+// === CLASS DIAGRAM UML: STRUKTUR KESIAPAN (RQ1) ===
+
+/// Dimensi penilaian kesiapan (SDM, Infrastruktur, Tata Kelola, dll)
+model Dimensi {
+  id          String      @id @default(cuid())
+  frameworkId String
+  nama        String
+  deskripsi   String?     @db.Text
+  bobot       Float       @default(1.0)
+  urutan      Int         @default(0)
+  status      String      @default("Aktif")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  indikator   Indikator[]
+}
+
+/// Indikator penilaian per dimensi
+model Indikator {
+  id             String           @id @default(cuid())
+  dimensiId      String
+  nama           String
+  deskripsi      String?          @db.Text
+  satuan         String?
+  targetNilai    Float?
+  bobot          Float            @default(1.0)
+  tipe           String           @default("Kuantitatif")
+  status         String           @default("Aktif")
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  dimensi        Dimensi          @relation(fields: [dimensiId], references: [id])
+  nilaiIndikator NilaiIndikator[]
+
+  @@index([dimensiId], map: "Indikator_dimensiId_fkey")
+}
+
+/// Nilai aktual indikator per desa per periode penilaian
+model NilaiIndikator {
+  id          String      @id @default(cuid())
+  indikatorId String
+  desaId      String
+  periode     String
+  nilai       Float
+  sumber      String?
+  catatan     String?     @db.Text
+  status      String      @default("Draft")
+  createdBy   String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  indikator   Indikator   @relation(fields: [indikatorId], references: [id])
+  buktiData   BuktiData[]
+
+  @@index([indikatorId], map: "NilaiIndikator_indikatorId_fkey")
+  @@index([desaId])
+}
+
+/// Bukti pendukung untuk nilai indikator (dokumen, foto, dll)
+model BuktiData {
+  id               String         @id @default(cuid())
+  nilaiIndikatorId String
+  judul            String
+  tipe             String         @default("dokumen")
+  fileUrl          String
+  keterangan       String?        @db.Text
+  uploadedBy       String?
+  statusReview     String         @default("Menunggu")
+  reviewedBy       String?
+  reviewedAt       DateTime?
+  createdAt        DateTime       @default(now())
+  nilaiIndikator   NilaiIndikator @relation(fields: [nilaiIndikatorId], references: [id])
+
+  @@index([nilaiIndikatorId], map: "BuktiData_nilaiIndikatorId_fkey")
+}
+
+// === CLASS DIAGRAM UML: MUSYAWARAH DAN PROGRAM ===
+
+/// Program desa resmi yang telah diputuskan
+model ProgramDesa {
+  id              String             @id @default(cuid())
+  desaId          String
+  namaProgram     String
+  deskripsi       String?            @db.Text
+  bidang          String
+  anggaranTotal   Float?
+  sumberDana      String?
+  periode         String
+  statusProgram   String             @default("Diusulkan")
+  prioritas       Int                @default(0)
+  penanggungJawab String?
+  targetCapaian   String?            @db.Text
+  tanggalMulai    DateTime?
+  tanggalSelesai  DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+  keputusan       KeputusanProgram[]
+}
+
+/// Keputusan resmi dari musyawarah yang menetapkan program
+model KeputusanProgram {
+  id               String       @id @default(cuid())
+  desaId           String
+  musyawarahId     String?
+  programDesaId    String?
+  nomorKeputusan   String?
+  judulKeputusan   String
+  isiKeputusan     String       @db.Text
+  tanggalKeputusan DateTime
+  statusSah        Boolean      @default(false)
+  disetujuiOleh    String?
+  catatan          String?      @db.Text
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  programDesa      ProgramDesa? @relation(fields: [programDesaId], references: [id])
+
+  @@index([programDesaId], map: "KeputusanProgram_programDesaId_fkey")
+}
+
+// === CLASS DIAGRAM UML: IDENTITAS DAN AKSES ===
+
+/// Persetujuan dan manajemen hak akses pengguna ke modul/fitur tertentu
+model PersetujuanAkses {
+  id            String    @id @default(cuid())
+  userId        String
+  modul         String
+  aksesLevel    String    @default("Baca")
+  disetujuiOleh String?
+  alasan        String?   @db.Text
+  status        String    @default("Aktif")
+  berlakuHingga DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([userId])
 }
 
 model Forum {

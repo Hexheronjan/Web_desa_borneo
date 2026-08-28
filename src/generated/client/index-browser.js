@@ -359,6 +359,108 @@ exports.Prisma.LaporanScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.DimensiScalarFieldEnum = {
+  id: 'id',
+  frameworkId: 'frameworkId',
+  nama: 'nama',
+  deskripsi: 'deskripsi',
+  bobot: 'bobot',
+  urutan: 'urutan',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.IndikatorScalarFieldEnum = {
+  id: 'id',
+  dimensiId: 'dimensiId',
+  nama: 'nama',
+  deskripsi: 'deskripsi',
+  satuan: 'satuan',
+  targetNilai: 'targetNilai',
+  bobot: 'bobot',
+  tipe: 'tipe',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.NilaiIndikatorScalarFieldEnum = {
+  id: 'id',
+  indikatorId: 'indikatorId',
+  desaId: 'desaId',
+  periode: 'periode',
+  nilai: 'nilai',
+  sumber: 'sumber',
+  catatan: 'catatan',
+  status: 'status',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.BuktiDataScalarFieldEnum = {
+  id: 'id',
+  nilaiIndikatorId: 'nilaiIndikatorId',
+  judul: 'judul',
+  tipe: 'tipe',
+  fileUrl: 'fileUrl',
+  keterangan: 'keterangan',
+  uploadedBy: 'uploadedBy',
+  statusReview: 'statusReview',
+  reviewedBy: 'reviewedBy',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ProgramDesaScalarFieldEnum = {
+  id: 'id',
+  desaId: 'desaId',
+  namaProgram: 'namaProgram',
+  deskripsi: 'deskripsi',
+  bidang: 'bidang',
+  anggaranTotal: 'anggaranTotal',
+  sumberDana: 'sumberDana',
+  periode: 'periode',
+  statusProgram: 'statusProgram',
+  prioritas: 'prioritas',
+  penanggungJawab: 'penanggungJawab',
+  targetCapaian: 'targetCapaian',
+  tanggalMulai: 'tanggalMulai',
+  tanggalSelesai: 'tanggalSelesai',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.KeputusanProgramScalarFieldEnum = {
+  id: 'id',
+  desaId: 'desaId',
+  musyawarahId: 'musyawarahId',
+  programDesaId: 'programDesaId',
+  nomorKeputusan: 'nomorKeputusan',
+  judulKeputusan: 'judulKeputusan',
+  isiKeputusan: 'isiKeputusan',
+  tanggalKeputusan: 'tanggalKeputusan',
+  statusSah: 'statusSah',
+  disetujuiOleh: 'disetujuiOleh',
+  catatan: 'catatan',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PersetujuanAksesScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  modul: 'modul',
+  aksesLevel: 'aksesLevel',
+  disetujuiOleh: 'disetujuiOleh',
+  alasan: 'alasan',
+  status: 'status',
+  berlakuHingga: 'berlakuHingga',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.ForumScalarFieldEnum = {
   id: 'id',
   kelasId: 'kelasId',
@@ -989,6 +1091,13 @@ exports.Prisma.ModelName = {
   AuditTrail: 'AuditTrail',
   Notifikasi: 'Notifikasi',
   Laporan: 'Laporan',
+  Dimensi: 'Dimensi',
+  Indikator: 'Indikator',
+  NilaiIndikator: 'NilaiIndikator',
+  BuktiData: 'BuktiData',
+  ProgramDesa: 'ProgramDesa',
+  KeputusanProgram: 'KeputusanProgram',
+  PersetujuanAkses: 'PersetujuanAkses',
   Forum: 'Forum',
   Diskusi: 'Diskusi',
   ShiftNakes: 'ShiftNakes',

@@ -119,6 +119,41 @@ export type Notifikasi = $Result.DefaultSelection<Prisma.$NotifikasiPayload>
  */
 export type Laporan = $Result.DefaultSelection<Prisma.$LaporanPayload>
 /**
+ * Model Dimensi
+ * Dimensi penilaian kesiapan (SDM, Infrastruktur, Tata Kelola, dll)
+ */
+export type Dimensi = $Result.DefaultSelection<Prisma.$DimensiPayload>
+/**
+ * Model Indikator
+ * Indikator penilaian per dimensi
+ */
+export type Indikator = $Result.DefaultSelection<Prisma.$IndikatorPayload>
+/**
+ * Model NilaiIndikator
+ * Nilai aktual indikator per desa per periode penilaian
+ */
+export type NilaiIndikator = $Result.DefaultSelection<Prisma.$NilaiIndikatorPayload>
+/**
+ * Model BuktiData
+ * Bukti pendukung untuk nilai indikator (dokumen, foto, dll)
+ */
+export type BuktiData = $Result.DefaultSelection<Prisma.$BuktiDataPayload>
+/**
+ * Model ProgramDesa
+ * Program desa resmi yang telah diputuskan
+ */
+export type ProgramDesa = $Result.DefaultSelection<Prisma.$ProgramDesaPayload>
+/**
+ * Model KeputusanProgram
+ * Keputusan resmi dari musyawarah yang menetapkan program
+ */
+export type KeputusanProgram = $Result.DefaultSelection<Prisma.$KeputusanProgramPayload>
+/**
+ * Model PersetujuanAkses
+ * Persetujuan dan manajemen hak akses pengguna ke modul/fitur tertentu
+ */
+export type PersetujuanAkses = $Result.DefaultSelection<Prisma.$PersetujuanAksesPayload>
+/**
  * Model Forum
  * 
  */
@@ -826,6 +861,76 @@ export class PrismaClient<
     * ```
     */
   get laporan(): Prisma.LaporanDelegate<ExtArgs>;
+
+  /**
+   * `prisma.dimensi`: Exposes CRUD operations for the **Dimensi** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Dimensis
+    * const dimensis = await prisma.dimensi.findMany()
+    * ```
+    */
+  get dimensi(): Prisma.DimensiDelegate<ExtArgs>;
+
+  /**
+   * `prisma.indikator`: Exposes CRUD operations for the **Indikator** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Indikators
+    * const indikators = await prisma.indikator.findMany()
+    * ```
+    */
+  get indikator(): Prisma.IndikatorDelegate<ExtArgs>;
+
+  /**
+   * `prisma.nilaiIndikator`: Exposes CRUD operations for the **NilaiIndikator** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more NilaiIndikators
+    * const nilaiIndikators = await prisma.nilaiIndikator.findMany()
+    * ```
+    */
+  get nilaiIndikator(): Prisma.NilaiIndikatorDelegate<ExtArgs>;
+
+  /**
+   * `prisma.buktiData`: Exposes CRUD operations for the **BuktiData** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more BuktiData
+    * const buktiData = await prisma.buktiData.findMany()
+    * ```
+    */
+  get buktiData(): Prisma.BuktiDataDelegate<ExtArgs>;
+
+  /**
+   * `prisma.programDesa`: Exposes CRUD operations for the **ProgramDesa** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProgramDesas
+    * const programDesas = await prisma.programDesa.findMany()
+    * ```
+    */
+  get programDesa(): Prisma.ProgramDesaDelegate<ExtArgs>;
+
+  /**
+   * `prisma.keputusanProgram`: Exposes CRUD operations for the **KeputusanProgram** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more KeputusanPrograms
+    * const keputusanPrograms = await prisma.keputusanProgram.findMany()
+    * ```
+    */
+  get keputusanProgram(): Prisma.KeputusanProgramDelegate<ExtArgs>;
+
+  /**
+   * `prisma.persetujuanAkses`: Exposes CRUD operations for the **PersetujuanAkses** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PersetujuanAkses
+    * const persetujuanAkses = await prisma.persetujuanAkses.findMany()
+    * ```
+    */
+  get persetujuanAkses(): Prisma.PersetujuanAksesDelegate<ExtArgs>;
 
   /**
    * `prisma.forum`: Exposes CRUD operations for the **Forum** model.
@@ -1748,6 +1853,13 @@ export namespace Prisma {
     AuditTrail: 'AuditTrail',
     Notifikasi: 'Notifikasi',
     Laporan: 'Laporan',
+    Dimensi: 'Dimensi',
+    Indikator: 'Indikator',
+    NilaiIndikator: 'NilaiIndikator',
+    BuktiData: 'BuktiData',
+    ProgramDesa: 'ProgramDesa',
+    KeputusanProgram: 'KeputusanProgram',
+    PersetujuanAkses: 'PersetujuanAkses',
     Forum: 'Forum',
     Diskusi: 'Diskusi',
     ShiftNakes: 'ShiftNakes',
@@ -1809,7 +1921,7 @@ export namespace Prisma {
 
   export type TypeMap<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, ClientOptions = {}> = {
     meta: {
-      modelProps: "user" | "desa" | "rwRt" | "warga" | "kelas" | "materi" | "pesertaKelas" | "tugas" | "rekamMedis" | "telemedicine" | "monitoringKesehatan" | "posyandu" | "stunting" | "pengurus" | "arsipAdat" | "musyawarah" | "wilayahAdat" | "hukumAdat" | "auditTrail" | "notifikasi" | "laporan" | "forum" | "diskusi" | "shiftNakes" | "aspirasi" | "siswa" | "monitoringDesa" | "masterDesaRecord" | "moduleRecord" | "umkm" | "masterFramework" | "frameworkVersioning" | "manajemenPeriode" | "validasiData" | "integrasiDataDesa" | "governanceManagement" | "dSSKnowledgeBase" | "evaluasiArtefak" | "expertValidation" | "uATResult" | "researchRepository" | "konfigurasiSistem" | "pengaturanNotifikasi" | "datasetAssessment" | "statistikPenelitian" | "visualisasiData" | "sDGsDashboard" | "publikasiSitasi" | "laporanPenelitian" | "jadwalKesehatan" | "edukasiKesehatan" | "kelasDesa" | "pelatihanOnline" | "sertifikasi" | "riwayatPelatihan" | "informasiAdat" | "kalenderAdat" | "arsipBudaya" | "forumDesa" | "musyawarahDigital" | "partisipasiMusyawarah" | "profilPengguna" | "riwayatLayanan" | "bantuanPanduan" | "dashboardNasional" | "dashboardPenelitian" | "dashboardLayananSLV"
+      modelProps: "user" | "desa" | "rwRt" | "warga" | "kelas" | "materi" | "pesertaKelas" | "tugas" | "rekamMedis" | "telemedicine" | "monitoringKesehatan" | "posyandu" | "stunting" | "pengurus" | "arsipAdat" | "musyawarah" | "wilayahAdat" | "hukumAdat" | "auditTrail" | "notifikasi" | "laporan" | "dimensi" | "indikator" | "nilaiIndikator" | "buktiData" | "programDesa" | "keputusanProgram" | "persetujuanAkses" | "forum" | "diskusi" | "shiftNakes" | "aspirasi" | "siswa" | "monitoringDesa" | "masterDesaRecord" | "moduleRecord" | "umkm" | "masterFramework" | "frameworkVersioning" | "manajemenPeriode" | "validasiData" | "integrasiDataDesa" | "governanceManagement" | "dSSKnowledgeBase" | "evaluasiArtefak" | "expertValidation" | "uATResult" | "researchRepository" | "konfigurasiSistem" | "pengaturanNotifikasi" | "datasetAssessment" | "statistikPenelitian" | "visualisasiData" | "sDGsDashboard" | "publikasiSitasi" | "laporanPenelitian" | "jadwalKesehatan" | "edukasiKesehatan" | "kelasDesa" | "pelatihanOnline" | "sertifikasi" | "riwayatPelatihan" | "informasiAdat" | "kalenderAdat" | "arsipBudaya" | "forumDesa" | "musyawarahDigital" | "partisipasiMusyawarah" | "profilPengguna" | "riwayatLayanan" | "bantuanPanduan" | "dashboardNasional" | "dashboardPenelitian" | "dashboardLayananSLV"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3196,6 +3308,468 @@ export namespace Prisma {
           count: {
             args: Prisma.LaporanCountArgs<ExtArgs>
             result: $Utils.Optional<LaporanCountAggregateOutputType> | number
+          }
+        }
+      }
+      Dimensi: {
+        payload: Prisma.$DimensiPayload<ExtArgs>
+        fields: Prisma.DimensiFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DimensiFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DimensiPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DimensiFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DimensiPayload>
+          }
+          findFirst: {
+            args: Prisma.DimensiFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DimensiPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DimensiFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DimensiPayload>
+          }
+          findMany: {
+            args: Prisma.DimensiFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DimensiPayload>[]
+          }
+          create: {
+            args: Prisma.DimensiCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DimensiPayload>
+          }
+          createMany: {
+            args: Prisma.DimensiCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.DimensiDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DimensiPayload>
+          }
+          update: {
+            args: Prisma.DimensiUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DimensiPayload>
+          }
+          deleteMany: {
+            args: Prisma.DimensiDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DimensiUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.DimensiUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DimensiPayload>
+          }
+          aggregate: {
+            args: Prisma.DimensiAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDimensi>
+          }
+          groupBy: {
+            args: Prisma.DimensiGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DimensiGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DimensiCountArgs<ExtArgs>
+            result: $Utils.Optional<DimensiCountAggregateOutputType> | number
+          }
+        }
+      }
+      Indikator: {
+        payload: Prisma.$IndikatorPayload<ExtArgs>
+        fields: Prisma.IndikatorFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IndikatorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IndikatorPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IndikatorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IndikatorPayload>
+          }
+          findFirst: {
+            args: Prisma.IndikatorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IndikatorPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IndikatorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IndikatorPayload>
+          }
+          findMany: {
+            args: Prisma.IndikatorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IndikatorPayload>[]
+          }
+          create: {
+            args: Prisma.IndikatorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IndikatorPayload>
+          }
+          createMany: {
+            args: Prisma.IndikatorCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.IndikatorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IndikatorPayload>
+          }
+          update: {
+            args: Prisma.IndikatorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IndikatorPayload>
+          }
+          deleteMany: {
+            args: Prisma.IndikatorDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IndikatorUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.IndikatorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IndikatorPayload>
+          }
+          aggregate: {
+            args: Prisma.IndikatorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIndikator>
+          }
+          groupBy: {
+            args: Prisma.IndikatorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IndikatorGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IndikatorCountArgs<ExtArgs>
+            result: $Utils.Optional<IndikatorCountAggregateOutputType> | number
+          }
+        }
+      }
+      NilaiIndikator: {
+        payload: Prisma.$NilaiIndikatorPayload<ExtArgs>
+        fields: Prisma.NilaiIndikatorFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.NilaiIndikatorFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NilaiIndikatorPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.NilaiIndikatorFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NilaiIndikatorPayload>
+          }
+          findFirst: {
+            args: Prisma.NilaiIndikatorFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NilaiIndikatorPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.NilaiIndikatorFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NilaiIndikatorPayload>
+          }
+          findMany: {
+            args: Prisma.NilaiIndikatorFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NilaiIndikatorPayload>[]
+          }
+          create: {
+            args: Prisma.NilaiIndikatorCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NilaiIndikatorPayload>
+          }
+          createMany: {
+            args: Prisma.NilaiIndikatorCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.NilaiIndikatorDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NilaiIndikatorPayload>
+          }
+          update: {
+            args: Prisma.NilaiIndikatorUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NilaiIndikatorPayload>
+          }
+          deleteMany: {
+            args: Prisma.NilaiIndikatorDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.NilaiIndikatorUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.NilaiIndikatorUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$NilaiIndikatorPayload>
+          }
+          aggregate: {
+            args: Prisma.NilaiIndikatorAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateNilaiIndikator>
+          }
+          groupBy: {
+            args: Prisma.NilaiIndikatorGroupByArgs<ExtArgs>
+            result: $Utils.Optional<NilaiIndikatorGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.NilaiIndikatorCountArgs<ExtArgs>
+            result: $Utils.Optional<NilaiIndikatorCountAggregateOutputType> | number
+          }
+        }
+      }
+      BuktiData: {
+        payload: Prisma.$BuktiDataPayload<ExtArgs>
+        fields: Prisma.BuktiDataFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.BuktiDataFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiDataPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.BuktiDataFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiDataPayload>
+          }
+          findFirst: {
+            args: Prisma.BuktiDataFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiDataPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.BuktiDataFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiDataPayload>
+          }
+          findMany: {
+            args: Prisma.BuktiDataFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiDataPayload>[]
+          }
+          create: {
+            args: Prisma.BuktiDataCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiDataPayload>
+          }
+          createMany: {
+            args: Prisma.BuktiDataCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.BuktiDataDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiDataPayload>
+          }
+          update: {
+            args: Prisma.BuktiDataUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiDataPayload>
+          }
+          deleteMany: {
+            args: Prisma.BuktiDataDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.BuktiDataUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.BuktiDataUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$BuktiDataPayload>
+          }
+          aggregate: {
+            args: Prisma.BuktiDataAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBuktiData>
+          }
+          groupBy: {
+            args: Prisma.BuktiDataGroupByArgs<ExtArgs>
+            result: $Utils.Optional<BuktiDataGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.BuktiDataCountArgs<ExtArgs>
+            result: $Utils.Optional<BuktiDataCountAggregateOutputType> | number
+          }
+        }
+      }
+      ProgramDesa: {
+        payload: Prisma.$ProgramDesaPayload<ExtArgs>
+        fields: Prisma.ProgramDesaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProgramDesaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramDesaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProgramDesaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramDesaPayload>
+          }
+          findFirst: {
+            args: Prisma.ProgramDesaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramDesaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProgramDesaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramDesaPayload>
+          }
+          findMany: {
+            args: Prisma.ProgramDesaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramDesaPayload>[]
+          }
+          create: {
+            args: Prisma.ProgramDesaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramDesaPayload>
+          }
+          createMany: {
+            args: Prisma.ProgramDesaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.ProgramDesaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramDesaPayload>
+          }
+          update: {
+            args: Prisma.ProgramDesaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramDesaPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProgramDesaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProgramDesaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.ProgramDesaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProgramDesaPayload>
+          }
+          aggregate: {
+            args: Prisma.ProgramDesaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProgramDesa>
+          }
+          groupBy: {
+            args: Prisma.ProgramDesaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProgramDesaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProgramDesaCountArgs<ExtArgs>
+            result: $Utils.Optional<ProgramDesaCountAggregateOutputType> | number
+          }
+        }
+      }
+      KeputusanProgram: {
+        payload: Prisma.$KeputusanProgramPayload<ExtArgs>
+        fields: Prisma.KeputusanProgramFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.KeputusanProgramFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KeputusanProgramPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.KeputusanProgramFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KeputusanProgramPayload>
+          }
+          findFirst: {
+            args: Prisma.KeputusanProgramFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KeputusanProgramPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.KeputusanProgramFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KeputusanProgramPayload>
+          }
+          findMany: {
+            args: Prisma.KeputusanProgramFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KeputusanProgramPayload>[]
+          }
+          create: {
+            args: Prisma.KeputusanProgramCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KeputusanProgramPayload>
+          }
+          createMany: {
+            args: Prisma.KeputusanProgramCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.KeputusanProgramDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KeputusanProgramPayload>
+          }
+          update: {
+            args: Prisma.KeputusanProgramUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KeputusanProgramPayload>
+          }
+          deleteMany: {
+            args: Prisma.KeputusanProgramDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.KeputusanProgramUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.KeputusanProgramUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KeputusanProgramPayload>
+          }
+          aggregate: {
+            args: Prisma.KeputusanProgramAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKeputusanProgram>
+          }
+          groupBy: {
+            args: Prisma.KeputusanProgramGroupByArgs<ExtArgs>
+            result: $Utils.Optional<KeputusanProgramGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.KeputusanProgramCountArgs<ExtArgs>
+            result: $Utils.Optional<KeputusanProgramCountAggregateOutputType> | number
+          }
+        }
+      }
+      PersetujuanAkses: {
+        payload: Prisma.$PersetujuanAksesPayload<ExtArgs>
+        fields: Prisma.PersetujuanAksesFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PersetujuanAksesFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersetujuanAksesPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PersetujuanAksesFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersetujuanAksesPayload>
+          }
+          findFirst: {
+            args: Prisma.PersetujuanAksesFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersetujuanAksesPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PersetujuanAksesFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersetujuanAksesPayload>
+          }
+          findMany: {
+            args: Prisma.PersetujuanAksesFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersetujuanAksesPayload>[]
+          }
+          create: {
+            args: Prisma.PersetujuanAksesCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersetujuanAksesPayload>
+          }
+          createMany: {
+            args: Prisma.PersetujuanAksesCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.PersetujuanAksesDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersetujuanAksesPayload>
+          }
+          update: {
+            args: Prisma.PersetujuanAksesUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersetujuanAksesPayload>
+          }
+          deleteMany: {
+            args: Prisma.PersetujuanAksesDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PersetujuanAksesUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.PersetujuanAksesUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersetujuanAksesPayload>
+          }
+          aggregate: {
+            args: Prisma.PersetujuanAksesAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePersetujuanAkses>
+          }
+          groupBy: {
+            args: Prisma.PersetujuanAksesGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PersetujuanAksesGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PersetujuanAksesCountArgs<ExtArgs>
+            result: $Utils.Optional<PersetujuanAksesCountAggregateOutputType> | number
           }
         }
       }
@@ -6602,6 +7176,130 @@ export namespace Prisma {
    */
   export type KelasCountOutputTypeCountTugasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TugasWhereInput
+  }
+
+
+  /**
+   * Count Type DimensiCountOutputType
+   */
+
+  export type DimensiCountOutputType = {
+    indikator: number
+  }
+
+  export type DimensiCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    indikator?: boolean | DimensiCountOutputTypeCountIndikatorArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DimensiCountOutputType without action
+   */
+  export type DimensiCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DimensiCountOutputType
+     */
+    select?: DimensiCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DimensiCountOutputType without action
+   */
+  export type DimensiCountOutputTypeCountIndikatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IndikatorWhereInput
+  }
+
+
+  /**
+   * Count Type IndikatorCountOutputType
+   */
+
+  export type IndikatorCountOutputType = {
+    nilaiIndikator: number
+  }
+
+  export type IndikatorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    nilaiIndikator?: boolean | IndikatorCountOutputTypeCountNilaiIndikatorArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * IndikatorCountOutputType without action
+   */
+  export type IndikatorCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IndikatorCountOutputType
+     */
+    select?: IndikatorCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * IndikatorCountOutputType without action
+   */
+  export type IndikatorCountOutputTypeCountNilaiIndikatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NilaiIndikatorWhereInput
+  }
+
+
+  /**
+   * Count Type NilaiIndikatorCountOutputType
+   */
+
+  export type NilaiIndikatorCountOutputType = {
+    buktiData: number
+  }
+
+  export type NilaiIndikatorCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    buktiData?: boolean | NilaiIndikatorCountOutputTypeCountBuktiDataArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * NilaiIndikatorCountOutputType without action
+   */
+  export type NilaiIndikatorCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NilaiIndikatorCountOutputType
+     */
+    select?: NilaiIndikatorCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * NilaiIndikatorCountOutputType without action
+   */
+  export type NilaiIndikatorCountOutputTypeCountBuktiDataArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BuktiDataWhereInput
+  }
+
+
+  /**
+   * Count Type ProgramDesaCountOutputType
+   */
+
+  export type ProgramDesaCountOutputType = {
+    keputusan: number
+  }
+
+  export type ProgramDesaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    keputusan?: boolean | ProgramDesaCountOutputTypeCountKeputusanArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ProgramDesaCountOutputType without action
+   */
+  export type ProgramDesaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramDesaCountOutputType
+     */
+    select?: ProgramDesaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ProgramDesaCountOutputType without action
+   */
+  export type ProgramDesaCountOutputTypeCountKeputusanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KeputusanProgramWhereInput
   }
 
 
@@ -26080,6 +26778,6877 @@ export namespace Prisma {
      * Select specific fields to fetch from the Laporan
      */
     select?: LaporanSelect<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Dimensi
+   */
+
+  export type AggregateDimensi = {
+    _count: DimensiCountAggregateOutputType | null
+    _avg: DimensiAvgAggregateOutputType | null
+    _sum: DimensiSumAggregateOutputType | null
+    _min: DimensiMinAggregateOutputType | null
+    _max: DimensiMaxAggregateOutputType | null
+  }
+
+  export type DimensiAvgAggregateOutputType = {
+    bobot: number | null
+    urutan: number | null
+  }
+
+  export type DimensiSumAggregateOutputType = {
+    bobot: number | null
+    urutan: number | null
+  }
+
+  export type DimensiMinAggregateOutputType = {
+    id: string | null
+    frameworkId: string | null
+    nama: string | null
+    deskripsi: string | null
+    bobot: number | null
+    urutan: number | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DimensiMaxAggregateOutputType = {
+    id: string | null
+    frameworkId: string | null
+    nama: string | null
+    deskripsi: string | null
+    bobot: number | null
+    urutan: number | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DimensiCountAggregateOutputType = {
+    id: number
+    frameworkId: number
+    nama: number
+    deskripsi: number
+    bobot: number
+    urutan: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DimensiAvgAggregateInputType = {
+    bobot?: true
+    urutan?: true
+  }
+
+  export type DimensiSumAggregateInputType = {
+    bobot?: true
+    urutan?: true
+  }
+
+  export type DimensiMinAggregateInputType = {
+    id?: true
+    frameworkId?: true
+    nama?: true
+    deskripsi?: true
+    bobot?: true
+    urutan?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DimensiMaxAggregateInputType = {
+    id?: true
+    frameworkId?: true
+    nama?: true
+    deskripsi?: true
+    bobot?: true
+    urutan?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DimensiCountAggregateInputType = {
+    id?: true
+    frameworkId?: true
+    nama?: true
+    deskripsi?: true
+    bobot?: true
+    urutan?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DimensiAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dimensi to aggregate.
+     */
+    where?: DimensiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dimensis to fetch.
+     */
+    orderBy?: DimensiOrderByWithRelationInput | DimensiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DimensiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dimensis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dimensis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Dimensis
+    **/
+    _count?: true | DimensiCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DimensiAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DimensiSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DimensiMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DimensiMaxAggregateInputType
+  }
+
+  export type GetDimensiAggregateType<T extends DimensiAggregateArgs> = {
+        [P in keyof T & keyof AggregateDimensi]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDimensi[P]>
+      : GetScalarType<T[P], AggregateDimensi[P]>
+  }
+
+
+
+
+  export type DimensiGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DimensiWhereInput
+    orderBy?: DimensiOrderByWithAggregationInput | DimensiOrderByWithAggregationInput[]
+    by: DimensiScalarFieldEnum[] | DimensiScalarFieldEnum
+    having?: DimensiScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DimensiCountAggregateInputType | true
+    _avg?: DimensiAvgAggregateInputType
+    _sum?: DimensiSumAggregateInputType
+    _min?: DimensiMinAggregateInputType
+    _max?: DimensiMaxAggregateInputType
+  }
+
+  export type DimensiGroupByOutputType = {
+    id: string
+    frameworkId: string
+    nama: string
+    deskripsi: string | null
+    bobot: number
+    urutan: number
+    status: string
+    createdAt: Date
+    updatedAt: Date
+    _count: DimensiCountAggregateOutputType | null
+    _avg: DimensiAvgAggregateOutputType | null
+    _sum: DimensiSumAggregateOutputType | null
+    _min: DimensiMinAggregateOutputType | null
+    _max: DimensiMaxAggregateOutputType | null
+  }
+
+  type GetDimensiGroupByPayload<T extends DimensiGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DimensiGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DimensiGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DimensiGroupByOutputType[P]>
+            : GetScalarType<T[P], DimensiGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DimensiSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    frameworkId?: boolean
+    nama?: boolean
+    deskripsi?: boolean
+    bobot?: boolean
+    urutan?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    indikator?: boolean | Dimensi$indikatorArgs<ExtArgs>
+    _count?: boolean | DimensiCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["dimensi"]>
+
+
+  export type DimensiSelectScalar = {
+    id?: boolean
+    frameworkId?: boolean
+    nama?: boolean
+    deskripsi?: boolean
+    bobot?: boolean
+    urutan?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DimensiInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    indikator?: boolean | Dimensi$indikatorArgs<ExtArgs>
+    _count?: boolean | DimensiCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $DimensiPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Dimensi"
+    objects: {
+      indikator: Prisma.$IndikatorPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      frameworkId: string
+      nama: string
+      deskripsi: string | null
+      bobot: number
+      urutan: number
+      status: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["dimensi"]>
+    composites: {}
+  }
+
+  type DimensiGetPayload<S extends boolean | null | undefined | DimensiDefaultArgs> = $Result.GetResult<Prisma.$DimensiPayload, S>
+
+  type DimensiCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<DimensiFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: DimensiCountAggregateInputType | true
+    }
+
+  export interface DimensiDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Dimensi'], meta: { name: 'Dimensi' } }
+    /**
+     * Find zero or one Dimensi that matches the filter.
+     * @param {DimensiFindUniqueArgs} args - Arguments to find a Dimensi
+     * @example
+     * // Get one Dimensi
+     * const dimensi = await prisma.dimensi.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DimensiFindUniqueArgs>(args: SelectSubset<T, DimensiFindUniqueArgs<ExtArgs>>): Prisma__DimensiClient<$Result.GetResult<Prisma.$DimensiPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Dimensi that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {DimensiFindUniqueOrThrowArgs} args - Arguments to find a Dimensi
+     * @example
+     * // Get one Dimensi
+     * const dimensi = await prisma.dimensi.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DimensiFindUniqueOrThrowArgs>(args: SelectSubset<T, DimensiFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DimensiClient<$Result.GetResult<Prisma.$DimensiPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Dimensi that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DimensiFindFirstArgs} args - Arguments to find a Dimensi
+     * @example
+     * // Get one Dimensi
+     * const dimensi = await prisma.dimensi.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DimensiFindFirstArgs>(args?: SelectSubset<T, DimensiFindFirstArgs<ExtArgs>>): Prisma__DimensiClient<$Result.GetResult<Prisma.$DimensiPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Dimensi that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DimensiFindFirstOrThrowArgs} args - Arguments to find a Dimensi
+     * @example
+     * // Get one Dimensi
+     * const dimensi = await prisma.dimensi.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DimensiFindFirstOrThrowArgs>(args?: SelectSubset<T, DimensiFindFirstOrThrowArgs<ExtArgs>>): Prisma__DimensiClient<$Result.GetResult<Prisma.$DimensiPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Dimensis that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DimensiFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Dimensis
+     * const dimensis = await prisma.dimensi.findMany()
+     * 
+     * // Get first 10 Dimensis
+     * const dimensis = await prisma.dimensi.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const dimensiWithIdOnly = await prisma.dimensi.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DimensiFindManyArgs>(args?: SelectSubset<T, DimensiFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DimensiPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Dimensi.
+     * @param {DimensiCreateArgs} args - Arguments to create a Dimensi.
+     * @example
+     * // Create one Dimensi
+     * const Dimensi = await prisma.dimensi.create({
+     *   data: {
+     *     // ... data to create a Dimensi
+     *   }
+     * })
+     * 
+     */
+    create<T extends DimensiCreateArgs>(args: SelectSubset<T, DimensiCreateArgs<ExtArgs>>): Prisma__DimensiClient<$Result.GetResult<Prisma.$DimensiPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Dimensis.
+     * @param {DimensiCreateManyArgs} args - Arguments to create many Dimensis.
+     * @example
+     * // Create many Dimensis
+     * const dimensi = await prisma.dimensi.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DimensiCreateManyArgs>(args?: SelectSubset<T, DimensiCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Dimensi.
+     * @param {DimensiDeleteArgs} args - Arguments to delete one Dimensi.
+     * @example
+     * // Delete one Dimensi
+     * const Dimensi = await prisma.dimensi.delete({
+     *   where: {
+     *     // ... filter to delete one Dimensi
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DimensiDeleteArgs>(args: SelectSubset<T, DimensiDeleteArgs<ExtArgs>>): Prisma__DimensiClient<$Result.GetResult<Prisma.$DimensiPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Dimensi.
+     * @param {DimensiUpdateArgs} args - Arguments to update one Dimensi.
+     * @example
+     * // Update one Dimensi
+     * const dimensi = await prisma.dimensi.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DimensiUpdateArgs>(args: SelectSubset<T, DimensiUpdateArgs<ExtArgs>>): Prisma__DimensiClient<$Result.GetResult<Prisma.$DimensiPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Dimensis.
+     * @param {DimensiDeleteManyArgs} args - Arguments to filter Dimensis to delete.
+     * @example
+     * // Delete a few Dimensis
+     * const { count } = await prisma.dimensi.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DimensiDeleteManyArgs>(args?: SelectSubset<T, DimensiDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Dimensis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DimensiUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Dimensis
+     * const dimensi = await prisma.dimensi.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DimensiUpdateManyArgs>(args: SelectSubset<T, DimensiUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Dimensi.
+     * @param {DimensiUpsertArgs} args - Arguments to update or create a Dimensi.
+     * @example
+     * // Update or create a Dimensi
+     * const dimensi = await prisma.dimensi.upsert({
+     *   create: {
+     *     // ... data to create a Dimensi
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Dimensi we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DimensiUpsertArgs>(args: SelectSubset<T, DimensiUpsertArgs<ExtArgs>>): Prisma__DimensiClient<$Result.GetResult<Prisma.$DimensiPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Dimensis.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DimensiCountArgs} args - Arguments to filter Dimensis to count.
+     * @example
+     * // Count the number of Dimensis
+     * const count = await prisma.dimensi.count({
+     *   where: {
+     *     // ... the filter for the Dimensis we want to count
+     *   }
+     * })
+    **/
+    count<T extends DimensiCountArgs>(
+      args?: Subset<T, DimensiCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DimensiCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Dimensi.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DimensiAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DimensiAggregateArgs>(args: Subset<T, DimensiAggregateArgs>): Prisma.PrismaPromise<GetDimensiAggregateType<T>>
+
+    /**
+     * Group by Dimensi.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DimensiGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DimensiGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DimensiGroupByArgs['orderBy'] }
+        : { orderBy?: DimensiGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DimensiGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDimensiGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Dimensi model
+   */
+  readonly fields: DimensiFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Dimensi.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DimensiClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    indikator<T extends Dimensi$indikatorArgs<ExtArgs> = {}>(args?: Subset<T, Dimensi$indikatorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IndikatorPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Dimensi model
+   */ 
+  interface DimensiFieldRefs {
+    readonly id: FieldRef<"Dimensi", 'String'>
+    readonly frameworkId: FieldRef<"Dimensi", 'String'>
+    readonly nama: FieldRef<"Dimensi", 'String'>
+    readonly deskripsi: FieldRef<"Dimensi", 'String'>
+    readonly bobot: FieldRef<"Dimensi", 'Float'>
+    readonly urutan: FieldRef<"Dimensi", 'Int'>
+    readonly status: FieldRef<"Dimensi", 'String'>
+    readonly createdAt: FieldRef<"Dimensi", 'DateTime'>
+    readonly updatedAt: FieldRef<"Dimensi", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Dimensi findUnique
+   */
+  export type DimensiFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dimensi
+     */
+    select?: DimensiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DimensiInclude<ExtArgs> | null
+    /**
+     * Filter, which Dimensi to fetch.
+     */
+    where: DimensiWhereUniqueInput
+  }
+
+  /**
+   * Dimensi findUniqueOrThrow
+   */
+  export type DimensiFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dimensi
+     */
+    select?: DimensiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DimensiInclude<ExtArgs> | null
+    /**
+     * Filter, which Dimensi to fetch.
+     */
+    where: DimensiWhereUniqueInput
+  }
+
+  /**
+   * Dimensi findFirst
+   */
+  export type DimensiFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dimensi
+     */
+    select?: DimensiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DimensiInclude<ExtArgs> | null
+    /**
+     * Filter, which Dimensi to fetch.
+     */
+    where?: DimensiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dimensis to fetch.
+     */
+    orderBy?: DimensiOrderByWithRelationInput | DimensiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dimensis.
+     */
+    cursor?: DimensiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dimensis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dimensis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dimensis.
+     */
+    distinct?: DimensiScalarFieldEnum | DimensiScalarFieldEnum[]
+  }
+
+  /**
+   * Dimensi findFirstOrThrow
+   */
+  export type DimensiFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dimensi
+     */
+    select?: DimensiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DimensiInclude<ExtArgs> | null
+    /**
+     * Filter, which Dimensi to fetch.
+     */
+    where?: DimensiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dimensis to fetch.
+     */
+    orderBy?: DimensiOrderByWithRelationInput | DimensiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Dimensis.
+     */
+    cursor?: DimensiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dimensis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dimensis.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Dimensis.
+     */
+    distinct?: DimensiScalarFieldEnum | DimensiScalarFieldEnum[]
+  }
+
+  /**
+   * Dimensi findMany
+   */
+  export type DimensiFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dimensi
+     */
+    select?: DimensiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DimensiInclude<ExtArgs> | null
+    /**
+     * Filter, which Dimensis to fetch.
+     */
+    where?: DimensiWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Dimensis to fetch.
+     */
+    orderBy?: DimensiOrderByWithRelationInput | DimensiOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Dimensis.
+     */
+    cursor?: DimensiWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Dimensis from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Dimensis.
+     */
+    skip?: number
+    distinct?: DimensiScalarFieldEnum | DimensiScalarFieldEnum[]
+  }
+
+  /**
+   * Dimensi create
+   */
+  export type DimensiCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dimensi
+     */
+    select?: DimensiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DimensiInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Dimensi.
+     */
+    data: XOR<DimensiCreateInput, DimensiUncheckedCreateInput>
+  }
+
+  /**
+   * Dimensi createMany
+   */
+  export type DimensiCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Dimensis.
+     */
+    data: DimensiCreateManyInput | DimensiCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Dimensi update
+   */
+  export type DimensiUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dimensi
+     */
+    select?: DimensiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DimensiInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Dimensi.
+     */
+    data: XOR<DimensiUpdateInput, DimensiUncheckedUpdateInput>
+    /**
+     * Choose, which Dimensi to update.
+     */
+    where: DimensiWhereUniqueInput
+  }
+
+  /**
+   * Dimensi updateMany
+   */
+  export type DimensiUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Dimensis.
+     */
+    data: XOR<DimensiUpdateManyMutationInput, DimensiUncheckedUpdateManyInput>
+    /**
+     * Filter which Dimensis to update
+     */
+    where?: DimensiWhereInput
+  }
+
+  /**
+   * Dimensi upsert
+   */
+  export type DimensiUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dimensi
+     */
+    select?: DimensiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DimensiInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Dimensi to update in case it exists.
+     */
+    where: DimensiWhereUniqueInput
+    /**
+     * In case the Dimensi found by the `where` argument doesn't exist, create a new Dimensi with this data.
+     */
+    create: XOR<DimensiCreateInput, DimensiUncheckedCreateInput>
+    /**
+     * In case the Dimensi was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DimensiUpdateInput, DimensiUncheckedUpdateInput>
+  }
+
+  /**
+   * Dimensi delete
+   */
+  export type DimensiDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dimensi
+     */
+    select?: DimensiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DimensiInclude<ExtArgs> | null
+    /**
+     * Filter which Dimensi to delete.
+     */
+    where: DimensiWhereUniqueInput
+  }
+
+  /**
+   * Dimensi deleteMany
+   */
+  export type DimensiDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Dimensis to delete
+     */
+    where?: DimensiWhereInput
+  }
+
+  /**
+   * Dimensi.indikator
+   */
+  export type Dimensi$indikatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Indikator
+     */
+    select?: IndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IndikatorInclude<ExtArgs> | null
+    where?: IndikatorWhereInput
+    orderBy?: IndikatorOrderByWithRelationInput | IndikatorOrderByWithRelationInput[]
+    cursor?: IndikatorWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: IndikatorScalarFieldEnum | IndikatorScalarFieldEnum[]
+  }
+
+  /**
+   * Dimensi without action
+   */
+  export type DimensiDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Dimensi
+     */
+    select?: DimensiSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DimensiInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Indikator
+   */
+
+  export type AggregateIndikator = {
+    _count: IndikatorCountAggregateOutputType | null
+    _avg: IndikatorAvgAggregateOutputType | null
+    _sum: IndikatorSumAggregateOutputType | null
+    _min: IndikatorMinAggregateOutputType | null
+    _max: IndikatorMaxAggregateOutputType | null
+  }
+
+  export type IndikatorAvgAggregateOutputType = {
+    targetNilai: number | null
+    bobot: number | null
+  }
+
+  export type IndikatorSumAggregateOutputType = {
+    targetNilai: number | null
+    bobot: number | null
+  }
+
+  export type IndikatorMinAggregateOutputType = {
+    id: string | null
+    dimensiId: string | null
+    nama: string | null
+    deskripsi: string | null
+    satuan: string | null
+    targetNilai: number | null
+    bobot: number | null
+    tipe: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type IndikatorMaxAggregateOutputType = {
+    id: string | null
+    dimensiId: string | null
+    nama: string | null
+    deskripsi: string | null
+    satuan: string | null
+    targetNilai: number | null
+    bobot: number | null
+    tipe: string | null
+    status: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type IndikatorCountAggregateOutputType = {
+    id: number
+    dimensiId: number
+    nama: number
+    deskripsi: number
+    satuan: number
+    targetNilai: number
+    bobot: number
+    tipe: number
+    status: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type IndikatorAvgAggregateInputType = {
+    targetNilai?: true
+    bobot?: true
+  }
+
+  export type IndikatorSumAggregateInputType = {
+    targetNilai?: true
+    bobot?: true
+  }
+
+  export type IndikatorMinAggregateInputType = {
+    id?: true
+    dimensiId?: true
+    nama?: true
+    deskripsi?: true
+    satuan?: true
+    targetNilai?: true
+    bobot?: true
+    tipe?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type IndikatorMaxAggregateInputType = {
+    id?: true
+    dimensiId?: true
+    nama?: true
+    deskripsi?: true
+    satuan?: true
+    targetNilai?: true
+    bobot?: true
+    tipe?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type IndikatorCountAggregateInputType = {
+    id?: true
+    dimensiId?: true
+    nama?: true
+    deskripsi?: true
+    satuan?: true
+    targetNilai?: true
+    bobot?: true
+    tipe?: true
+    status?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type IndikatorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Indikator to aggregate.
+     */
+    where?: IndikatorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Indikators to fetch.
+     */
+    orderBy?: IndikatorOrderByWithRelationInput | IndikatorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IndikatorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Indikators from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Indikators.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Indikators
+    **/
+    _count?: true | IndikatorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: IndikatorAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: IndikatorSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IndikatorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IndikatorMaxAggregateInputType
+  }
+
+  export type GetIndikatorAggregateType<T extends IndikatorAggregateArgs> = {
+        [P in keyof T & keyof AggregateIndikator]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIndikator[P]>
+      : GetScalarType<T[P], AggregateIndikator[P]>
+  }
+
+
+
+
+  export type IndikatorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IndikatorWhereInput
+    orderBy?: IndikatorOrderByWithAggregationInput | IndikatorOrderByWithAggregationInput[]
+    by: IndikatorScalarFieldEnum[] | IndikatorScalarFieldEnum
+    having?: IndikatorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IndikatorCountAggregateInputType | true
+    _avg?: IndikatorAvgAggregateInputType
+    _sum?: IndikatorSumAggregateInputType
+    _min?: IndikatorMinAggregateInputType
+    _max?: IndikatorMaxAggregateInputType
+  }
+
+  export type IndikatorGroupByOutputType = {
+    id: string
+    dimensiId: string
+    nama: string
+    deskripsi: string | null
+    satuan: string | null
+    targetNilai: number | null
+    bobot: number
+    tipe: string
+    status: string
+    createdAt: Date
+    updatedAt: Date
+    _count: IndikatorCountAggregateOutputType | null
+    _avg: IndikatorAvgAggregateOutputType | null
+    _sum: IndikatorSumAggregateOutputType | null
+    _min: IndikatorMinAggregateOutputType | null
+    _max: IndikatorMaxAggregateOutputType | null
+  }
+
+  type GetIndikatorGroupByPayload<T extends IndikatorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IndikatorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IndikatorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IndikatorGroupByOutputType[P]>
+            : GetScalarType<T[P], IndikatorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IndikatorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dimensiId?: boolean
+    nama?: boolean
+    deskripsi?: boolean
+    satuan?: boolean
+    targetNilai?: boolean
+    bobot?: boolean
+    tipe?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    dimensi?: boolean | DimensiDefaultArgs<ExtArgs>
+    nilaiIndikator?: boolean | Indikator$nilaiIndikatorArgs<ExtArgs>
+    _count?: boolean | IndikatorCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["indikator"]>
+
+
+  export type IndikatorSelectScalar = {
+    id?: boolean
+    dimensiId?: boolean
+    nama?: boolean
+    deskripsi?: boolean
+    satuan?: boolean
+    targetNilai?: boolean
+    bobot?: boolean
+    tipe?: boolean
+    status?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type IndikatorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    dimensi?: boolean | DimensiDefaultArgs<ExtArgs>
+    nilaiIndikator?: boolean | Indikator$nilaiIndikatorArgs<ExtArgs>
+    _count?: boolean | IndikatorCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $IndikatorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Indikator"
+    objects: {
+      dimensi: Prisma.$DimensiPayload<ExtArgs>
+      nilaiIndikator: Prisma.$NilaiIndikatorPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      dimensiId: string
+      nama: string
+      deskripsi: string | null
+      satuan: string | null
+      targetNilai: number | null
+      bobot: number
+      tipe: string
+      status: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["indikator"]>
+    composites: {}
+  }
+
+  type IndikatorGetPayload<S extends boolean | null | undefined | IndikatorDefaultArgs> = $Result.GetResult<Prisma.$IndikatorPayload, S>
+
+  type IndikatorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<IndikatorFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: IndikatorCountAggregateInputType | true
+    }
+
+  export interface IndikatorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Indikator'], meta: { name: 'Indikator' } }
+    /**
+     * Find zero or one Indikator that matches the filter.
+     * @param {IndikatorFindUniqueArgs} args - Arguments to find a Indikator
+     * @example
+     * // Get one Indikator
+     * const indikator = await prisma.indikator.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IndikatorFindUniqueArgs>(args: SelectSubset<T, IndikatorFindUniqueArgs<ExtArgs>>): Prisma__IndikatorClient<$Result.GetResult<Prisma.$IndikatorPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one Indikator that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {IndikatorFindUniqueOrThrowArgs} args - Arguments to find a Indikator
+     * @example
+     * // Get one Indikator
+     * const indikator = await prisma.indikator.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IndikatorFindUniqueOrThrowArgs>(args: SelectSubset<T, IndikatorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IndikatorClient<$Result.GetResult<Prisma.$IndikatorPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first Indikator that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IndikatorFindFirstArgs} args - Arguments to find a Indikator
+     * @example
+     * // Get one Indikator
+     * const indikator = await prisma.indikator.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IndikatorFindFirstArgs>(args?: SelectSubset<T, IndikatorFindFirstArgs<ExtArgs>>): Prisma__IndikatorClient<$Result.GetResult<Prisma.$IndikatorPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first Indikator that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IndikatorFindFirstOrThrowArgs} args - Arguments to find a Indikator
+     * @example
+     * // Get one Indikator
+     * const indikator = await prisma.indikator.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IndikatorFindFirstOrThrowArgs>(args?: SelectSubset<T, IndikatorFindFirstOrThrowArgs<ExtArgs>>): Prisma__IndikatorClient<$Result.GetResult<Prisma.$IndikatorPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more Indikators that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IndikatorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Indikators
+     * const indikators = await prisma.indikator.findMany()
+     * 
+     * // Get first 10 Indikators
+     * const indikators = await prisma.indikator.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const indikatorWithIdOnly = await prisma.indikator.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IndikatorFindManyArgs>(args?: SelectSubset<T, IndikatorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IndikatorPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a Indikator.
+     * @param {IndikatorCreateArgs} args - Arguments to create a Indikator.
+     * @example
+     * // Create one Indikator
+     * const Indikator = await prisma.indikator.create({
+     *   data: {
+     *     // ... data to create a Indikator
+     *   }
+     * })
+     * 
+     */
+    create<T extends IndikatorCreateArgs>(args: SelectSubset<T, IndikatorCreateArgs<ExtArgs>>): Prisma__IndikatorClient<$Result.GetResult<Prisma.$IndikatorPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many Indikators.
+     * @param {IndikatorCreateManyArgs} args - Arguments to create many Indikators.
+     * @example
+     * // Create many Indikators
+     * const indikator = await prisma.indikator.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IndikatorCreateManyArgs>(args?: SelectSubset<T, IndikatorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Indikator.
+     * @param {IndikatorDeleteArgs} args - Arguments to delete one Indikator.
+     * @example
+     * // Delete one Indikator
+     * const Indikator = await prisma.indikator.delete({
+     *   where: {
+     *     // ... filter to delete one Indikator
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IndikatorDeleteArgs>(args: SelectSubset<T, IndikatorDeleteArgs<ExtArgs>>): Prisma__IndikatorClient<$Result.GetResult<Prisma.$IndikatorPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one Indikator.
+     * @param {IndikatorUpdateArgs} args - Arguments to update one Indikator.
+     * @example
+     * // Update one Indikator
+     * const indikator = await prisma.indikator.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IndikatorUpdateArgs>(args: SelectSubset<T, IndikatorUpdateArgs<ExtArgs>>): Prisma__IndikatorClient<$Result.GetResult<Prisma.$IndikatorPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more Indikators.
+     * @param {IndikatorDeleteManyArgs} args - Arguments to filter Indikators to delete.
+     * @example
+     * // Delete a few Indikators
+     * const { count } = await prisma.indikator.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends IndikatorDeleteManyArgs>(args?: SelectSubset<T, IndikatorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Indikators.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IndikatorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Indikators
+     * const indikator = await prisma.indikator.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends IndikatorUpdateManyArgs>(args: SelectSubset<T, IndikatorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Indikator.
+     * @param {IndikatorUpsertArgs} args - Arguments to update or create a Indikator.
+     * @example
+     * // Update or create a Indikator
+     * const indikator = await prisma.indikator.upsert({
+     *   create: {
+     *     // ... data to create a Indikator
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Indikator we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IndikatorUpsertArgs>(args: SelectSubset<T, IndikatorUpsertArgs<ExtArgs>>): Prisma__IndikatorClient<$Result.GetResult<Prisma.$IndikatorPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of Indikators.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IndikatorCountArgs} args - Arguments to filter Indikators to count.
+     * @example
+     * // Count the number of Indikators
+     * const count = await prisma.indikator.count({
+     *   where: {
+     *     // ... the filter for the Indikators we want to count
+     *   }
+     * })
+    **/
+    count<T extends IndikatorCountArgs>(
+      args?: Subset<T, IndikatorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IndikatorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Indikator.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IndikatorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IndikatorAggregateArgs>(args: Subset<T, IndikatorAggregateArgs>): Prisma.PrismaPromise<GetIndikatorAggregateType<T>>
+
+    /**
+     * Group by Indikator.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IndikatorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends IndikatorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IndikatorGroupByArgs['orderBy'] }
+        : { orderBy?: IndikatorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IndikatorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIndikatorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Indikator model
+   */
+  readonly fields: IndikatorFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Indikator.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IndikatorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    dimensi<T extends DimensiDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DimensiDefaultArgs<ExtArgs>>): Prisma__DimensiClient<$Result.GetResult<Prisma.$DimensiPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    nilaiIndikator<T extends Indikator$nilaiIndikatorArgs<ExtArgs> = {}>(args?: Subset<T, Indikator$nilaiIndikatorArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NilaiIndikatorPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Indikator model
+   */ 
+  interface IndikatorFieldRefs {
+    readonly id: FieldRef<"Indikator", 'String'>
+    readonly dimensiId: FieldRef<"Indikator", 'String'>
+    readonly nama: FieldRef<"Indikator", 'String'>
+    readonly deskripsi: FieldRef<"Indikator", 'String'>
+    readonly satuan: FieldRef<"Indikator", 'String'>
+    readonly targetNilai: FieldRef<"Indikator", 'Float'>
+    readonly bobot: FieldRef<"Indikator", 'Float'>
+    readonly tipe: FieldRef<"Indikator", 'String'>
+    readonly status: FieldRef<"Indikator", 'String'>
+    readonly createdAt: FieldRef<"Indikator", 'DateTime'>
+    readonly updatedAt: FieldRef<"Indikator", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Indikator findUnique
+   */
+  export type IndikatorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Indikator
+     */
+    select?: IndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IndikatorInclude<ExtArgs> | null
+    /**
+     * Filter, which Indikator to fetch.
+     */
+    where: IndikatorWhereUniqueInput
+  }
+
+  /**
+   * Indikator findUniqueOrThrow
+   */
+  export type IndikatorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Indikator
+     */
+    select?: IndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IndikatorInclude<ExtArgs> | null
+    /**
+     * Filter, which Indikator to fetch.
+     */
+    where: IndikatorWhereUniqueInput
+  }
+
+  /**
+   * Indikator findFirst
+   */
+  export type IndikatorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Indikator
+     */
+    select?: IndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IndikatorInclude<ExtArgs> | null
+    /**
+     * Filter, which Indikator to fetch.
+     */
+    where?: IndikatorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Indikators to fetch.
+     */
+    orderBy?: IndikatorOrderByWithRelationInput | IndikatorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Indikators.
+     */
+    cursor?: IndikatorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Indikators from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Indikators.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Indikators.
+     */
+    distinct?: IndikatorScalarFieldEnum | IndikatorScalarFieldEnum[]
+  }
+
+  /**
+   * Indikator findFirstOrThrow
+   */
+  export type IndikatorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Indikator
+     */
+    select?: IndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IndikatorInclude<ExtArgs> | null
+    /**
+     * Filter, which Indikator to fetch.
+     */
+    where?: IndikatorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Indikators to fetch.
+     */
+    orderBy?: IndikatorOrderByWithRelationInput | IndikatorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Indikators.
+     */
+    cursor?: IndikatorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Indikators from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Indikators.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Indikators.
+     */
+    distinct?: IndikatorScalarFieldEnum | IndikatorScalarFieldEnum[]
+  }
+
+  /**
+   * Indikator findMany
+   */
+  export type IndikatorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Indikator
+     */
+    select?: IndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IndikatorInclude<ExtArgs> | null
+    /**
+     * Filter, which Indikators to fetch.
+     */
+    where?: IndikatorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Indikators to fetch.
+     */
+    orderBy?: IndikatorOrderByWithRelationInput | IndikatorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Indikators.
+     */
+    cursor?: IndikatorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Indikators from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Indikators.
+     */
+    skip?: number
+    distinct?: IndikatorScalarFieldEnum | IndikatorScalarFieldEnum[]
+  }
+
+  /**
+   * Indikator create
+   */
+  export type IndikatorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Indikator
+     */
+    select?: IndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IndikatorInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Indikator.
+     */
+    data: XOR<IndikatorCreateInput, IndikatorUncheckedCreateInput>
+  }
+
+  /**
+   * Indikator createMany
+   */
+  export type IndikatorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Indikators.
+     */
+    data: IndikatorCreateManyInput | IndikatorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Indikator update
+   */
+  export type IndikatorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Indikator
+     */
+    select?: IndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IndikatorInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Indikator.
+     */
+    data: XOR<IndikatorUpdateInput, IndikatorUncheckedUpdateInput>
+    /**
+     * Choose, which Indikator to update.
+     */
+    where: IndikatorWhereUniqueInput
+  }
+
+  /**
+   * Indikator updateMany
+   */
+  export type IndikatorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Indikators.
+     */
+    data: XOR<IndikatorUpdateManyMutationInput, IndikatorUncheckedUpdateManyInput>
+    /**
+     * Filter which Indikators to update
+     */
+    where?: IndikatorWhereInput
+  }
+
+  /**
+   * Indikator upsert
+   */
+  export type IndikatorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Indikator
+     */
+    select?: IndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IndikatorInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Indikator to update in case it exists.
+     */
+    where: IndikatorWhereUniqueInput
+    /**
+     * In case the Indikator found by the `where` argument doesn't exist, create a new Indikator with this data.
+     */
+    create: XOR<IndikatorCreateInput, IndikatorUncheckedCreateInput>
+    /**
+     * In case the Indikator was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IndikatorUpdateInput, IndikatorUncheckedUpdateInput>
+  }
+
+  /**
+   * Indikator delete
+   */
+  export type IndikatorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Indikator
+     */
+    select?: IndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IndikatorInclude<ExtArgs> | null
+    /**
+     * Filter which Indikator to delete.
+     */
+    where: IndikatorWhereUniqueInput
+  }
+
+  /**
+   * Indikator deleteMany
+   */
+  export type IndikatorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Indikators to delete
+     */
+    where?: IndikatorWhereInput
+  }
+
+  /**
+   * Indikator.nilaiIndikator
+   */
+  export type Indikator$nilaiIndikatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NilaiIndikator
+     */
+    select?: NilaiIndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NilaiIndikatorInclude<ExtArgs> | null
+    where?: NilaiIndikatorWhereInput
+    orderBy?: NilaiIndikatorOrderByWithRelationInput | NilaiIndikatorOrderByWithRelationInput[]
+    cursor?: NilaiIndikatorWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: NilaiIndikatorScalarFieldEnum | NilaiIndikatorScalarFieldEnum[]
+  }
+
+  /**
+   * Indikator without action
+   */
+  export type IndikatorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Indikator
+     */
+    select?: IndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: IndikatorInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model NilaiIndikator
+   */
+
+  export type AggregateNilaiIndikator = {
+    _count: NilaiIndikatorCountAggregateOutputType | null
+    _avg: NilaiIndikatorAvgAggregateOutputType | null
+    _sum: NilaiIndikatorSumAggregateOutputType | null
+    _min: NilaiIndikatorMinAggregateOutputType | null
+    _max: NilaiIndikatorMaxAggregateOutputType | null
+  }
+
+  export type NilaiIndikatorAvgAggregateOutputType = {
+    nilai: number | null
+  }
+
+  export type NilaiIndikatorSumAggregateOutputType = {
+    nilai: number | null
+  }
+
+  export type NilaiIndikatorMinAggregateOutputType = {
+    id: string | null
+    indikatorId: string | null
+    desaId: string | null
+    periode: string | null
+    nilai: number | null
+    sumber: string | null
+    catatan: string | null
+    status: string | null
+    createdBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type NilaiIndikatorMaxAggregateOutputType = {
+    id: string | null
+    indikatorId: string | null
+    desaId: string | null
+    periode: string | null
+    nilai: number | null
+    sumber: string | null
+    catatan: string | null
+    status: string | null
+    createdBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type NilaiIndikatorCountAggregateOutputType = {
+    id: number
+    indikatorId: number
+    desaId: number
+    periode: number
+    nilai: number
+    sumber: number
+    catatan: number
+    status: number
+    createdBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type NilaiIndikatorAvgAggregateInputType = {
+    nilai?: true
+  }
+
+  export type NilaiIndikatorSumAggregateInputType = {
+    nilai?: true
+  }
+
+  export type NilaiIndikatorMinAggregateInputType = {
+    id?: true
+    indikatorId?: true
+    desaId?: true
+    periode?: true
+    nilai?: true
+    sumber?: true
+    catatan?: true
+    status?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type NilaiIndikatorMaxAggregateInputType = {
+    id?: true
+    indikatorId?: true
+    desaId?: true
+    periode?: true
+    nilai?: true
+    sumber?: true
+    catatan?: true
+    status?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type NilaiIndikatorCountAggregateInputType = {
+    id?: true
+    indikatorId?: true
+    desaId?: true
+    periode?: true
+    nilai?: true
+    sumber?: true
+    catatan?: true
+    status?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type NilaiIndikatorAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which NilaiIndikator to aggregate.
+     */
+    where?: NilaiIndikatorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NilaiIndikators to fetch.
+     */
+    orderBy?: NilaiIndikatorOrderByWithRelationInput | NilaiIndikatorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: NilaiIndikatorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NilaiIndikators from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NilaiIndikators.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned NilaiIndikators
+    **/
+    _count?: true | NilaiIndikatorCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: NilaiIndikatorAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: NilaiIndikatorSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: NilaiIndikatorMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: NilaiIndikatorMaxAggregateInputType
+  }
+
+  export type GetNilaiIndikatorAggregateType<T extends NilaiIndikatorAggregateArgs> = {
+        [P in keyof T & keyof AggregateNilaiIndikator]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateNilaiIndikator[P]>
+      : GetScalarType<T[P], AggregateNilaiIndikator[P]>
+  }
+
+
+
+
+  export type NilaiIndikatorGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: NilaiIndikatorWhereInput
+    orderBy?: NilaiIndikatorOrderByWithAggregationInput | NilaiIndikatorOrderByWithAggregationInput[]
+    by: NilaiIndikatorScalarFieldEnum[] | NilaiIndikatorScalarFieldEnum
+    having?: NilaiIndikatorScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: NilaiIndikatorCountAggregateInputType | true
+    _avg?: NilaiIndikatorAvgAggregateInputType
+    _sum?: NilaiIndikatorSumAggregateInputType
+    _min?: NilaiIndikatorMinAggregateInputType
+    _max?: NilaiIndikatorMaxAggregateInputType
+  }
+
+  export type NilaiIndikatorGroupByOutputType = {
+    id: string
+    indikatorId: string
+    desaId: string
+    periode: string
+    nilai: number
+    sumber: string | null
+    catatan: string | null
+    status: string
+    createdBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: NilaiIndikatorCountAggregateOutputType | null
+    _avg: NilaiIndikatorAvgAggregateOutputType | null
+    _sum: NilaiIndikatorSumAggregateOutputType | null
+    _min: NilaiIndikatorMinAggregateOutputType | null
+    _max: NilaiIndikatorMaxAggregateOutputType | null
+  }
+
+  type GetNilaiIndikatorGroupByPayload<T extends NilaiIndikatorGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<NilaiIndikatorGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof NilaiIndikatorGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], NilaiIndikatorGroupByOutputType[P]>
+            : GetScalarType<T[P], NilaiIndikatorGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type NilaiIndikatorSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    indikatorId?: boolean
+    desaId?: boolean
+    periode?: boolean
+    nilai?: boolean
+    sumber?: boolean
+    catatan?: boolean
+    status?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    indikator?: boolean | IndikatorDefaultArgs<ExtArgs>
+    buktiData?: boolean | NilaiIndikator$buktiDataArgs<ExtArgs>
+    _count?: boolean | NilaiIndikatorCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["nilaiIndikator"]>
+
+
+  export type NilaiIndikatorSelectScalar = {
+    id?: boolean
+    indikatorId?: boolean
+    desaId?: boolean
+    periode?: boolean
+    nilai?: boolean
+    sumber?: boolean
+    catatan?: boolean
+    status?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type NilaiIndikatorInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    indikator?: boolean | IndikatorDefaultArgs<ExtArgs>
+    buktiData?: boolean | NilaiIndikator$buktiDataArgs<ExtArgs>
+    _count?: boolean | NilaiIndikatorCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $NilaiIndikatorPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "NilaiIndikator"
+    objects: {
+      indikator: Prisma.$IndikatorPayload<ExtArgs>
+      buktiData: Prisma.$BuktiDataPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      indikatorId: string
+      desaId: string
+      periode: string
+      nilai: number
+      sumber: string | null
+      catatan: string | null
+      status: string
+      createdBy: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["nilaiIndikator"]>
+    composites: {}
+  }
+
+  type NilaiIndikatorGetPayload<S extends boolean | null | undefined | NilaiIndikatorDefaultArgs> = $Result.GetResult<Prisma.$NilaiIndikatorPayload, S>
+
+  type NilaiIndikatorCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<NilaiIndikatorFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: NilaiIndikatorCountAggregateInputType | true
+    }
+
+  export interface NilaiIndikatorDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['NilaiIndikator'], meta: { name: 'NilaiIndikator' } }
+    /**
+     * Find zero or one NilaiIndikator that matches the filter.
+     * @param {NilaiIndikatorFindUniqueArgs} args - Arguments to find a NilaiIndikator
+     * @example
+     * // Get one NilaiIndikator
+     * const nilaiIndikator = await prisma.nilaiIndikator.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends NilaiIndikatorFindUniqueArgs>(args: SelectSubset<T, NilaiIndikatorFindUniqueArgs<ExtArgs>>): Prisma__NilaiIndikatorClient<$Result.GetResult<Prisma.$NilaiIndikatorPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one NilaiIndikator that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {NilaiIndikatorFindUniqueOrThrowArgs} args - Arguments to find a NilaiIndikator
+     * @example
+     * // Get one NilaiIndikator
+     * const nilaiIndikator = await prisma.nilaiIndikator.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends NilaiIndikatorFindUniqueOrThrowArgs>(args: SelectSubset<T, NilaiIndikatorFindUniqueOrThrowArgs<ExtArgs>>): Prisma__NilaiIndikatorClient<$Result.GetResult<Prisma.$NilaiIndikatorPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first NilaiIndikator that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NilaiIndikatorFindFirstArgs} args - Arguments to find a NilaiIndikator
+     * @example
+     * // Get one NilaiIndikator
+     * const nilaiIndikator = await prisma.nilaiIndikator.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends NilaiIndikatorFindFirstArgs>(args?: SelectSubset<T, NilaiIndikatorFindFirstArgs<ExtArgs>>): Prisma__NilaiIndikatorClient<$Result.GetResult<Prisma.$NilaiIndikatorPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first NilaiIndikator that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NilaiIndikatorFindFirstOrThrowArgs} args - Arguments to find a NilaiIndikator
+     * @example
+     * // Get one NilaiIndikator
+     * const nilaiIndikator = await prisma.nilaiIndikator.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends NilaiIndikatorFindFirstOrThrowArgs>(args?: SelectSubset<T, NilaiIndikatorFindFirstOrThrowArgs<ExtArgs>>): Prisma__NilaiIndikatorClient<$Result.GetResult<Prisma.$NilaiIndikatorPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more NilaiIndikators that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NilaiIndikatorFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all NilaiIndikators
+     * const nilaiIndikators = await prisma.nilaiIndikator.findMany()
+     * 
+     * // Get first 10 NilaiIndikators
+     * const nilaiIndikators = await prisma.nilaiIndikator.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const nilaiIndikatorWithIdOnly = await prisma.nilaiIndikator.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends NilaiIndikatorFindManyArgs>(args?: SelectSubset<T, NilaiIndikatorFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NilaiIndikatorPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a NilaiIndikator.
+     * @param {NilaiIndikatorCreateArgs} args - Arguments to create a NilaiIndikator.
+     * @example
+     * // Create one NilaiIndikator
+     * const NilaiIndikator = await prisma.nilaiIndikator.create({
+     *   data: {
+     *     // ... data to create a NilaiIndikator
+     *   }
+     * })
+     * 
+     */
+    create<T extends NilaiIndikatorCreateArgs>(args: SelectSubset<T, NilaiIndikatorCreateArgs<ExtArgs>>): Prisma__NilaiIndikatorClient<$Result.GetResult<Prisma.$NilaiIndikatorPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many NilaiIndikators.
+     * @param {NilaiIndikatorCreateManyArgs} args - Arguments to create many NilaiIndikators.
+     * @example
+     * // Create many NilaiIndikators
+     * const nilaiIndikator = await prisma.nilaiIndikator.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends NilaiIndikatorCreateManyArgs>(args?: SelectSubset<T, NilaiIndikatorCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a NilaiIndikator.
+     * @param {NilaiIndikatorDeleteArgs} args - Arguments to delete one NilaiIndikator.
+     * @example
+     * // Delete one NilaiIndikator
+     * const NilaiIndikator = await prisma.nilaiIndikator.delete({
+     *   where: {
+     *     // ... filter to delete one NilaiIndikator
+     *   }
+     * })
+     * 
+     */
+    delete<T extends NilaiIndikatorDeleteArgs>(args: SelectSubset<T, NilaiIndikatorDeleteArgs<ExtArgs>>): Prisma__NilaiIndikatorClient<$Result.GetResult<Prisma.$NilaiIndikatorPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one NilaiIndikator.
+     * @param {NilaiIndikatorUpdateArgs} args - Arguments to update one NilaiIndikator.
+     * @example
+     * // Update one NilaiIndikator
+     * const nilaiIndikator = await prisma.nilaiIndikator.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends NilaiIndikatorUpdateArgs>(args: SelectSubset<T, NilaiIndikatorUpdateArgs<ExtArgs>>): Prisma__NilaiIndikatorClient<$Result.GetResult<Prisma.$NilaiIndikatorPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more NilaiIndikators.
+     * @param {NilaiIndikatorDeleteManyArgs} args - Arguments to filter NilaiIndikators to delete.
+     * @example
+     * // Delete a few NilaiIndikators
+     * const { count } = await prisma.nilaiIndikator.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends NilaiIndikatorDeleteManyArgs>(args?: SelectSubset<T, NilaiIndikatorDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more NilaiIndikators.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NilaiIndikatorUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many NilaiIndikators
+     * const nilaiIndikator = await prisma.nilaiIndikator.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends NilaiIndikatorUpdateManyArgs>(args: SelectSubset<T, NilaiIndikatorUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one NilaiIndikator.
+     * @param {NilaiIndikatorUpsertArgs} args - Arguments to update or create a NilaiIndikator.
+     * @example
+     * // Update or create a NilaiIndikator
+     * const nilaiIndikator = await prisma.nilaiIndikator.upsert({
+     *   create: {
+     *     // ... data to create a NilaiIndikator
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the NilaiIndikator we want to update
+     *   }
+     * })
+     */
+    upsert<T extends NilaiIndikatorUpsertArgs>(args: SelectSubset<T, NilaiIndikatorUpsertArgs<ExtArgs>>): Prisma__NilaiIndikatorClient<$Result.GetResult<Prisma.$NilaiIndikatorPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of NilaiIndikators.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NilaiIndikatorCountArgs} args - Arguments to filter NilaiIndikators to count.
+     * @example
+     * // Count the number of NilaiIndikators
+     * const count = await prisma.nilaiIndikator.count({
+     *   where: {
+     *     // ... the filter for the NilaiIndikators we want to count
+     *   }
+     * })
+    **/
+    count<T extends NilaiIndikatorCountArgs>(
+      args?: Subset<T, NilaiIndikatorCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], NilaiIndikatorCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a NilaiIndikator.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NilaiIndikatorAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends NilaiIndikatorAggregateArgs>(args: Subset<T, NilaiIndikatorAggregateArgs>): Prisma.PrismaPromise<GetNilaiIndikatorAggregateType<T>>
+
+    /**
+     * Group by NilaiIndikator.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {NilaiIndikatorGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends NilaiIndikatorGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: NilaiIndikatorGroupByArgs['orderBy'] }
+        : { orderBy?: NilaiIndikatorGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, NilaiIndikatorGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetNilaiIndikatorGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the NilaiIndikator model
+   */
+  readonly fields: NilaiIndikatorFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for NilaiIndikator.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__NilaiIndikatorClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    indikator<T extends IndikatorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, IndikatorDefaultArgs<ExtArgs>>): Prisma__IndikatorClient<$Result.GetResult<Prisma.$IndikatorPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    buktiData<T extends NilaiIndikator$buktiDataArgs<ExtArgs> = {}>(args?: Subset<T, NilaiIndikator$buktiDataArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuktiDataPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the NilaiIndikator model
+   */ 
+  interface NilaiIndikatorFieldRefs {
+    readonly id: FieldRef<"NilaiIndikator", 'String'>
+    readonly indikatorId: FieldRef<"NilaiIndikator", 'String'>
+    readonly desaId: FieldRef<"NilaiIndikator", 'String'>
+    readonly periode: FieldRef<"NilaiIndikator", 'String'>
+    readonly nilai: FieldRef<"NilaiIndikator", 'Float'>
+    readonly sumber: FieldRef<"NilaiIndikator", 'String'>
+    readonly catatan: FieldRef<"NilaiIndikator", 'String'>
+    readonly status: FieldRef<"NilaiIndikator", 'String'>
+    readonly createdBy: FieldRef<"NilaiIndikator", 'String'>
+    readonly createdAt: FieldRef<"NilaiIndikator", 'DateTime'>
+    readonly updatedAt: FieldRef<"NilaiIndikator", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * NilaiIndikator findUnique
+   */
+  export type NilaiIndikatorFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NilaiIndikator
+     */
+    select?: NilaiIndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NilaiIndikatorInclude<ExtArgs> | null
+    /**
+     * Filter, which NilaiIndikator to fetch.
+     */
+    where: NilaiIndikatorWhereUniqueInput
+  }
+
+  /**
+   * NilaiIndikator findUniqueOrThrow
+   */
+  export type NilaiIndikatorFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NilaiIndikator
+     */
+    select?: NilaiIndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NilaiIndikatorInclude<ExtArgs> | null
+    /**
+     * Filter, which NilaiIndikator to fetch.
+     */
+    where: NilaiIndikatorWhereUniqueInput
+  }
+
+  /**
+   * NilaiIndikator findFirst
+   */
+  export type NilaiIndikatorFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NilaiIndikator
+     */
+    select?: NilaiIndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NilaiIndikatorInclude<ExtArgs> | null
+    /**
+     * Filter, which NilaiIndikator to fetch.
+     */
+    where?: NilaiIndikatorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NilaiIndikators to fetch.
+     */
+    orderBy?: NilaiIndikatorOrderByWithRelationInput | NilaiIndikatorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for NilaiIndikators.
+     */
+    cursor?: NilaiIndikatorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NilaiIndikators from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NilaiIndikators.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NilaiIndikators.
+     */
+    distinct?: NilaiIndikatorScalarFieldEnum | NilaiIndikatorScalarFieldEnum[]
+  }
+
+  /**
+   * NilaiIndikator findFirstOrThrow
+   */
+  export type NilaiIndikatorFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NilaiIndikator
+     */
+    select?: NilaiIndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NilaiIndikatorInclude<ExtArgs> | null
+    /**
+     * Filter, which NilaiIndikator to fetch.
+     */
+    where?: NilaiIndikatorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NilaiIndikators to fetch.
+     */
+    orderBy?: NilaiIndikatorOrderByWithRelationInput | NilaiIndikatorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for NilaiIndikators.
+     */
+    cursor?: NilaiIndikatorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NilaiIndikators from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NilaiIndikators.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of NilaiIndikators.
+     */
+    distinct?: NilaiIndikatorScalarFieldEnum | NilaiIndikatorScalarFieldEnum[]
+  }
+
+  /**
+   * NilaiIndikator findMany
+   */
+  export type NilaiIndikatorFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NilaiIndikator
+     */
+    select?: NilaiIndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NilaiIndikatorInclude<ExtArgs> | null
+    /**
+     * Filter, which NilaiIndikators to fetch.
+     */
+    where?: NilaiIndikatorWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of NilaiIndikators to fetch.
+     */
+    orderBy?: NilaiIndikatorOrderByWithRelationInput | NilaiIndikatorOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing NilaiIndikators.
+     */
+    cursor?: NilaiIndikatorWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` NilaiIndikators from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` NilaiIndikators.
+     */
+    skip?: number
+    distinct?: NilaiIndikatorScalarFieldEnum | NilaiIndikatorScalarFieldEnum[]
+  }
+
+  /**
+   * NilaiIndikator create
+   */
+  export type NilaiIndikatorCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NilaiIndikator
+     */
+    select?: NilaiIndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NilaiIndikatorInclude<ExtArgs> | null
+    /**
+     * The data needed to create a NilaiIndikator.
+     */
+    data: XOR<NilaiIndikatorCreateInput, NilaiIndikatorUncheckedCreateInput>
+  }
+
+  /**
+   * NilaiIndikator createMany
+   */
+  export type NilaiIndikatorCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many NilaiIndikators.
+     */
+    data: NilaiIndikatorCreateManyInput | NilaiIndikatorCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * NilaiIndikator update
+   */
+  export type NilaiIndikatorUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NilaiIndikator
+     */
+    select?: NilaiIndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NilaiIndikatorInclude<ExtArgs> | null
+    /**
+     * The data needed to update a NilaiIndikator.
+     */
+    data: XOR<NilaiIndikatorUpdateInput, NilaiIndikatorUncheckedUpdateInput>
+    /**
+     * Choose, which NilaiIndikator to update.
+     */
+    where: NilaiIndikatorWhereUniqueInput
+  }
+
+  /**
+   * NilaiIndikator updateMany
+   */
+  export type NilaiIndikatorUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update NilaiIndikators.
+     */
+    data: XOR<NilaiIndikatorUpdateManyMutationInput, NilaiIndikatorUncheckedUpdateManyInput>
+    /**
+     * Filter which NilaiIndikators to update
+     */
+    where?: NilaiIndikatorWhereInput
+  }
+
+  /**
+   * NilaiIndikator upsert
+   */
+  export type NilaiIndikatorUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NilaiIndikator
+     */
+    select?: NilaiIndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NilaiIndikatorInclude<ExtArgs> | null
+    /**
+     * The filter to search for the NilaiIndikator to update in case it exists.
+     */
+    where: NilaiIndikatorWhereUniqueInput
+    /**
+     * In case the NilaiIndikator found by the `where` argument doesn't exist, create a new NilaiIndikator with this data.
+     */
+    create: XOR<NilaiIndikatorCreateInput, NilaiIndikatorUncheckedCreateInput>
+    /**
+     * In case the NilaiIndikator was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<NilaiIndikatorUpdateInput, NilaiIndikatorUncheckedUpdateInput>
+  }
+
+  /**
+   * NilaiIndikator delete
+   */
+  export type NilaiIndikatorDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NilaiIndikator
+     */
+    select?: NilaiIndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NilaiIndikatorInclude<ExtArgs> | null
+    /**
+     * Filter which NilaiIndikator to delete.
+     */
+    where: NilaiIndikatorWhereUniqueInput
+  }
+
+  /**
+   * NilaiIndikator deleteMany
+   */
+  export type NilaiIndikatorDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which NilaiIndikators to delete
+     */
+    where?: NilaiIndikatorWhereInput
+  }
+
+  /**
+   * NilaiIndikator.buktiData
+   */
+  export type NilaiIndikator$buktiDataArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiData
+     */
+    select?: BuktiDataSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiDataInclude<ExtArgs> | null
+    where?: BuktiDataWhereInput
+    orderBy?: BuktiDataOrderByWithRelationInput | BuktiDataOrderByWithRelationInput[]
+    cursor?: BuktiDataWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: BuktiDataScalarFieldEnum | BuktiDataScalarFieldEnum[]
+  }
+
+  /**
+   * NilaiIndikator without action
+   */
+  export type NilaiIndikatorDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the NilaiIndikator
+     */
+    select?: NilaiIndikatorSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: NilaiIndikatorInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model BuktiData
+   */
+
+  export type AggregateBuktiData = {
+    _count: BuktiDataCountAggregateOutputType | null
+    _min: BuktiDataMinAggregateOutputType | null
+    _max: BuktiDataMaxAggregateOutputType | null
+  }
+
+  export type BuktiDataMinAggregateOutputType = {
+    id: string | null
+    nilaiIndikatorId: string | null
+    judul: string | null
+    tipe: string | null
+    fileUrl: string | null
+    keterangan: string | null
+    uploadedBy: string | null
+    statusReview: string | null
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type BuktiDataMaxAggregateOutputType = {
+    id: string | null
+    nilaiIndikatorId: string | null
+    judul: string | null
+    tipe: string | null
+    fileUrl: string | null
+    keterangan: string | null
+    uploadedBy: string | null
+    statusReview: string | null
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type BuktiDataCountAggregateOutputType = {
+    id: number
+    nilaiIndikatorId: number
+    judul: number
+    tipe: number
+    fileUrl: number
+    keterangan: number
+    uploadedBy: number
+    statusReview: number
+    reviewedBy: number
+    reviewedAt: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type BuktiDataMinAggregateInputType = {
+    id?: true
+    nilaiIndikatorId?: true
+    judul?: true
+    tipe?: true
+    fileUrl?: true
+    keterangan?: true
+    uploadedBy?: true
+    statusReview?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    createdAt?: true
+  }
+
+  export type BuktiDataMaxAggregateInputType = {
+    id?: true
+    nilaiIndikatorId?: true
+    judul?: true
+    tipe?: true
+    fileUrl?: true
+    keterangan?: true
+    uploadedBy?: true
+    statusReview?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    createdAt?: true
+  }
+
+  export type BuktiDataCountAggregateInputType = {
+    id?: true
+    nilaiIndikatorId?: true
+    judul?: true
+    tipe?: true
+    fileUrl?: true
+    keterangan?: true
+    uploadedBy?: true
+    statusReview?: true
+    reviewedBy?: true
+    reviewedAt?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type BuktiDataAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BuktiData to aggregate.
+     */
+    where?: BuktiDataWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuktiData to fetch.
+     */
+    orderBy?: BuktiDataOrderByWithRelationInput | BuktiDataOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: BuktiDataWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuktiData from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuktiData.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned BuktiData
+    **/
+    _count?: true | BuktiDataCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: BuktiDataMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: BuktiDataMaxAggregateInputType
+  }
+
+  export type GetBuktiDataAggregateType<T extends BuktiDataAggregateArgs> = {
+        [P in keyof T & keyof AggregateBuktiData]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBuktiData[P]>
+      : GetScalarType<T[P], AggregateBuktiData[P]>
+  }
+
+
+
+
+  export type BuktiDataGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: BuktiDataWhereInput
+    orderBy?: BuktiDataOrderByWithAggregationInput | BuktiDataOrderByWithAggregationInput[]
+    by: BuktiDataScalarFieldEnum[] | BuktiDataScalarFieldEnum
+    having?: BuktiDataScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: BuktiDataCountAggregateInputType | true
+    _min?: BuktiDataMinAggregateInputType
+    _max?: BuktiDataMaxAggregateInputType
+  }
+
+  export type BuktiDataGroupByOutputType = {
+    id: string
+    nilaiIndikatorId: string
+    judul: string
+    tipe: string
+    fileUrl: string
+    keterangan: string | null
+    uploadedBy: string | null
+    statusReview: string
+    reviewedBy: string | null
+    reviewedAt: Date | null
+    createdAt: Date
+    _count: BuktiDataCountAggregateOutputType | null
+    _min: BuktiDataMinAggregateOutputType | null
+    _max: BuktiDataMaxAggregateOutputType | null
+  }
+
+  type GetBuktiDataGroupByPayload<T extends BuktiDataGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<BuktiDataGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof BuktiDataGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], BuktiDataGroupByOutputType[P]>
+            : GetScalarType<T[P], BuktiDataGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type BuktiDataSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    nilaiIndikatorId?: boolean
+    judul?: boolean
+    tipe?: boolean
+    fileUrl?: boolean
+    keterangan?: boolean
+    uploadedBy?: boolean
+    statusReview?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+    nilaiIndikator?: boolean | NilaiIndikatorDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["buktiData"]>
+
+
+  export type BuktiDataSelectScalar = {
+    id?: boolean
+    nilaiIndikatorId?: boolean
+    judul?: boolean
+    tipe?: boolean
+    fileUrl?: boolean
+    keterangan?: boolean
+    uploadedBy?: boolean
+    statusReview?: boolean
+    reviewedBy?: boolean
+    reviewedAt?: boolean
+    createdAt?: boolean
+  }
+
+  export type BuktiDataInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    nilaiIndikator?: boolean | NilaiIndikatorDefaultArgs<ExtArgs>
+  }
+
+  export type $BuktiDataPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "BuktiData"
+    objects: {
+      nilaiIndikator: Prisma.$NilaiIndikatorPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      nilaiIndikatorId: string
+      judul: string
+      tipe: string
+      fileUrl: string
+      keterangan: string | null
+      uploadedBy: string | null
+      statusReview: string
+      reviewedBy: string | null
+      reviewedAt: Date | null
+      createdAt: Date
+    }, ExtArgs["result"]["buktiData"]>
+    composites: {}
+  }
+
+  type BuktiDataGetPayload<S extends boolean | null | undefined | BuktiDataDefaultArgs> = $Result.GetResult<Prisma.$BuktiDataPayload, S>
+
+  type BuktiDataCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<BuktiDataFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: BuktiDataCountAggregateInputType | true
+    }
+
+  export interface BuktiDataDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['BuktiData'], meta: { name: 'BuktiData' } }
+    /**
+     * Find zero or one BuktiData that matches the filter.
+     * @param {BuktiDataFindUniqueArgs} args - Arguments to find a BuktiData
+     * @example
+     * // Get one BuktiData
+     * const buktiData = await prisma.buktiData.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends BuktiDataFindUniqueArgs>(args: SelectSubset<T, BuktiDataFindUniqueArgs<ExtArgs>>): Prisma__BuktiDataClient<$Result.GetResult<Prisma.$BuktiDataPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one BuktiData that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {BuktiDataFindUniqueOrThrowArgs} args - Arguments to find a BuktiData
+     * @example
+     * // Get one BuktiData
+     * const buktiData = await prisma.buktiData.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends BuktiDataFindUniqueOrThrowArgs>(args: SelectSubset<T, BuktiDataFindUniqueOrThrowArgs<ExtArgs>>): Prisma__BuktiDataClient<$Result.GetResult<Prisma.$BuktiDataPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first BuktiData that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiDataFindFirstArgs} args - Arguments to find a BuktiData
+     * @example
+     * // Get one BuktiData
+     * const buktiData = await prisma.buktiData.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends BuktiDataFindFirstArgs>(args?: SelectSubset<T, BuktiDataFindFirstArgs<ExtArgs>>): Prisma__BuktiDataClient<$Result.GetResult<Prisma.$BuktiDataPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first BuktiData that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiDataFindFirstOrThrowArgs} args - Arguments to find a BuktiData
+     * @example
+     * // Get one BuktiData
+     * const buktiData = await prisma.buktiData.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends BuktiDataFindFirstOrThrowArgs>(args?: SelectSubset<T, BuktiDataFindFirstOrThrowArgs<ExtArgs>>): Prisma__BuktiDataClient<$Result.GetResult<Prisma.$BuktiDataPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more BuktiData that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiDataFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all BuktiData
+     * const buktiData = await prisma.buktiData.findMany()
+     * 
+     * // Get first 10 BuktiData
+     * const buktiData = await prisma.buktiData.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const buktiDataWithIdOnly = await prisma.buktiData.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends BuktiDataFindManyArgs>(args?: SelectSubset<T, BuktiDataFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$BuktiDataPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a BuktiData.
+     * @param {BuktiDataCreateArgs} args - Arguments to create a BuktiData.
+     * @example
+     * // Create one BuktiData
+     * const BuktiData = await prisma.buktiData.create({
+     *   data: {
+     *     // ... data to create a BuktiData
+     *   }
+     * })
+     * 
+     */
+    create<T extends BuktiDataCreateArgs>(args: SelectSubset<T, BuktiDataCreateArgs<ExtArgs>>): Prisma__BuktiDataClient<$Result.GetResult<Prisma.$BuktiDataPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many BuktiData.
+     * @param {BuktiDataCreateManyArgs} args - Arguments to create many BuktiData.
+     * @example
+     * // Create many BuktiData
+     * const buktiData = await prisma.buktiData.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends BuktiDataCreateManyArgs>(args?: SelectSubset<T, BuktiDataCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a BuktiData.
+     * @param {BuktiDataDeleteArgs} args - Arguments to delete one BuktiData.
+     * @example
+     * // Delete one BuktiData
+     * const BuktiData = await prisma.buktiData.delete({
+     *   where: {
+     *     // ... filter to delete one BuktiData
+     *   }
+     * })
+     * 
+     */
+    delete<T extends BuktiDataDeleteArgs>(args: SelectSubset<T, BuktiDataDeleteArgs<ExtArgs>>): Prisma__BuktiDataClient<$Result.GetResult<Prisma.$BuktiDataPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one BuktiData.
+     * @param {BuktiDataUpdateArgs} args - Arguments to update one BuktiData.
+     * @example
+     * // Update one BuktiData
+     * const buktiData = await prisma.buktiData.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends BuktiDataUpdateArgs>(args: SelectSubset<T, BuktiDataUpdateArgs<ExtArgs>>): Prisma__BuktiDataClient<$Result.GetResult<Prisma.$BuktiDataPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more BuktiData.
+     * @param {BuktiDataDeleteManyArgs} args - Arguments to filter BuktiData to delete.
+     * @example
+     * // Delete a few BuktiData
+     * const { count } = await prisma.buktiData.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends BuktiDataDeleteManyArgs>(args?: SelectSubset<T, BuktiDataDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more BuktiData.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiDataUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many BuktiData
+     * const buktiData = await prisma.buktiData.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends BuktiDataUpdateManyArgs>(args: SelectSubset<T, BuktiDataUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one BuktiData.
+     * @param {BuktiDataUpsertArgs} args - Arguments to update or create a BuktiData.
+     * @example
+     * // Update or create a BuktiData
+     * const buktiData = await prisma.buktiData.upsert({
+     *   create: {
+     *     // ... data to create a BuktiData
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the BuktiData we want to update
+     *   }
+     * })
+     */
+    upsert<T extends BuktiDataUpsertArgs>(args: SelectSubset<T, BuktiDataUpsertArgs<ExtArgs>>): Prisma__BuktiDataClient<$Result.GetResult<Prisma.$BuktiDataPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of BuktiData.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiDataCountArgs} args - Arguments to filter BuktiData to count.
+     * @example
+     * // Count the number of BuktiData
+     * const count = await prisma.buktiData.count({
+     *   where: {
+     *     // ... the filter for the BuktiData we want to count
+     *   }
+     * })
+    **/
+    count<T extends BuktiDataCountArgs>(
+      args?: Subset<T, BuktiDataCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], BuktiDataCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a BuktiData.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiDataAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends BuktiDataAggregateArgs>(args: Subset<T, BuktiDataAggregateArgs>): Prisma.PrismaPromise<GetBuktiDataAggregateType<T>>
+
+    /**
+     * Group by BuktiData.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {BuktiDataGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends BuktiDataGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: BuktiDataGroupByArgs['orderBy'] }
+        : { orderBy?: BuktiDataGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, BuktiDataGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBuktiDataGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the BuktiData model
+   */
+  readonly fields: BuktiDataFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for BuktiData.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__BuktiDataClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    nilaiIndikator<T extends NilaiIndikatorDefaultArgs<ExtArgs> = {}>(args?: Subset<T, NilaiIndikatorDefaultArgs<ExtArgs>>): Prisma__NilaiIndikatorClient<$Result.GetResult<Prisma.$NilaiIndikatorPayload<ExtArgs>, T, "findUniqueOrThrow"> | Null, Null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the BuktiData model
+   */ 
+  interface BuktiDataFieldRefs {
+    readonly id: FieldRef<"BuktiData", 'String'>
+    readonly nilaiIndikatorId: FieldRef<"BuktiData", 'String'>
+    readonly judul: FieldRef<"BuktiData", 'String'>
+    readonly tipe: FieldRef<"BuktiData", 'String'>
+    readonly fileUrl: FieldRef<"BuktiData", 'String'>
+    readonly keterangan: FieldRef<"BuktiData", 'String'>
+    readonly uploadedBy: FieldRef<"BuktiData", 'String'>
+    readonly statusReview: FieldRef<"BuktiData", 'String'>
+    readonly reviewedBy: FieldRef<"BuktiData", 'String'>
+    readonly reviewedAt: FieldRef<"BuktiData", 'DateTime'>
+    readonly createdAt: FieldRef<"BuktiData", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * BuktiData findUnique
+   */
+  export type BuktiDataFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiData
+     */
+    select?: BuktiDataSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiDataInclude<ExtArgs> | null
+    /**
+     * Filter, which BuktiData to fetch.
+     */
+    where: BuktiDataWhereUniqueInput
+  }
+
+  /**
+   * BuktiData findUniqueOrThrow
+   */
+  export type BuktiDataFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiData
+     */
+    select?: BuktiDataSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiDataInclude<ExtArgs> | null
+    /**
+     * Filter, which BuktiData to fetch.
+     */
+    where: BuktiDataWhereUniqueInput
+  }
+
+  /**
+   * BuktiData findFirst
+   */
+  export type BuktiDataFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiData
+     */
+    select?: BuktiDataSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiDataInclude<ExtArgs> | null
+    /**
+     * Filter, which BuktiData to fetch.
+     */
+    where?: BuktiDataWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuktiData to fetch.
+     */
+    orderBy?: BuktiDataOrderByWithRelationInput | BuktiDataOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BuktiData.
+     */
+    cursor?: BuktiDataWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuktiData from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuktiData.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BuktiData.
+     */
+    distinct?: BuktiDataScalarFieldEnum | BuktiDataScalarFieldEnum[]
+  }
+
+  /**
+   * BuktiData findFirstOrThrow
+   */
+  export type BuktiDataFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiData
+     */
+    select?: BuktiDataSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiDataInclude<ExtArgs> | null
+    /**
+     * Filter, which BuktiData to fetch.
+     */
+    where?: BuktiDataWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuktiData to fetch.
+     */
+    orderBy?: BuktiDataOrderByWithRelationInput | BuktiDataOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for BuktiData.
+     */
+    cursor?: BuktiDataWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuktiData from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuktiData.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of BuktiData.
+     */
+    distinct?: BuktiDataScalarFieldEnum | BuktiDataScalarFieldEnum[]
+  }
+
+  /**
+   * BuktiData findMany
+   */
+  export type BuktiDataFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiData
+     */
+    select?: BuktiDataSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiDataInclude<ExtArgs> | null
+    /**
+     * Filter, which BuktiData to fetch.
+     */
+    where?: BuktiDataWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of BuktiData to fetch.
+     */
+    orderBy?: BuktiDataOrderByWithRelationInput | BuktiDataOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing BuktiData.
+     */
+    cursor?: BuktiDataWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` BuktiData from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` BuktiData.
+     */
+    skip?: number
+    distinct?: BuktiDataScalarFieldEnum | BuktiDataScalarFieldEnum[]
+  }
+
+  /**
+   * BuktiData create
+   */
+  export type BuktiDataCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiData
+     */
+    select?: BuktiDataSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiDataInclude<ExtArgs> | null
+    /**
+     * The data needed to create a BuktiData.
+     */
+    data: XOR<BuktiDataCreateInput, BuktiDataUncheckedCreateInput>
+  }
+
+  /**
+   * BuktiData createMany
+   */
+  export type BuktiDataCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many BuktiData.
+     */
+    data: BuktiDataCreateManyInput | BuktiDataCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * BuktiData update
+   */
+  export type BuktiDataUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiData
+     */
+    select?: BuktiDataSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiDataInclude<ExtArgs> | null
+    /**
+     * The data needed to update a BuktiData.
+     */
+    data: XOR<BuktiDataUpdateInput, BuktiDataUncheckedUpdateInput>
+    /**
+     * Choose, which BuktiData to update.
+     */
+    where: BuktiDataWhereUniqueInput
+  }
+
+  /**
+   * BuktiData updateMany
+   */
+  export type BuktiDataUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update BuktiData.
+     */
+    data: XOR<BuktiDataUpdateManyMutationInput, BuktiDataUncheckedUpdateManyInput>
+    /**
+     * Filter which BuktiData to update
+     */
+    where?: BuktiDataWhereInput
+  }
+
+  /**
+   * BuktiData upsert
+   */
+  export type BuktiDataUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiData
+     */
+    select?: BuktiDataSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiDataInclude<ExtArgs> | null
+    /**
+     * The filter to search for the BuktiData to update in case it exists.
+     */
+    where: BuktiDataWhereUniqueInput
+    /**
+     * In case the BuktiData found by the `where` argument doesn't exist, create a new BuktiData with this data.
+     */
+    create: XOR<BuktiDataCreateInput, BuktiDataUncheckedCreateInput>
+    /**
+     * In case the BuktiData was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<BuktiDataUpdateInput, BuktiDataUncheckedUpdateInput>
+  }
+
+  /**
+   * BuktiData delete
+   */
+  export type BuktiDataDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiData
+     */
+    select?: BuktiDataSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiDataInclude<ExtArgs> | null
+    /**
+     * Filter which BuktiData to delete.
+     */
+    where: BuktiDataWhereUniqueInput
+  }
+
+  /**
+   * BuktiData deleteMany
+   */
+  export type BuktiDataDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which BuktiData to delete
+     */
+    where?: BuktiDataWhereInput
+  }
+
+  /**
+   * BuktiData without action
+   */
+  export type BuktiDataDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the BuktiData
+     */
+    select?: BuktiDataSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: BuktiDataInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProgramDesa
+   */
+
+  export type AggregateProgramDesa = {
+    _count: ProgramDesaCountAggregateOutputType | null
+    _avg: ProgramDesaAvgAggregateOutputType | null
+    _sum: ProgramDesaSumAggregateOutputType | null
+    _min: ProgramDesaMinAggregateOutputType | null
+    _max: ProgramDesaMaxAggregateOutputType | null
+  }
+
+  export type ProgramDesaAvgAggregateOutputType = {
+    anggaranTotal: number | null
+    prioritas: number | null
+  }
+
+  export type ProgramDesaSumAggregateOutputType = {
+    anggaranTotal: number | null
+    prioritas: number | null
+  }
+
+  export type ProgramDesaMinAggregateOutputType = {
+    id: string | null
+    desaId: string | null
+    namaProgram: string | null
+    deskripsi: string | null
+    bidang: string | null
+    anggaranTotal: number | null
+    sumberDana: string | null
+    periode: string | null
+    statusProgram: string | null
+    prioritas: number | null
+    penanggungJawab: string | null
+    targetCapaian: string | null
+    tanggalMulai: Date | null
+    tanggalSelesai: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProgramDesaMaxAggregateOutputType = {
+    id: string | null
+    desaId: string | null
+    namaProgram: string | null
+    deskripsi: string | null
+    bidang: string | null
+    anggaranTotal: number | null
+    sumberDana: string | null
+    periode: string | null
+    statusProgram: string | null
+    prioritas: number | null
+    penanggungJawab: string | null
+    targetCapaian: string | null
+    tanggalMulai: Date | null
+    tanggalSelesai: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProgramDesaCountAggregateOutputType = {
+    id: number
+    desaId: number
+    namaProgram: number
+    deskripsi: number
+    bidang: number
+    anggaranTotal: number
+    sumberDana: number
+    periode: number
+    statusProgram: number
+    prioritas: number
+    penanggungJawab: number
+    targetCapaian: number
+    tanggalMulai: number
+    tanggalSelesai: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProgramDesaAvgAggregateInputType = {
+    anggaranTotal?: true
+    prioritas?: true
+  }
+
+  export type ProgramDesaSumAggregateInputType = {
+    anggaranTotal?: true
+    prioritas?: true
+  }
+
+  export type ProgramDesaMinAggregateInputType = {
+    id?: true
+    desaId?: true
+    namaProgram?: true
+    deskripsi?: true
+    bidang?: true
+    anggaranTotal?: true
+    sumberDana?: true
+    periode?: true
+    statusProgram?: true
+    prioritas?: true
+    penanggungJawab?: true
+    targetCapaian?: true
+    tanggalMulai?: true
+    tanggalSelesai?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProgramDesaMaxAggregateInputType = {
+    id?: true
+    desaId?: true
+    namaProgram?: true
+    deskripsi?: true
+    bidang?: true
+    anggaranTotal?: true
+    sumberDana?: true
+    periode?: true
+    statusProgram?: true
+    prioritas?: true
+    penanggungJawab?: true
+    targetCapaian?: true
+    tanggalMulai?: true
+    tanggalSelesai?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ProgramDesaCountAggregateInputType = {
+    id?: true
+    desaId?: true
+    namaProgram?: true
+    deskripsi?: true
+    bidang?: true
+    anggaranTotal?: true
+    sumberDana?: true
+    periode?: true
+    statusProgram?: true
+    prioritas?: true
+    penanggungJawab?: true
+    targetCapaian?: true
+    tanggalMulai?: true
+    tanggalSelesai?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProgramDesaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProgramDesa to aggregate.
+     */
+    where?: ProgramDesaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProgramDesas to fetch.
+     */
+    orderBy?: ProgramDesaOrderByWithRelationInput | ProgramDesaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProgramDesaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProgramDesas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProgramDesas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProgramDesas
+    **/
+    _count?: true | ProgramDesaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ProgramDesaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ProgramDesaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProgramDesaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProgramDesaMaxAggregateInputType
+  }
+
+  export type GetProgramDesaAggregateType<T extends ProgramDesaAggregateArgs> = {
+        [P in keyof T & keyof AggregateProgramDesa]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProgramDesa[P]>
+      : GetScalarType<T[P], AggregateProgramDesa[P]>
+  }
+
+
+
+
+  export type ProgramDesaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProgramDesaWhereInput
+    orderBy?: ProgramDesaOrderByWithAggregationInput | ProgramDesaOrderByWithAggregationInput[]
+    by: ProgramDesaScalarFieldEnum[] | ProgramDesaScalarFieldEnum
+    having?: ProgramDesaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProgramDesaCountAggregateInputType | true
+    _avg?: ProgramDesaAvgAggregateInputType
+    _sum?: ProgramDesaSumAggregateInputType
+    _min?: ProgramDesaMinAggregateInputType
+    _max?: ProgramDesaMaxAggregateInputType
+  }
+
+  export type ProgramDesaGroupByOutputType = {
+    id: string
+    desaId: string
+    namaProgram: string
+    deskripsi: string | null
+    bidang: string
+    anggaranTotal: number | null
+    sumberDana: string | null
+    periode: string
+    statusProgram: string
+    prioritas: number
+    penanggungJawab: string | null
+    targetCapaian: string | null
+    tanggalMulai: Date | null
+    tanggalSelesai: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: ProgramDesaCountAggregateOutputType | null
+    _avg: ProgramDesaAvgAggregateOutputType | null
+    _sum: ProgramDesaSumAggregateOutputType | null
+    _min: ProgramDesaMinAggregateOutputType | null
+    _max: ProgramDesaMaxAggregateOutputType | null
+  }
+
+  type GetProgramDesaGroupByPayload<T extends ProgramDesaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProgramDesaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProgramDesaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProgramDesaGroupByOutputType[P]>
+            : GetScalarType<T[P], ProgramDesaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProgramDesaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    desaId?: boolean
+    namaProgram?: boolean
+    deskripsi?: boolean
+    bidang?: boolean
+    anggaranTotal?: boolean
+    sumberDana?: boolean
+    periode?: boolean
+    statusProgram?: boolean
+    prioritas?: boolean
+    penanggungJawab?: boolean
+    targetCapaian?: boolean
+    tanggalMulai?: boolean
+    tanggalSelesai?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    keputusan?: boolean | ProgramDesa$keputusanArgs<ExtArgs>
+    _count?: boolean | ProgramDesaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["programDesa"]>
+
+
+  export type ProgramDesaSelectScalar = {
+    id?: boolean
+    desaId?: boolean
+    namaProgram?: boolean
+    deskripsi?: boolean
+    bidang?: boolean
+    anggaranTotal?: boolean
+    sumberDana?: boolean
+    periode?: boolean
+    statusProgram?: boolean
+    prioritas?: boolean
+    penanggungJawab?: boolean
+    targetCapaian?: boolean
+    tanggalMulai?: boolean
+    tanggalSelesai?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProgramDesaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    keputusan?: boolean | ProgramDesa$keputusanArgs<ExtArgs>
+    _count?: boolean | ProgramDesaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+
+  export type $ProgramDesaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProgramDesa"
+    objects: {
+      keputusan: Prisma.$KeputusanProgramPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      desaId: string
+      namaProgram: string
+      deskripsi: string | null
+      bidang: string
+      anggaranTotal: number | null
+      sumberDana: string | null
+      periode: string
+      statusProgram: string
+      prioritas: number
+      penanggungJawab: string | null
+      targetCapaian: string | null
+      tanggalMulai: Date | null
+      tanggalSelesai: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["programDesa"]>
+    composites: {}
+  }
+
+  type ProgramDesaGetPayload<S extends boolean | null | undefined | ProgramDesaDefaultArgs> = $Result.GetResult<Prisma.$ProgramDesaPayload, S>
+
+  type ProgramDesaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<ProgramDesaFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: ProgramDesaCountAggregateInputType | true
+    }
+
+  export interface ProgramDesaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProgramDesa'], meta: { name: 'ProgramDesa' } }
+    /**
+     * Find zero or one ProgramDesa that matches the filter.
+     * @param {ProgramDesaFindUniqueArgs} args - Arguments to find a ProgramDesa
+     * @example
+     * // Get one ProgramDesa
+     * const programDesa = await prisma.programDesa.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProgramDesaFindUniqueArgs>(args: SelectSubset<T, ProgramDesaFindUniqueArgs<ExtArgs>>): Prisma__ProgramDesaClient<$Result.GetResult<Prisma.$ProgramDesaPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one ProgramDesa that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {ProgramDesaFindUniqueOrThrowArgs} args - Arguments to find a ProgramDesa
+     * @example
+     * // Get one ProgramDesa
+     * const programDesa = await prisma.programDesa.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProgramDesaFindUniqueOrThrowArgs>(args: SelectSubset<T, ProgramDesaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProgramDesaClient<$Result.GetResult<Prisma.$ProgramDesaPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first ProgramDesa that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramDesaFindFirstArgs} args - Arguments to find a ProgramDesa
+     * @example
+     * // Get one ProgramDesa
+     * const programDesa = await prisma.programDesa.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProgramDesaFindFirstArgs>(args?: SelectSubset<T, ProgramDesaFindFirstArgs<ExtArgs>>): Prisma__ProgramDesaClient<$Result.GetResult<Prisma.$ProgramDesaPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first ProgramDesa that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramDesaFindFirstOrThrowArgs} args - Arguments to find a ProgramDesa
+     * @example
+     * // Get one ProgramDesa
+     * const programDesa = await prisma.programDesa.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProgramDesaFindFirstOrThrowArgs>(args?: SelectSubset<T, ProgramDesaFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProgramDesaClient<$Result.GetResult<Prisma.$ProgramDesaPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more ProgramDesas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramDesaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProgramDesas
+     * const programDesas = await prisma.programDesa.findMany()
+     * 
+     * // Get first 10 ProgramDesas
+     * const programDesas = await prisma.programDesa.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const programDesaWithIdOnly = await prisma.programDesa.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProgramDesaFindManyArgs>(args?: SelectSubset<T, ProgramDesaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProgramDesaPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a ProgramDesa.
+     * @param {ProgramDesaCreateArgs} args - Arguments to create a ProgramDesa.
+     * @example
+     * // Create one ProgramDesa
+     * const ProgramDesa = await prisma.programDesa.create({
+     *   data: {
+     *     // ... data to create a ProgramDesa
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProgramDesaCreateArgs>(args: SelectSubset<T, ProgramDesaCreateArgs<ExtArgs>>): Prisma__ProgramDesaClient<$Result.GetResult<Prisma.$ProgramDesaPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many ProgramDesas.
+     * @param {ProgramDesaCreateManyArgs} args - Arguments to create many ProgramDesas.
+     * @example
+     * // Create many ProgramDesas
+     * const programDesa = await prisma.programDesa.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProgramDesaCreateManyArgs>(args?: SelectSubset<T, ProgramDesaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a ProgramDesa.
+     * @param {ProgramDesaDeleteArgs} args - Arguments to delete one ProgramDesa.
+     * @example
+     * // Delete one ProgramDesa
+     * const ProgramDesa = await prisma.programDesa.delete({
+     *   where: {
+     *     // ... filter to delete one ProgramDesa
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProgramDesaDeleteArgs>(args: SelectSubset<T, ProgramDesaDeleteArgs<ExtArgs>>): Prisma__ProgramDesaClient<$Result.GetResult<Prisma.$ProgramDesaPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one ProgramDesa.
+     * @param {ProgramDesaUpdateArgs} args - Arguments to update one ProgramDesa.
+     * @example
+     * // Update one ProgramDesa
+     * const programDesa = await prisma.programDesa.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProgramDesaUpdateArgs>(args: SelectSubset<T, ProgramDesaUpdateArgs<ExtArgs>>): Prisma__ProgramDesaClient<$Result.GetResult<Prisma.$ProgramDesaPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more ProgramDesas.
+     * @param {ProgramDesaDeleteManyArgs} args - Arguments to filter ProgramDesas to delete.
+     * @example
+     * // Delete a few ProgramDesas
+     * const { count } = await prisma.programDesa.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProgramDesaDeleteManyArgs>(args?: SelectSubset<T, ProgramDesaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProgramDesas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramDesaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProgramDesas
+     * const programDesa = await prisma.programDesa.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProgramDesaUpdateManyArgs>(args: SelectSubset<T, ProgramDesaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one ProgramDesa.
+     * @param {ProgramDesaUpsertArgs} args - Arguments to update or create a ProgramDesa.
+     * @example
+     * // Update or create a ProgramDesa
+     * const programDesa = await prisma.programDesa.upsert({
+     *   create: {
+     *     // ... data to create a ProgramDesa
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProgramDesa we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProgramDesaUpsertArgs>(args: SelectSubset<T, ProgramDesaUpsertArgs<ExtArgs>>): Prisma__ProgramDesaClient<$Result.GetResult<Prisma.$ProgramDesaPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of ProgramDesas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramDesaCountArgs} args - Arguments to filter ProgramDesas to count.
+     * @example
+     * // Count the number of ProgramDesas
+     * const count = await prisma.programDesa.count({
+     *   where: {
+     *     // ... the filter for the ProgramDesas we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProgramDesaCountArgs>(
+      args?: Subset<T, ProgramDesaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProgramDesaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProgramDesa.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramDesaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProgramDesaAggregateArgs>(args: Subset<T, ProgramDesaAggregateArgs>): Prisma.PrismaPromise<GetProgramDesaAggregateType<T>>
+
+    /**
+     * Group by ProgramDesa.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProgramDesaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProgramDesaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProgramDesaGroupByArgs['orderBy'] }
+        : { orderBy?: ProgramDesaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProgramDesaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProgramDesaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProgramDesa model
+   */
+  readonly fields: ProgramDesaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProgramDesa.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProgramDesaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    keputusan<T extends ProgramDesa$keputusanArgs<ExtArgs> = {}>(args?: Subset<T, ProgramDesa$keputusanArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KeputusanProgramPayload<ExtArgs>, T, "findMany"> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProgramDesa model
+   */ 
+  interface ProgramDesaFieldRefs {
+    readonly id: FieldRef<"ProgramDesa", 'String'>
+    readonly desaId: FieldRef<"ProgramDesa", 'String'>
+    readonly namaProgram: FieldRef<"ProgramDesa", 'String'>
+    readonly deskripsi: FieldRef<"ProgramDesa", 'String'>
+    readonly bidang: FieldRef<"ProgramDesa", 'String'>
+    readonly anggaranTotal: FieldRef<"ProgramDesa", 'Float'>
+    readonly sumberDana: FieldRef<"ProgramDesa", 'String'>
+    readonly periode: FieldRef<"ProgramDesa", 'String'>
+    readonly statusProgram: FieldRef<"ProgramDesa", 'String'>
+    readonly prioritas: FieldRef<"ProgramDesa", 'Int'>
+    readonly penanggungJawab: FieldRef<"ProgramDesa", 'String'>
+    readonly targetCapaian: FieldRef<"ProgramDesa", 'String'>
+    readonly tanggalMulai: FieldRef<"ProgramDesa", 'DateTime'>
+    readonly tanggalSelesai: FieldRef<"ProgramDesa", 'DateTime'>
+    readonly createdAt: FieldRef<"ProgramDesa", 'DateTime'>
+    readonly updatedAt: FieldRef<"ProgramDesa", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProgramDesa findUnique
+   */
+  export type ProgramDesaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramDesa
+     */
+    select?: ProgramDesaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramDesaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProgramDesa to fetch.
+     */
+    where: ProgramDesaWhereUniqueInput
+  }
+
+  /**
+   * ProgramDesa findUniqueOrThrow
+   */
+  export type ProgramDesaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramDesa
+     */
+    select?: ProgramDesaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramDesaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProgramDesa to fetch.
+     */
+    where: ProgramDesaWhereUniqueInput
+  }
+
+  /**
+   * ProgramDesa findFirst
+   */
+  export type ProgramDesaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramDesa
+     */
+    select?: ProgramDesaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramDesaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProgramDesa to fetch.
+     */
+    where?: ProgramDesaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProgramDesas to fetch.
+     */
+    orderBy?: ProgramDesaOrderByWithRelationInput | ProgramDesaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProgramDesas.
+     */
+    cursor?: ProgramDesaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProgramDesas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProgramDesas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProgramDesas.
+     */
+    distinct?: ProgramDesaScalarFieldEnum | ProgramDesaScalarFieldEnum[]
+  }
+
+  /**
+   * ProgramDesa findFirstOrThrow
+   */
+  export type ProgramDesaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramDesa
+     */
+    select?: ProgramDesaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramDesaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProgramDesa to fetch.
+     */
+    where?: ProgramDesaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProgramDesas to fetch.
+     */
+    orderBy?: ProgramDesaOrderByWithRelationInput | ProgramDesaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProgramDesas.
+     */
+    cursor?: ProgramDesaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProgramDesas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProgramDesas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProgramDesas.
+     */
+    distinct?: ProgramDesaScalarFieldEnum | ProgramDesaScalarFieldEnum[]
+  }
+
+  /**
+   * ProgramDesa findMany
+   */
+  export type ProgramDesaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramDesa
+     */
+    select?: ProgramDesaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramDesaInclude<ExtArgs> | null
+    /**
+     * Filter, which ProgramDesas to fetch.
+     */
+    where?: ProgramDesaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProgramDesas to fetch.
+     */
+    orderBy?: ProgramDesaOrderByWithRelationInput | ProgramDesaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProgramDesas.
+     */
+    cursor?: ProgramDesaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProgramDesas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProgramDesas.
+     */
+    skip?: number
+    distinct?: ProgramDesaScalarFieldEnum | ProgramDesaScalarFieldEnum[]
+  }
+
+  /**
+   * ProgramDesa create
+   */
+  export type ProgramDesaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramDesa
+     */
+    select?: ProgramDesaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramDesaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProgramDesa.
+     */
+    data: XOR<ProgramDesaCreateInput, ProgramDesaUncheckedCreateInput>
+  }
+
+  /**
+   * ProgramDesa createMany
+   */
+  export type ProgramDesaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProgramDesas.
+     */
+    data: ProgramDesaCreateManyInput | ProgramDesaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProgramDesa update
+   */
+  export type ProgramDesaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramDesa
+     */
+    select?: ProgramDesaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramDesaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProgramDesa.
+     */
+    data: XOR<ProgramDesaUpdateInput, ProgramDesaUncheckedUpdateInput>
+    /**
+     * Choose, which ProgramDesa to update.
+     */
+    where: ProgramDesaWhereUniqueInput
+  }
+
+  /**
+   * ProgramDesa updateMany
+   */
+  export type ProgramDesaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProgramDesas.
+     */
+    data: XOR<ProgramDesaUpdateManyMutationInput, ProgramDesaUncheckedUpdateManyInput>
+    /**
+     * Filter which ProgramDesas to update
+     */
+    where?: ProgramDesaWhereInput
+  }
+
+  /**
+   * ProgramDesa upsert
+   */
+  export type ProgramDesaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramDesa
+     */
+    select?: ProgramDesaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramDesaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProgramDesa to update in case it exists.
+     */
+    where: ProgramDesaWhereUniqueInput
+    /**
+     * In case the ProgramDesa found by the `where` argument doesn't exist, create a new ProgramDesa with this data.
+     */
+    create: XOR<ProgramDesaCreateInput, ProgramDesaUncheckedCreateInput>
+    /**
+     * In case the ProgramDesa was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProgramDesaUpdateInput, ProgramDesaUncheckedUpdateInput>
+  }
+
+  /**
+   * ProgramDesa delete
+   */
+  export type ProgramDesaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramDesa
+     */
+    select?: ProgramDesaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramDesaInclude<ExtArgs> | null
+    /**
+     * Filter which ProgramDesa to delete.
+     */
+    where: ProgramDesaWhereUniqueInput
+  }
+
+  /**
+   * ProgramDesa deleteMany
+   */
+  export type ProgramDesaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProgramDesas to delete
+     */
+    where?: ProgramDesaWhereInput
+  }
+
+  /**
+   * ProgramDesa.keputusan
+   */
+  export type ProgramDesa$keputusanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KeputusanProgram
+     */
+    select?: KeputusanProgramSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KeputusanProgramInclude<ExtArgs> | null
+    where?: KeputusanProgramWhereInput
+    orderBy?: KeputusanProgramOrderByWithRelationInput | KeputusanProgramOrderByWithRelationInput[]
+    cursor?: KeputusanProgramWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: KeputusanProgramScalarFieldEnum | KeputusanProgramScalarFieldEnum[]
+  }
+
+  /**
+   * ProgramDesa without action
+   */
+  export type ProgramDesaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramDesa
+     */
+    select?: ProgramDesaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramDesaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model KeputusanProgram
+   */
+
+  export type AggregateKeputusanProgram = {
+    _count: KeputusanProgramCountAggregateOutputType | null
+    _min: KeputusanProgramMinAggregateOutputType | null
+    _max: KeputusanProgramMaxAggregateOutputType | null
+  }
+
+  export type KeputusanProgramMinAggregateOutputType = {
+    id: string | null
+    desaId: string | null
+    musyawarahId: string | null
+    programDesaId: string | null
+    nomorKeputusan: string | null
+    judulKeputusan: string | null
+    isiKeputusan: string | null
+    tanggalKeputusan: Date | null
+    statusSah: boolean | null
+    disetujuiOleh: string | null
+    catatan: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type KeputusanProgramMaxAggregateOutputType = {
+    id: string | null
+    desaId: string | null
+    musyawarahId: string | null
+    programDesaId: string | null
+    nomorKeputusan: string | null
+    judulKeputusan: string | null
+    isiKeputusan: string | null
+    tanggalKeputusan: Date | null
+    statusSah: boolean | null
+    disetujuiOleh: string | null
+    catatan: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type KeputusanProgramCountAggregateOutputType = {
+    id: number
+    desaId: number
+    musyawarahId: number
+    programDesaId: number
+    nomorKeputusan: number
+    judulKeputusan: number
+    isiKeputusan: number
+    tanggalKeputusan: number
+    statusSah: number
+    disetujuiOleh: number
+    catatan: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type KeputusanProgramMinAggregateInputType = {
+    id?: true
+    desaId?: true
+    musyawarahId?: true
+    programDesaId?: true
+    nomorKeputusan?: true
+    judulKeputusan?: true
+    isiKeputusan?: true
+    tanggalKeputusan?: true
+    statusSah?: true
+    disetujuiOleh?: true
+    catatan?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type KeputusanProgramMaxAggregateInputType = {
+    id?: true
+    desaId?: true
+    musyawarahId?: true
+    programDesaId?: true
+    nomorKeputusan?: true
+    judulKeputusan?: true
+    isiKeputusan?: true
+    tanggalKeputusan?: true
+    statusSah?: true
+    disetujuiOleh?: true
+    catatan?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type KeputusanProgramCountAggregateInputType = {
+    id?: true
+    desaId?: true
+    musyawarahId?: true
+    programDesaId?: true
+    nomorKeputusan?: true
+    judulKeputusan?: true
+    isiKeputusan?: true
+    tanggalKeputusan?: true
+    statusSah?: true
+    disetujuiOleh?: true
+    catatan?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type KeputusanProgramAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KeputusanProgram to aggregate.
+     */
+    where?: KeputusanProgramWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KeputusanPrograms to fetch.
+     */
+    orderBy?: KeputusanProgramOrderByWithRelationInput | KeputusanProgramOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: KeputusanProgramWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KeputusanPrograms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KeputusanPrograms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned KeputusanPrograms
+    **/
+    _count?: true | KeputusanProgramCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: KeputusanProgramMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: KeputusanProgramMaxAggregateInputType
+  }
+
+  export type GetKeputusanProgramAggregateType<T extends KeputusanProgramAggregateArgs> = {
+        [P in keyof T & keyof AggregateKeputusanProgram]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKeputusanProgram[P]>
+      : GetScalarType<T[P], AggregateKeputusanProgram[P]>
+  }
+
+
+
+
+  export type KeputusanProgramGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KeputusanProgramWhereInput
+    orderBy?: KeputusanProgramOrderByWithAggregationInput | KeputusanProgramOrderByWithAggregationInput[]
+    by: KeputusanProgramScalarFieldEnum[] | KeputusanProgramScalarFieldEnum
+    having?: KeputusanProgramScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: KeputusanProgramCountAggregateInputType | true
+    _min?: KeputusanProgramMinAggregateInputType
+    _max?: KeputusanProgramMaxAggregateInputType
+  }
+
+  export type KeputusanProgramGroupByOutputType = {
+    id: string
+    desaId: string
+    musyawarahId: string | null
+    programDesaId: string | null
+    nomorKeputusan: string | null
+    judulKeputusan: string
+    isiKeputusan: string
+    tanggalKeputusan: Date
+    statusSah: boolean
+    disetujuiOleh: string | null
+    catatan: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: KeputusanProgramCountAggregateOutputType | null
+    _min: KeputusanProgramMinAggregateOutputType | null
+    _max: KeputusanProgramMaxAggregateOutputType | null
+  }
+
+  type GetKeputusanProgramGroupByPayload<T extends KeputusanProgramGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<KeputusanProgramGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof KeputusanProgramGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], KeputusanProgramGroupByOutputType[P]>
+            : GetScalarType<T[P], KeputusanProgramGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type KeputusanProgramSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    desaId?: boolean
+    musyawarahId?: boolean
+    programDesaId?: boolean
+    nomorKeputusan?: boolean
+    judulKeputusan?: boolean
+    isiKeputusan?: boolean
+    tanggalKeputusan?: boolean
+    statusSah?: boolean
+    disetujuiOleh?: boolean
+    catatan?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    programDesa?: boolean | KeputusanProgram$programDesaArgs<ExtArgs>
+  }, ExtArgs["result"]["keputusanProgram"]>
+
+
+  export type KeputusanProgramSelectScalar = {
+    id?: boolean
+    desaId?: boolean
+    musyawarahId?: boolean
+    programDesaId?: boolean
+    nomorKeputusan?: boolean
+    judulKeputusan?: boolean
+    isiKeputusan?: boolean
+    tanggalKeputusan?: boolean
+    statusSah?: boolean
+    disetujuiOleh?: boolean
+    catatan?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type KeputusanProgramInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    programDesa?: boolean | KeputusanProgram$programDesaArgs<ExtArgs>
+  }
+
+  export type $KeputusanProgramPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "KeputusanProgram"
+    objects: {
+      programDesa: Prisma.$ProgramDesaPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      desaId: string
+      musyawarahId: string | null
+      programDesaId: string | null
+      nomorKeputusan: string | null
+      judulKeputusan: string
+      isiKeputusan: string
+      tanggalKeputusan: Date
+      statusSah: boolean
+      disetujuiOleh: string | null
+      catatan: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["keputusanProgram"]>
+    composites: {}
+  }
+
+  type KeputusanProgramGetPayload<S extends boolean | null | undefined | KeputusanProgramDefaultArgs> = $Result.GetResult<Prisma.$KeputusanProgramPayload, S>
+
+  type KeputusanProgramCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<KeputusanProgramFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: KeputusanProgramCountAggregateInputType | true
+    }
+
+  export interface KeputusanProgramDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KeputusanProgram'], meta: { name: 'KeputusanProgram' } }
+    /**
+     * Find zero or one KeputusanProgram that matches the filter.
+     * @param {KeputusanProgramFindUniqueArgs} args - Arguments to find a KeputusanProgram
+     * @example
+     * // Get one KeputusanProgram
+     * const keputusanProgram = await prisma.keputusanProgram.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends KeputusanProgramFindUniqueArgs>(args: SelectSubset<T, KeputusanProgramFindUniqueArgs<ExtArgs>>): Prisma__KeputusanProgramClient<$Result.GetResult<Prisma.$KeputusanProgramPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one KeputusanProgram that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {KeputusanProgramFindUniqueOrThrowArgs} args - Arguments to find a KeputusanProgram
+     * @example
+     * // Get one KeputusanProgram
+     * const keputusanProgram = await prisma.keputusanProgram.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends KeputusanProgramFindUniqueOrThrowArgs>(args: SelectSubset<T, KeputusanProgramFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KeputusanProgramClient<$Result.GetResult<Prisma.$KeputusanProgramPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first KeputusanProgram that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KeputusanProgramFindFirstArgs} args - Arguments to find a KeputusanProgram
+     * @example
+     * // Get one KeputusanProgram
+     * const keputusanProgram = await prisma.keputusanProgram.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends KeputusanProgramFindFirstArgs>(args?: SelectSubset<T, KeputusanProgramFindFirstArgs<ExtArgs>>): Prisma__KeputusanProgramClient<$Result.GetResult<Prisma.$KeputusanProgramPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first KeputusanProgram that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KeputusanProgramFindFirstOrThrowArgs} args - Arguments to find a KeputusanProgram
+     * @example
+     * // Get one KeputusanProgram
+     * const keputusanProgram = await prisma.keputusanProgram.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends KeputusanProgramFindFirstOrThrowArgs>(args?: SelectSubset<T, KeputusanProgramFindFirstOrThrowArgs<ExtArgs>>): Prisma__KeputusanProgramClient<$Result.GetResult<Prisma.$KeputusanProgramPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more KeputusanPrograms that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KeputusanProgramFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all KeputusanPrograms
+     * const keputusanPrograms = await prisma.keputusanProgram.findMany()
+     * 
+     * // Get first 10 KeputusanPrograms
+     * const keputusanPrograms = await prisma.keputusanProgram.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const keputusanProgramWithIdOnly = await prisma.keputusanProgram.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends KeputusanProgramFindManyArgs>(args?: SelectSubset<T, KeputusanProgramFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KeputusanProgramPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a KeputusanProgram.
+     * @param {KeputusanProgramCreateArgs} args - Arguments to create a KeputusanProgram.
+     * @example
+     * // Create one KeputusanProgram
+     * const KeputusanProgram = await prisma.keputusanProgram.create({
+     *   data: {
+     *     // ... data to create a KeputusanProgram
+     *   }
+     * })
+     * 
+     */
+    create<T extends KeputusanProgramCreateArgs>(args: SelectSubset<T, KeputusanProgramCreateArgs<ExtArgs>>): Prisma__KeputusanProgramClient<$Result.GetResult<Prisma.$KeputusanProgramPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many KeputusanPrograms.
+     * @param {KeputusanProgramCreateManyArgs} args - Arguments to create many KeputusanPrograms.
+     * @example
+     * // Create many KeputusanPrograms
+     * const keputusanProgram = await prisma.keputusanProgram.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends KeputusanProgramCreateManyArgs>(args?: SelectSubset<T, KeputusanProgramCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a KeputusanProgram.
+     * @param {KeputusanProgramDeleteArgs} args - Arguments to delete one KeputusanProgram.
+     * @example
+     * // Delete one KeputusanProgram
+     * const KeputusanProgram = await prisma.keputusanProgram.delete({
+     *   where: {
+     *     // ... filter to delete one KeputusanProgram
+     *   }
+     * })
+     * 
+     */
+    delete<T extends KeputusanProgramDeleteArgs>(args: SelectSubset<T, KeputusanProgramDeleteArgs<ExtArgs>>): Prisma__KeputusanProgramClient<$Result.GetResult<Prisma.$KeputusanProgramPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one KeputusanProgram.
+     * @param {KeputusanProgramUpdateArgs} args - Arguments to update one KeputusanProgram.
+     * @example
+     * // Update one KeputusanProgram
+     * const keputusanProgram = await prisma.keputusanProgram.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends KeputusanProgramUpdateArgs>(args: SelectSubset<T, KeputusanProgramUpdateArgs<ExtArgs>>): Prisma__KeputusanProgramClient<$Result.GetResult<Prisma.$KeputusanProgramPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more KeputusanPrograms.
+     * @param {KeputusanProgramDeleteManyArgs} args - Arguments to filter KeputusanPrograms to delete.
+     * @example
+     * // Delete a few KeputusanPrograms
+     * const { count } = await prisma.keputusanProgram.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends KeputusanProgramDeleteManyArgs>(args?: SelectSubset<T, KeputusanProgramDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KeputusanPrograms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KeputusanProgramUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many KeputusanPrograms
+     * const keputusanProgram = await prisma.keputusanProgram.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends KeputusanProgramUpdateManyArgs>(args: SelectSubset<T, KeputusanProgramUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one KeputusanProgram.
+     * @param {KeputusanProgramUpsertArgs} args - Arguments to update or create a KeputusanProgram.
+     * @example
+     * // Update or create a KeputusanProgram
+     * const keputusanProgram = await prisma.keputusanProgram.upsert({
+     *   create: {
+     *     // ... data to create a KeputusanProgram
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the KeputusanProgram we want to update
+     *   }
+     * })
+     */
+    upsert<T extends KeputusanProgramUpsertArgs>(args: SelectSubset<T, KeputusanProgramUpsertArgs<ExtArgs>>): Prisma__KeputusanProgramClient<$Result.GetResult<Prisma.$KeputusanProgramPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of KeputusanPrograms.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KeputusanProgramCountArgs} args - Arguments to filter KeputusanPrograms to count.
+     * @example
+     * // Count the number of KeputusanPrograms
+     * const count = await prisma.keputusanProgram.count({
+     *   where: {
+     *     // ... the filter for the KeputusanPrograms we want to count
+     *   }
+     * })
+    **/
+    count<T extends KeputusanProgramCountArgs>(
+      args?: Subset<T, KeputusanProgramCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], KeputusanProgramCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a KeputusanProgram.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KeputusanProgramAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends KeputusanProgramAggregateArgs>(args: Subset<T, KeputusanProgramAggregateArgs>): Prisma.PrismaPromise<GetKeputusanProgramAggregateType<T>>
+
+    /**
+     * Group by KeputusanProgram.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KeputusanProgramGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends KeputusanProgramGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: KeputusanProgramGroupByArgs['orderBy'] }
+        : { orderBy?: KeputusanProgramGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, KeputusanProgramGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKeputusanProgramGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the KeputusanProgram model
+   */
+  readonly fields: KeputusanProgramFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for KeputusanProgram.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__KeputusanProgramClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    programDesa<T extends KeputusanProgram$programDesaArgs<ExtArgs> = {}>(args?: Subset<T, KeputusanProgram$programDesaArgs<ExtArgs>>): Prisma__ProgramDesaClient<$Result.GetResult<Prisma.$ProgramDesaPayload<ExtArgs>, T, "findUniqueOrThrow"> | null, null, ExtArgs>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the KeputusanProgram model
+   */ 
+  interface KeputusanProgramFieldRefs {
+    readonly id: FieldRef<"KeputusanProgram", 'String'>
+    readonly desaId: FieldRef<"KeputusanProgram", 'String'>
+    readonly musyawarahId: FieldRef<"KeputusanProgram", 'String'>
+    readonly programDesaId: FieldRef<"KeputusanProgram", 'String'>
+    readonly nomorKeputusan: FieldRef<"KeputusanProgram", 'String'>
+    readonly judulKeputusan: FieldRef<"KeputusanProgram", 'String'>
+    readonly isiKeputusan: FieldRef<"KeputusanProgram", 'String'>
+    readonly tanggalKeputusan: FieldRef<"KeputusanProgram", 'DateTime'>
+    readonly statusSah: FieldRef<"KeputusanProgram", 'Boolean'>
+    readonly disetujuiOleh: FieldRef<"KeputusanProgram", 'String'>
+    readonly catatan: FieldRef<"KeputusanProgram", 'String'>
+    readonly createdAt: FieldRef<"KeputusanProgram", 'DateTime'>
+    readonly updatedAt: FieldRef<"KeputusanProgram", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * KeputusanProgram findUnique
+   */
+  export type KeputusanProgramFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KeputusanProgram
+     */
+    select?: KeputusanProgramSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KeputusanProgramInclude<ExtArgs> | null
+    /**
+     * Filter, which KeputusanProgram to fetch.
+     */
+    where: KeputusanProgramWhereUniqueInput
+  }
+
+  /**
+   * KeputusanProgram findUniqueOrThrow
+   */
+  export type KeputusanProgramFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KeputusanProgram
+     */
+    select?: KeputusanProgramSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KeputusanProgramInclude<ExtArgs> | null
+    /**
+     * Filter, which KeputusanProgram to fetch.
+     */
+    where: KeputusanProgramWhereUniqueInput
+  }
+
+  /**
+   * KeputusanProgram findFirst
+   */
+  export type KeputusanProgramFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KeputusanProgram
+     */
+    select?: KeputusanProgramSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KeputusanProgramInclude<ExtArgs> | null
+    /**
+     * Filter, which KeputusanProgram to fetch.
+     */
+    where?: KeputusanProgramWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KeputusanPrograms to fetch.
+     */
+    orderBy?: KeputusanProgramOrderByWithRelationInput | KeputusanProgramOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KeputusanPrograms.
+     */
+    cursor?: KeputusanProgramWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KeputusanPrograms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KeputusanPrograms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KeputusanPrograms.
+     */
+    distinct?: KeputusanProgramScalarFieldEnum | KeputusanProgramScalarFieldEnum[]
+  }
+
+  /**
+   * KeputusanProgram findFirstOrThrow
+   */
+  export type KeputusanProgramFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KeputusanProgram
+     */
+    select?: KeputusanProgramSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KeputusanProgramInclude<ExtArgs> | null
+    /**
+     * Filter, which KeputusanProgram to fetch.
+     */
+    where?: KeputusanProgramWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KeputusanPrograms to fetch.
+     */
+    orderBy?: KeputusanProgramOrderByWithRelationInput | KeputusanProgramOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KeputusanPrograms.
+     */
+    cursor?: KeputusanProgramWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KeputusanPrograms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KeputusanPrograms.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KeputusanPrograms.
+     */
+    distinct?: KeputusanProgramScalarFieldEnum | KeputusanProgramScalarFieldEnum[]
+  }
+
+  /**
+   * KeputusanProgram findMany
+   */
+  export type KeputusanProgramFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KeputusanProgram
+     */
+    select?: KeputusanProgramSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KeputusanProgramInclude<ExtArgs> | null
+    /**
+     * Filter, which KeputusanPrograms to fetch.
+     */
+    where?: KeputusanProgramWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KeputusanPrograms to fetch.
+     */
+    orderBy?: KeputusanProgramOrderByWithRelationInput | KeputusanProgramOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing KeputusanPrograms.
+     */
+    cursor?: KeputusanProgramWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KeputusanPrograms from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KeputusanPrograms.
+     */
+    skip?: number
+    distinct?: KeputusanProgramScalarFieldEnum | KeputusanProgramScalarFieldEnum[]
+  }
+
+  /**
+   * KeputusanProgram create
+   */
+  export type KeputusanProgramCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KeputusanProgram
+     */
+    select?: KeputusanProgramSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KeputusanProgramInclude<ExtArgs> | null
+    /**
+     * The data needed to create a KeputusanProgram.
+     */
+    data: XOR<KeputusanProgramCreateInput, KeputusanProgramUncheckedCreateInput>
+  }
+
+  /**
+   * KeputusanProgram createMany
+   */
+  export type KeputusanProgramCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many KeputusanPrograms.
+     */
+    data: KeputusanProgramCreateManyInput | KeputusanProgramCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * KeputusanProgram update
+   */
+  export type KeputusanProgramUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KeputusanProgram
+     */
+    select?: KeputusanProgramSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KeputusanProgramInclude<ExtArgs> | null
+    /**
+     * The data needed to update a KeputusanProgram.
+     */
+    data: XOR<KeputusanProgramUpdateInput, KeputusanProgramUncheckedUpdateInput>
+    /**
+     * Choose, which KeputusanProgram to update.
+     */
+    where: KeputusanProgramWhereUniqueInput
+  }
+
+  /**
+   * KeputusanProgram updateMany
+   */
+  export type KeputusanProgramUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update KeputusanPrograms.
+     */
+    data: XOR<KeputusanProgramUpdateManyMutationInput, KeputusanProgramUncheckedUpdateManyInput>
+    /**
+     * Filter which KeputusanPrograms to update
+     */
+    where?: KeputusanProgramWhereInput
+  }
+
+  /**
+   * KeputusanProgram upsert
+   */
+  export type KeputusanProgramUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KeputusanProgram
+     */
+    select?: KeputusanProgramSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KeputusanProgramInclude<ExtArgs> | null
+    /**
+     * The filter to search for the KeputusanProgram to update in case it exists.
+     */
+    where: KeputusanProgramWhereUniqueInput
+    /**
+     * In case the KeputusanProgram found by the `where` argument doesn't exist, create a new KeputusanProgram with this data.
+     */
+    create: XOR<KeputusanProgramCreateInput, KeputusanProgramUncheckedCreateInput>
+    /**
+     * In case the KeputusanProgram was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<KeputusanProgramUpdateInput, KeputusanProgramUncheckedUpdateInput>
+  }
+
+  /**
+   * KeputusanProgram delete
+   */
+  export type KeputusanProgramDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KeputusanProgram
+     */
+    select?: KeputusanProgramSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KeputusanProgramInclude<ExtArgs> | null
+    /**
+     * Filter which KeputusanProgram to delete.
+     */
+    where: KeputusanProgramWhereUniqueInput
+  }
+
+  /**
+   * KeputusanProgram deleteMany
+   */
+  export type KeputusanProgramDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KeputusanPrograms to delete
+     */
+    where?: KeputusanProgramWhereInput
+  }
+
+  /**
+   * KeputusanProgram.programDesa
+   */
+  export type KeputusanProgram$programDesaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProgramDesa
+     */
+    select?: ProgramDesaSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProgramDesaInclude<ExtArgs> | null
+    where?: ProgramDesaWhereInput
+  }
+
+  /**
+   * KeputusanProgram without action
+   */
+  export type KeputusanProgramDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KeputusanProgram
+     */
+    select?: KeputusanProgramSelect<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: KeputusanProgramInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PersetujuanAkses
+   */
+
+  export type AggregatePersetujuanAkses = {
+    _count: PersetujuanAksesCountAggregateOutputType | null
+    _min: PersetujuanAksesMinAggregateOutputType | null
+    _max: PersetujuanAksesMaxAggregateOutputType | null
+  }
+
+  export type PersetujuanAksesMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    modul: string | null
+    aksesLevel: string | null
+    disetujuiOleh: string | null
+    alasan: string | null
+    status: string | null
+    berlakuHingga: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PersetujuanAksesMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    modul: string | null
+    aksesLevel: string | null
+    disetujuiOleh: string | null
+    alasan: string | null
+    status: string | null
+    berlakuHingga: Date | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PersetujuanAksesCountAggregateOutputType = {
+    id: number
+    userId: number
+    modul: number
+    aksesLevel: number
+    disetujuiOleh: number
+    alasan: number
+    status: number
+    berlakuHingga: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PersetujuanAksesMinAggregateInputType = {
+    id?: true
+    userId?: true
+    modul?: true
+    aksesLevel?: true
+    disetujuiOleh?: true
+    alasan?: true
+    status?: true
+    berlakuHingga?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PersetujuanAksesMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    modul?: true
+    aksesLevel?: true
+    disetujuiOleh?: true
+    alasan?: true
+    status?: true
+    berlakuHingga?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PersetujuanAksesCountAggregateInputType = {
+    id?: true
+    userId?: true
+    modul?: true
+    aksesLevel?: true
+    disetujuiOleh?: true
+    alasan?: true
+    status?: true
+    berlakuHingga?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PersetujuanAksesAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PersetujuanAkses to aggregate.
+     */
+    where?: PersetujuanAksesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PersetujuanAkses to fetch.
+     */
+    orderBy?: PersetujuanAksesOrderByWithRelationInput | PersetujuanAksesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PersetujuanAksesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PersetujuanAkses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PersetujuanAkses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PersetujuanAkses
+    **/
+    _count?: true | PersetujuanAksesCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PersetujuanAksesMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PersetujuanAksesMaxAggregateInputType
+  }
+
+  export type GetPersetujuanAksesAggregateType<T extends PersetujuanAksesAggregateArgs> = {
+        [P in keyof T & keyof AggregatePersetujuanAkses]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePersetujuanAkses[P]>
+      : GetScalarType<T[P], AggregatePersetujuanAkses[P]>
+  }
+
+
+
+
+  export type PersetujuanAksesGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersetujuanAksesWhereInput
+    orderBy?: PersetujuanAksesOrderByWithAggregationInput | PersetujuanAksesOrderByWithAggregationInput[]
+    by: PersetujuanAksesScalarFieldEnum[] | PersetujuanAksesScalarFieldEnum
+    having?: PersetujuanAksesScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PersetujuanAksesCountAggregateInputType | true
+    _min?: PersetujuanAksesMinAggregateInputType
+    _max?: PersetujuanAksesMaxAggregateInputType
+  }
+
+  export type PersetujuanAksesGroupByOutputType = {
+    id: string
+    userId: string
+    modul: string
+    aksesLevel: string
+    disetujuiOleh: string | null
+    alasan: string | null
+    status: string
+    berlakuHingga: Date | null
+    createdAt: Date
+    updatedAt: Date
+    _count: PersetujuanAksesCountAggregateOutputType | null
+    _min: PersetujuanAksesMinAggregateOutputType | null
+    _max: PersetujuanAksesMaxAggregateOutputType | null
+  }
+
+  type GetPersetujuanAksesGroupByPayload<T extends PersetujuanAksesGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PersetujuanAksesGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PersetujuanAksesGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PersetujuanAksesGroupByOutputType[P]>
+            : GetScalarType<T[P], PersetujuanAksesGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PersetujuanAksesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    modul?: boolean
+    aksesLevel?: boolean
+    disetujuiOleh?: boolean
+    alasan?: boolean
+    status?: boolean
+    berlakuHingga?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["persetujuanAkses"]>
+
+
+  export type PersetujuanAksesSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    modul?: boolean
+    aksesLevel?: boolean
+    disetujuiOleh?: boolean
+    alasan?: boolean
+    status?: boolean
+    berlakuHingga?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+
+  export type $PersetujuanAksesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PersetujuanAkses"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      modul: string
+      aksesLevel: string
+      disetujuiOleh: string | null
+      alasan: string | null
+      status: string
+      berlakuHingga: Date | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["persetujuanAkses"]>
+    composites: {}
+  }
+
+  type PersetujuanAksesGetPayload<S extends boolean | null | undefined | PersetujuanAksesDefaultArgs> = $Result.GetResult<Prisma.$PersetujuanAksesPayload, S>
+
+  type PersetujuanAksesCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = 
+    Omit<PersetujuanAksesFindManyArgs, 'select' | 'include' | 'distinct'> & {
+      select?: PersetujuanAksesCountAggregateInputType | true
+    }
+
+  export interface PersetujuanAksesDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PersetujuanAkses'], meta: { name: 'PersetujuanAkses' } }
+    /**
+     * Find zero or one PersetujuanAkses that matches the filter.
+     * @param {PersetujuanAksesFindUniqueArgs} args - Arguments to find a PersetujuanAkses
+     * @example
+     * // Get one PersetujuanAkses
+     * const persetujuanAkses = await prisma.persetujuanAkses.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PersetujuanAksesFindUniqueArgs>(args: SelectSubset<T, PersetujuanAksesFindUniqueArgs<ExtArgs>>): Prisma__PersetujuanAksesClient<$Result.GetResult<Prisma.$PersetujuanAksesPayload<ExtArgs>, T, "findUnique"> | null, null, ExtArgs>
+
+    /**
+     * Find one PersetujuanAkses that matches the filter or throw an error with `error.code='P2025'` 
+     * if no matches were found.
+     * @param {PersetujuanAksesFindUniqueOrThrowArgs} args - Arguments to find a PersetujuanAkses
+     * @example
+     * // Get one PersetujuanAkses
+     * const persetujuanAkses = await prisma.persetujuanAkses.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PersetujuanAksesFindUniqueOrThrowArgs>(args: SelectSubset<T, PersetujuanAksesFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PersetujuanAksesClient<$Result.GetResult<Prisma.$PersetujuanAksesPayload<ExtArgs>, T, "findUniqueOrThrow">, never, ExtArgs>
+
+    /**
+     * Find the first PersetujuanAkses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersetujuanAksesFindFirstArgs} args - Arguments to find a PersetujuanAkses
+     * @example
+     * // Get one PersetujuanAkses
+     * const persetujuanAkses = await prisma.persetujuanAkses.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PersetujuanAksesFindFirstArgs>(args?: SelectSubset<T, PersetujuanAksesFindFirstArgs<ExtArgs>>): Prisma__PersetujuanAksesClient<$Result.GetResult<Prisma.$PersetujuanAksesPayload<ExtArgs>, T, "findFirst"> | null, null, ExtArgs>
+
+    /**
+     * Find the first PersetujuanAkses that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersetujuanAksesFindFirstOrThrowArgs} args - Arguments to find a PersetujuanAkses
+     * @example
+     * // Get one PersetujuanAkses
+     * const persetujuanAkses = await prisma.persetujuanAkses.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PersetujuanAksesFindFirstOrThrowArgs>(args?: SelectSubset<T, PersetujuanAksesFindFirstOrThrowArgs<ExtArgs>>): Prisma__PersetujuanAksesClient<$Result.GetResult<Prisma.$PersetujuanAksesPayload<ExtArgs>, T, "findFirstOrThrow">, never, ExtArgs>
+
+    /**
+     * Find zero or more PersetujuanAkses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersetujuanAksesFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PersetujuanAkses
+     * const persetujuanAkses = await prisma.persetujuanAkses.findMany()
+     * 
+     * // Get first 10 PersetujuanAkses
+     * const persetujuanAkses = await prisma.persetujuanAkses.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const persetujuanAksesWithIdOnly = await prisma.persetujuanAkses.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PersetujuanAksesFindManyArgs>(args?: SelectSubset<T, PersetujuanAksesFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersetujuanAksesPayload<ExtArgs>, T, "findMany">>
+
+    /**
+     * Create a PersetujuanAkses.
+     * @param {PersetujuanAksesCreateArgs} args - Arguments to create a PersetujuanAkses.
+     * @example
+     * // Create one PersetujuanAkses
+     * const PersetujuanAkses = await prisma.persetujuanAkses.create({
+     *   data: {
+     *     // ... data to create a PersetujuanAkses
+     *   }
+     * })
+     * 
+     */
+    create<T extends PersetujuanAksesCreateArgs>(args: SelectSubset<T, PersetujuanAksesCreateArgs<ExtArgs>>): Prisma__PersetujuanAksesClient<$Result.GetResult<Prisma.$PersetujuanAksesPayload<ExtArgs>, T, "create">, never, ExtArgs>
+
+    /**
+     * Create many PersetujuanAkses.
+     * @param {PersetujuanAksesCreateManyArgs} args - Arguments to create many PersetujuanAkses.
+     * @example
+     * // Create many PersetujuanAkses
+     * const persetujuanAkses = await prisma.persetujuanAkses.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PersetujuanAksesCreateManyArgs>(args?: SelectSubset<T, PersetujuanAksesCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a PersetujuanAkses.
+     * @param {PersetujuanAksesDeleteArgs} args - Arguments to delete one PersetujuanAkses.
+     * @example
+     * // Delete one PersetujuanAkses
+     * const PersetujuanAkses = await prisma.persetujuanAkses.delete({
+     *   where: {
+     *     // ... filter to delete one PersetujuanAkses
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PersetujuanAksesDeleteArgs>(args: SelectSubset<T, PersetujuanAksesDeleteArgs<ExtArgs>>): Prisma__PersetujuanAksesClient<$Result.GetResult<Prisma.$PersetujuanAksesPayload<ExtArgs>, T, "delete">, never, ExtArgs>
+
+    /**
+     * Update one PersetujuanAkses.
+     * @param {PersetujuanAksesUpdateArgs} args - Arguments to update one PersetujuanAkses.
+     * @example
+     * // Update one PersetujuanAkses
+     * const persetujuanAkses = await prisma.persetujuanAkses.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PersetujuanAksesUpdateArgs>(args: SelectSubset<T, PersetujuanAksesUpdateArgs<ExtArgs>>): Prisma__PersetujuanAksesClient<$Result.GetResult<Prisma.$PersetujuanAksesPayload<ExtArgs>, T, "update">, never, ExtArgs>
+
+    /**
+     * Delete zero or more PersetujuanAkses.
+     * @param {PersetujuanAksesDeleteManyArgs} args - Arguments to filter PersetujuanAkses to delete.
+     * @example
+     * // Delete a few PersetujuanAkses
+     * const { count } = await prisma.persetujuanAkses.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PersetujuanAksesDeleteManyArgs>(args?: SelectSubset<T, PersetujuanAksesDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PersetujuanAkses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersetujuanAksesUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PersetujuanAkses
+     * const persetujuanAkses = await prisma.persetujuanAkses.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PersetujuanAksesUpdateManyArgs>(args: SelectSubset<T, PersetujuanAksesUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one PersetujuanAkses.
+     * @param {PersetujuanAksesUpsertArgs} args - Arguments to update or create a PersetujuanAkses.
+     * @example
+     * // Update or create a PersetujuanAkses
+     * const persetujuanAkses = await prisma.persetujuanAkses.upsert({
+     *   create: {
+     *     // ... data to create a PersetujuanAkses
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PersetujuanAkses we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PersetujuanAksesUpsertArgs>(args: SelectSubset<T, PersetujuanAksesUpsertArgs<ExtArgs>>): Prisma__PersetujuanAksesClient<$Result.GetResult<Prisma.$PersetujuanAksesPayload<ExtArgs>, T, "upsert">, never, ExtArgs>
+
+
+    /**
+     * Count the number of PersetujuanAkses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersetujuanAksesCountArgs} args - Arguments to filter PersetujuanAkses to count.
+     * @example
+     * // Count the number of PersetujuanAkses
+     * const count = await prisma.persetujuanAkses.count({
+     *   where: {
+     *     // ... the filter for the PersetujuanAkses we want to count
+     *   }
+     * })
+    **/
+    count<T extends PersetujuanAksesCountArgs>(
+      args?: Subset<T, PersetujuanAksesCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PersetujuanAksesCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PersetujuanAkses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersetujuanAksesAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PersetujuanAksesAggregateArgs>(args: Subset<T, PersetujuanAksesAggregateArgs>): Prisma.PrismaPromise<GetPersetujuanAksesAggregateType<T>>
+
+    /**
+     * Group by PersetujuanAkses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersetujuanAksesGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PersetujuanAksesGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PersetujuanAksesGroupByArgs['orderBy'] }
+        : { orderBy?: PersetujuanAksesGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PersetujuanAksesGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPersetujuanAksesGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PersetujuanAkses model
+   */
+  readonly fields: PersetujuanAksesFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PersetujuanAkses.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PersetujuanAksesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PersetujuanAkses model
+   */ 
+  interface PersetujuanAksesFieldRefs {
+    readonly id: FieldRef<"PersetujuanAkses", 'String'>
+    readonly userId: FieldRef<"PersetujuanAkses", 'String'>
+    readonly modul: FieldRef<"PersetujuanAkses", 'String'>
+    readonly aksesLevel: FieldRef<"PersetujuanAkses", 'String'>
+    readonly disetujuiOleh: FieldRef<"PersetujuanAkses", 'String'>
+    readonly alasan: FieldRef<"PersetujuanAkses", 'String'>
+    readonly status: FieldRef<"PersetujuanAkses", 'String'>
+    readonly berlakuHingga: FieldRef<"PersetujuanAkses", 'DateTime'>
+    readonly createdAt: FieldRef<"PersetujuanAkses", 'DateTime'>
+    readonly updatedAt: FieldRef<"PersetujuanAkses", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PersetujuanAkses findUnique
+   */
+  export type PersetujuanAksesFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersetujuanAkses
+     */
+    select?: PersetujuanAksesSelect<ExtArgs> | null
+    /**
+     * Filter, which PersetujuanAkses to fetch.
+     */
+    where: PersetujuanAksesWhereUniqueInput
+  }
+
+  /**
+   * PersetujuanAkses findUniqueOrThrow
+   */
+  export type PersetujuanAksesFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersetujuanAkses
+     */
+    select?: PersetujuanAksesSelect<ExtArgs> | null
+    /**
+     * Filter, which PersetujuanAkses to fetch.
+     */
+    where: PersetujuanAksesWhereUniqueInput
+  }
+
+  /**
+   * PersetujuanAkses findFirst
+   */
+  export type PersetujuanAksesFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersetujuanAkses
+     */
+    select?: PersetujuanAksesSelect<ExtArgs> | null
+    /**
+     * Filter, which PersetujuanAkses to fetch.
+     */
+    where?: PersetujuanAksesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PersetujuanAkses to fetch.
+     */
+    orderBy?: PersetujuanAksesOrderByWithRelationInput | PersetujuanAksesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PersetujuanAkses.
+     */
+    cursor?: PersetujuanAksesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PersetujuanAkses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PersetujuanAkses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PersetujuanAkses.
+     */
+    distinct?: PersetujuanAksesScalarFieldEnum | PersetujuanAksesScalarFieldEnum[]
+  }
+
+  /**
+   * PersetujuanAkses findFirstOrThrow
+   */
+  export type PersetujuanAksesFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersetujuanAkses
+     */
+    select?: PersetujuanAksesSelect<ExtArgs> | null
+    /**
+     * Filter, which PersetujuanAkses to fetch.
+     */
+    where?: PersetujuanAksesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PersetujuanAkses to fetch.
+     */
+    orderBy?: PersetujuanAksesOrderByWithRelationInput | PersetujuanAksesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PersetujuanAkses.
+     */
+    cursor?: PersetujuanAksesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PersetujuanAkses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PersetujuanAkses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PersetujuanAkses.
+     */
+    distinct?: PersetujuanAksesScalarFieldEnum | PersetujuanAksesScalarFieldEnum[]
+  }
+
+  /**
+   * PersetujuanAkses findMany
+   */
+  export type PersetujuanAksesFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersetujuanAkses
+     */
+    select?: PersetujuanAksesSelect<ExtArgs> | null
+    /**
+     * Filter, which PersetujuanAkses to fetch.
+     */
+    where?: PersetujuanAksesWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PersetujuanAkses to fetch.
+     */
+    orderBy?: PersetujuanAksesOrderByWithRelationInput | PersetujuanAksesOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PersetujuanAkses.
+     */
+    cursor?: PersetujuanAksesWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PersetujuanAkses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PersetujuanAkses.
+     */
+    skip?: number
+    distinct?: PersetujuanAksesScalarFieldEnum | PersetujuanAksesScalarFieldEnum[]
+  }
+
+  /**
+   * PersetujuanAkses create
+   */
+  export type PersetujuanAksesCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersetujuanAkses
+     */
+    select?: PersetujuanAksesSelect<ExtArgs> | null
+    /**
+     * The data needed to create a PersetujuanAkses.
+     */
+    data: XOR<PersetujuanAksesCreateInput, PersetujuanAksesUncheckedCreateInput>
+  }
+
+  /**
+   * PersetujuanAkses createMany
+   */
+  export type PersetujuanAksesCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PersetujuanAkses.
+     */
+    data: PersetujuanAksesCreateManyInput | PersetujuanAksesCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PersetujuanAkses update
+   */
+  export type PersetujuanAksesUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersetujuanAkses
+     */
+    select?: PersetujuanAksesSelect<ExtArgs> | null
+    /**
+     * The data needed to update a PersetujuanAkses.
+     */
+    data: XOR<PersetujuanAksesUpdateInput, PersetujuanAksesUncheckedUpdateInput>
+    /**
+     * Choose, which PersetujuanAkses to update.
+     */
+    where: PersetujuanAksesWhereUniqueInput
+  }
+
+  /**
+   * PersetujuanAkses updateMany
+   */
+  export type PersetujuanAksesUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PersetujuanAkses.
+     */
+    data: XOR<PersetujuanAksesUpdateManyMutationInput, PersetujuanAksesUncheckedUpdateManyInput>
+    /**
+     * Filter which PersetujuanAkses to update
+     */
+    where?: PersetujuanAksesWhereInput
+  }
+
+  /**
+   * PersetujuanAkses upsert
+   */
+  export type PersetujuanAksesUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersetujuanAkses
+     */
+    select?: PersetujuanAksesSelect<ExtArgs> | null
+    /**
+     * The filter to search for the PersetujuanAkses to update in case it exists.
+     */
+    where: PersetujuanAksesWhereUniqueInput
+    /**
+     * In case the PersetujuanAkses found by the `where` argument doesn't exist, create a new PersetujuanAkses with this data.
+     */
+    create: XOR<PersetujuanAksesCreateInput, PersetujuanAksesUncheckedCreateInput>
+    /**
+     * In case the PersetujuanAkses was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PersetujuanAksesUpdateInput, PersetujuanAksesUncheckedUpdateInput>
+  }
+
+  /**
+   * PersetujuanAkses delete
+   */
+  export type PersetujuanAksesDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersetujuanAkses
+     */
+    select?: PersetujuanAksesSelect<ExtArgs> | null
+    /**
+     * Filter which PersetujuanAkses to delete.
+     */
+    where: PersetujuanAksesWhereUniqueInput
+  }
+
+  /**
+   * PersetujuanAkses deleteMany
+   */
+  export type PersetujuanAksesDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PersetujuanAkses to delete
+     */
+    where?: PersetujuanAksesWhereInput
+  }
+
+  /**
+   * PersetujuanAkses without action
+   */
+  export type PersetujuanAksesDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersetujuanAkses
+     */
+    select?: PersetujuanAksesSelect<ExtArgs> | null
   }
 
 
@@ -67196,6 +74765,129 @@ export namespace Prisma {
   export type LaporanScalarFieldEnum = (typeof LaporanScalarFieldEnum)[keyof typeof LaporanScalarFieldEnum]
 
 
+  export const DimensiScalarFieldEnum: {
+    id: 'id',
+    frameworkId: 'frameworkId',
+    nama: 'nama',
+    deskripsi: 'deskripsi',
+    bobot: 'bobot',
+    urutan: 'urutan',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DimensiScalarFieldEnum = (typeof DimensiScalarFieldEnum)[keyof typeof DimensiScalarFieldEnum]
+
+
+  export const IndikatorScalarFieldEnum: {
+    id: 'id',
+    dimensiId: 'dimensiId',
+    nama: 'nama',
+    deskripsi: 'deskripsi',
+    satuan: 'satuan',
+    targetNilai: 'targetNilai',
+    bobot: 'bobot',
+    tipe: 'tipe',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type IndikatorScalarFieldEnum = (typeof IndikatorScalarFieldEnum)[keyof typeof IndikatorScalarFieldEnum]
+
+
+  export const NilaiIndikatorScalarFieldEnum: {
+    id: 'id',
+    indikatorId: 'indikatorId',
+    desaId: 'desaId',
+    periode: 'periode',
+    nilai: 'nilai',
+    sumber: 'sumber',
+    catatan: 'catatan',
+    status: 'status',
+    createdBy: 'createdBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type NilaiIndikatorScalarFieldEnum = (typeof NilaiIndikatorScalarFieldEnum)[keyof typeof NilaiIndikatorScalarFieldEnum]
+
+
+  export const BuktiDataScalarFieldEnum: {
+    id: 'id',
+    nilaiIndikatorId: 'nilaiIndikatorId',
+    judul: 'judul',
+    tipe: 'tipe',
+    fileUrl: 'fileUrl',
+    keterangan: 'keterangan',
+    uploadedBy: 'uploadedBy',
+    statusReview: 'statusReview',
+    reviewedBy: 'reviewedBy',
+    reviewedAt: 'reviewedAt',
+    createdAt: 'createdAt'
+  };
+
+  export type BuktiDataScalarFieldEnum = (typeof BuktiDataScalarFieldEnum)[keyof typeof BuktiDataScalarFieldEnum]
+
+
+  export const ProgramDesaScalarFieldEnum: {
+    id: 'id',
+    desaId: 'desaId',
+    namaProgram: 'namaProgram',
+    deskripsi: 'deskripsi',
+    bidang: 'bidang',
+    anggaranTotal: 'anggaranTotal',
+    sumberDana: 'sumberDana',
+    periode: 'periode',
+    statusProgram: 'statusProgram',
+    prioritas: 'prioritas',
+    penanggungJawab: 'penanggungJawab',
+    targetCapaian: 'targetCapaian',
+    tanggalMulai: 'tanggalMulai',
+    tanggalSelesai: 'tanggalSelesai',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProgramDesaScalarFieldEnum = (typeof ProgramDesaScalarFieldEnum)[keyof typeof ProgramDesaScalarFieldEnum]
+
+
+  export const KeputusanProgramScalarFieldEnum: {
+    id: 'id',
+    desaId: 'desaId',
+    musyawarahId: 'musyawarahId',
+    programDesaId: 'programDesaId',
+    nomorKeputusan: 'nomorKeputusan',
+    judulKeputusan: 'judulKeputusan',
+    isiKeputusan: 'isiKeputusan',
+    tanggalKeputusan: 'tanggalKeputusan',
+    statusSah: 'statusSah',
+    disetujuiOleh: 'disetujuiOleh',
+    catatan: 'catatan',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type KeputusanProgramScalarFieldEnum = (typeof KeputusanProgramScalarFieldEnum)[keyof typeof KeputusanProgramScalarFieldEnum]
+
+
+  export const PersetujuanAksesScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    modul: 'modul',
+    aksesLevel: 'aksesLevel',
+    disetujuiOleh: 'disetujuiOleh',
+    alasan: 'alasan',
+    status: 'status',
+    berlakuHingga: 'berlakuHingga',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PersetujuanAksesScalarFieldEnum = (typeof PersetujuanAksesScalarFieldEnum)[keyof typeof PersetujuanAksesScalarFieldEnum]
+
+
   export const ForumScalarFieldEnum: {
     id: 'id',
     kelasId: 'kelasId',
@@ -69538,6 +77230,632 @@ export namespace Prisma {
     periode?: StringWithAggregatesFilter<"Laporan"> | string
     fileUrl?: StringNullableWithAggregatesFilter<"Laporan"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Laporan"> | Date | string
+  }
+
+  export type DimensiWhereInput = {
+    AND?: DimensiWhereInput | DimensiWhereInput[]
+    OR?: DimensiWhereInput[]
+    NOT?: DimensiWhereInput | DimensiWhereInput[]
+    id?: StringFilter<"Dimensi"> | string
+    frameworkId?: StringFilter<"Dimensi"> | string
+    nama?: StringFilter<"Dimensi"> | string
+    deskripsi?: StringNullableFilter<"Dimensi"> | string | null
+    bobot?: FloatFilter<"Dimensi"> | number
+    urutan?: IntFilter<"Dimensi"> | number
+    status?: StringFilter<"Dimensi"> | string
+    createdAt?: DateTimeFilter<"Dimensi"> | Date | string
+    updatedAt?: DateTimeFilter<"Dimensi"> | Date | string
+    indikator?: IndikatorListRelationFilter
+  }
+
+  export type DimensiOrderByWithRelationInput = {
+    id?: SortOrder
+    frameworkId?: SortOrder
+    nama?: SortOrder
+    deskripsi?: SortOrderInput | SortOrder
+    bobot?: SortOrder
+    urutan?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    indikator?: IndikatorOrderByRelationAggregateInput
+  }
+
+  export type DimensiWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DimensiWhereInput | DimensiWhereInput[]
+    OR?: DimensiWhereInput[]
+    NOT?: DimensiWhereInput | DimensiWhereInput[]
+    frameworkId?: StringFilter<"Dimensi"> | string
+    nama?: StringFilter<"Dimensi"> | string
+    deskripsi?: StringNullableFilter<"Dimensi"> | string | null
+    bobot?: FloatFilter<"Dimensi"> | number
+    urutan?: IntFilter<"Dimensi"> | number
+    status?: StringFilter<"Dimensi"> | string
+    createdAt?: DateTimeFilter<"Dimensi"> | Date | string
+    updatedAt?: DateTimeFilter<"Dimensi"> | Date | string
+    indikator?: IndikatorListRelationFilter
+  }, "id">
+
+  export type DimensiOrderByWithAggregationInput = {
+    id?: SortOrder
+    frameworkId?: SortOrder
+    nama?: SortOrder
+    deskripsi?: SortOrderInput | SortOrder
+    bobot?: SortOrder
+    urutan?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DimensiCountOrderByAggregateInput
+    _avg?: DimensiAvgOrderByAggregateInput
+    _max?: DimensiMaxOrderByAggregateInput
+    _min?: DimensiMinOrderByAggregateInput
+    _sum?: DimensiSumOrderByAggregateInput
+  }
+
+  export type DimensiScalarWhereWithAggregatesInput = {
+    AND?: DimensiScalarWhereWithAggregatesInput | DimensiScalarWhereWithAggregatesInput[]
+    OR?: DimensiScalarWhereWithAggregatesInput[]
+    NOT?: DimensiScalarWhereWithAggregatesInput | DimensiScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Dimensi"> | string
+    frameworkId?: StringWithAggregatesFilter<"Dimensi"> | string
+    nama?: StringWithAggregatesFilter<"Dimensi"> | string
+    deskripsi?: StringNullableWithAggregatesFilter<"Dimensi"> | string | null
+    bobot?: FloatWithAggregatesFilter<"Dimensi"> | number
+    urutan?: IntWithAggregatesFilter<"Dimensi"> | number
+    status?: StringWithAggregatesFilter<"Dimensi"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Dimensi"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Dimensi"> | Date | string
+  }
+
+  export type IndikatorWhereInput = {
+    AND?: IndikatorWhereInput | IndikatorWhereInput[]
+    OR?: IndikatorWhereInput[]
+    NOT?: IndikatorWhereInput | IndikatorWhereInput[]
+    id?: StringFilter<"Indikator"> | string
+    dimensiId?: StringFilter<"Indikator"> | string
+    nama?: StringFilter<"Indikator"> | string
+    deskripsi?: StringNullableFilter<"Indikator"> | string | null
+    satuan?: StringNullableFilter<"Indikator"> | string | null
+    targetNilai?: FloatNullableFilter<"Indikator"> | number | null
+    bobot?: FloatFilter<"Indikator"> | number
+    tipe?: StringFilter<"Indikator"> | string
+    status?: StringFilter<"Indikator"> | string
+    createdAt?: DateTimeFilter<"Indikator"> | Date | string
+    updatedAt?: DateTimeFilter<"Indikator"> | Date | string
+    dimensi?: XOR<DimensiRelationFilter, DimensiWhereInput>
+    nilaiIndikator?: NilaiIndikatorListRelationFilter
+  }
+
+  export type IndikatorOrderByWithRelationInput = {
+    id?: SortOrder
+    dimensiId?: SortOrder
+    nama?: SortOrder
+    deskripsi?: SortOrderInput | SortOrder
+    satuan?: SortOrderInput | SortOrder
+    targetNilai?: SortOrderInput | SortOrder
+    bobot?: SortOrder
+    tipe?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    dimensi?: DimensiOrderByWithRelationInput
+    nilaiIndikator?: NilaiIndikatorOrderByRelationAggregateInput
+  }
+
+  export type IndikatorWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: IndikatorWhereInput | IndikatorWhereInput[]
+    OR?: IndikatorWhereInput[]
+    NOT?: IndikatorWhereInput | IndikatorWhereInput[]
+    dimensiId?: StringFilter<"Indikator"> | string
+    nama?: StringFilter<"Indikator"> | string
+    deskripsi?: StringNullableFilter<"Indikator"> | string | null
+    satuan?: StringNullableFilter<"Indikator"> | string | null
+    targetNilai?: FloatNullableFilter<"Indikator"> | number | null
+    bobot?: FloatFilter<"Indikator"> | number
+    tipe?: StringFilter<"Indikator"> | string
+    status?: StringFilter<"Indikator"> | string
+    createdAt?: DateTimeFilter<"Indikator"> | Date | string
+    updatedAt?: DateTimeFilter<"Indikator"> | Date | string
+    dimensi?: XOR<DimensiRelationFilter, DimensiWhereInput>
+    nilaiIndikator?: NilaiIndikatorListRelationFilter
+  }, "id">
+
+  export type IndikatorOrderByWithAggregationInput = {
+    id?: SortOrder
+    dimensiId?: SortOrder
+    nama?: SortOrder
+    deskripsi?: SortOrderInput | SortOrder
+    satuan?: SortOrderInput | SortOrder
+    targetNilai?: SortOrderInput | SortOrder
+    bobot?: SortOrder
+    tipe?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: IndikatorCountOrderByAggregateInput
+    _avg?: IndikatorAvgOrderByAggregateInput
+    _max?: IndikatorMaxOrderByAggregateInput
+    _min?: IndikatorMinOrderByAggregateInput
+    _sum?: IndikatorSumOrderByAggregateInput
+  }
+
+  export type IndikatorScalarWhereWithAggregatesInput = {
+    AND?: IndikatorScalarWhereWithAggregatesInput | IndikatorScalarWhereWithAggregatesInput[]
+    OR?: IndikatorScalarWhereWithAggregatesInput[]
+    NOT?: IndikatorScalarWhereWithAggregatesInput | IndikatorScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Indikator"> | string
+    dimensiId?: StringWithAggregatesFilter<"Indikator"> | string
+    nama?: StringWithAggregatesFilter<"Indikator"> | string
+    deskripsi?: StringNullableWithAggregatesFilter<"Indikator"> | string | null
+    satuan?: StringNullableWithAggregatesFilter<"Indikator"> | string | null
+    targetNilai?: FloatNullableWithAggregatesFilter<"Indikator"> | number | null
+    bobot?: FloatWithAggregatesFilter<"Indikator"> | number
+    tipe?: StringWithAggregatesFilter<"Indikator"> | string
+    status?: StringWithAggregatesFilter<"Indikator"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Indikator"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Indikator"> | Date | string
+  }
+
+  export type NilaiIndikatorWhereInput = {
+    AND?: NilaiIndikatorWhereInput | NilaiIndikatorWhereInput[]
+    OR?: NilaiIndikatorWhereInput[]
+    NOT?: NilaiIndikatorWhereInput | NilaiIndikatorWhereInput[]
+    id?: StringFilter<"NilaiIndikator"> | string
+    indikatorId?: StringFilter<"NilaiIndikator"> | string
+    desaId?: StringFilter<"NilaiIndikator"> | string
+    periode?: StringFilter<"NilaiIndikator"> | string
+    nilai?: FloatFilter<"NilaiIndikator"> | number
+    sumber?: StringNullableFilter<"NilaiIndikator"> | string | null
+    catatan?: StringNullableFilter<"NilaiIndikator"> | string | null
+    status?: StringFilter<"NilaiIndikator"> | string
+    createdBy?: StringNullableFilter<"NilaiIndikator"> | string | null
+    createdAt?: DateTimeFilter<"NilaiIndikator"> | Date | string
+    updatedAt?: DateTimeFilter<"NilaiIndikator"> | Date | string
+    indikator?: XOR<IndikatorRelationFilter, IndikatorWhereInput>
+    buktiData?: BuktiDataListRelationFilter
+  }
+
+  export type NilaiIndikatorOrderByWithRelationInput = {
+    id?: SortOrder
+    indikatorId?: SortOrder
+    desaId?: SortOrder
+    periode?: SortOrder
+    nilai?: SortOrder
+    sumber?: SortOrderInput | SortOrder
+    catatan?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    indikator?: IndikatorOrderByWithRelationInput
+    buktiData?: BuktiDataOrderByRelationAggregateInput
+  }
+
+  export type NilaiIndikatorWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: NilaiIndikatorWhereInput | NilaiIndikatorWhereInput[]
+    OR?: NilaiIndikatorWhereInput[]
+    NOT?: NilaiIndikatorWhereInput | NilaiIndikatorWhereInput[]
+    indikatorId?: StringFilter<"NilaiIndikator"> | string
+    desaId?: StringFilter<"NilaiIndikator"> | string
+    periode?: StringFilter<"NilaiIndikator"> | string
+    nilai?: FloatFilter<"NilaiIndikator"> | number
+    sumber?: StringNullableFilter<"NilaiIndikator"> | string | null
+    catatan?: StringNullableFilter<"NilaiIndikator"> | string | null
+    status?: StringFilter<"NilaiIndikator"> | string
+    createdBy?: StringNullableFilter<"NilaiIndikator"> | string | null
+    createdAt?: DateTimeFilter<"NilaiIndikator"> | Date | string
+    updatedAt?: DateTimeFilter<"NilaiIndikator"> | Date | string
+    indikator?: XOR<IndikatorRelationFilter, IndikatorWhereInput>
+    buktiData?: BuktiDataListRelationFilter
+  }, "id">
+
+  export type NilaiIndikatorOrderByWithAggregationInput = {
+    id?: SortOrder
+    indikatorId?: SortOrder
+    desaId?: SortOrder
+    periode?: SortOrder
+    nilai?: SortOrder
+    sumber?: SortOrderInput | SortOrder
+    catatan?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: NilaiIndikatorCountOrderByAggregateInput
+    _avg?: NilaiIndikatorAvgOrderByAggregateInput
+    _max?: NilaiIndikatorMaxOrderByAggregateInput
+    _min?: NilaiIndikatorMinOrderByAggregateInput
+    _sum?: NilaiIndikatorSumOrderByAggregateInput
+  }
+
+  export type NilaiIndikatorScalarWhereWithAggregatesInput = {
+    AND?: NilaiIndikatorScalarWhereWithAggregatesInput | NilaiIndikatorScalarWhereWithAggregatesInput[]
+    OR?: NilaiIndikatorScalarWhereWithAggregatesInput[]
+    NOT?: NilaiIndikatorScalarWhereWithAggregatesInput | NilaiIndikatorScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"NilaiIndikator"> | string
+    indikatorId?: StringWithAggregatesFilter<"NilaiIndikator"> | string
+    desaId?: StringWithAggregatesFilter<"NilaiIndikator"> | string
+    periode?: StringWithAggregatesFilter<"NilaiIndikator"> | string
+    nilai?: FloatWithAggregatesFilter<"NilaiIndikator"> | number
+    sumber?: StringNullableWithAggregatesFilter<"NilaiIndikator"> | string | null
+    catatan?: StringNullableWithAggregatesFilter<"NilaiIndikator"> | string | null
+    status?: StringWithAggregatesFilter<"NilaiIndikator"> | string
+    createdBy?: StringNullableWithAggregatesFilter<"NilaiIndikator"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"NilaiIndikator"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"NilaiIndikator"> | Date | string
+  }
+
+  export type BuktiDataWhereInput = {
+    AND?: BuktiDataWhereInput | BuktiDataWhereInput[]
+    OR?: BuktiDataWhereInput[]
+    NOT?: BuktiDataWhereInput | BuktiDataWhereInput[]
+    id?: StringFilter<"BuktiData"> | string
+    nilaiIndikatorId?: StringFilter<"BuktiData"> | string
+    judul?: StringFilter<"BuktiData"> | string
+    tipe?: StringFilter<"BuktiData"> | string
+    fileUrl?: StringFilter<"BuktiData"> | string
+    keterangan?: StringNullableFilter<"BuktiData"> | string | null
+    uploadedBy?: StringNullableFilter<"BuktiData"> | string | null
+    statusReview?: StringFilter<"BuktiData"> | string
+    reviewedBy?: StringNullableFilter<"BuktiData"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"BuktiData"> | Date | string | null
+    createdAt?: DateTimeFilter<"BuktiData"> | Date | string
+    nilaiIndikator?: XOR<NilaiIndikatorRelationFilter, NilaiIndikatorWhereInput>
+  }
+
+  export type BuktiDataOrderByWithRelationInput = {
+    id?: SortOrder
+    nilaiIndikatorId?: SortOrder
+    judul?: SortOrder
+    tipe?: SortOrder
+    fileUrl?: SortOrder
+    keterangan?: SortOrderInput | SortOrder
+    uploadedBy?: SortOrderInput | SortOrder
+    statusReview?: SortOrder
+    reviewedBy?: SortOrderInput | SortOrder
+    reviewedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    nilaiIndikator?: NilaiIndikatorOrderByWithRelationInput
+  }
+
+  export type BuktiDataWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: BuktiDataWhereInput | BuktiDataWhereInput[]
+    OR?: BuktiDataWhereInput[]
+    NOT?: BuktiDataWhereInput | BuktiDataWhereInput[]
+    nilaiIndikatorId?: StringFilter<"BuktiData"> | string
+    judul?: StringFilter<"BuktiData"> | string
+    tipe?: StringFilter<"BuktiData"> | string
+    fileUrl?: StringFilter<"BuktiData"> | string
+    keterangan?: StringNullableFilter<"BuktiData"> | string | null
+    uploadedBy?: StringNullableFilter<"BuktiData"> | string | null
+    statusReview?: StringFilter<"BuktiData"> | string
+    reviewedBy?: StringNullableFilter<"BuktiData"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"BuktiData"> | Date | string | null
+    createdAt?: DateTimeFilter<"BuktiData"> | Date | string
+    nilaiIndikator?: XOR<NilaiIndikatorRelationFilter, NilaiIndikatorWhereInput>
+  }, "id">
+
+  export type BuktiDataOrderByWithAggregationInput = {
+    id?: SortOrder
+    nilaiIndikatorId?: SortOrder
+    judul?: SortOrder
+    tipe?: SortOrder
+    fileUrl?: SortOrder
+    keterangan?: SortOrderInput | SortOrder
+    uploadedBy?: SortOrderInput | SortOrder
+    statusReview?: SortOrder
+    reviewedBy?: SortOrderInput | SortOrder
+    reviewedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: BuktiDataCountOrderByAggregateInput
+    _max?: BuktiDataMaxOrderByAggregateInput
+    _min?: BuktiDataMinOrderByAggregateInput
+  }
+
+  export type BuktiDataScalarWhereWithAggregatesInput = {
+    AND?: BuktiDataScalarWhereWithAggregatesInput | BuktiDataScalarWhereWithAggregatesInput[]
+    OR?: BuktiDataScalarWhereWithAggregatesInput[]
+    NOT?: BuktiDataScalarWhereWithAggregatesInput | BuktiDataScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"BuktiData"> | string
+    nilaiIndikatorId?: StringWithAggregatesFilter<"BuktiData"> | string
+    judul?: StringWithAggregatesFilter<"BuktiData"> | string
+    tipe?: StringWithAggregatesFilter<"BuktiData"> | string
+    fileUrl?: StringWithAggregatesFilter<"BuktiData"> | string
+    keterangan?: StringNullableWithAggregatesFilter<"BuktiData"> | string | null
+    uploadedBy?: StringNullableWithAggregatesFilter<"BuktiData"> | string | null
+    statusReview?: StringWithAggregatesFilter<"BuktiData"> | string
+    reviewedBy?: StringNullableWithAggregatesFilter<"BuktiData"> | string | null
+    reviewedAt?: DateTimeNullableWithAggregatesFilter<"BuktiData"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"BuktiData"> | Date | string
+  }
+
+  export type ProgramDesaWhereInput = {
+    AND?: ProgramDesaWhereInput | ProgramDesaWhereInput[]
+    OR?: ProgramDesaWhereInput[]
+    NOT?: ProgramDesaWhereInput | ProgramDesaWhereInput[]
+    id?: StringFilter<"ProgramDesa"> | string
+    desaId?: StringFilter<"ProgramDesa"> | string
+    namaProgram?: StringFilter<"ProgramDesa"> | string
+    deskripsi?: StringNullableFilter<"ProgramDesa"> | string | null
+    bidang?: StringFilter<"ProgramDesa"> | string
+    anggaranTotal?: FloatNullableFilter<"ProgramDesa"> | number | null
+    sumberDana?: StringNullableFilter<"ProgramDesa"> | string | null
+    periode?: StringFilter<"ProgramDesa"> | string
+    statusProgram?: StringFilter<"ProgramDesa"> | string
+    prioritas?: IntFilter<"ProgramDesa"> | number
+    penanggungJawab?: StringNullableFilter<"ProgramDesa"> | string | null
+    targetCapaian?: StringNullableFilter<"ProgramDesa"> | string | null
+    tanggalMulai?: DateTimeNullableFilter<"ProgramDesa"> | Date | string | null
+    tanggalSelesai?: DateTimeNullableFilter<"ProgramDesa"> | Date | string | null
+    createdAt?: DateTimeFilter<"ProgramDesa"> | Date | string
+    updatedAt?: DateTimeFilter<"ProgramDesa"> | Date | string
+    keputusan?: KeputusanProgramListRelationFilter
+  }
+
+  export type ProgramDesaOrderByWithRelationInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    namaProgram?: SortOrder
+    deskripsi?: SortOrderInput | SortOrder
+    bidang?: SortOrder
+    anggaranTotal?: SortOrderInput | SortOrder
+    sumberDana?: SortOrderInput | SortOrder
+    periode?: SortOrder
+    statusProgram?: SortOrder
+    prioritas?: SortOrder
+    penanggungJawab?: SortOrderInput | SortOrder
+    targetCapaian?: SortOrderInput | SortOrder
+    tanggalMulai?: SortOrderInput | SortOrder
+    tanggalSelesai?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    keputusan?: KeputusanProgramOrderByRelationAggregateInput
+  }
+
+  export type ProgramDesaWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ProgramDesaWhereInput | ProgramDesaWhereInput[]
+    OR?: ProgramDesaWhereInput[]
+    NOT?: ProgramDesaWhereInput | ProgramDesaWhereInput[]
+    desaId?: StringFilter<"ProgramDesa"> | string
+    namaProgram?: StringFilter<"ProgramDesa"> | string
+    deskripsi?: StringNullableFilter<"ProgramDesa"> | string | null
+    bidang?: StringFilter<"ProgramDesa"> | string
+    anggaranTotal?: FloatNullableFilter<"ProgramDesa"> | number | null
+    sumberDana?: StringNullableFilter<"ProgramDesa"> | string | null
+    periode?: StringFilter<"ProgramDesa"> | string
+    statusProgram?: StringFilter<"ProgramDesa"> | string
+    prioritas?: IntFilter<"ProgramDesa"> | number
+    penanggungJawab?: StringNullableFilter<"ProgramDesa"> | string | null
+    targetCapaian?: StringNullableFilter<"ProgramDesa"> | string | null
+    tanggalMulai?: DateTimeNullableFilter<"ProgramDesa"> | Date | string | null
+    tanggalSelesai?: DateTimeNullableFilter<"ProgramDesa"> | Date | string | null
+    createdAt?: DateTimeFilter<"ProgramDesa"> | Date | string
+    updatedAt?: DateTimeFilter<"ProgramDesa"> | Date | string
+    keputusan?: KeputusanProgramListRelationFilter
+  }, "id">
+
+  export type ProgramDesaOrderByWithAggregationInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    namaProgram?: SortOrder
+    deskripsi?: SortOrderInput | SortOrder
+    bidang?: SortOrder
+    anggaranTotal?: SortOrderInput | SortOrder
+    sumberDana?: SortOrderInput | SortOrder
+    periode?: SortOrder
+    statusProgram?: SortOrder
+    prioritas?: SortOrder
+    penanggungJawab?: SortOrderInput | SortOrder
+    targetCapaian?: SortOrderInput | SortOrder
+    tanggalMulai?: SortOrderInput | SortOrder
+    tanggalSelesai?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProgramDesaCountOrderByAggregateInput
+    _avg?: ProgramDesaAvgOrderByAggregateInput
+    _max?: ProgramDesaMaxOrderByAggregateInput
+    _min?: ProgramDesaMinOrderByAggregateInput
+    _sum?: ProgramDesaSumOrderByAggregateInput
+  }
+
+  export type ProgramDesaScalarWhereWithAggregatesInput = {
+    AND?: ProgramDesaScalarWhereWithAggregatesInput | ProgramDesaScalarWhereWithAggregatesInput[]
+    OR?: ProgramDesaScalarWhereWithAggregatesInput[]
+    NOT?: ProgramDesaScalarWhereWithAggregatesInput | ProgramDesaScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProgramDesa"> | string
+    desaId?: StringWithAggregatesFilter<"ProgramDesa"> | string
+    namaProgram?: StringWithAggregatesFilter<"ProgramDesa"> | string
+    deskripsi?: StringNullableWithAggregatesFilter<"ProgramDesa"> | string | null
+    bidang?: StringWithAggregatesFilter<"ProgramDesa"> | string
+    anggaranTotal?: FloatNullableWithAggregatesFilter<"ProgramDesa"> | number | null
+    sumberDana?: StringNullableWithAggregatesFilter<"ProgramDesa"> | string | null
+    periode?: StringWithAggregatesFilter<"ProgramDesa"> | string
+    statusProgram?: StringWithAggregatesFilter<"ProgramDesa"> | string
+    prioritas?: IntWithAggregatesFilter<"ProgramDesa"> | number
+    penanggungJawab?: StringNullableWithAggregatesFilter<"ProgramDesa"> | string | null
+    targetCapaian?: StringNullableWithAggregatesFilter<"ProgramDesa"> | string | null
+    tanggalMulai?: DateTimeNullableWithAggregatesFilter<"ProgramDesa"> | Date | string | null
+    tanggalSelesai?: DateTimeNullableWithAggregatesFilter<"ProgramDesa"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ProgramDesa"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ProgramDesa"> | Date | string
+  }
+
+  export type KeputusanProgramWhereInput = {
+    AND?: KeputusanProgramWhereInput | KeputusanProgramWhereInput[]
+    OR?: KeputusanProgramWhereInput[]
+    NOT?: KeputusanProgramWhereInput | KeputusanProgramWhereInput[]
+    id?: StringFilter<"KeputusanProgram"> | string
+    desaId?: StringFilter<"KeputusanProgram"> | string
+    musyawarahId?: StringNullableFilter<"KeputusanProgram"> | string | null
+    programDesaId?: StringNullableFilter<"KeputusanProgram"> | string | null
+    nomorKeputusan?: StringNullableFilter<"KeputusanProgram"> | string | null
+    judulKeputusan?: StringFilter<"KeputusanProgram"> | string
+    isiKeputusan?: StringFilter<"KeputusanProgram"> | string
+    tanggalKeputusan?: DateTimeFilter<"KeputusanProgram"> | Date | string
+    statusSah?: BoolFilter<"KeputusanProgram"> | boolean
+    disetujuiOleh?: StringNullableFilter<"KeputusanProgram"> | string | null
+    catatan?: StringNullableFilter<"KeputusanProgram"> | string | null
+    createdAt?: DateTimeFilter<"KeputusanProgram"> | Date | string
+    updatedAt?: DateTimeFilter<"KeputusanProgram"> | Date | string
+    programDesa?: XOR<ProgramDesaNullableRelationFilter, ProgramDesaWhereInput> | null
+  }
+
+  export type KeputusanProgramOrderByWithRelationInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    musyawarahId?: SortOrderInput | SortOrder
+    programDesaId?: SortOrderInput | SortOrder
+    nomorKeputusan?: SortOrderInput | SortOrder
+    judulKeputusan?: SortOrder
+    isiKeputusan?: SortOrder
+    tanggalKeputusan?: SortOrder
+    statusSah?: SortOrder
+    disetujuiOleh?: SortOrderInput | SortOrder
+    catatan?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    programDesa?: ProgramDesaOrderByWithRelationInput
+  }
+
+  export type KeputusanProgramWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: KeputusanProgramWhereInput | KeputusanProgramWhereInput[]
+    OR?: KeputusanProgramWhereInput[]
+    NOT?: KeputusanProgramWhereInput | KeputusanProgramWhereInput[]
+    desaId?: StringFilter<"KeputusanProgram"> | string
+    musyawarahId?: StringNullableFilter<"KeputusanProgram"> | string | null
+    programDesaId?: StringNullableFilter<"KeputusanProgram"> | string | null
+    nomorKeputusan?: StringNullableFilter<"KeputusanProgram"> | string | null
+    judulKeputusan?: StringFilter<"KeputusanProgram"> | string
+    isiKeputusan?: StringFilter<"KeputusanProgram"> | string
+    tanggalKeputusan?: DateTimeFilter<"KeputusanProgram"> | Date | string
+    statusSah?: BoolFilter<"KeputusanProgram"> | boolean
+    disetujuiOleh?: StringNullableFilter<"KeputusanProgram"> | string | null
+    catatan?: StringNullableFilter<"KeputusanProgram"> | string | null
+    createdAt?: DateTimeFilter<"KeputusanProgram"> | Date | string
+    updatedAt?: DateTimeFilter<"KeputusanProgram"> | Date | string
+    programDesa?: XOR<ProgramDesaNullableRelationFilter, ProgramDesaWhereInput> | null
+  }, "id">
+
+  export type KeputusanProgramOrderByWithAggregationInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    musyawarahId?: SortOrderInput | SortOrder
+    programDesaId?: SortOrderInput | SortOrder
+    nomorKeputusan?: SortOrderInput | SortOrder
+    judulKeputusan?: SortOrder
+    isiKeputusan?: SortOrder
+    tanggalKeputusan?: SortOrder
+    statusSah?: SortOrder
+    disetujuiOleh?: SortOrderInput | SortOrder
+    catatan?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: KeputusanProgramCountOrderByAggregateInput
+    _max?: KeputusanProgramMaxOrderByAggregateInput
+    _min?: KeputusanProgramMinOrderByAggregateInput
+  }
+
+  export type KeputusanProgramScalarWhereWithAggregatesInput = {
+    AND?: KeputusanProgramScalarWhereWithAggregatesInput | KeputusanProgramScalarWhereWithAggregatesInput[]
+    OR?: KeputusanProgramScalarWhereWithAggregatesInput[]
+    NOT?: KeputusanProgramScalarWhereWithAggregatesInput | KeputusanProgramScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"KeputusanProgram"> | string
+    desaId?: StringWithAggregatesFilter<"KeputusanProgram"> | string
+    musyawarahId?: StringNullableWithAggregatesFilter<"KeputusanProgram"> | string | null
+    programDesaId?: StringNullableWithAggregatesFilter<"KeputusanProgram"> | string | null
+    nomorKeputusan?: StringNullableWithAggregatesFilter<"KeputusanProgram"> | string | null
+    judulKeputusan?: StringWithAggregatesFilter<"KeputusanProgram"> | string
+    isiKeputusan?: StringWithAggregatesFilter<"KeputusanProgram"> | string
+    tanggalKeputusan?: DateTimeWithAggregatesFilter<"KeputusanProgram"> | Date | string
+    statusSah?: BoolWithAggregatesFilter<"KeputusanProgram"> | boolean
+    disetujuiOleh?: StringNullableWithAggregatesFilter<"KeputusanProgram"> | string | null
+    catatan?: StringNullableWithAggregatesFilter<"KeputusanProgram"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"KeputusanProgram"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"KeputusanProgram"> | Date | string
+  }
+
+  export type PersetujuanAksesWhereInput = {
+    AND?: PersetujuanAksesWhereInput | PersetujuanAksesWhereInput[]
+    OR?: PersetujuanAksesWhereInput[]
+    NOT?: PersetujuanAksesWhereInput | PersetujuanAksesWhereInput[]
+    id?: StringFilter<"PersetujuanAkses"> | string
+    userId?: StringFilter<"PersetujuanAkses"> | string
+    modul?: StringFilter<"PersetujuanAkses"> | string
+    aksesLevel?: StringFilter<"PersetujuanAkses"> | string
+    disetujuiOleh?: StringNullableFilter<"PersetujuanAkses"> | string | null
+    alasan?: StringNullableFilter<"PersetujuanAkses"> | string | null
+    status?: StringFilter<"PersetujuanAkses"> | string
+    berlakuHingga?: DateTimeNullableFilter<"PersetujuanAkses"> | Date | string | null
+    createdAt?: DateTimeFilter<"PersetujuanAkses"> | Date | string
+    updatedAt?: DateTimeFilter<"PersetujuanAkses"> | Date | string
+  }
+
+  export type PersetujuanAksesOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    modul?: SortOrder
+    aksesLevel?: SortOrder
+    disetujuiOleh?: SortOrderInput | SortOrder
+    alasan?: SortOrderInput | SortOrder
+    status?: SortOrder
+    berlakuHingga?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PersetujuanAksesWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PersetujuanAksesWhereInput | PersetujuanAksesWhereInput[]
+    OR?: PersetujuanAksesWhereInput[]
+    NOT?: PersetujuanAksesWhereInput | PersetujuanAksesWhereInput[]
+    userId?: StringFilter<"PersetujuanAkses"> | string
+    modul?: StringFilter<"PersetujuanAkses"> | string
+    aksesLevel?: StringFilter<"PersetujuanAkses"> | string
+    disetujuiOleh?: StringNullableFilter<"PersetujuanAkses"> | string | null
+    alasan?: StringNullableFilter<"PersetujuanAkses"> | string | null
+    status?: StringFilter<"PersetujuanAkses"> | string
+    berlakuHingga?: DateTimeNullableFilter<"PersetujuanAkses"> | Date | string | null
+    createdAt?: DateTimeFilter<"PersetujuanAkses"> | Date | string
+    updatedAt?: DateTimeFilter<"PersetujuanAkses"> | Date | string
+  }, "id">
+
+  export type PersetujuanAksesOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    modul?: SortOrder
+    aksesLevel?: SortOrder
+    disetujuiOleh?: SortOrderInput | SortOrder
+    alasan?: SortOrderInput | SortOrder
+    status?: SortOrder
+    berlakuHingga?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PersetujuanAksesCountOrderByAggregateInput
+    _max?: PersetujuanAksesMaxOrderByAggregateInput
+    _min?: PersetujuanAksesMinOrderByAggregateInput
+  }
+
+  export type PersetujuanAksesScalarWhereWithAggregatesInput = {
+    AND?: PersetujuanAksesScalarWhereWithAggregatesInput | PersetujuanAksesScalarWhereWithAggregatesInput[]
+    OR?: PersetujuanAksesScalarWhereWithAggregatesInput[]
+    NOT?: PersetujuanAksesScalarWhereWithAggregatesInput | PersetujuanAksesScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PersetujuanAkses"> | string
+    userId?: StringWithAggregatesFilter<"PersetujuanAkses"> | string
+    modul?: StringWithAggregatesFilter<"PersetujuanAkses"> | string
+    aksesLevel?: StringWithAggregatesFilter<"PersetujuanAkses"> | string
+    disetujuiOleh?: StringNullableWithAggregatesFilter<"PersetujuanAkses"> | string | null
+    alasan?: StringNullableWithAggregatesFilter<"PersetujuanAkses"> | string | null
+    status?: StringWithAggregatesFilter<"PersetujuanAkses"> | string
+    berlakuHingga?: DateTimeNullableWithAggregatesFilter<"PersetujuanAkses"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"PersetujuanAkses"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PersetujuanAkses"> | Date | string
   }
 
   export type ForumWhereInput = {
@@ -74439,6 +82757,732 @@ export namespace Prisma {
     periode?: StringFieldUpdateOperationsInput | string
     fileUrl?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DimensiCreateInput = {
+    id?: string
+    frameworkId: string
+    nama: string
+    deskripsi?: string | null
+    bobot?: number
+    urutan?: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    indikator?: IndikatorCreateNestedManyWithoutDimensiInput
+  }
+
+  export type DimensiUncheckedCreateInput = {
+    id?: string
+    frameworkId: string
+    nama: string
+    deskripsi?: string | null
+    bobot?: number
+    urutan?: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    indikator?: IndikatorUncheckedCreateNestedManyWithoutDimensiInput
+  }
+
+  export type DimensiUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    frameworkId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    urutan?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    indikator?: IndikatorUpdateManyWithoutDimensiNestedInput
+  }
+
+  export type DimensiUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    frameworkId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    urutan?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    indikator?: IndikatorUncheckedUpdateManyWithoutDimensiNestedInput
+  }
+
+  export type DimensiCreateManyInput = {
+    id?: string
+    frameworkId: string
+    nama: string
+    deskripsi?: string | null
+    bobot?: number
+    urutan?: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DimensiUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    frameworkId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    urutan?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DimensiUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    frameworkId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    urutan?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IndikatorCreateInput = {
+    id?: string
+    nama: string
+    deskripsi?: string | null
+    satuan?: string | null
+    targetNilai?: number | null
+    bobot?: number
+    tipe?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    dimensi: DimensiCreateNestedOneWithoutIndikatorInput
+    nilaiIndikator?: NilaiIndikatorCreateNestedManyWithoutIndikatorInput
+  }
+
+  export type IndikatorUncheckedCreateInput = {
+    id?: string
+    dimensiId: string
+    nama: string
+    deskripsi?: string | null
+    satuan?: string | null
+    targetNilai?: number | null
+    bobot?: number
+    tipe?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    nilaiIndikator?: NilaiIndikatorUncheckedCreateNestedManyWithoutIndikatorInput
+  }
+
+  export type IndikatorUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    satuan?: NullableStringFieldUpdateOperationsInput | string | null
+    targetNilai?: NullableFloatFieldUpdateOperationsInput | number | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    tipe?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dimensi?: DimensiUpdateOneRequiredWithoutIndikatorNestedInput
+    nilaiIndikator?: NilaiIndikatorUpdateManyWithoutIndikatorNestedInput
+  }
+
+  export type IndikatorUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dimensiId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    satuan?: NullableStringFieldUpdateOperationsInput | string | null
+    targetNilai?: NullableFloatFieldUpdateOperationsInput | number | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    tipe?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    nilaiIndikator?: NilaiIndikatorUncheckedUpdateManyWithoutIndikatorNestedInput
+  }
+
+  export type IndikatorCreateManyInput = {
+    id?: string
+    dimensiId: string
+    nama: string
+    deskripsi?: string | null
+    satuan?: string | null
+    targetNilai?: number | null
+    bobot?: number
+    tipe?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IndikatorUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    satuan?: NullableStringFieldUpdateOperationsInput | string | null
+    targetNilai?: NullableFloatFieldUpdateOperationsInput | number | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    tipe?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IndikatorUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dimensiId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    satuan?: NullableStringFieldUpdateOperationsInput | string | null
+    targetNilai?: NullableFloatFieldUpdateOperationsInput | number | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    tipe?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NilaiIndikatorCreateInput = {
+    id?: string
+    desaId: string
+    periode: string
+    nilai: number
+    sumber?: string | null
+    catatan?: string | null
+    status?: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    indikator: IndikatorCreateNestedOneWithoutNilaiIndikatorInput
+    buktiData?: BuktiDataCreateNestedManyWithoutNilaiIndikatorInput
+  }
+
+  export type NilaiIndikatorUncheckedCreateInput = {
+    id?: string
+    indikatorId: string
+    desaId: string
+    periode: string
+    nilai: number
+    sumber?: string | null
+    catatan?: string | null
+    status?: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    buktiData?: BuktiDataUncheckedCreateNestedManyWithoutNilaiIndikatorInput
+  }
+
+  export type NilaiIndikatorUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    periode?: StringFieldUpdateOperationsInput | string
+    nilai?: FloatFieldUpdateOperationsInput | number
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    indikator?: IndikatorUpdateOneRequiredWithoutNilaiIndikatorNestedInput
+    buktiData?: BuktiDataUpdateManyWithoutNilaiIndikatorNestedInput
+  }
+
+  export type NilaiIndikatorUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    indikatorId?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    periode?: StringFieldUpdateOperationsInput | string
+    nilai?: FloatFieldUpdateOperationsInput | number
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    buktiData?: BuktiDataUncheckedUpdateManyWithoutNilaiIndikatorNestedInput
+  }
+
+  export type NilaiIndikatorCreateManyInput = {
+    id?: string
+    indikatorId: string
+    desaId: string
+    periode: string
+    nilai: number
+    sumber?: string | null
+    catatan?: string | null
+    status?: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type NilaiIndikatorUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    periode?: StringFieldUpdateOperationsInput | string
+    nilai?: FloatFieldUpdateOperationsInput | number
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NilaiIndikatorUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    indikatorId?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    periode?: StringFieldUpdateOperationsInput | string
+    nilai?: FloatFieldUpdateOperationsInput | number
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuktiDataCreateInput = {
+    id?: string
+    judul: string
+    tipe?: string
+    fileUrl: string
+    keterangan?: string | null
+    uploadedBy?: string | null
+    statusReview?: string
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+    nilaiIndikator: NilaiIndikatorCreateNestedOneWithoutBuktiDataInput
+  }
+
+  export type BuktiDataUncheckedCreateInput = {
+    id?: string
+    nilaiIndikatorId: string
+    judul: string
+    tipe?: string
+    fileUrl: string
+    keterangan?: string | null
+    uploadedBy?: string | null
+    statusReview?: string
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type BuktiDataUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    tipe?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    statusReview?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    nilaiIndikator?: NilaiIndikatorUpdateOneRequiredWithoutBuktiDataNestedInput
+  }
+
+  export type BuktiDataUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nilaiIndikatorId?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    tipe?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    statusReview?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuktiDataCreateManyInput = {
+    id?: string
+    nilaiIndikatorId: string
+    judul: string
+    tipe?: string
+    fileUrl: string
+    keterangan?: string | null
+    uploadedBy?: string | null
+    statusReview?: string
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type BuktiDataUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    tipe?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    statusReview?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuktiDataUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nilaiIndikatorId?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    tipe?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    statusReview?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProgramDesaCreateInput = {
+    id?: string
+    desaId: string
+    namaProgram: string
+    deskripsi?: string | null
+    bidang: string
+    anggaranTotal?: number | null
+    sumberDana?: string | null
+    periode: string
+    statusProgram?: string
+    prioritas?: number
+    penanggungJawab?: string | null
+    targetCapaian?: string | null
+    tanggalMulai?: Date | string | null
+    tanggalSelesai?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    keputusan?: KeputusanProgramCreateNestedManyWithoutProgramDesaInput
+  }
+
+  export type ProgramDesaUncheckedCreateInput = {
+    id?: string
+    desaId: string
+    namaProgram: string
+    deskripsi?: string | null
+    bidang: string
+    anggaranTotal?: number | null
+    sumberDana?: string | null
+    periode: string
+    statusProgram?: string
+    prioritas?: number
+    penanggungJawab?: string | null
+    targetCapaian?: string | null
+    tanggalMulai?: Date | string | null
+    tanggalSelesai?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    keputusan?: KeputusanProgramUncheckedCreateNestedManyWithoutProgramDesaInput
+  }
+
+  export type ProgramDesaUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    namaProgram?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    bidang?: StringFieldUpdateOperationsInput | string
+    anggaranTotal?: NullableFloatFieldUpdateOperationsInput | number | null
+    sumberDana?: NullableStringFieldUpdateOperationsInput | string | null
+    periode?: StringFieldUpdateOperationsInput | string
+    statusProgram?: StringFieldUpdateOperationsInput | string
+    prioritas?: IntFieldUpdateOperationsInput | number
+    penanggungJawab?: NullableStringFieldUpdateOperationsInput | string | null
+    targetCapaian?: NullableStringFieldUpdateOperationsInput | string | null
+    tanggalMulai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    tanggalSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    keputusan?: KeputusanProgramUpdateManyWithoutProgramDesaNestedInput
+  }
+
+  export type ProgramDesaUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    namaProgram?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    bidang?: StringFieldUpdateOperationsInput | string
+    anggaranTotal?: NullableFloatFieldUpdateOperationsInput | number | null
+    sumberDana?: NullableStringFieldUpdateOperationsInput | string | null
+    periode?: StringFieldUpdateOperationsInput | string
+    statusProgram?: StringFieldUpdateOperationsInput | string
+    prioritas?: IntFieldUpdateOperationsInput | number
+    penanggungJawab?: NullableStringFieldUpdateOperationsInput | string | null
+    targetCapaian?: NullableStringFieldUpdateOperationsInput | string | null
+    tanggalMulai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    tanggalSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    keputusan?: KeputusanProgramUncheckedUpdateManyWithoutProgramDesaNestedInput
+  }
+
+  export type ProgramDesaCreateManyInput = {
+    id?: string
+    desaId: string
+    namaProgram: string
+    deskripsi?: string | null
+    bidang: string
+    anggaranTotal?: number | null
+    sumberDana?: string | null
+    periode: string
+    statusProgram?: string
+    prioritas?: number
+    penanggungJawab?: string | null
+    targetCapaian?: string | null
+    tanggalMulai?: Date | string | null
+    tanggalSelesai?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProgramDesaUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    namaProgram?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    bidang?: StringFieldUpdateOperationsInput | string
+    anggaranTotal?: NullableFloatFieldUpdateOperationsInput | number | null
+    sumberDana?: NullableStringFieldUpdateOperationsInput | string | null
+    periode?: StringFieldUpdateOperationsInput | string
+    statusProgram?: StringFieldUpdateOperationsInput | string
+    prioritas?: IntFieldUpdateOperationsInput | number
+    penanggungJawab?: NullableStringFieldUpdateOperationsInput | string | null
+    targetCapaian?: NullableStringFieldUpdateOperationsInput | string | null
+    tanggalMulai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    tanggalSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProgramDesaUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    namaProgram?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    bidang?: StringFieldUpdateOperationsInput | string
+    anggaranTotal?: NullableFloatFieldUpdateOperationsInput | number | null
+    sumberDana?: NullableStringFieldUpdateOperationsInput | string | null
+    periode?: StringFieldUpdateOperationsInput | string
+    statusProgram?: StringFieldUpdateOperationsInput | string
+    prioritas?: IntFieldUpdateOperationsInput | number
+    penanggungJawab?: NullableStringFieldUpdateOperationsInput | string | null
+    targetCapaian?: NullableStringFieldUpdateOperationsInput | string | null
+    tanggalMulai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    tanggalSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KeputusanProgramCreateInput = {
+    id?: string
+    desaId: string
+    musyawarahId?: string | null
+    nomorKeputusan?: string | null
+    judulKeputusan: string
+    isiKeputusan: string
+    tanggalKeputusan: Date | string
+    statusSah?: boolean
+    disetujuiOleh?: string | null
+    catatan?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    programDesa?: ProgramDesaCreateNestedOneWithoutKeputusanInput
+  }
+
+  export type KeputusanProgramUncheckedCreateInput = {
+    id?: string
+    desaId: string
+    musyawarahId?: string | null
+    programDesaId?: string | null
+    nomorKeputusan?: string | null
+    judulKeputusan: string
+    isiKeputusan: string
+    tanggalKeputusan: Date | string
+    statusSah?: boolean
+    disetujuiOleh?: string | null
+    catatan?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KeputusanProgramUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    musyawarahId?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorKeputusan?: NullableStringFieldUpdateOperationsInput | string | null
+    judulKeputusan?: StringFieldUpdateOperationsInput | string
+    isiKeputusan?: StringFieldUpdateOperationsInput | string
+    tanggalKeputusan?: DateTimeFieldUpdateOperationsInput | Date | string
+    statusSah?: BoolFieldUpdateOperationsInput | boolean
+    disetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    programDesa?: ProgramDesaUpdateOneWithoutKeputusanNestedInput
+  }
+
+  export type KeputusanProgramUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    musyawarahId?: NullableStringFieldUpdateOperationsInput | string | null
+    programDesaId?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorKeputusan?: NullableStringFieldUpdateOperationsInput | string | null
+    judulKeputusan?: StringFieldUpdateOperationsInput | string
+    isiKeputusan?: StringFieldUpdateOperationsInput | string
+    tanggalKeputusan?: DateTimeFieldUpdateOperationsInput | Date | string
+    statusSah?: BoolFieldUpdateOperationsInput | boolean
+    disetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KeputusanProgramCreateManyInput = {
+    id?: string
+    desaId: string
+    musyawarahId?: string | null
+    programDesaId?: string | null
+    nomorKeputusan?: string | null
+    judulKeputusan: string
+    isiKeputusan: string
+    tanggalKeputusan: Date | string
+    statusSah?: boolean
+    disetujuiOleh?: string | null
+    catatan?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KeputusanProgramUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    musyawarahId?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorKeputusan?: NullableStringFieldUpdateOperationsInput | string | null
+    judulKeputusan?: StringFieldUpdateOperationsInput | string
+    isiKeputusan?: StringFieldUpdateOperationsInput | string
+    tanggalKeputusan?: DateTimeFieldUpdateOperationsInput | Date | string
+    statusSah?: BoolFieldUpdateOperationsInput | boolean
+    disetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KeputusanProgramUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    musyawarahId?: NullableStringFieldUpdateOperationsInput | string | null
+    programDesaId?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorKeputusan?: NullableStringFieldUpdateOperationsInput | string | null
+    judulKeputusan?: StringFieldUpdateOperationsInput | string
+    isiKeputusan?: StringFieldUpdateOperationsInput | string
+    tanggalKeputusan?: DateTimeFieldUpdateOperationsInput | Date | string
+    statusSah?: BoolFieldUpdateOperationsInput | boolean
+    disetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersetujuanAksesCreateInput = {
+    id?: string
+    userId: string
+    modul: string
+    aksesLevel?: string
+    disetujuiOleh?: string | null
+    alasan?: string | null
+    status?: string
+    berlakuHingga?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PersetujuanAksesUncheckedCreateInput = {
+    id?: string
+    userId: string
+    modul: string
+    aksesLevel?: string
+    disetujuiOleh?: string | null
+    alasan?: string | null
+    status?: string
+    berlakuHingga?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PersetujuanAksesUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    modul?: StringFieldUpdateOperationsInput | string
+    aksesLevel?: StringFieldUpdateOperationsInput | string
+    disetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    alasan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    berlakuHingga?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersetujuanAksesUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    modul?: StringFieldUpdateOperationsInput | string
+    aksesLevel?: StringFieldUpdateOperationsInput | string
+    disetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    alasan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    berlakuHingga?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersetujuanAksesCreateManyInput = {
+    id?: string
+    userId: string
+    modul: string
+    aksesLevel?: string
+    disetujuiOleh?: string | null
+    alasan?: string | null
+    status?: string
+    berlakuHingga?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PersetujuanAksesUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    modul?: StringFieldUpdateOperationsInput | string
+    aksesLevel?: StringFieldUpdateOperationsInput | string
+    disetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    alasan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    berlakuHingga?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersetujuanAksesUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    modul?: StringFieldUpdateOperationsInput | string
+    aksesLevel?: StringFieldUpdateOperationsInput | string
+    disetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    alasan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    berlakuHingga?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ForumCreateInput = {
@@ -79461,6 +88505,410 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type IndikatorListRelationFilter = {
+    every?: IndikatorWhereInput
+    some?: IndikatorWhereInput
+    none?: IndikatorWhereInput
+  }
+
+  export type IndikatorOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DimensiCountOrderByAggregateInput = {
+    id?: SortOrder
+    frameworkId?: SortOrder
+    nama?: SortOrder
+    deskripsi?: SortOrder
+    bobot?: SortOrder
+    urutan?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DimensiAvgOrderByAggregateInput = {
+    bobot?: SortOrder
+    urutan?: SortOrder
+  }
+
+  export type DimensiMaxOrderByAggregateInput = {
+    id?: SortOrder
+    frameworkId?: SortOrder
+    nama?: SortOrder
+    deskripsi?: SortOrder
+    bobot?: SortOrder
+    urutan?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DimensiMinOrderByAggregateInput = {
+    id?: SortOrder
+    frameworkId?: SortOrder
+    nama?: SortOrder
+    deskripsi?: SortOrder
+    bobot?: SortOrder
+    urutan?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DimensiSumOrderByAggregateInput = {
+    bobot?: SortOrder
+    urutan?: SortOrder
+  }
+
+  export type DimensiRelationFilter = {
+    is?: DimensiWhereInput
+    isNot?: DimensiWhereInput
+  }
+
+  export type NilaiIndikatorListRelationFilter = {
+    every?: NilaiIndikatorWhereInput
+    some?: NilaiIndikatorWhereInput
+    none?: NilaiIndikatorWhereInput
+  }
+
+  export type NilaiIndikatorOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type IndikatorCountOrderByAggregateInput = {
+    id?: SortOrder
+    dimensiId?: SortOrder
+    nama?: SortOrder
+    deskripsi?: SortOrder
+    satuan?: SortOrder
+    targetNilai?: SortOrder
+    bobot?: SortOrder
+    tipe?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IndikatorAvgOrderByAggregateInput = {
+    targetNilai?: SortOrder
+    bobot?: SortOrder
+  }
+
+  export type IndikatorMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dimensiId?: SortOrder
+    nama?: SortOrder
+    deskripsi?: SortOrder
+    satuan?: SortOrder
+    targetNilai?: SortOrder
+    bobot?: SortOrder
+    tipe?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IndikatorMinOrderByAggregateInput = {
+    id?: SortOrder
+    dimensiId?: SortOrder
+    nama?: SortOrder
+    deskripsi?: SortOrder
+    satuan?: SortOrder
+    targetNilai?: SortOrder
+    bobot?: SortOrder
+    tipe?: SortOrder
+    status?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IndikatorSumOrderByAggregateInput = {
+    targetNilai?: SortOrder
+    bobot?: SortOrder
+  }
+
+  export type IndikatorRelationFilter = {
+    is?: IndikatorWhereInput
+    isNot?: IndikatorWhereInput
+  }
+
+  export type BuktiDataListRelationFilter = {
+    every?: BuktiDataWhereInput
+    some?: BuktiDataWhereInput
+    none?: BuktiDataWhereInput
+  }
+
+  export type BuktiDataOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type NilaiIndikatorCountOrderByAggregateInput = {
+    id?: SortOrder
+    indikatorId?: SortOrder
+    desaId?: SortOrder
+    periode?: SortOrder
+    nilai?: SortOrder
+    sumber?: SortOrder
+    catatan?: SortOrder
+    status?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type NilaiIndikatorAvgOrderByAggregateInput = {
+    nilai?: SortOrder
+  }
+
+  export type NilaiIndikatorMaxOrderByAggregateInput = {
+    id?: SortOrder
+    indikatorId?: SortOrder
+    desaId?: SortOrder
+    periode?: SortOrder
+    nilai?: SortOrder
+    sumber?: SortOrder
+    catatan?: SortOrder
+    status?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type NilaiIndikatorMinOrderByAggregateInput = {
+    id?: SortOrder
+    indikatorId?: SortOrder
+    desaId?: SortOrder
+    periode?: SortOrder
+    nilai?: SortOrder
+    sumber?: SortOrder
+    catatan?: SortOrder
+    status?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type NilaiIndikatorSumOrderByAggregateInput = {
+    nilai?: SortOrder
+  }
+
+  export type NilaiIndikatorRelationFilter = {
+    is?: NilaiIndikatorWhereInput
+    isNot?: NilaiIndikatorWhereInput
+  }
+
+  export type BuktiDataCountOrderByAggregateInput = {
+    id?: SortOrder
+    nilaiIndikatorId?: SortOrder
+    judul?: SortOrder
+    tipe?: SortOrder
+    fileUrl?: SortOrder
+    keterangan?: SortOrder
+    uploadedBy?: SortOrder
+    statusReview?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type BuktiDataMaxOrderByAggregateInput = {
+    id?: SortOrder
+    nilaiIndikatorId?: SortOrder
+    judul?: SortOrder
+    tipe?: SortOrder
+    fileUrl?: SortOrder
+    keterangan?: SortOrder
+    uploadedBy?: SortOrder
+    statusReview?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type BuktiDataMinOrderByAggregateInput = {
+    id?: SortOrder
+    nilaiIndikatorId?: SortOrder
+    judul?: SortOrder
+    tipe?: SortOrder
+    fileUrl?: SortOrder
+    keterangan?: SortOrder
+    uploadedBy?: SortOrder
+    statusReview?: SortOrder
+    reviewedBy?: SortOrder
+    reviewedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type KeputusanProgramListRelationFilter = {
+    every?: KeputusanProgramWhereInput
+    some?: KeputusanProgramWhereInput
+    none?: KeputusanProgramWhereInput
+  }
+
+  export type KeputusanProgramOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProgramDesaCountOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    namaProgram?: SortOrder
+    deskripsi?: SortOrder
+    bidang?: SortOrder
+    anggaranTotal?: SortOrder
+    sumberDana?: SortOrder
+    periode?: SortOrder
+    statusProgram?: SortOrder
+    prioritas?: SortOrder
+    penanggungJawab?: SortOrder
+    targetCapaian?: SortOrder
+    tanggalMulai?: SortOrder
+    tanggalSelesai?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProgramDesaAvgOrderByAggregateInput = {
+    anggaranTotal?: SortOrder
+    prioritas?: SortOrder
+  }
+
+  export type ProgramDesaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    namaProgram?: SortOrder
+    deskripsi?: SortOrder
+    bidang?: SortOrder
+    anggaranTotal?: SortOrder
+    sumberDana?: SortOrder
+    periode?: SortOrder
+    statusProgram?: SortOrder
+    prioritas?: SortOrder
+    penanggungJawab?: SortOrder
+    targetCapaian?: SortOrder
+    tanggalMulai?: SortOrder
+    tanggalSelesai?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProgramDesaMinOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    namaProgram?: SortOrder
+    deskripsi?: SortOrder
+    bidang?: SortOrder
+    anggaranTotal?: SortOrder
+    sumberDana?: SortOrder
+    periode?: SortOrder
+    statusProgram?: SortOrder
+    prioritas?: SortOrder
+    penanggungJawab?: SortOrder
+    targetCapaian?: SortOrder
+    tanggalMulai?: SortOrder
+    tanggalSelesai?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProgramDesaSumOrderByAggregateInput = {
+    anggaranTotal?: SortOrder
+    prioritas?: SortOrder
+  }
+
+  export type ProgramDesaNullableRelationFilter = {
+    is?: ProgramDesaWhereInput | null
+    isNot?: ProgramDesaWhereInput | null
+  }
+
+  export type KeputusanProgramCountOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    musyawarahId?: SortOrder
+    programDesaId?: SortOrder
+    nomorKeputusan?: SortOrder
+    judulKeputusan?: SortOrder
+    isiKeputusan?: SortOrder
+    tanggalKeputusan?: SortOrder
+    statusSah?: SortOrder
+    disetujuiOleh?: SortOrder
+    catatan?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type KeputusanProgramMaxOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    musyawarahId?: SortOrder
+    programDesaId?: SortOrder
+    nomorKeputusan?: SortOrder
+    judulKeputusan?: SortOrder
+    isiKeputusan?: SortOrder
+    tanggalKeputusan?: SortOrder
+    statusSah?: SortOrder
+    disetujuiOleh?: SortOrder
+    catatan?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type KeputusanProgramMinOrderByAggregateInput = {
+    id?: SortOrder
+    desaId?: SortOrder
+    musyawarahId?: SortOrder
+    programDesaId?: SortOrder
+    nomorKeputusan?: SortOrder
+    judulKeputusan?: SortOrder
+    isiKeputusan?: SortOrder
+    tanggalKeputusan?: SortOrder
+    statusSah?: SortOrder
+    disetujuiOleh?: SortOrder
+    catatan?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PersetujuanAksesCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    modul?: SortOrder
+    aksesLevel?: SortOrder
+    disetujuiOleh?: SortOrder
+    alasan?: SortOrder
+    status?: SortOrder
+    berlakuHingga?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PersetujuanAksesMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    modul?: SortOrder
+    aksesLevel?: SortOrder
+    disetujuiOleh?: SortOrder
+    alasan?: SortOrder
+    status?: SortOrder
+    berlakuHingga?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PersetujuanAksesMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    modul?: SortOrder
+    aksesLevel?: SortOrder
+    disetujuiOleh?: SortOrder
+    alasan?: SortOrder
+    status?: SortOrder
+    berlakuHingga?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type DiskusiListRelationFilter = {
     every?: DiskusiWhereInput
     some?: DiskusiWhereInput
@@ -82109,6 +91557,232 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
+  export type IndikatorCreateNestedManyWithoutDimensiInput = {
+    create?: XOR<IndikatorCreateWithoutDimensiInput, IndikatorUncheckedCreateWithoutDimensiInput> | IndikatorCreateWithoutDimensiInput[] | IndikatorUncheckedCreateWithoutDimensiInput[]
+    connectOrCreate?: IndikatorCreateOrConnectWithoutDimensiInput | IndikatorCreateOrConnectWithoutDimensiInput[]
+    createMany?: IndikatorCreateManyDimensiInputEnvelope
+    connect?: IndikatorWhereUniqueInput | IndikatorWhereUniqueInput[]
+  }
+
+  export type IndikatorUncheckedCreateNestedManyWithoutDimensiInput = {
+    create?: XOR<IndikatorCreateWithoutDimensiInput, IndikatorUncheckedCreateWithoutDimensiInput> | IndikatorCreateWithoutDimensiInput[] | IndikatorUncheckedCreateWithoutDimensiInput[]
+    connectOrCreate?: IndikatorCreateOrConnectWithoutDimensiInput | IndikatorCreateOrConnectWithoutDimensiInput[]
+    createMany?: IndikatorCreateManyDimensiInputEnvelope
+    connect?: IndikatorWhereUniqueInput | IndikatorWhereUniqueInput[]
+  }
+
+  export type IndikatorUpdateManyWithoutDimensiNestedInput = {
+    create?: XOR<IndikatorCreateWithoutDimensiInput, IndikatorUncheckedCreateWithoutDimensiInput> | IndikatorCreateWithoutDimensiInput[] | IndikatorUncheckedCreateWithoutDimensiInput[]
+    connectOrCreate?: IndikatorCreateOrConnectWithoutDimensiInput | IndikatorCreateOrConnectWithoutDimensiInput[]
+    upsert?: IndikatorUpsertWithWhereUniqueWithoutDimensiInput | IndikatorUpsertWithWhereUniqueWithoutDimensiInput[]
+    createMany?: IndikatorCreateManyDimensiInputEnvelope
+    set?: IndikatorWhereUniqueInput | IndikatorWhereUniqueInput[]
+    disconnect?: IndikatorWhereUniqueInput | IndikatorWhereUniqueInput[]
+    delete?: IndikatorWhereUniqueInput | IndikatorWhereUniqueInput[]
+    connect?: IndikatorWhereUniqueInput | IndikatorWhereUniqueInput[]
+    update?: IndikatorUpdateWithWhereUniqueWithoutDimensiInput | IndikatorUpdateWithWhereUniqueWithoutDimensiInput[]
+    updateMany?: IndikatorUpdateManyWithWhereWithoutDimensiInput | IndikatorUpdateManyWithWhereWithoutDimensiInput[]
+    deleteMany?: IndikatorScalarWhereInput | IndikatorScalarWhereInput[]
+  }
+
+  export type IndikatorUncheckedUpdateManyWithoutDimensiNestedInput = {
+    create?: XOR<IndikatorCreateWithoutDimensiInput, IndikatorUncheckedCreateWithoutDimensiInput> | IndikatorCreateWithoutDimensiInput[] | IndikatorUncheckedCreateWithoutDimensiInput[]
+    connectOrCreate?: IndikatorCreateOrConnectWithoutDimensiInput | IndikatorCreateOrConnectWithoutDimensiInput[]
+    upsert?: IndikatorUpsertWithWhereUniqueWithoutDimensiInput | IndikatorUpsertWithWhereUniqueWithoutDimensiInput[]
+    createMany?: IndikatorCreateManyDimensiInputEnvelope
+    set?: IndikatorWhereUniqueInput | IndikatorWhereUniqueInput[]
+    disconnect?: IndikatorWhereUniqueInput | IndikatorWhereUniqueInput[]
+    delete?: IndikatorWhereUniqueInput | IndikatorWhereUniqueInput[]
+    connect?: IndikatorWhereUniqueInput | IndikatorWhereUniqueInput[]
+    update?: IndikatorUpdateWithWhereUniqueWithoutDimensiInput | IndikatorUpdateWithWhereUniqueWithoutDimensiInput[]
+    updateMany?: IndikatorUpdateManyWithWhereWithoutDimensiInput | IndikatorUpdateManyWithWhereWithoutDimensiInput[]
+    deleteMany?: IndikatorScalarWhereInput | IndikatorScalarWhereInput[]
+  }
+
+  export type DimensiCreateNestedOneWithoutIndikatorInput = {
+    create?: XOR<DimensiCreateWithoutIndikatorInput, DimensiUncheckedCreateWithoutIndikatorInput>
+    connectOrCreate?: DimensiCreateOrConnectWithoutIndikatorInput
+    connect?: DimensiWhereUniqueInput
+  }
+
+  export type NilaiIndikatorCreateNestedManyWithoutIndikatorInput = {
+    create?: XOR<NilaiIndikatorCreateWithoutIndikatorInput, NilaiIndikatorUncheckedCreateWithoutIndikatorInput> | NilaiIndikatorCreateWithoutIndikatorInput[] | NilaiIndikatorUncheckedCreateWithoutIndikatorInput[]
+    connectOrCreate?: NilaiIndikatorCreateOrConnectWithoutIndikatorInput | NilaiIndikatorCreateOrConnectWithoutIndikatorInput[]
+    createMany?: NilaiIndikatorCreateManyIndikatorInputEnvelope
+    connect?: NilaiIndikatorWhereUniqueInput | NilaiIndikatorWhereUniqueInput[]
+  }
+
+  export type NilaiIndikatorUncheckedCreateNestedManyWithoutIndikatorInput = {
+    create?: XOR<NilaiIndikatorCreateWithoutIndikatorInput, NilaiIndikatorUncheckedCreateWithoutIndikatorInput> | NilaiIndikatorCreateWithoutIndikatorInput[] | NilaiIndikatorUncheckedCreateWithoutIndikatorInput[]
+    connectOrCreate?: NilaiIndikatorCreateOrConnectWithoutIndikatorInput | NilaiIndikatorCreateOrConnectWithoutIndikatorInput[]
+    createMany?: NilaiIndikatorCreateManyIndikatorInputEnvelope
+    connect?: NilaiIndikatorWhereUniqueInput | NilaiIndikatorWhereUniqueInput[]
+  }
+
+  export type DimensiUpdateOneRequiredWithoutIndikatorNestedInput = {
+    create?: XOR<DimensiCreateWithoutIndikatorInput, DimensiUncheckedCreateWithoutIndikatorInput>
+    connectOrCreate?: DimensiCreateOrConnectWithoutIndikatorInput
+    upsert?: DimensiUpsertWithoutIndikatorInput
+    connect?: DimensiWhereUniqueInput
+    update?: XOR<XOR<DimensiUpdateToOneWithWhereWithoutIndikatorInput, DimensiUpdateWithoutIndikatorInput>, DimensiUncheckedUpdateWithoutIndikatorInput>
+  }
+
+  export type NilaiIndikatorUpdateManyWithoutIndikatorNestedInput = {
+    create?: XOR<NilaiIndikatorCreateWithoutIndikatorInput, NilaiIndikatorUncheckedCreateWithoutIndikatorInput> | NilaiIndikatorCreateWithoutIndikatorInput[] | NilaiIndikatorUncheckedCreateWithoutIndikatorInput[]
+    connectOrCreate?: NilaiIndikatorCreateOrConnectWithoutIndikatorInput | NilaiIndikatorCreateOrConnectWithoutIndikatorInput[]
+    upsert?: NilaiIndikatorUpsertWithWhereUniqueWithoutIndikatorInput | NilaiIndikatorUpsertWithWhereUniqueWithoutIndikatorInput[]
+    createMany?: NilaiIndikatorCreateManyIndikatorInputEnvelope
+    set?: NilaiIndikatorWhereUniqueInput | NilaiIndikatorWhereUniqueInput[]
+    disconnect?: NilaiIndikatorWhereUniqueInput | NilaiIndikatorWhereUniqueInput[]
+    delete?: NilaiIndikatorWhereUniqueInput | NilaiIndikatorWhereUniqueInput[]
+    connect?: NilaiIndikatorWhereUniqueInput | NilaiIndikatorWhereUniqueInput[]
+    update?: NilaiIndikatorUpdateWithWhereUniqueWithoutIndikatorInput | NilaiIndikatorUpdateWithWhereUniqueWithoutIndikatorInput[]
+    updateMany?: NilaiIndikatorUpdateManyWithWhereWithoutIndikatorInput | NilaiIndikatorUpdateManyWithWhereWithoutIndikatorInput[]
+    deleteMany?: NilaiIndikatorScalarWhereInput | NilaiIndikatorScalarWhereInput[]
+  }
+
+  export type NilaiIndikatorUncheckedUpdateManyWithoutIndikatorNestedInput = {
+    create?: XOR<NilaiIndikatorCreateWithoutIndikatorInput, NilaiIndikatorUncheckedCreateWithoutIndikatorInput> | NilaiIndikatorCreateWithoutIndikatorInput[] | NilaiIndikatorUncheckedCreateWithoutIndikatorInput[]
+    connectOrCreate?: NilaiIndikatorCreateOrConnectWithoutIndikatorInput | NilaiIndikatorCreateOrConnectWithoutIndikatorInput[]
+    upsert?: NilaiIndikatorUpsertWithWhereUniqueWithoutIndikatorInput | NilaiIndikatorUpsertWithWhereUniqueWithoutIndikatorInput[]
+    createMany?: NilaiIndikatorCreateManyIndikatorInputEnvelope
+    set?: NilaiIndikatorWhereUniqueInput | NilaiIndikatorWhereUniqueInput[]
+    disconnect?: NilaiIndikatorWhereUniqueInput | NilaiIndikatorWhereUniqueInput[]
+    delete?: NilaiIndikatorWhereUniqueInput | NilaiIndikatorWhereUniqueInput[]
+    connect?: NilaiIndikatorWhereUniqueInput | NilaiIndikatorWhereUniqueInput[]
+    update?: NilaiIndikatorUpdateWithWhereUniqueWithoutIndikatorInput | NilaiIndikatorUpdateWithWhereUniqueWithoutIndikatorInput[]
+    updateMany?: NilaiIndikatorUpdateManyWithWhereWithoutIndikatorInput | NilaiIndikatorUpdateManyWithWhereWithoutIndikatorInput[]
+    deleteMany?: NilaiIndikatorScalarWhereInput | NilaiIndikatorScalarWhereInput[]
+  }
+
+  export type IndikatorCreateNestedOneWithoutNilaiIndikatorInput = {
+    create?: XOR<IndikatorCreateWithoutNilaiIndikatorInput, IndikatorUncheckedCreateWithoutNilaiIndikatorInput>
+    connectOrCreate?: IndikatorCreateOrConnectWithoutNilaiIndikatorInput
+    connect?: IndikatorWhereUniqueInput
+  }
+
+  export type BuktiDataCreateNestedManyWithoutNilaiIndikatorInput = {
+    create?: XOR<BuktiDataCreateWithoutNilaiIndikatorInput, BuktiDataUncheckedCreateWithoutNilaiIndikatorInput> | BuktiDataCreateWithoutNilaiIndikatorInput[] | BuktiDataUncheckedCreateWithoutNilaiIndikatorInput[]
+    connectOrCreate?: BuktiDataCreateOrConnectWithoutNilaiIndikatorInput | BuktiDataCreateOrConnectWithoutNilaiIndikatorInput[]
+    createMany?: BuktiDataCreateManyNilaiIndikatorInputEnvelope
+    connect?: BuktiDataWhereUniqueInput | BuktiDataWhereUniqueInput[]
+  }
+
+  export type BuktiDataUncheckedCreateNestedManyWithoutNilaiIndikatorInput = {
+    create?: XOR<BuktiDataCreateWithoutNilaiIndikatorInput, BuktiDataUncheckedCreateWithoutNilaiIndikatorInput> | BuktiDataCreateWithoutNilaiIndikatorInput[] | BuktiDataUncheckedCreateWithoutNilaiIndikatorInput[]
+    connectOrCreate?: BuktiDataCreateOrConnectWithoutNilaiIndikatorInput | BuktiDataCreateOrConnectWithoutNilaiIndikatorInput[]
+    createMany?: BuktiDataCreateManyNilaiIndikatorInputEnvelope
+    connect?: BuktiDataWhereUniqueInput | BuktiDataWhereUniqueInput[]
+  }
+
+  export type IndikatorUpdateOneRequiredWithoutNilaiIndikatorNestedInput = {
+    create?: XOR<IndikatorCreateWithoutNilaiIndikatorInput, IndikatorUncheckedCreateWithoutNilaiIndikatorInput>
+    connectOrCreate?: IndikatorCreateOrConnectWithoutNilaiIndikatorInput
+    upsert?: IndikatorUpsertWithoutNilaiIndikatorInput
+    connect?: IndikatorWhereUniqueInput
+    update?: XOR<XOR<IndikatorUpdateToOneWithWhereWithoutNilaiIndikatorInput, IndikatorUpdateWithoutNilaiIndikatorInput>, IndikatorUncheckedUpdateWithoutNilaiIndikatorInput>
+  }
+
+  export type BuktiDataUpdateManyWithoutNilaiIndikatorNestedInput = {
+    create?: XOR<BuktiDataCreateWithoutNilaiIndikatorInput, BuktiDataUncheckedCreateWithoutNilaiIndikatorInput> | BuktiDataCreateWithoutNilaiIndikatorInput[] | BuktiDataUncheckedCreateWithoutNilaiIndikatorInput[]
+    connectOrCreate?: BuktiDataCreateOrConnectWithoutNilaiIndikatorInput | BuktiDataCreateOrConnectWithoutNilaiIndikatorInput[]
+    upsert?: BuktiDataUpsertWithWhereUniqueWithoutNilaiIndikatorInput | BuktiDataUpsertWithWhereUniqueWithoutNilaiIndikatorInput[]
+    createMany?: BuktiDataCreateManyNilaiIndikatorInputEnvelope
+    set?: BuktiDataWhereUniqueInput | BuktiDataWhereUniqueInput[]
+    disconnect?: BuktiDataWhereUniqueInput | BuktiDataWhereUniqueInput[]
+    delete?: BuktiDataWhereUniqueInput | BuktiDataWhereUniqueInput[]
+    connect?: BuktiDataWhereUniqueInput | BuktiDataWhereUniqueInput[]
+    update?: BuktiDataUpdateWithWhereUniqueWithoutNilaiIndikatorInput | BuktiDataUpdateWithWhereUniqueWithoutNilaiIndikatorInput[]
+    updateMany?: BuktiDataUpdateManyWithWhereWithoutNilaiIndikatorInput | BuktiDataUpdateManyWithWhereWithoutNilaiIndikatorInput[]
+    deleteMany?: BuktiDataScalarWhereInput | BuktiDataScalarWhereInput[]
+  }
+
+  export type BuktiDataUncheckedUpdateManyWithoutNilaiIndikatorNestedInput = {
+    create?: XOR<BuktiDataCreateWithoutNilaiIndikatorInput, BuktiDataUncheckedCreateWithoutNilaiIndikatorInput> | BuktiDataCreateWithoutNilaiIndikatorInput[] | BuktiDataUncheckedCreateWithoutNilaiIndikatorInput[]
+    connectOrCreate?: BuktiDataCreateOrConnectWithoutNilaiIndikatorInput | BuktiDataCreateOrConnectWithoutNilaiIndikatorInput[]
+    upsert?: BuktiDataUpsertWithWhereUniqueWithoutNilaiIndikatorInput | BuktiDataUpsertWithWhereUniqueWithoutNilaiIndikatorInput[]
+    createMany?: BuktiDataCreateManyNilaiIndikatorInputEnvelope
+    set?: BuktiDataWhereUniqueInput | BuktiDataWhereUniqueInput[]
+    disconnect?: BuktiDataWhereUniqueInput | BuktiDataWhereUniqueInput[]
+    delete?: BuktiDataWhereUniqueInput | BuktiDataWhereUniqueInput[]
+    connect?: BuktiDataWhereUniqueInput | BuktiDataWhereUniqueInput[]
+    update?: BuktiDataUpdateWithWhereUniqueWithoutNilaiIndikatorInput | BuktiDataUpdateWithWhereUniqueWithoutNilaiIndikatorInput[]
+    updateMany?: BuktiDataUpdateManyWithWhereWithoutNilaiIndikatorInput | BuktiDataUpdateManyWithWhereWithoutNilaiIndikatorInput[]
+    deleteMany?: BuktiDataScalarWhereInput | BuktiDataScalarWhereInput[]
+  }
+
+  export type NilaiIndikatorCreateNestedOneWithoutBuktiDataInput = {
+    create?: XOR<NilaiIndikatorCreateWithoutBuktiDataInput, NilaiIndikatorUncheckedCreateWithoutBuktiDataInput>
+    connectOrCreate?: NilaiIndikatorCreateOrConnectWithoutBuktiDataInput
+    connect?: NilaiIndikatorWhereUniqueInput
+  }
+
+  export type NilaiIndikatorUpdateOneRequiredWithoutBuktiDataNestedInput = {
+    create?: XOR<NilaiIndikatorCreateWithoutBuktiDataInput, NilaiIndikatorUncheckedCreateWithoutBuktiDataInput>
+    connectOrCreate?: NilaiIndikatorCreateOrConnectWithoutBuktiDataInput
+    upsert?: NilaiIndikatorUpsertWithoutBuktiDataInput
+    connect?: NilaiIndikatorWhereUniqueInput
+    update?: XOR<XOR<NilaiIndikatorUpdateToOneWithWhereWithoutBuktiDataInput, NilaiIndikatorUpdateWithoutBuktiDataInput>, NilaiIndikatorUncheckedUpdateWithoutBuktiDataInput>
+  }
+
+  export type KeputusanProgramCreateNestedManyWithoutProgramDesaInput = {
+    create?: XOR<KeputusanProgramCreateWithoutProgramDesaInput, KeputusanProgramUncheckedCreateWithoutProgramDesaInput> | KeputusanProgramCreateWithoutProgramDesaInput[] | KeputusanProgramUncheckedCreateWithoutProgramDesaInput[]
+    connectOrCreate?: KeputusanProgramCreateOrConnectWithoutProgramDesaInput | KeputusanProgramCreateOrConnectWithoutProgramDesaInput[]
+    createMany?: KeputusanProgramCreateManyProgramDesaInputEnvelope
+    connect?: KeputusanProgramWhereUniqueInput | KeputusanProgramWhereUniqueInput[]
+  }
+
+  export type KeputusanProgramUncheckedCreateNestedManyWithoutProgramDesaInput = {
+    create?: XOR<KeputusanProgramCreateWithoutProgramDesaInput, KeputusanProgramUncheckedCreateWithoutProgramDesaInput> | KeputusanProgramCreateWithoutProgramDesaInput[] | KeputusanProgramUncheckedCreateWithoutProgramDesaInput[]
+    connectOrCreate?: KeputusanProgramCreateOrConnectWithoutProgramDesaInput | KeputusanProgramCreateOrConnectWithoutProgramDesaInput[]
+    createMany?: KeputusanProgramCreateManyProgramDesaInputEnvelope
+    connect?: KeputusanProgramWhereUniqueInput | KeputusanProgramWhereUniqueInput[]
+  }
+
+  export type KeputusanProgramUpdateManyWithoutProgramDesaNestedInput = {
+    create?: XOR<KeputusanProgramCreateWithoutProgramDesaInput, KeputusanProgramUncheckedCreateWithoutProgramDesaInput> | KeputusanProgramCreateWithoutProgramDesaInput[] | KeputusanProgramUncheckedCreateWithoutProgramDesaInput[]
+    connectOrCreate?: KeputusanProgramCreateOrConnectWithoutProgramDesaInput | KeputusanProgramCreateOrConnectWithoutProgramDesaInput[]
+    upsert?: KeputusanProgramUpsertWithWhereUniqueWithoutProgramDesaInput | KeputusanProgramUpsertWithWhereUniqueWithoutProgramDesaInput[]
+    createMany?: KeputusanProgramCreateManyProgramDesaInputEnvelope
+    set?: KeputusanProgramWhereUniqueInput | KeputusanProgramWhereUniqueInput[]
+    disconnect?: KeputusanProgramWhereUniqueInput | KeputusanProgramWhereUniqueInput[]
+    delete?: KeputusanProgramWhereUniqueInput | KeputusanProgramWhereUniqueInput[]
+    connect?: KeputusanProgramWhereUniqueInput | KeputusanProgramWhereUniqueInput[]
+    update?: KeputusanProgramUpdateWithWhereUniqueWithoutProgramDesaInput | KeputusanProgramUpdateWithWhereUniqueWithoutProgramDesaInput[]
+    updateMany?: KeputusanProgramUpdateManyWithWhereWithoutProgramDesaInput | KeputusanProgramUpdateManyWithWhereWithoutProgramDesaInput[]
+    deleteMany?: KeputusanProgramScalarWhereInput | KeputusanProgramScalarWhereInput[]
+  }
+
+  export type KeputusanProgramUncheckedUpdateManyWithoutProgramDesaNestedInput = {
+    create?: XOR<KeputusanProgramCreateWithoutProgramDesaInput, KeputusanProgramUncheckedCreateWithoutProgramDesaInput> | KeputusanProgramCreateWithoutProgramDesaInput[] | KeputusanProgramUncheckedCreateWithoutProgramDesaInput[]
+    connectOrCreate?: KeputusanProgramCreateOrConnectWithoutProgramDesaInput | KeputusanProgramCreateOrConnectWithoutProgramDesaInput[]
+    upsert?: KeputusanProgramUpsertWithWhereUniqueWithoutProgramDesaInput | KeputusanProgramUpsertWithWhereUniqueWithoutProgramDesaInput[]
+    createMany?: KeputusanProgramCreateManyProgramDesaInputEnvelope
+    set?: KeputusanProgramWhereUniqueInput | KeputusanProgramWhereUniqueInput[]
+    disconnect?: KeputusanProgramWhereUniqueInput | KeputusanProgramWhereUniqueInput[]
+    delete?: KeputusanProgramWhereUniqueInput | KeputusanProgramWhereUniqueInput[]
+    connect?: KeputusanProgramWhereUniqueInput | KeputusanProgramWhereUniqueInput[]
+    update?: KeputusanProgramUpdateWithWhereUniqueWithoutProgramDesaInput | KeputusanProgramUpdateWithWhereUniqueWithoutProgramDesaInput[]
+    updateMany?: KeputusanProgramUpdateManyWithWhereWithoutProgramDesaInput | KeputusanProgramUpdateManyWithWhereWithoutProgramDesaInput[]
+    deleteMany?: KeputusanProgramScalarWhereInput | KeputusanProgramScalarWhereInput[]
+  }
+
+  export type ProgramDesaCreateNestedOneWithoutKeputusanInput = {
+    create?: XOR<ProgramDesaCreateWithoutKeputusanInput, ProgramDesaUncheckedCreateWithoutKeputusanInput>
+    connectOrCreate?: ProgramDesaCreateOrConnectWithoutKeputusanInput
+    connect?: ProgramDesaWhereUniqueInput
+  }
+
+  export type ProgramDesaUpdateOneWithoutKeputusanNestedInput = {
+    create?: XOR<ProgramDesaCreateWithoutKeputusanInput, ProgramDesaUncheckedCreateWithoutKeputusanInput>
+    connectOrCreate?: ProgramDesaCreateOrConnectWithoutKeputusanInput
+    upsert?: ProgramDesaUpsertWithoutKeputusanInput
+    disconnect?: ProgramDesaWhereInput | boolean
+    delete?: ProgramDesaWhereInput | boolean
+    connect?: ProgramDesaWhereUniqueInput
+    update?: XOR<XOR<ProgramDesaUpdateToOneWithWhereWithoutKeputusanInput, ProgramDesaUpdateWithoutKeputusanInput>, ProgramDesaUncheckedUpdateWithoutKeputusanInput>
+  }
+
   export type DiskusiCreateNestedManyWithoutForumInput = {
     create?: XOR<DiskusiCreateWithoutForumInput, DiskusiUncheckedCreateWithoutForumInput> | DiskusiCreateWithoutForumInput[] | DiskusiUncheckedCreateWithoutForumInput[]
     connectOrCreate?: DiskusiCreateOrConnectWithoutForumInput | DiskusiCreateOrConnectWithoutForumInput[]
@@ -84647,6 +94321,592 @@ export namespace Prisma {
     user?: UserUncheckedUpdateOneWithoutWargaNestedInput
   }
 
+  export type IndikatorCreateWithoutDimensiInput = {
+    id?: string
+    nama: string
+    deskripsi?: string | null
+    satuan?: string | null
+    targetNilai?: number | null
+    bobot?: number
+    tipe?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    nilaiIndikator?: NilaiIndikatorCreateNestedManyWithoutIndikatorInput
+  }
+
+  export type IndikatorUncheckedCreateWithoutDimensiInput = {
+    id?: string
+    nama: string
+    deskripsi?: string | null
+    satuan?: string | null
+    targetNilai?: number | null
+    bobot?: number
+    tipe?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    nilaiIndikator?: NilaiIndikatorUncheckedCreateNestedManyWithoutIndikatorInput
+  }
+
+  export type IndikatorCreateOrConnectWithoutDimensiInput = {
+    where: IndikatorWhereUniqueInput
+    create: XOR<IndikatorCreateWithoutDimensiInput, IndikatorUncheckedCreateWithoutDimensiInput>
+  }
+
+  export type IndikatorCreateManyDimensiInputEnvelope = {
+    data: IndikatorCreateManyDimensiInput | IndikatorCreateManyDimensiInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type IndikatorUpsertWithWhereUniqueWithoutDimensiInput = {
+    where: IndikatorWhereUniqueInput
+    update: XOR<IndikatorUpdateWithoutDimensiInput, IndikatorUncheckedUpdateWithoutDimensiInput>
+    create: XOR<IndikatorCreateWithoutDimensiInput, IndikatorUncheckedCreateWithoutDimensiInput>
+  }
+
+  export type IndikatorUpdateWithWhereUniqueWithoutDimensiInput = {
+    where: IndikatorWhereUniqueInput
+    data: XOR<IndikatorUpdateWithoutDimensiInput, IndikatorUncheckedUpdateWithoutDimensiInput>
+  }
+
+  export type IndikatorUpdateManyWithWhereWithoutDimensiInput = {
+    where: IndikatorScalarWhereInput
+    data: XOR<IndikatorUpdateManyMutationInput, IndikatorUncheckedUpdateManyWithoutDimensiInput>
+  }
+
+  export type IndikatorScalarWhereInput = {
+    AND?: IndikatorScalarWhereInput | IndikatorScalarWhereInput[]
+    OR?: IndikatorScalarWhereInput[]
+    NOT?: IndikatorScalarWhereInput | IndikatorScalarWhereInput[]
+    id?: StringFilter<"Indikator"> | string
+    dimensiId?: StringFilter<"Indikator"> | string
+    nama?: StringFilter<"Indikator"> | string
+    deskripsi?: StringNullableFilter<"Indikator"> | string | null
+    satuan?: StringNullableFilter<"Indikator"> | string | null
+    targetNilai?: FloatNullableFilter<"Indikator"> | number | null
+    bobot?: FloatFilter<"Indikator"> | number
+    tipe?: StringFilter<"Indikator"> | string
+    status?: StringFilter<"Indikator"> | string
+    createdAt?: DateTimeFilter<"Indikator"> | Date | string
+    updatedAt?: DateTimeFilter<"Indikator"> | Date | string
+  }
+
+  export type DimensiCreateWithoutIndikatorInput = {
+    id?: string
+    frameworkId: string
+    nama: string
+    deskripsi?: string | null
+    bobot?: number
+    urutan?: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DimensiUncheckedCreateWithoutIndikatorInput = {
+    id?: string
+    frameworkId: string
+    nama: string
+    deskripsi?: string | null
+    bobot?: number
+    urutan?: number
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DimensiCreateOrConnectWithoutIndikatorInput = {
+    where: DimensiWhereUniqueInput
+    create: XOR<DimensiCreateWithoutIndikatorInput, DimensiUncheckedCreateWithoutIndikatorInput>
+  }
+
+  export type NilaiIndikatorCreateWithoutIndikatorInput = {
+    id?: string
+    desaId: string
+    periode: string
+    nilai: number
+    sumber?: string | null
+    catatan?: string | null
+    status?: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    buktiData?: BuktiDataCreateNestedManyWithoutNilaiIndikatorInput
+  }
+
+  export type NilaiIndikatorUncheckedCreateWithoutIndikatorInput = {
+    id?: string
+    desaId: string
+    periode: string
+    nilai: number
+    sumber?: string | null
+    catatan?: string | null
+    status?: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    buktiData?: BuktiDataUncheckedCreateNestedManyWithoutNilaiIndikatorInput
+  }
+
+  export type NilaiIndikatorCreateOrConnectWithoutIndikatorInput = {
+    where: NilaiIndikatorWhereUniqueInput
+    create: XOR<NilaiIndikatorCreateWithoutIndikatorInput, NilaiIndikatorUncheckedCreateWithoutIndikatorInput>
+  }
+
+  export type NilaiIndikatorCreateManyIndikatorInputEnvelope = {
+    data: NilaiIndikatorCreateManyIndikatorInput | NilaiIndikatorCreateManyIndikatorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DimensiUpsertWithoutIndikatorInput = {
+    update: XOR<DimensiUpdateWithoutIndikatorInput, DimensiUncheckedUpdateWithoutIndikatorInput>
+    create: XOR<DimensiCreateWithoutIndikatorInput, DimensiUncheckedCreateWithoutIndikatorInput>
+    where?: DimensiWhereInput
+  }
+
+  export type DimensiUpdateToOneWithWhereWithoutIndikatorInput = {
+    where?: DimensiWhereInput
+    data: XOR<DimensiUpdateWithoutIndikatorInput, DimensiUncheckedUpdateWithoutIndikatorInput>
+  }
+
+  export type DimensiUpdateWithoutIndikatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    frameworkId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    urutan?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DimensiUncheckedUpdateWithoutIndikatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    frameworkId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    urutan?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NilaiIndikatorUpsertWithWhereUniqueWithoutIndikatorInput = {
+    where: NilaiIndikatorWhereUniqueInput
+    update: XOR<NilaiIndikatorUpdateWithoutIndikatorInput, NilaiIndikatorUncheckedUpdateWithoutIndikatorInput>
+    create: XOR<NilaiIndikatorCreateWithoutIndikatorInput, NilaiIndikatorUncheckedCreateWithoutIndikatorInput>
+  }
+
+  export type NilaiIndikatorUpdateWithWhereUniqueWithoutIndikatorInput = {
+    where: NilaiIndikatorWhereUniqueInput
+    data: XOR<NilaiIndikatorUpdateWithoutIndikatorInput, NilaiIndikatorUncheckedUpdateWithoutIndikatorInput>
+  }
+
+  export type NilaiIndikatorUpdateManyWithWhereWithoutIndikatorInput = {
+    where: NilaiIndikatorScalarWhereInput
+    data: XOR<NilaiIndikatorUpdateManyMutationInput, NilaiIndikatorUncheckedUpdateManyWithoutIndikatorInput>
+  }
+
+  export type NilaiIndikatorScalarWhereInput = {
+    AND?: NilaiIndikatorScalarWhereInput | NilaiIndikatorScalarWhereInput[]
+    OR?: NilaiIndikatorScalarWhereInput[]
+    NOT?: NilaiIndikatorScalarWhereInput | NilaiIndikatorScalarWhereInput[]
+    id?: StringFilter<"NilaiIndikator"> | string
+    indikatorId?: StringFilter<"NilaiIndikator"> | string
+    desaId?: StringFilter<"NilaiIndikator"> | string
+    periode?: StringFilter<"NilaiIndikator"> | string
+    nilai?: FloatFilter<"NilaiIndikator"> | number
+    sumber?: StringNullableFilter<"NilaiIndikator"> | string | null
+    catatan?: StringNullableFilter<"NilaiIndikator"> | string | null
+    status?: StringFilter<"NilaiIndikator"> | string
+    createdBy?: StringNullableFilter<"NilaiIndikator"> | string | null
+    createdAt?: DateTimeFilter<"NilaiIndikator"> | Date | string
+    updatedAt?: DateTimeFilter<"NilaiIndikator"> | Date | string
+  }
+
+  export type IndikatorCreateWithoutNilaiIndikatorInput = {
+    id?: string
+    nama: string
+    deskripsi?: string | null
+    satuan?: string | null
+    targetNilai?: number | null
+    bobot?: number
+    tipe?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    dimensi: DimensiCreateNestedOneWithoutIndikatorInput
+  }
+
+  export type IndikatorUncheckedCreateWithoutNilaiIndikatorInput = {
+    id?: string
+    dimensiId: string
+    nama: string
+    deskripsi?: string | null
+    satuan?: string | null
+    targetNilai?: number | null
+    bobot?: number
+    tipe?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IndikatorCreateOrConnectWithoutNilaiIndikatorInput = {
+    where: IndikatorWhereUniqueInput
+    create: XOR<IndikatorCreateWithoutNilaiIndikatorInput, IndikatorUncheckedCreateWithoutNilaiIndikatorInput>
+  }
+
+  export type BuktiDataCreateWithoutNilaiIndikatorInput = {
+    id?: string
+    judul: string
+    tipe?: string
+    fileUrl: string
+    keterangan?: string | null
+    uploadedBy?: string | null
+    statusReview?: string
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type BuktiDataUncheckedCreateWithoutNilaiIndikatorInput = {
+    id?: string
+    judul: string
+    tipe?: string
+    fileUrl: string
+    keterangan?: string | null
+    uploadedBy?: string | null
+    statusReview?: string
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type BuktiDataCreateOrConnectWithoutNilaiIndikatorInput = {
+    where: BuktiDataWhereUniqueInput
+    create: XOR<BuktiDataCreateWithoutNilaiIndikatorInput, BuktiDataUncheckedCreateWithoutNilaiIndikatorInput>
+  }
+
+  export type BuktiDataCreateManyNilaiIndikatorInputEnvelope = {
+    data: BuktiDataCreateManyNilaiIndikatorInput | BuktiDataCreateManyNilaiIndikatorInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type IndikatorUpsertWithoutNilaiIndikatorInput = {
+    update: XOR<IndikatorUpdateWithoutNilaiIndikatorInput, IndikatorUncheckedUpdateWithoutNilaiIndikatorInput>
+    create: XOR<IndikatorCreateWithoutNilaiIndikatorInput, IndikatorUncheckedCreateWithoutNilaiIndikatorInput>
+    where?: IndikatorWhereInput
+  }
+
+  export type IndikatorUpdateToOneWithWhereWithoutNilaiIndikatorInput = {
+    where?: IndikatorWhereInput
+    data: XOR<IndikatorUpdateWithoutNilaiIndikatorInput, IndikatorUncheckedUpdateWithoutNilaiIndikatorInput>
+  }
+
+  export type IndikatorUpdateWithoutNilaiIndikatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    satuan?: NullableStringFieldUpdateOperationsInput | string | null
+    targetNilai?: NullableFloatFieldUpdateOperationsInput | number | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    tipe?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dimensi?: DimensiUpdateOneRequiredWithoutIndikatorNestedInput
+  }
+
+  export type IndikatorUncheckedUpdateWithoutNilaiIndikatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dimensiId?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    satuan?: NullableStringFieldUpdateOperationsInput | string | null
+    targetNilai?: NullableFloatFieldUpdateOperationsInput | number | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    tipe?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuktiDataUpsertWithWhereUniqueWithoutNilaiIndikatorInput = {
+    where: BuktiDataWhereUniqueInput
+    update: XOR<BuktiDataUpdateWithoutNilaiIndikatorInput, BuktiDataUncheckedUpdateWithoutNilaiIndikatorInput>
+    create: XOR<BuktiDataCreateWithoutNilaiIndikatorInput, BuktiDataUncheckedCreateWithoutNilaiIndikatorInput>
+  }
+
+  export type BuktiDataUpdateWithWhereUniqueWithoutNilaiIndikatorInput = {
+    where: BuktiDataWhereUniqueInput
+    data: XOR<BuktiDataUpdateWithoutNilaiIndikatorInput, BuktiDataUncheckedUpdateWithoutNilaiIndikatorInput>
+  }
+
+  export type BuktiDataUpdateManyWithWhereWithoutNilaiIndikatorInput = {
+    where: BuktiDataScalarWhereInput
+    data: XOR<BuktiDataUpdateManyMutationInput, BuktiDataUncheckedUpdateManyWithoutNilaiIndikatorInput>
+  }
+
+  export type BuktiDataScalarWhereInput = {
+    AND?: BuktiDataScalarWhereInput | BuktiDataScalarWhereInput[]
+    OR?: BuktiDataScalarWhereInput[]
+    NOT?: BuktiDataScalarWhereInput | BuktiDataScalarWhereInput[]
+    id?: StringFilter<"BuktiData"> | string
+    nilaiIndikatorId?: StringFilter<"BuktiData"> | string
+    judul?: StringFilter<"BuktiData"> | string
+    tipe?: StringFilter<"BuktiData"> | string
+    fileUrl?: StringFilter<"BuktiData"> | string
+    keterangan?: StringNullableFilter<"BuktiData"> | string | null
+    uploadedBy?: StringNullableFilter<"BuktiData"> | string | null
+    statusReview?: StringFilter<"BuktiData"> | string
+    reviewedBy?: StringNullableFilter<"BuktiData"> | string | null
+    reviewedAt?: DateTimeNullableFilter<"BuktiData"> | Date | string | null
+    createdAt?: DateTimeFilter<"BuktiData"> | Date | string
+  }
+
+  export type NilaiIndikatorCreateWithoutBuktiDataInput = {
+    id?: string
+    desaId: string
+    periode: string
+    nilai: number
+    sumber?: string | null
+    catatan?: string | null
+    status?: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    indikator: IndikatorCreateNestedOneWithoutNilaiIndikatorInput
+  }
+
+  export type NilaiIndikatorUncheckedCreateWithoutBuktiDataInput = {
+    id?: string
+    indikatorId: string
+    desaId: string
+    periode: string
+    nilai: number
+    sumber?: string | null
+    catatan?: string | null
+    status?: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type NilaiIndikatorCreateOrConnectWithoutBuktiDataInput = {
+    where: NilaiIndikatorWhereUniqueInput
+    create: XOR<NilaiIndikatorCreateWithoutBuktiDataInput, NilaiIndikatorUncheckedCreateWithoutBuktiDataInput>
+  }
+
+  export type NilaiIndikatorUpsertWithoutBuktiDataInput = {
+    update: XOR<NilaiIndikatorUpdateWithoutBuktiDataInput, NilaiIndikatorUncheckedUpdateWithoutBuktiDataInput>
+    create: XOR<NilaiIndikatorCreateWithoutBuktiDataInput, NilaiIndikatorUncheckedCreateWithoutBuktiDataInput>
+    where?: NilaiIndikatorWhereInput
+  }
+
+  export type NilaiIndikatorUpdateToOneWithWhereWithoutBuktiDataInput = {
+    where?: NilaiIndikatorWhereInput
+    data: XOR<NilaiIndikatorUpdateWithoutBuktiDataInput, NilaiIndikatorUncheckedUpdateWithoutBuktiDataInput>
+  }
+
+  export type NilaiIndikatorUpdateWithoutBuktiDataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    periode?: StringFieldUpdateOperationsInput | string
+    nilai?: FloatFieldUpdateOperationsInput | number
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    indikator?: IndikatorUpdateOneRequiredWithoutNilaiIndikatorNestedInput
+  }
+
+  export type NilaiIndikatorUncheckedUpdateWithoutBuktiDataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    indikatorId?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    periode?: StringFieldUpdateOperationsInput | string
+    nilai?: FloatFieldUpdateOperationsInput | number
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KeputusanProgramCreateWithoutProgramDesaInput = {
+    id?: string
+    desaId: string
+    musyawarahId?: string | null
+    nomorKeputusan?: string | null
+    judulKeputusan: string
+    isiKeputusan: string
+    tanggalKeputusan: Date | string
+    statusSah?: boolean
+    disetujuiOleh?: string | null
+    catatan?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KeputusanProgramUncheckedCreateWithoutProgramDesaInput = {
+    id?: string
+    desaId: string
+    musyawarahId?: string | null
+    nomorKeputusan?: string | null
+    judulKeputusan: string
+    isiKeputusan: string
+    tanggalKeputusan: Date | string
+    statusSah?: boolean
+    disetujuiOleh?: string | null
+    catatan?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KeputusanProgramCreateOrConnectWithoutProgramDesaInput = {
+    where: KeputusanProgramWhereUniqueInput
+    create: XOR<KeputusanProgramCreateWithoutProgramDesaInput, KeputusanProgramUncheckedCreateWithoutProgramDesaInput>
+  }
+
+  export type KeputusanProgramCreateManyProgramDesaInputEnvelope = {
+    data: KeputusanProgramCreateManyProgramDesaInput | KeputusanProgramCreateManyProgramDesaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type KeputusanProgramUpsertWithWhereUniqueWithoutProgramDesaInput = {
+    where: KeputusanProgramWhereUniqueInput
+    update: XOR<KeputusanProgramUpdateWithoutProgramDesaInput, KeputusanProgramUncheckedUpdateWithoutProgramDesaInput>
+    create: XOR<KeputusanProgramCreateWithoutProgramDesaInput, KeputusanProgramUncheckedCreateWithoutProgramDesaInput>
+  }
+
+  export type KeputusanProgramUpdateWithWhereUniqueWithoutProgramDesaInput = {
+    where: KeputusanProgramWhereUniqueInput
+    data: XOR<KeputusanProgramUpdateWithoutProgramDesaInput, KeputusanProgramUncheckedUpdateWithoutProgramDesaInput>
+  }
+
+  export type KeputusanProgramUpdateManyWithWhereWithoutProgramDesaInput = {
+    where: KeputusanProgramScalarWhereInput
+    data: XOR<KeputusanProgramUpdateManyMutationInput, KeputusanProgramUncheckedUpdateManyWithoutProgramDesaInput>
+  }
+
+  export type KeputusanProgramScalarWhereInput = {
+    AND?: KeputusanProgramScalarWhereInput | KeputusanProgramScalarWhereInput[]
+    OR?: KeputusanProgramScalarWhereInput[]
+    NOT?: KeputusanProgramScalarWhereInput | KeputusanProgramScalarWhereInput[]
+    id?: StringFilter<"KeputusanProgram"> | string
+    desaId?: StringFilter<"KeputusanProgram"> | string
+    musyawarahId?: StringNullableFilter<"KeputusanProgram"> | string | null
+    programDesaId?: StringNullableFilter<"KeputusanProgram"> | string | null
+    nomorKeputusan?: StringNullableFilter<"KeputusanProgram"> | string | null
+    judulKeputusan?: StringFilter<"KeputusanProgram"> | string
+    isiKeputusan?: StringFilter<"KeputusanProgram"> | string
+    tanggalKeputusan?: DateTimeFilter<"KeputusanProgram"> | Date | string
+    statusSah?: BoolFilter<"KeputusanProgram"> | boolean
+    disetujuiOleh?: StringNullableFilter<"KeputusanProgram"> | string | null
+    catatan?: StringNullableFilter<"KeputusanProgram"> | string | null
+    createdAt?: DateTimeFilter<"KeputusanProgram"> | Date | string
+    updatedAt?: DateTimeFilter<"KeputusanProgram"> | Date | string
+  }
+
+  export type ProgramDesaCreateWithoutKeputusanInput = {
+    id?: string
+    desaId: string
+    namaProgram: string
+    deskripsi?: string | null
+    bidang: string
+    anggaranTotal?: number | null
+    sumberDana?: string | null
+    periode: string
+    statusProgram?: string
+    prioritas?: number
+    penanggungJawab?: string | null
+    targetCapaian?: string | null
+    tanggalMulai?: Date | string | null
+    tanggalSelesai?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProgramDesaUncheckedCreateWithoutKeputusanInput = {
+    id?: string
+    desaId: string
+    namaProgram: string
+    deskripsi?: string | null
+    bidang: string
+    anggaranTotal?: number | null
+    sumberDana?: string | null
+    periode: string
+    statusProgram?: string
+    prioritas?: number
+    penanggungJawab?: string | null
+    targetCapaian?: string | null
+    tanggalMulai?: Date | string | null
+    tanggalSelesai?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProgramDesaCreateOrConnectWithoutKeputusanInput = {
+    where: ProgramDesaWhereUniqueInput
+    create: XOR<ProgramDesaCreateWithoutKeputusanInput, ProgramDesaUncheckedCreateWithoutKeputusanInput>
+  }
+
+  export type ProgramDesaUpsertWithoutKeputusanInput = {
+    update: XOR<ProgramDesaUpdateWithoutKeputusanInput, ProgramDesaUncheckedUpdateWithoutKeputusanInput>
+    create: XOR<ProgramDesaCreateWithoutKeputusanInput, ProgramDesaUncheckedCreateWithoutKeputusanInput>
+    where?: ProgramDesaWhereInput
+  }
+
+  export type ProgramDesaUpdateToOneWithWhereWithoutKeputusanInput = {
+    where?: ProgramDesaWhereInput
+    data: XOR<ProgramDesaUpdateWithoutKeputusanInput, ProgramDesaUncheckedUpdateWithoutKeputusanInput>
+  }
+
+  export type ProgramDesaUpdateWithoutKeputusanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    namaProgram?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    bidang?: StringFieldUpdateOperationsInput | string
+    anggaranTotal?: NullableFloatFieldUpdateOperationsInput | number | null
+    sumberDana?: NullableStringFieldUpdateOperationsInput | string | null
+    periode?: StringFieldUpdateOperationsInput | string
+    statusProgram?: StringFieldUpdateOperationsInput | string
+    prioritas?: IntFieldUpdateOperationsInput | number
+    penanggungJawab?: NullableStringFieldUpdateOperationsInput | string | null
+    targetCapaian?: NullableStringFieldUpdateOperationsInput | string | null
+    tanggalMulai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    tanggalSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProgramDesaUncheckedUpdateWithoutKeputusanInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    namaProgram?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    bidang?: StringFieldUpdateOperationsInput | string
+    anggaranTotal?: NullableFloatFieldUpdateOperationsInput | number | null
+    sumberDana?: NullableStringFieldUpdateOperationsInput | string | null
+    periode?: StringFieldUpdateOperationsInput | string
+    statusProgram?: StringFieldUpdateOperationsInput | string
+    prioritas?: IntFieldUpdateOperationsInput | number
+    penanggungJawab?: NullableStringFieldUpdateOperationsInput | string | null
+    targetCapaian?: NullableStringFieldUpdateOperationsInput | string | null
+    tanggalMulai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    tanggalSelesai?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type DiskusiCreateWithoutForumInput = {
     id?: string
     userId: string
@@ -85534,6 +95794,226 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type IndikatorCreateManyDimensiInput = {
+    id?: string
+    nama: string
+    deskripsi?: string | null
+    satuan?: string | null
+    targetNilai?: number | null
+    bobot?: number
+    tipe?: string
+    status?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IndikatorUpdateWithoutDimensiInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    satuan?: NullableStringFieldUpdateOperationsInput | string | null
+    targetNilai?: NullableFloatFieldUpdateOperationsInput | number | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    tipe?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    nilaiIndikator?: NilaiIndikatorUpdateManyWithoutIndikatorNestedInput
+  }
+
+  export type IndikatorUncheckedUpdateWithoutDimensiInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    satuan?: NullableStringFieldUpdateOperationsInput | string | null
+    targetNilai?: NullableFloatFieldUpdateOperationsInput | number | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    tipe?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    nilaiIndikator?: NilaiIndikatorUncheckedUpdateManyWithoutIndikatorNestedInput
+  }
+
+  export type IndikatorUncheckedUpdateManyWithoutDimensiInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nama?: StringFieldUpdateOperationsInput | string
+    deskripsi?: NullableStringFieldUpdateOperationsInput | string | null
+    satuan?: NullableStringFieldUpdateOperationsInput | string | null
+    targetNilai?: NullableFloatFieldUpdateOperationsInput | number | null
+    bobot?: FloatFieldUpdateOperationsInput | number
+    tipe?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type NilaiIndikatorCreateManyIndikatorInput = {
+    id?: string
+    desaId: string
+    periode: string
+    nilai: number
+    sumber?: string | null
+    catatan?: string | null
+    status?: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type NilaiIndikatorUpdateWithoutIndikatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    periode?: StringFieldUpdateOperationsInput | string
+    nilai?: FloatFieldUpdateOperationsInput | number
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    buktiData?: BuktiDataUpdateManyWithoutNilaiIndikatorNestedInput
+  }
+
+  export type NilaiIndikatorUncheckedUpdateWithoutIndikatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    periode?: StringFieldUpdateOperationsInput | string
+    nilai?: FloatFieldUpdateOperationsInput | number
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    buktiData?: BuktiDataUncheckedUpdateManyWithoutNilaiIndikatorNestedInput
+  }
+
+  export type NilaiIndikatorUncheckedUpdateManyWithoutIndikatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    periode?: StringFieldUpdateOperationsInput | string
+    nilai?: FloatFieldUpdateOperationsInput | number
+    sumber?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuktiDataCreateManyNilaiIndikatorInput = {
+    id?: string
+    judul: string
+    tipe?: string
+    fileUrl: string
+    keterangan?: string | null
+    uploadedBy?: string | null
+    statusReview?: string
+    reviewedBy?: string | null
+    reviewedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type BuktiDataUpdateWithoutNilaiIndikatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    tipe?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    statusReview?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuktiDataUncheckedUpdateWithoutNilaiIndikatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    tipe?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    statusReview?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type BuktiDataUncheckedUpdateManyWithoutNilaiIndikatorInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    tipe?: StringFieldUpdateOperationsInput | string
+    fileUrl?: StringFieldUpdateOperationsInput | string
+    keterangan?: NullableStringFieldUpdateOperationsInput | string | null
+    uploadedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    statusReview?: StringFieldUpdateOperationsInput | string
+    reviewedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    reviewedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KeputusanProgramCreateManyProgramDesaInput = {
+    id?: string
+    desaId: string
+    musyawarahId?: string | null
+    nomorKeputusan?: string | null
+    judulKeputusan: string
+    isiKeputusan: string
+    tanggalKeputusan: Date | string
+    statusSah?: boolean
+    disetujuiOleh?: string | null
+    catatan?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type KeputusanProgramUpdateWithoutProgramDesaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    musyawarahId?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorKeputusan?: NullableStringFieldUpdateOperationsInput | string | null
+    judulKeputusan?: StringFieldUpdateOperationsInput | string
+    isiKeputusan?: StringFieldUpdateOperationsInput | string
+    tanggalKeputusan?: DateTimeFieldUpdateOperationsInput | Date | string
+    statusSah?: BoolFieldUpdateOperationsInput | boolean
+    disetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KeputusanProgramUncheckedUpdateWithoutProgramDesaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    musyawarahId?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorKeputusan?: NullableStringFieldUpdateOperationsInput | string | null
+    judulKeputusan?: StringFieldUpdateOperationsInput | string
+    isiKeputusan?: StringFieldUpdateOperationsInput | string
+    tanggalKeputusan?: DateTimeFieldUpdateOperationsInput | Date | string
+    statusSah?: BoolFieldUpdateOperationsInput | boolean
+    disetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type KeputusanProgramUncheckedUpdateManyWithoutProgramDesaInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    desaId?: StringFieldUpdateOperationsInput | string
+    musyawarahId?: NullableStringFieldUpdateOperationsInput | string | null
+    nomorKeputusan?: NullableStringFieldUpdateOperationsInput | string | null
+    judulKeputusan?: StringFieldUpdateOperationsInput | string
+    isiKeputusan?: StringFieldUpdateOperationsInput | string
+    tanggalKeputusan?: DateTimeFieldUpdateOperationsInput | Date | string
+    statusSah?: BoolFieldUpdateOperationsInput | boolean
+    disetujuiOleh?: NullableStringFieldUpdateOperationsInput | string | null
+    catatan?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type DiskusiCreateManyForumInput = {
     id?: string
     userId: string
@@ -85583,6 +96063,22 @@ export namespace Prisma {
      * @deprecated Use KelasCountOutputTypeDefaultArgs instead
      */
     export type KelasCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = KelasCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DimensiCountOutputTypeDefaultArgs instead
+     */
+    export type DimensiCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DimensiCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use IndikatorCountOutputTypeDefaultArgs instead
+     */
+    export type IndikatorCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = IndikatorCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use NilaiIndikatorCountOutputTypeDefaultArgs instead
+     */
+    export type NilaiIndikatorCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NilaiIndikatorCountOutputTypeDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ProgramDesaCountOutputTypeDefaultArgs instead
+     */
+    export type ProgramDesaCountOutputTypeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProgramDesaCountOutputTypeDefaultArgs<ExtArgs>
     /**
      * @deprecated Use ForumCountOutputTypeDefaultArgs instead
      */
@@ -85671,6 +96167,34 @@ export namespace Prisma {
      * @deprecated Use LaporanDefaultArgs instead
      */
     export type LaporanArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = LaporanDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use DimensiDefaultArgs instead
+     */
+    export type DimensiArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = DimensiDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use IndikatorDefaultArgs instead
+     */
+    export type IndikatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = IndikatorDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use NilaiIndikatorDefaultArgs instead
+     */
+    export type NilaiIndikatorArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = NilaiIndikatorDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use BuktiDataDefaultArgs instead
+     */
+    export type BuktiDataArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = BuktiDataDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use ProgramDesaDefaultArgs instead
+     */
+    export type ProgramDesaArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = ProgramDesaDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use KeputusanProgramDefaultArgs instead
+     */
+    export type KeputusanProgramArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = KeputusanProgramDefaultArgs<ExtArgs>
+    /**
+     * @deprecated Use PersetujuanAksesDefaultArgs instead
+     */
+    export type PersetujuanAksesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = PersetujuanAksesDefaultArgs<ExtArgs>
     /**
      * @deprecated Use ForumDefaultArgs instead
      */

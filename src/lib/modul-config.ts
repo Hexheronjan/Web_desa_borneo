@@ -1,6 +1,20 @@
 // Modul config: warna, nama, sidebar items per role
 // 10 roles x 60 modul sesuai tabel struktur prototype
 
+// === PERAN SISTEM SESUAI USE CASE DIAGRAM UML ===
+// Use Case Diagram mendefinisikan 7 aktor:
+// 1. Administrator Sistem → admin_super
+// 2. Pemerintah Desa      → pemerintah_desa
+// 3. Lembaga Adat         → lembaga_adat
+// 4. Tokoh Masyarakat     → warga
+// 5. Guru/Tenaga Pendidikan → guru_fasilitator
+// 6. Tenaga Kesehatan     → nakes_posyandu
+// 7. Masyarakat Umum      → layanan_slv
+// Peran tambahan (tidak di Use Case Diagram utama):
+// - operator_sid (Verifikator/Admin Desa & Sosdem)
+// - bpd (Pengawas/BPD)
+// - dinas_pmd (Pemantau Regional)
+// - peneliti (Evaluator Sistem)
 export type RoleKey =
   | "admin_super"
   | "operator_sid"
@@ -146,17 +160,33 @@ export const roleConfig: Record<RoleKey, RoleConfig> = {
     ],
   },
 
-  // === WARGA (Modul 47–50) ===
+  // === TOKOH MASYARAKAT (Use Case Diagram: Partisipasi Masyarakat & Tindak Lanjut) ===
   warga: {
     key: "warga",
     nama: "Tokoh Masyarakat",
     warna: "#6a1b9a",
     dashboardPath: "/warga",
     sidebarItems: [
-      { label: "Surat Online", path: "/warga/surat-online", group: "LAYANAN DESA" },
-      { label: "Pengaduan", path: "/warga/pengaduan", group: "LAYANAN DESA" },
-      { label: "Aspirasi", path: "/warga/aspirasi", group: "LAYANAN DESA" },
-      { label: "Kualitas Hidup", path: "/warga/survey-qol", group: "SURVEY QoL" },
+      // Use Case: Mengisi survei kesiapan dan kualitas hidup
+      { label: "Survei Persepsi Kesiapan", path: "/warga/survei-readiness", group: "SURVEI PARTISIPASI" },
+      { label: "Survei Kualitas Hidup Masyarakat", path: "/warga/survey-qol", group: "SURVEI PARTISIPASI" },
+      // Use Case: Menyampaikan aspirasi/pengaduan dan mengunggah bukti
+      { label: "Aspirasi Masyarakat", path: "/warga/aspirasi", group: "ASPIRASI & KEBUTUHAN" },
+      { label: "Pengaduan Masyarakat", path: "/warga/pengaduan", group: "ASPIRASI & KEBUTUHAN" },
+      { label: "Prioritas Kebutuhan Masyarakat", path: "/warga/prioritas-kebutuhan", group: "ASPIRASI & KEBUTUHAN" },
+      { label: "Usulan Program Desa", path: "/warga/usulan-program-desa", group: "ASPIRASI & KEBUTUHAN" },
+      { label: "Pemantauan Masalah Masyarakat", path: "/warga/pemantauan-masalah", group: "ASPIRASI & KEBUTUHAN" },
+      { label: "Agenda dan Musyawarah Desa", path: "/warga/agenda-musyawarah", group: "MUSYAWARAH & KEPUTUSAN" },
+      { label: "Masukan dan Partisipasi", path: "/warga/masukan-partisipasi", group: "MUSYAWARAH & KEPUTUSAN" },
+      { label: "Hasil Keputusan dan Tindak Lanjut", path: "/warga/hasil-keputusan", group: "MUSYAWARAH & KEPUTUSAN" },
+      { label: "Program dan Status Pelaksanaan", path: "/warga/pemantauan-program-desa", group: "MONITORING PROGRAM" },
+      { label: "Ringkasan Kesiapan Desa", path: "/warga/hasil-readiness-desa", group: "INFORMASI DESA" },
+      { label: "Ringkasan Kualitas Hidup", path: "/warga/hasil-quality-of-life-desa", group: "INFORMASI DESA" },
+      { label: "Informasi Kesehatan (SDGs 3)", path: "/warga/informasi-kesehatan", group: "INFORMASI DESA" },
+      { label: "Informasi Pendidikan (SDGs 4)", path: "/warga/informasi-pendidikan", group: "INFORMASI DESA" },
+      { label: "Informasi Budaya (SDGs 18)", path: "/warga/informasi-budaya", group: "INFORMASI DESA" },
+      { label: "Surat Online", path: "/warga/surat-online", group: "LAYANAN WARGA" },
+      { label: "Notifikasi dan Tindak Lanjut", path: "/warga/notifikasi", group: "LAYANAN WARGA" },
     ],
   },
 
@@ -190,7 +220,7 @@ export const roleConfig: Record<RoleKey, RoleConfig> = {
     ],
   },
   
-  // === MASYARAKAT UMUM (SDGs 3, 4 & 18 + Profil) ===
+  // === MASYARAKAT UMUM (Use Case Diagram: Akses Informasi Publik SDGs 3, 4, 18) ===
   layanan_slv: {
     key: "layanan_slv",
     nama: "Masyarakat Umum",

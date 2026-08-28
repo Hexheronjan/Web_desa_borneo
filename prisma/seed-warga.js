@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require("../src/generated/client");
 
 const prisma = new PrismaClient();
 
@@ -54,6 +54,7 @@ async function main() {
     update: { wargaId: budiWarga.id, name: "Tokoh/Perwakilan Masyarakat Desa Lung Anai" },
     create: {
       email: "tokoh.masyarakat@contoh.id",
+      username: "tokoh_masyarakat",
       name: "Tokoh/Perwakilan Masyarakat Desa Lung Anai",
       password: "password123", 
       role: "warga",

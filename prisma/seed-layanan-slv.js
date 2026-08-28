@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require("../src/generated/client");
 
 const prisma = new PrismaClient();
 
@@ -421,10 +421,19 @@ async function main() {
     try {
       const id = `modrec_${Date.now()}_${Math.random().toString(36).slice(2, 10)}`;
       
-      await prisma.$executeRaw`
-        INSERT INTO ModuleRecord (id, modulePath, moduleName, title, category, description, valueText, status, createdBy)
-        VALUES (${id}, ${record.modulePath}, ${record.moduleName}, ${record.title}, ${record.category}, ${record.description}, ${record.valueText}, ${record.status}, ${record.createdBy})
-      `;
+      await prisma.moduleRecord.create({
+        data: {
+          id,
+          modulePath: record.modulePath,
+          moduleName: record.moduleName,
+          title: record.title,
+          category: record.category,
+          description: record.description,
+          valueText: record.valueText,
+          status: record.status,
+          createdBy: record.createdBy,
+        }
+      });
       
       successCount++;
       console.log(`✅ ${record.moduleName} - ${record.title}`);

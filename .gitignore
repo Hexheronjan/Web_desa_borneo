@@ -1,5 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
 # dependencies
 /node_modules
 /.pnp
@@ -19,6 +17,9 @@
 # misc
 .DS_Store
 *.pem
+*.zip
+*.sql
+check-server.js
 
 # debug
 npm-debug.log*
@@ -37,7 +38,7 @@ yarn-error.log*
 next-env.d.ts
 
 /src/generated/prisma
+/src/generated/client
 
-.vercel
 dev-server.log
 dev-server.err.log
