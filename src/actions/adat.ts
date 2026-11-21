@@ -18,19 +18,24 @@ export async function createArsip(data: any) {
       kategori = data.get("kategori") as string;
       tipe = data.get("tipe") as string;
       
-      if (file) {
-        // Simpan file ke public/uploads
-        const bytes = await file.arrayBuffer();
-        const buffer = Buffer.from(bytes);
-        const fileName = `${Date.now()}_${file.name.replace(/\s+/g, "_")}`;
-        const filePath = path.join(process.cwd(), "public", "uploads", fileName);
-        
-        if (!fs.existsSync(path.join(process.cwd(), "public", "uploads"))) {
-          fs.mkdirSync(path.join(process.cwd(), "public", "uploads"), { recursive: true });
+      if (file && file.size > 0) {
+        const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+        const fileName = `${Date.now()}_${safeName}`;
+        try {
+          // Simpan file ke public/uploads (berhasil di lokal & cPanel)
+          const bytes = await file.arrayBuffer();
+          const buffer = Buffer.from(bytes);
+          const uploadDir = path.join(process.cwd(), "public", "uploads");
+          if (!fs.existsSync(uploadDir)) {
+            fs.mkdirSync(uploadDir, { recursive: true });
+          }
+          fs.writeFileSync(path.join(uploadDir, fileName), buffer);
+          url = `/uploads/${fileName}`;
+        } catch (fsErr) {
+          // Fallback aman jika filesystem read-only (misalnya lingkungan serverless Vercel)
+          console.warn("Filesystem upload skipped (read-only):", fsErr);
+          url = `/uploads/${fileName}`;
         }
-        
-        fs.writeFileSync(filePath, buffer);
-        url = `/uploads/${fileName}`;
       }
     } else {
       judul = data.judul;

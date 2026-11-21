@@ -1,12 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { createArsip } from "@/actions/adat";
 
+const MAX_FILE_MB = 15;
+
 export default function AdminArsipActions({ color }: { color: string }) {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   
   const [judul, setJudul] = useState("");
   const [kategori, setKategori] = useState("Ritual Adat");
@@ -15,24 +20,45 @@ export default function AdminArsipActions({ color }: { color: string }) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!file) return alert("Pilih file terlebih dahulu!");
+    setErrorMsg(null);
+    if (!file) {
+      setErrorMsg("Pilih file terlebih dahulu sebelum menyimpan.");
+      return;
+    }
+    if (file.size > MAX_FILE_MB * 1024 * 1024) {
+      setErrorMsg(`Ukuran file terlalu besar (${(file.size / 1024 / 1024).toFixed(2)} MB). Maksimal ${MAX_FILE_MB} MB.`);
+      return;
+    }
     
     setLoading(true);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("judul", judul);
-    formData.append("kategori", kategori);
-    formData.append("tipe", tipe);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("judul", judul.trim());
+      formData.append("kategori", kategori);
+      formData.append("tipe", tipe);
 
-    const res = await createArsip(formData);
-    
-    if (res.success) {
-      alert("✅ File '" + file.name + "' berhasil diunggah secara riil ke server!");
-      setIsModalOpen(false);
-      setJudul("");
-      setFile(null);
-    } else alert("Gagal Unggah: " + res.error);
-    setLoading(false);
+      const res = await createArsip(formData);
+      
+      if (res?.success) {
+        setIsModalOpen(false);
+        setJudul("");
+        setFile(null);
+        setErrorMsg(null);
+        router.refresh();
+      } else {
+        setErrorMsg(res?.error || "Gagal mengunggah arsip. Silakan coba lagi.");
+      }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setErrorMsg(
+        msg.toLowerCase().includes("body") || msg.toLowerCase().includes("limit") || msg.toLowerCase().includes("413")
+          ? `Ukuran file melewati batas unggah server. Gunakan file di bawah ${MAX_FILE_MB} MB.`
+          : `Gagal mengunggah file: ${msg}`
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -81,23 +107,36 @@ export default function AdminArsipActions({ color }: { color: string }) {
               <div className={`p-4 border-2 border-dashed rounded-xl transition-colors ${file ? 'border-green-500 bg-green-50' : 'border-slate-200 hover:border-green-400'}`}>
                 <label className="block text-center cursor-pointer">
                   <span className="text-2xl block mb-1">{file ? "✅" : "📁"}</span>
-                  <span className="text-xs font-bold text-slate-500 uppercase">
-                    {file ? `File Terpilih: ${file.name}` : "Klik untuk Pilih File"}
+                  <span className="text-xs font-bold text-slate-600 uppercase block">
+                    {file
+                      ? `File Terpilih: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)`
+                      : `Klik untuk Pilih File (Maks. ${MAX_FILE_MB} MB)`}
                   </span>
                   <input 
                     type="file" 
                     className="hidden" 
                     onChange={(e) => {
                       const selected = e.target.files?.[0];
-                      if (selected) setFile(selected);
+                      if (selected) {
+                        setFile(selected);
+                        setErrorMsg(null);
+                      }
                     }} 
                   />
                 </label>
               </div>
 
-              <div className="flex justify-end gap-3 pt-6 border-t border-slate-100">
-                <Button type="button" variant="ghost" onClick={() => setIsModalOpen(false)}>Batal</Button>
-                <Button type="submit" disabled={loading} style={{ backgroundColor: color, color: 'white' }}>Unggah & Simpan</Button>
+              {errorMsg && (
+                <div className="p-2.5 rounded-lg bg-red-50 border border-red-200 text-red-700 text-xs font-semibold">
+                  ⚠️ {errorMsg}
+                </div>
+              )}
+
+              <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                <Button type="button" variant="ghost" disabled={loading} onClick={() => { setIsModalOpen(false); setErrorMsg(null); }}>Batal</Button>
+                <Button type="submit" disabled={loading} style={{ backgroundColor: color, color: 'white' }}>
+                  {loading ? "Mengunggah..." : "Unggah & Simpan"}
+                </Button>
               </div>
             </form>
           </div>
