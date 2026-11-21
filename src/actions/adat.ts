@@ -67,6 +67,16 @@ export async function createArsip(data: any) {
 
 export async function deleteArsip(id: string) {
   try {
+    const existing = await prisma.arsipAdat.findUnique({ where: { id }, select: { url: true } });
+    if (existing?.url?.startsWith("/api/adat/arsip/file")) {
+      const match = existing.url.match(/[?&]key=([^&]+)/);
+      if (match?.[1]) {
+        const fileKey = decodeURIComponent(match[1]);
+        await prisma.moduleRecord.deleteMany({
+          where: { modulePath: "/adat/arsip/file", category: fileKey },
+        });
+      }
+    }
     await prisma.arsipAdat.delete({ where: { id } });
     revalidatePath("/adat/arsip");
     revalidatePath("/adat/laporan-kelembagaan");

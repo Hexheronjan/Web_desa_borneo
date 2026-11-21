@@ -5,13 +5,29 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { createArsip } from "@/actions/adat";
 
-const MAX_FILE_MB = 50;
-const DIRECT_BINARY_LIMIT_BYTES = 3.5 * 1024 * 1024; // Aman di bawah batas 4.5 MB serverless Vercel
+const MAX_FILE_MB = 25;
+const CHUNK_SIZE_BYTES = 1536 * 1024; // 1.5 MB biner (~2 MB base64) -> aman di Vercel (limit 4.5 MB) & MySQL cPanel
+
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  const chunks: string[] = [];
+  const step = 0x8000;
+  for (let i = 0; i < bytes.length; i += step) {
+    const end = Math.min(i + step, bytes.length);
+    let part = "";
+    for (let j = i; j < end; j++) {
+      part += String.fromCharCode(bytes[j]);
+    }
+    chunks.push(part);
+  }
+  return btoa(chunks.join(""));
+}
 
 export default function AdminArsipActions({ color }: { color: string }) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [progressText, setProgressText] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   
   const [judul, setJudul] = useState("");
@@ -32,32 +48,43 @@ export default function AdminArsipActions({ color }: { color: string }) {
     }
     
     setLoading(true);
-    const safeName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
     try {
-      let res: { success?: boolean; error?: string } | undefined;
+      const fileKey = `arsip_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+      const totalChunks = Math.max(1, Math.ceil(file.size / CHUNK_SIZE_BYTES));
 
-      if (file.size <= DIRECT_BINARY_LIMIT_BYTES) {
-        try {
-          const formData = new FormData();
-          formData.append("file", file);
-          formData.append("judul", judul.trim());
-          formData.append("kategori", kategori);
-          formData.append("tipe", tipe);
-          res = await createArsip(formData);
-        } catch {
-          // Fallback ke simpan metadata ringan jika proxy menolak payload biner
-          res = undefined;
+      for (let i = 0; i < totalChunks; i++) {
+        setProgressText(totalChunks > 1 ? `Mengunggah bagian ${i + 1}/${totalChunks}...` : "Mengunggah file...");
+        const slice = file.slice(i * CHUNK_SIZE_BYTES, (i + 1) * CHUNK_SIZE_BYTES);
+        const buf = await slice.arrayBuffer();
+        const dataBase64 = arrayBufferToBase64(buf);
+
+        const uploadRes = await fetch("/api/adat/arsip/file", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            key: fileKey,
+            chunkIndex: i,
+            totalChunks,
+            fileName: file.name,
+            mimeType: file.type || "application/octet-stream",
+            dataBase64,
+          }),
+        });
+
+        const uploadJson = await uploadRes.json().catch(() => null);
+        if (!uploadRes.ok || !uploadJson?.success) {
+          throw new Error(uploadJson?.error || `Gagal menyimpan bagian file (${uploadRes.status})`);
         }
       }
 
-      if (!res || (!res.success && !res.error)) {
-        res = await createArsip({
-          judul: judul.trim(),
-          kategori,
-          tipe,
-          url: `/uploads/${safeName}`,
-        });
-      }
+      setProgressText("Menyimpan arsip...");
+      const fileUrl = `/api/adat/arsip/file?key=${encodeURIComponent(fileKey)}&name=${encodeURIComponent(file.name)}`;
+      const res = await createArsip({
+        judul: judul.trim(),
+        kategori,
+        tipe,
+        url: fileUrl,
+      });
       
       if (res?.success) {
         setIsModalOpen(false);
@@ -73,6 +100,7 @@ export default function AdminArsipActions({ color }: { color: string }) {
       setErrorMsg(`Gagal mengunggah file: ${msg}`);
     } finally {
       setLoading(false);
+      setProgressText(null);
     }
   };
 
@@ -150,7 +178,7 @@ export default function AdminArsipActions({ color }: { color: string }) {
               <div className="flex justify-end gap-3 pt-4 border-t border-slate-100">
                 <Button type="button" variant="ghost" disabled={loading} onClick={() => { setIsModalOpen(false); setErrorMsg(null); }}>Batal</Button>
                 <Button type="submit" disabled={loading} style={{ backgroundColor: color, color: 'white' }}>
-                  {loading ? "Mengunggah..." : "Unggah & Simpan"}
+                  {loading ? (progressText || "Mengunggah...") : "Unggah & Simpan"}
                 </Button>
               </div>
             </form>

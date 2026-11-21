@@ -88,37 +88,83 @@ export function ArsipList({ initialArsip, color }: { initialArsip: any[], color:
               <button onClick={() => setPreviewFile(null)} className="text-slate-400 hover:text-slate-600 text-3xl p-2">&times;</button>
             </div>
 
-            <div className="flex-1 bg-slate-200 overflow-hidden relative">
-              {previewFile.tipe === "foto" ? (
-                <img
-                  src={previewFile.url}
-                  alt="Preview"
-                  className="w-full h-full object-contain"
-                />
-              ) : previewFile.tipe === "video" ? (
-                <video controls className="w-full h-full bg-black">
-                  <source src={previewFile.url} type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
-              ) : (
-                <iframe
-                  src={previewFile.url}
-                  className="w-full h-full bg-white border-none"
-                  title="PDF Preview"
-                />
-              )}
+            <div className="flex-1 bg-slate-100 overflow-hidden relative">
+              {(() => {
+                const fileUrl: string = previewFile.url || "";
+                const lowerUrl = fileUrl.toLowerCase();
+                const isDbFile = fileUrl.startsWith("/api/adat/arsip/file");
+                const isImage = previewFile.tipe === "foto" || /\.(png|jpe?g|webp|gif)(\b|$)/.test(lowerUrl);
+                const isVideo = previewFile.tipe === "video" || /\.(mp4|webm|ogg)(\b|$)/.test(lowerUrl);
+                const isPdf = /\.pdf(\b|$)/.test(lowerUrl);
+
+                if (!isDbFile && fileUrl.startsWith("/uploads/")) {
+                  return (
+                    <div className="h-full flex flex-col items-center justify-center p-8 text-center gap-3 bg-white">
+                      <div className="text-5xl">📄</div>
+                      <h3 className="font-bold text-slate-800 text-base">{previewFile.judul}</h3>
+                      <p className="text-xs text-slate-500 max-w-md leading-relaxed">
+                        Arsip ini diunggah sebelum penyimpanan file database diaktifkan, sehingga file fisiknya tidak tersimpan di server serverless. Silakan hapus arsip lama ini lalu unggah ulang agar file dapat dilihat &amp; diunduh langsung.
+                      </p>
+                    </div>
+                  );
+                }
+
+                if (isImage) {
+                  return (
+                    <img
+                      src={fileUrl}
+                      alt={previewFile.judul}
+                      className="w-full h-full object-contain bg-slate-900/5"
+                    />
+                  );
+                }
+
+                if (isVideo) {
+                  return (
+                    <video controls className="w-full h-full bg-black">
+                      <source src={fileUrl} />
+                      Browser Anda tidak mendukung pemutar video.
+                    </video>
+                  );
+                }
+
+                if (isPdf) {
+                  return (
+                    <iframe
+                      src={fileUrl}
+                      className="w-full h-full bg-white border-none"
+                      title={previewFile.judul}
+                    />
+                  );
+                }
+
+                return (
+                  <div className="h-full flex flex-col items-center justify-center p-8 text-center gap-4 bg-white">
+                    <div className="w-16 h-16 rounded-2xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-3xl">
+                      📝
+                    </div>
+                    <div className="space-y-1 max-w-md">
+                      <h3 className="font-bold text-slate-800 text-base">{previewFile.judul}</h3>
+                      <p className="text-xs text-slate-500 leading-relaxed">
+                        Dokumen Word/Office (<code>.docx / .xlsx</code>) tersimpan aman di database. Browser tidak dapat menampilkan pratinjau dokumen Word secara langsung — silakan klik tombol <strong>Unduh File Asli</strong> di bawah untuk membukanya.
+                      </p>
+                    </div>
+                  </div>
+                );
+              })()}
             </div>
 
             <div className="p-4 bg-slate-50 border-t border-slate-100 flex justify-end gap-3">
               <Button variant="outline" onClick={() => setPreviewFile(null)}>Tutup</Button>
-              <a 
-                href={previewFile.url} 
-                download={previewFile.judul}
-                className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 h-9 px-4 py-2"
-                style={{ backgroundColor: color, color: 'white' }}
-              >
-                Unduh File Asli
-              </a>
+              {previewFile.url?.startsWith("/api/adat/arsip/file") && (
+                <a 
+                  href={`${previewFile.url}${previewFile.url.includes("?") ? "&" : "?"}download=1`}
+                  className="inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors h-9 px-4 py-2"
+                  style={{ backgroundColor: color, color: 'white' }}
+                >
+                  Unduh File Asli
+                </a>
+              )}
             </div>
           </div>
         </div>
