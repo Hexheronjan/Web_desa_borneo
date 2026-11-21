@@ -20,10 +20,10 @@ export async function createWarga(data: any) {
     if (!desa) {
       desa = await prisma.desa.create({
         data: {
-          nama: "Desa Borneo Adat",
-          kecamatan: "Kecamatan Default",
-          kabupaten: "Kabupaten Default",
-          provinsi: "Kalimantan Tengah",
+          nama: "Desa Lung Anai",
+          kecamatan: "Loa Kulu",
+          kabupaten: "Kutai Kartanegara",
+          provinsi: "Kalimantan Timur",
         }
       });
     }

@@ -2,15 +2,12 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
-import { StatCard } from '@/components/shared/StatCard';
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
-  LineChart, Line, Legend
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
 } from 'recharts';
-import {
-  Globe, Heart, GraduationCap, RefreshCw, AlertTriangle, Lock, ShieldCheck, Landmark
-} from 'lucide-react';
+import { Heart, GraduationCap, RefreshCw, AlertTriangle, Lock, ShieldCheck, Landmark } from 'lucide-react';
 import { useState } from 'react';
+import { DESA_BAB4 } from '@/lib/bab4-data';
 
 const COLOR = '#283593';
 
@@ -18,62 +15,65 @@ type SDG_TYPE = 'sdg3' | 'sdg4' | 'sdg18';
 
 const SDG_CONFIG = {
   sdg3: {
-    title: 'SDG Desa 3 — Desa Sehat & Sejahtera',
+    title: 'SDGs Desa 3 — Desa Sehat dan Sejahtera (18 Unit KPI — 6 KPI/Desa)',
     ikon: <Heart size={16} className="text-red-600" />,
-    skor: 78.5,
-    kesenjangan: 'Kebutuhan nutrisi ibu hamil di RT 03 Dusun B masih kurang (selisih 6.5 poin dari target)',
-    program: 'Gerakan 1000 HPK, Penguatan Posyandu Digital, Pengadaan Ambulans Desa',
-    tindakLanjut: 'Penyaluran PMT (Pemberian Makanan Tambahan) fokus di RT 03 Dusun B mulai Agustus 2026',
-    tren: [
-      { name: '2023', skor: 72.0 },
-      { name: '2024', skor: 74.5 },
-      { name: '2025', skor: 76.8 },
-      { name: '2026 (Kini)', skor: 78.5 },
+    awal: 74.70,
+    akhir: 82.24,
+    delta: '+7,55 pp',
+    kesenjangan: 'Validasi data agregat kesehatan (F-029) masih perlu perbaikan dan uji ulang (retest); pembaruan data Posyandu, ANC, dan stunting perlu konsistensi.',
+    program: 'Posyandu Digital, Pemantauan Stunting & ANC Ibu Hamil, Verifikasi Data Agregat Kesehatan (F-026–F-030)',
+    tindakLanjut: 'Perbaikan aturan validasi agregat F-029, pendampingan kader Posyandu, dan integrasi pelaporan ke Puskesmas/Pustu.',
+    perDesa: [
+      { desa: 'Jonggon Jaya', pasca: 85.5 },
+      { desa: 'Kedang Ipil', pasca: 80.9 },
+      { desa: 'Lung Anai', pasca: 80.4 },
     ],
     agregat: [
-      { label: 'Cakupan Imunisasi Balita', value: '92%' },
-      { label: 'Akses Sanitasi Layak', value: '88%' },
-      { label: 'Angka Stunting', value: '14% (Kategori Aman)' },
-    ]
+      { label: 'Capaian Awal (% Target)', value: '74,70%' },
+      { label: 'Capaian Pasca (% Target)', value: '82,24%' },
+      { label: 'Perubahan (4 Minggu)', value: '+7,55 pp' },
+    ],
   },
   sdg4: {
-    title: 'SDG Desa 4 — Pendidikan Desa Berkualitas',
+    title: 'SDGs Desa 4 — Pendidikan Desa Berkualitas (18 Unit KPI — 6 KPI/Desa)',
     ikon: <GraduationCap size={16} className="text-blue-600" />,
-    skor: 74.20,
-    kesenjangan: 'Akses komputer di PAUD Dusun C masih rendah (selisih 10.8 poin dari target)',
-    program: 'Beasiswa Kuliah Desa, Sekolah Adat, Kelas Literasi Digital Pemuda',
-    tindakLanjut: 'Pengiriman 5 unit laptop ke TBM Dusun C pada September 2026',
-    tren: [
-      { name: '2023', skor: 68.5 },
-      { name: '2024', skor: 70.2 },
-      { name: '2025', skor: 72.1 },
-      { name: '2026 (Kini)', skor: 74.2 },
+    awal: 66.68,
+    akhir: 74.90,
+    delta: '+8,22 pp',
+    kesenjangan: 'Capaian akhir terendah di antara 3 tujuan SDGs (74,90%); angka putus sekolah (indikator biaya) dan UAT Guru (79,86%) menuntut pendampingan khusus.',
+    program: 'Penguatan Literasi Digital, Sumber Belajar, Kompetensi SDM Pendidikan, dan Pendampingan Guru (F-021–F-025)',
+    tindakLanjut: 'Prioritaskan mutu data pendidikan, panduan tugas sederhana bagi guru, pelatihan literasi digital, dan pencegahan putus sekolah.',
+    perDesa: [
+      { desa: 'Jonggon Jaya', pasca: 76.1 },
+      { desa: 'Kedang Ipil', pasca: 75.0 },
+      { desa: 'Lung Anai', pasca: 73.6 },
     ],
     agregat: [
-      { label: 'Angka Melek Aksara', value: '98.5%' },
-      { label: 'APK SD / Sederajat', value: '99.0%' },
-      { label: 'Tingkat Kelulusan SMA', value: '84.0%' },
-    ]
+      { label: 'Capaian Awal (% Target)', value: '66,68%' },
+      { label: 'Capaian Pasca (% Target)', value: '74,90%' },
+      { label: 'Perubahan (Terbesar)', value: '+8,22 pp' },
+    ],
   },
   sdg18: {
-    title: 'SDG Desa 18 — Kelembagaan Desa Dinamis & Budaya Adaptif',
+    title: 'SDGs Desa 18 — Kelembagaan Desa Dinamis & Budaya Adaptif (18 Unit KPI)',
     ikon: <Landmark size={16} className="text-emerald-600" />,
-    skor: 82.15,
-    kesenjangan: 'Dokumentasi digital bahasa daerah Dayak Kenyah belum lengkap (selisih 5.0 poin dari target)',
-    program: 'Festival Adat Kenyah, Digitalisasi Huma Betang, Penulisan Kamus Adat',
-    tindakLanjut: 'Perekaman audio sastra lisan Dayak Kenyah bersama sesepuh adat mulai Oktober 2026',
-    tren: [
-      { name: '2023', skor: 78.0 },
-      { name: '2024', skor: 79.5 },
-      { name: '2025', skor: 81.0 },
-      { name: '2026 (Kini)', skor: 82.15 },
+    awal: 76.92,
+    akhir: 84.86,
+    delta: '+7,94 pp',
+    kesenjangan: 'Pelindungan data budaya (klasifikasi publik/terbatas/rahasia, persetujuan komunitas, dan jejak audit) harus terus dijaga konsisten lintas aktor.',
+    program: 'Persetujuan & Klasifikasi Data Budaya, Dokumentasi Pengetahuan Dayak Kenyah & Kutai Adat Lawas, Musyawarah Adat (F-011–F-015)',
+    tindakLanjut: 'Pertahankan kewenangan verifikasi Lembaga Adat dalam setiap pemanfaatan data budaya dan musyawarah program desa.',
+    perDesa: [
+      { desa: 'Jonggon Jaya', pasca: 83.7 },
+      { desa: 'Kedang Ipil', pasca: 83.5 },
+      { desa: 'Lung Anai', pasca: 87.4 },
     ],
     agregat: [
-      { label: 'Keberadaan Lembaga Adat Resmi', value: '1 Lembaga Aktif' },
-      { label: 'Dokumentasi Hukum Adat', value: '120 Dokumen Digital' },
-      { label: 'Jumlah Kegiatan Budaya/Tahun', value: '6 Agenda Utama' },
-    ]
-  }
+      { label: 'Capaian Awal (% Target)', value: '76,92%' },
+      { label: 'Capaian Pasca (% Target)', value: '84,86%' },
+      { label: 'Perubahan (4 Minggu)', value: '+7,94 pp' },
+    ],
+  },
 };
 
 export default function PemantauanSDGsPage() {
@@ -82,31 +82,28 @@ export default function PemantauanSDGsPage() {
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Pemantauan SDGs Desa" modul="Pemerintah Desa" color={COLOR} />
+      <PageTitle fitur="Pemantauan SDGs Desa 3, 4, dan 18 (54 Unit KPI — Bab IV Tabel 4.45 &amp; Gambar 4.23)" modul="Pemerintah Desa" color={COLOR} />
 
-      {/* PRIVACY WARNING */}
       <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2.5">
         <Lock size={16} className="text-amber-700 flex-shrink-0 mt-0.5" />
-        <p className="font-medium leading-relaxed text-amber-700">
-          Pemerintah Desa hanya melihat **informasi agregat, kesenjangan, program, tren, dan tindak lanjut**. Data kesehatan serta pendidikan individu tetap berada pada otoritas aktor sektoral (Bidan/Sekolah) demi menjaga kerahasiaan data pribadi.
+        <p className="font-medium leading-relaxed text-amber-800">
+          Pemerintah Desa hanya melihat <strong>informasi agregat, kesenjangan, program, dan tindak lanjut</strong>. Capaian keseluruhan 54 unit KPI (18 KPI × 3 desa) meningkat dari <strong>72,76%</strong> menjadi <strong>80,67% (+7,90 pp)</strong> selama periode pengamatan empat minggu.
         </p>
       </div>
 
       <div className="flex gap-2 border-b pb-2 flex-wrap">
-        <button onClick={() => setActiveTab('sdg3')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 border ${activeTab === 'sdg3' ? 'bg-indigo-700 text-white' : 'bg-white text-slate-650 hover:bg-slate-50'}`}>
-          <Heart size={13} /> SDG Desa 3 (Kesehatan)
+        <button onClick={() => setActiveTab('sdg3')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 border ${activeTab === 'sdg3' ? 'bg-indigo-700 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}>
+          <Heart size={13} /> SDGs Desa 3 — Kesehatan (82,24%)
         </button>
-        <button onClick={() => setActiveTab('sdg4')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 border ${activeTab === 'sdg4' ? 'bg-indigo-700 text-white' : 'bg-white text-slate-650 hover:bg-slate-50'}`}>
-          <GraduationCap size={13} /> SDG Desa 4 (Pendidikan)
+        <button onClick={() => setActiveTab('sdg4')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 border ${activeTab === 'sdg4' ? 'bg-indigo-700 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}>
+          <GraduationCap size={13} /> SDGs Desa 4 — Pendidikan (74,90%)
         </button>
-        <button onClick={() => setActiveTab('sdg18')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 border ${activeTab === 'sdg18' ? 'bg-indigo-700 text-white' : 'bg-white text-slate-650 hover:bg-slate-50'}`}>
-          <Landmark size={13} /> SDG Desa 18 (Budaya & Lembaga)
+        <button onClick={() => setActiveTab('sdg18')} className={`px-4 py-2 rounded-lg text-xs font-bold transition-colors flex items-center gap-1.5 border ${activeTab === 'sdg18' ? 'bg-indigo-700 text-white' : 'bg-white text-slate-600 hover:bg-slate-50'}`}>
+          <Landmark size={13} /> SDGs Desa 18 — Budaya &amp; Kelembagaan (84,86%)
         </button>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        
-        {/* DETAIL & TREN */}
         <div className="lg:col-span-2 space-y-4">
           <Card>
             <CardHeader className="py-4">
@@ -115,72 +112,72 @@ export default function PemantauanSDGsPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4 text-xs">
-              
-              {/* DATA AGREGAT */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                 {cfg.agregat.map((a, i) => (
                   <div key={i} className="p-3 bg-slate-50 border rounded-xl">
                     <p className="text-[10px] text-slate-400 font-semibold">{a.label}</p>
-                    <p className="font-bold text-slate-800 text-[14px] mt-0.5">{a.value}</p>
+                    <p className="font-black text-slate-800 text-[15px] mt-0.5">{a.value}</p>
                   </div>
                 ))}
               </div>
 
-              {/* TREN GRAFIK */}
               <div>
-                <p className="font-bold text-slate-700 mb-2">Tren Capaian SDGs (4 Periode Terakhir):</p>
-                <div className="h-[180px] w-full">
+                <p className="font-bold text-slate-700 mb-2">Capaian KPI Pascaimplementasi Menurut Desa (Gambar 4.23):</p>
+                <div className="h-[200px] w-full">
                   <ResponsiveContainer width="100%" height="100%">
-                    <LineChart data={cfg.tren}>
+                    <BarChart data={cfg.perDesa} barSize={44}>
                       <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                      <XAxis dataKey="name" tick={{ fontSize: 10, fill: '#64748b' }} />
-                      <YAxis domain={[60, 100]} tick={{ fontSize: 10, fill: '#64748b' }} />
-                      <Tooltip contentStyle={{ fontSize: 10 }} />
-                      <Line type="monotone" dataKey="skor" name="Skor Capaian" stroke={COLOR} strokeWidth={2} dot={{ r: 4 }} />
-                    </LineChart>
+                      <XAxis dataKey="desa" tick={{ fontSize: 10, fill: '#64748b' }} />
+                      <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: '#64748b' }} />
+                      <Tooltip contentStyle={{ fontSize: 10 }} formatter={(v: any) => [`${v}%`, 'Capaian Pasca']} />
+                      <Legend wrapperStyle={{ fontSize: 10 }} />
+                      <Bar dataKey="pasca" name="Capaian Pasca terhadap Target (%)" fill={COLOR} radius={[6, 6, 0, 0]} />
+                    </BarChart>
                   </ResponsiveContainer>
                 </div>
               </div>
-
             </CardContent>
           </Card>
         </div>
 
-        {/* ANALISIS KESENJANGAN & PROGRAM */}
         <Card className="lg:col-span-1">
           <CardHeader className="py-4">
             <CardTitle className="text-sm font-bold text-slate-800 flex items-center gap-2" style={{ color: COLOR }}>
-              <AlertTriangle size={16} /> Analisis Kesenjangan & RTL
+              <AlertTriangle size={16} /> Analisis Kesenjangan &amp; Tindak Lanjut
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3.5 text-xs">
             <div className="p-3 bg-red-50 border border-red-200 rounded-xl space-y-1">
-              <p className="font-bold text-red-700">Kesenjangan Teridentifikasi:</p>
-              <p className="text-[10px] text-red-650 leading-relaxed font-medium">{cfg.kesenjangan}</p>
+              <p className="font-bold text-red-700">Kesenjangan &amp; Catatan Audit:</p>
+              <p className="text-[10px] text-red-800 leading-relaxed font-medium">{cfg.kesenjangan}</p>
             </div>
-
             <div className="p-3 bg-indigo-50/50 border border-indigo-100 rounded-xl space-y-1">
-              <p className="font-bold text-indigo-900">Program Terkait:</p>
+              <p className="font-bold text-indigo-900">Kelompok Fitur &amp; Program:</p>
               <p className="text-[10px] text-slate-600 leading-relaxed font-semibold">{cfg.program}</p>
             </div>
-
             <div className="p-3 bg-green-50 border border-green-200 rounded-xl space-y-1">
               <p className="font-bold text-green-700">Rencana Tindak Lanjut:</p>
-              <p className="text-[10px] text-green-650 leading-relaxed font-medium">{cfg.tindakLanjut}</p>
+              <p className="text-[10px] text-green-800 leading-relaxed font-medium">{cfg.tindakLanjut}</p>
             </div>
-
+            <div className="p-2.5 bg-slate-50 border rounded-xl space-y-1 text-[10px] text-slate-600">
+              {DESA_BAB4.map((d) => (
+                <div key={d.id} className="flex justify-between">
+                  <span className="font-semibold">{d.nama}</span>
+                  <span className="font-mono font-bold text-indigo-700">{d.sdgKPI.awal.toFixed(2)}% → {d.sdgKPI.akhir.toFixed(2)}%</span>
+                </div>
+              ))}
+            </div>
             <div className="p-2.5 bg-slate-50 border rounded-xl flex items-center gap-2">
               <ShieldCheck size={14} className="text-indigo-700 flex-shrink-0" />
-              <span className="text-[10px] text-slate-500 font-semibold">Data terverifikasi aman secara sektoral.</span>
+              <span className="text-[10px] text-slate-500 font-semibold">Perubahan implementatif 4 minggu (Dataset SLV 3 — 10_SDG_KPI).</span>
             </div>
           </CardContent>
         </Card>
-
       </div>
 
       <div className="flex items-center justify-between text-[11px] text-slate-400 p-2.5 border border-dashed rounded-lg bg-slate-50/50">
-        <span className="flex items-center gap-1"><RefreshCw size={12} className="animate-pulse" /> Sinkronisasi otomatis data SDGs Desa Kemendesa PDTT</span>
-        <span>Terakhir Diperbarui: 18 Juli 2026</span>
+        <span className="flex items-center gap-1"><RefreshCw size={12} /> Sumber: Dataset SLV 3 v1.2 — 54 Unit KPI SDGs Desa (3, 4, dan 18)</span>
+        <span>Keseluruhan: 72,76% → 80,67% (+7,90 pp)</span>
       </div>
     </div>
   );

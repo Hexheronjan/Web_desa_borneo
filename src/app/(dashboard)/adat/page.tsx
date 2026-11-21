@@ -116,7 +116,7 @@ export default function AdatDashboardPage() {
         </div>
       </div>
 
-      {/* ── ROW KARTU INDEKS & CAPAIAN SDG 18 (5 KARTU) ── */}
+      {/* ── ROW KARTU INDEKS & CAPAIAN SDG 18 (5 KARTU — BAB IV) ── */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
         {/* Capaian SDG Desa 18 */}
         <div className="bg-amber-50 rounded-xl border border-amber-200 shadow-sm p-3.5 flex flex-col justify-between gap-2">
@@ -125,88 +125,88 @@ export default function AdatDashboardPage() {
             <span className="text-[10px] font-bold text-amber-900 uppercase tracking-wide leading-none">Capaian SDG Desa 18</span>
           </div>
           <div>
-            <p className="text-2xl font-black text-amber-900 leading-none">84.5%</p>
-            <p className="text-[9px] text-amber-700 font-semibold mt-1">Kategori: Sangat Tinggi</p>
+            <p className="text-2xl font-black text-amber-900 leading-none">84,86%</p>
+            <p className="text-[9px] text-amber-700 font-semibold mt-1">Awal 76,92% (+7,94) · LA 87,4%</p>
           </div>
           <div className="w-full h-1 bg-amber-200 rounded-full overflow-hidden">
-            <div className="h-full bg-amber-700" style={{ width: '84.5%' }} />
+            <div className="h-full bg-amber-700" style={{ width: '84.86%' }} />
           </div>
         </div>
 
-        {/* Skor Kesiapan Budaya */}
+        {/* Skor Dimensi D5 Lung Anai */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3.5 flex flex-col justify-between gap-2">
           <div className="flex items-center gap-1.5">
             <Landmark size={15} className="text-indigo-600" />
-            <span className="text-[9px] font-bold text-slate-500 uppercase leading-none">Kesiapan Budaya &amp; Adat</span>
+            <span className="text-[9px] font-bold text-slate-500 uppercase leading-none">Dimensi D5 (Lung Anai)</span>
           </div>
           <div>
-            <p className="text-xl font-black text-slate-800 leading-none">74,20</p>
-            <p className="text-[9px] text-indigo-700 font-bold mt-1">Status: Siap / Lestari</p>
+            <p className="text-xl font-black text-slate-800 leading-none">89,73</p>
+            <p className="text-[9px] text-indigo-700 font-bold mt-1">Tertinggi 3 Desa · Bobot 16,65%</p>
           </div>
           <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
-            <div className="h-full bg-indigo-600" style={{ width: '74.2%' }} />
+            <div className="h-full bg-indigo-600" style={{ width: '89.73%' }} />
           </div>
         </div>
 
-        {/* Skor Ketahanan Budaya */}
+        {/* Skor Dimensi D5 Kedang Ipil & Jonggon Jaya */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3.5 flex flex-col justify-between gap-2">
           <div className="flex items-center gap-1.5">
             <Activity size={15} className="text-rose-600" />
-            <span className="text-[9px] font-bold text-slate-500 uppercase leading-none">Skor Ketahanan Budaya</span>
+            <span className="text-[9px] font-bold text-slate-500 uppercase leading-none">D5 Kedang Ipil / JJ</span>
           </div>
           <div>
-            <p className="text-xl font-black text-slate-800 leading-none">72,80</p>
-            <p className="text-[9px] text-rose-700 font-bold mt-1">Status: Tinggi</p>
+            <p className="text-xl font-black text-slate-800 leading-none">86,58 / 73,05</p>
+            <p className="text-[9px] text-rose-700 font-bold mt-1">Rerata D5 3 Desa: 83,12</p>
           </div>
           <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
-            <div className="h-full bg-rose-600" style={{ width: '72.8%' }} />
+            <div className="h-full bg-rose-600" style={{ width: '83.12%' }} />
           </div>
         </div>
 
-        {/* Skor Keberlanjutan Pengetahuan Lokal */}
+        {/* Rubrik M6 Budaya & Tata Kelola Adat */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3.5 flex flex-col justify-between gap-2">
           <div className="flex items-center gap-1.5">
             <BookOpen size={15} className="text-emerald-600" />
-            <span className="text-[9px] font-bold text-slate-500 uppercase leading-none">Keberlanjutan Pengetahuan</span>
+            <span className="text-[9px] font-bold text-slate-500 uppercase leading-none">Rubrik M6 Budaya Adat</span>
           </div>
           <div>
-            <p className="text-xl font-black text-slate-800 leading-none">75,60</p>
-            <p className="text-[9px] text-emerald-700 font-bold mt-1">Status: Terpelihara</p>
+            <p className="text-xl font-black text-slate-800 leading-none">2,60 / 5</p>
+            <p className="text-[9px] text-emerald-700 font-bold mt-1">JJ 2,75 · KI 2,53 · LA 2,53</p>
           </div>
           <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
-            <div className="h-full bg-emerald-600" style={{ width: '75.6%' }} />
+            <div className="h-full bg-emerald-600" style={{ width: '52%' }} />
           </div>
         </div>
 
-        {/* Usulan Aspirasi Masuk */}
+        {/* UAT & SUS Lembaga Adat */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-3.5 flex flex-col justify-between gap-2">
           <div className="flex items-center gap-1.5">
             <MessageSquare size={15} className="text-purple-600" />
-            <span className="text-[9px] font-bold text-slate-500 uppercase leading-none">Aspirasi Masuk</span>
+            <span className="text-[9px] font-bold text-slate-500 uppercase leading-none">UAT Lembaga Adat (N=18)</span>
           </div>
           <div>
-            <p className="text-xl font-black text-slate-800 leading-none">14 Usulan</p>
-            <p className="text-[9px] text-purple-700 font-bold mt-1">4 Menunggu Telaah</p>
+            <p className="text-xl font-black text-slate-800 leading-none">86,81%</p>
+            <p className="text-[9px] text-purple-700 font-bold mt-1">SUS 63,61 · Kualitas 3,32/5</p>
           </div>
           <div className="w-full h-1 bg-slate-100 rounded-full overflow-hidden">
-            <div className="h-full bg-purple-600" style={{ width: '80%' }} />
+            <div className="h-full bg-purple-600" style={{ width: '86.8%' }} />
           </div>
         </div>
       </div>
 
-      {/* ── ROW EMPAT INDIKATOR UTAMA D6 (EKSPLISIT) ── */}
-      <Card className="border border-amber-250 bg-amber-50/10">
+      {/* ── ROW EMPAT INDIKATOR UTAMA D5 (BAB IV: I17–I20) ── */}
+      <Card className="border border-amber-300 bg-amber-50/10">
         <CardHeader className="py-2.5 px-4 bg-amber-50/30 border-b">
           <CardTitle className="text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
-            <Landmark size={14} /> Kinerja Empat Indikator Utama (Sub-Dimensi D6: Budaya &amp; Lembaga Adat)
+            <Landmark size={14} /> Kinerja Empat Indikator Utama (Dimensi D5: Partisipasi &amp; Tata Kelola Adat — I17 s.d. I20)
           </CardTitle>
         </CardHeader>
         <CardContent className="p-4 grid grid-cols-1 md:grid-cols-4 gap-4">
           {[
-            { label: 'Kelembagaan & Kewenangan Adat', val: '78.0 / 100', status: 'Kuat', desc: 'Struktur adat memiliki wewenang penuh penyelesaian sengketa lokal.' },
-            { label: 'Musyawarah & Partisipasi Komunitas', val: '75.2 / 100', status: 'Aktif', desc: 'Rapat adat Rumah Betang melibatkan pemuda & perwakilan wanita Dayak.' },
-            { label: 'Keberlanjutan Praktik Budaya', val: '74.0 / 100', status: 'Lestari', desc: 'Transfer kearifan lokal kerajinan mandau & seni tari Gong terjaga.' },
-            { label: 'Tata Kelola & Perlindungan Data', val: '72.4 / 100', status: 'Terlindungi', desc: 'Naskah adat digital tersimpan rapi dengan klasifikasi terbatas.' },
+            { label: 'I17 — Pelibatan Lembaga Adat dalam Tata Kelola', val: '89,73 / 100', status: 'Kuat', desc: 'Lembaga adat memiliki peran sah dalam verifikasi, persetujuan, dan musyawarah (Bobot global AHP: 0,04877).' },
+            { label: 'I18 — Musyawarah & Partisipasi Multiaktor', val: '86,58 / 100', status: 'Aktif', desc: 'Pemerintah, adat, tokoh, guru, nakes, dan warga terlibat dalam penetapan prioritas (Bobot global AHP: 0,04604).' },
+            { label: 'I19 — Etika, Persetujuan & Perlindungan Data Budaya', val: '84,86 / 100', status: 'Terlindungi', desc: 'Data budaya diklasifikasikan, digunakan sesuai persetujuan, dan dibatasi menurut kewenangan (Bobot: 0,04101).' },
+            { label: 'I20 — Dokumentasi & Keberlanjutan Pengetahuan Lokal', val: '87,40 / 100', status: 'Lestari', desc: 'Pengetahuan lokal Dayak Kenyah & Kutai Adat Lawas didokumentasikan dengan kendali komunitas (Bobot: 0,03072).' },
           ].map((ind, idx) => (
             <div key={idx} className="p-3 bg-white border border-amber-100 rounded-xl space-y-1.5">
               <p className="font-bold text-slate-800 text-[11px] leading-snug">{ind.label}</p>
@@ -228,7 +228,7 @@ export default function AdatDashboardPage() {
             { label: 'Periksa Data Budaya', desc: 'Arsip & Warisan', path: '/adat/arsip', color: 'hover:bg-amber-50 hover:border-amber-300 text-amber-900' },
             { label: 'Tetapkan Klasifikasi', desc: 'Persetujuan Akses', path: '/adat/persetujuan-data', color: 'hover:bg-indigo-50 hover:border-indigo-300 text-indigo-900' },
             { label: 'Berikan Persetujuan', desc: 'Program & Nilai Adat', path: '/adat/persetujuan-data', color: 'hover:bg-green-50 hover:border-green-300 text-green-900' },
-            { label: 'Jadwalkan Musyawarah', desc: 'Rapat Betang', path: '/adat/musyawarah-adat', color: 'hover:bg-purple-50 hover:border-purple-300 text-purple-900' },
+            { label: 'Jadwalkan Musyawarah', desc: 'Musyawarah Balai Adat', path: '/adat/musyawarah-adat', color: 'hover:bg-purple-50 hover:border-purple-300 text-purple-900' },
             { label: 'Telaah Program', desc: 'Evaluasi APBDes', path: '/adat/telaah-adat', color: 'hover:bg-sky-50 hover:border-sky-300 text-sky-900' },
             { label: 'Buat Laporan Adat', desc: 'Dokumen Tahunan', path: '/adat/laporan-kelembagaan', color: 'hover:bg-rose-50 hover:border-rose-300 text-rose-900' },
           ].map((act, i) => (
@@ -278,7 +278,7 @@ export default function AdatDashboardPage() {
                   <p className="font-bold text-slate-805 leading-snug">{tp.program}</p>
                   <span className={`px-1.5 py-0.5 rounded text-[8px] font-bold border capitalize flex-shrink-0 ${tp.statusColor}`}>{tp.status}</span>
                 </div>
-                <p className="text-[10px] text-slate-550 leading-relaxed font-semibold">{tp.ket}</p>
+                <p className="text-[10px] text-slate-600 leading-relaxed font-semibold">{tp.ket}</p>
               </div>
             ))}
           </div>
@@ -304,7 +304,7 @@ export default function AdatDashboardPage() {
                   <tr key={idx} className="border-b border-slate-50">
                     <td className="py-2 font-semibold text-slate-800 leading-snug">{dp.program}</td>
                     <td className="py-2 text-center font-black text-amber-700">{dp.dampak}</td>
-                    <td className="py-2 text-[10px] text-slate-450 leading-snug">{dp.ket}</td>
+                    <td className="py-2 text-[10px] text-slate-500 leading-snug">{dp.ket}</td>
                   </tr>
                 ))}
               </tbody>
@@ -341,7 +341,7 @@ export default function AdatDashboardPage() {
               <ShieldCheck size={14} className="text-red-700" /> Perlindungan Data Budaya
             </CardTitle>
           </CardHeader>
-          <CardContent className="p-3.5 space-y-2 text-[11px] text-slate-650 leading-relaxed font-semibold">
+          <CardContent className="p-3.5 space-y-2 text-[11px] text-slate-700 leading-relaxed font-semibold">
             <p>🔒 <strong>Informasi Keamanan:</strong></p>
             <p>Data budaya dikelola berdasarkan kewenangan komunitas, klasifikasi, tujuan penggunaan, persetujuan, dan jejak audit.</p>
             <p>Dashboard publik hanya boleh menampilkan data budaya yang telah ditetapkan sebagai informasi publik.</p>

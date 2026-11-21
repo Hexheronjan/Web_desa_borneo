@@ -117,11 +117,11 @@ export default function PeringatanTindakLanjutPage() {
                 >
                   <div className="flex justify-between items-start gap-2 mb-2">
                     <div className="flex items-start gap-2">
-                      <AlertTriangle size={14} className={item.tingkatPrioritas === 'Tinggi' ? 'text-red-650 mt-0.5' : 'text-amber-600 mt-0.5'} />
+                      <AlertTriangle size={14} className={item.tingkatPrioritas === 'Tinggi' ? 'text-red-700 mt-0.5' : 'text-amber-600 mt-0.5'} />
                       <p className="font-bold text-slate-800 leading-snug">{item.jenisMasalah}</p>
                     </div>
                     <span className={`text-[9px] font-bold px-2 py-0.5 rounded border ${
-                      item.tingkatPrioritas === 'Tinggi' ? 'bg-red-50 text-red-750 border-red-200' : 'bg-amber-50 text-amber-700 border-amber-200'
+                      item.tingkatPrioritas === 'Tinggi' ? 'bg-red-50 text-red-800 border-red-200' : 'bg-amber-50 text-amber-700 border-amber-200'
                     }`}>
                       {item.tingkatPrioritas}
                     </span>
@@ -133,7 +133,7 @@ export default function PeringatanTindakLanjutPage() {
                     <div>
                       <strong>Status:</strong>&nbsp;
                       <span className={`font-bold ${
-                        item.status === 'Selesai' ? 'text-green-700' : item.status === 'Dalam Proses' ? 'text-amber-750' : 'text-red-600'
+                        item.status === 'Selesai' ? 'text-green-700' : item.status === 'Dalam Proses' ? 'text-amber-800' : 'text-red-600'
                       }`}>{item.status}</span>
                     </div>
                   </div>
@@ -164,7 +164,7 @@ export default function PeringatanTindakLanjutPage() {
                   </div>
 
                   <div className="space-y-2 border-t pt-3">
-                    <p className="font-bold text-slate-650 text-[10px] uppercase">Input Bukti Penyelesaian / Keterangan</p>
+                    <p className="font-bold text-slate-700 text-[10px] uppercase">Input Bukti Penyelesaian / Keterangan</p>
                     <textarea
                       value={inputBukti}
                       onChange={e => setInputBukti(e.target.value)}

@@ -54,7 +54,7 @@ export default function KelasDesaPage() {
 
       {/* BANNER INFORMASI */}
       <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 text-xs flex items-start gap-2.5 shadow-sm">
-        <Info size={16} className="text-indigo-650 flex-shrink-0 mt-0.5" />
+        <Info size={16} className="text-indigo-700 flex-shrink-0 mt-0.5" />
         <p className="font-semibold leading-relaxed">
           Kelas desa merupakan sarana belajar gratis terintegrasi yang mencakup pendidikan keluarga, literasi, keterampilan, kebudayaan, dan pelayanan desa.
         </p>
@@ -74,7 +74,7 @@ export default function KelasDesaPage() {
           <button
             key={t}
             onClick={() => setFilterTopik(t)}
-            className={`px-3 py-1.5 rounded-lg text-[9px] font-bold transition-colors border ${filterTopik === t ? 'bg-indigo-700 border-indigo-700 text-white' : 'bg-white border-slate-200 text-slate-650 hover:bg-slate-100'}`}
+            className={`px-3 py-1.5 rounded-lg text-[9px] font-bold transition-colors border ${filterTopik === t ? 'bg-indigo-700 border-indigo-700 text-white' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'}`}
           >
             {t}
           </button>
@@ -96,17 +96,17 @@ export default function KelasDesaPage() {
                     
                     <div className="flex justify-between items-start gap-2 flex-wrap">
                       <div className="space-y-1">
-                        <span className="text-[9px] font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-150 mr-2">{k.topik}</span>
+                        <span className="text-[9px] font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-200 mr-2">{k.topik}</span>
                         <h3 className="font-bold text-slate-800 text-sm mt-1">{k.nama}</h3>
                       </div>
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
-                        k.statusPendaftaran === 'Tersedia' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-750'
+                        k.statusPendaftaran === 'Tersedia' ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-800'
                       }`}>
                         {k.statusPendaftaran}
                       </span>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 border-t pt-2.5 text-slate-650">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-2 border-t pt-2.5 text-slate-700">
                       <p className="flex items-center gap-1.5"><Calendar size={13} className="text-slate-400" /> {k.jadwal}</p>
                       <p className="flex items-center gap-1.5"><MapPin size={13} className="text-slate-400" /> {k.lokasi}</p>
                       <p className="flex items-center gap-1.5"><User size={13} className="text-slate-400" /> Fasilitator: <strong>{k.fasilitator}</strong></p>
@@ -131,7 +131,7 @@ export default function KelasDesaPage() {
                           Daftar Kelas
                         </button>
                       ) : (
-                        <span className="text-[10px] text-slate-450 italic font-semibold">Kuota Penuh</span>
+                        <span className="text-[10px] text-slate-500 italic font-semibold">Kuota Penuh</span>
                       )}
                     </div>
 

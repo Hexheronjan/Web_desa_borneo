@@ -85,7 +85,7 @@ export default function PersetujuanKlasifikasiDataBudayaPage() {
       case 'Disetujui': return 'bg-green-50 text-green-700 border-green-200';
       case 'Terbatas': return 'bg-blue-50 text-blue-700 border-blue-200';
       case 'Ditolak': return 'bg-red-50 text-red-700 border-red-200';
-      case 'Dicabut': return 'bg-slate-100 text-slate-650 border-slate-200';
+      case 'Dicabut': return 'bg-slate-100 text-slate-700 border-slate-200';
       case 'Tidak Didigitalisasi': return 'bg-purple-50 text-purple-700 border-purple-200';
       case 'Menunggu Pemeriksaan': return 'bg-amber-50 text-amber-700 border-amber-200';
       default: return 'bg-slate-50 text-slate-500';
@@ -94,7 +94,7 @@ export default function PersetujuanKlasifikasiDataBudayaPage() {
 
   return (
     <div className="flex flex-col gap-5 text-xs">
-      <PageTitle fitur="Persetujuan dan Klasifikasi Data Budaya" modul="Penelitian &amp; Evaluasi" color={COLOR} />
+      <PageTitle fitur="Persetujuan dan Klasifikasi Data Budaya" modul="Lembaga Adat" color={COLOR} />
 
       {/* Banner perlindungan */}
       <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-start gap-2.5">
@@ -147,7 +147,7 @@ export default function PersetujuanKlasifikasiDataBudayaPage() {
                     <TableCell>
                       <div className="flex gap-1">
                         <Button onClick={() => openEdit(item)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Pencil size={13} className="text-blue-600" /></Button>
-                        <Button onClick={() => handleDelete(item.id)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Trash2 size={13} className="text-red-650" /></Button>
+                        <Button onClick={() => handleDelete(item.id)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Trash2 size={13} className="text-red-700" /></Button>
                       </div>
                     </TableCell>
                   </TableRow>

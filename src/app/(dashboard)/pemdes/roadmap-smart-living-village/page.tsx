@@ -48,7 +48,7 @@ const ROADMAP_STEPS = [
     pemantauan: 'Pemantauan transaksi mingguan oleh pengawas BUMDes',
     dss: 'Penggunaan DSS AHP SAW terintegrasi penuh untuk alokasi ADD 2026',
     perluasan: 'Peluncuran marketplace online anyaman rotan Lung Anai',
-    evaluasi: 'Evaluasi efisiensi pelayanan & kenaikan pendapatan (QoL skor 71.28)',
+    evaluasi: 'Evaluasi efisiensi pelayanan & peningkatan kualitas hidup proksimal (skor 69,97; pra 68,43)',
     targetWaktu: 'Q1 - Q4 2026 (Kini Berjalan)',
     pj: 'Direktur BUMDes & Kasi Pembangunan',
     ketergantungan: 'Penyelesaian izin usaha BUMDes dari Kemenkumham',
@@ -69,15 +69,15 @@ export default function RoadmapSmartLivingVillagePage() {
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-sm font-bold text-slate-705 uppercase tracking-wider">
-          Peta Jalan Implementasi *Roadmap Smart Living Village*
+        <h2 className="text-sm font-bold text-slate-700 uppercase tracking-wider">
+          Peta Jalan Implementasi Roadmap Smart Living Village
         </h2>
 
         <div className="relative border-l-2 border-indigo-200 pl-6 ml-2 space-y-6">
           {ROADMAP_STEPS.map((s, idx) => (
             <div key={idx} className="relative">
               {/* TIMELINE BULLET */}
-              <div className={`absolute -left-[31px] top-1.5 w-4.5 h-4.5 rounded-full border-2 border-white flex items-center justify-center ${s.status === 'Selesai' ? 'bg-green-600' : 'bg-indigo-750'}`}>
+              <div className={`absolute -left-[31px] top-1.5 w-4 h-4 rounded-full border-2 border-white flex items-center justify-center ${s.status === 'Selesai' ? 'bg-green-600' : 'bg-indigo-700'}`}>
                 {s.status === 'Selesai' && <CheckCircle2 size={10} className="text-white" />}
               </div>
 
@@ -87,7 +87,7 @@ export default function RoadmapSmartLivingVillagePage() {
                     <span className="text-[10px] font-bold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded border border-indigo-100 uppercase tracking-wider">{s.tahap}</span>
                     <p className="text-[10px] text-slate-400 mt-1 flex items-center gap-1"><Clock size={10} /> Target Waktu: {s.targetWaktu}</p>
                   </div>
-                  <span className={`text-[9px] font-bold px-2 py-0.5 rounded ${s.status === 'Selesai' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-750'}`}>{s.status}</span>
+                  <span className={`text-[9px] font-bold px-2 py-0.5 rounded ${s.status === 'Selesai' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-700'}`}>{s.status}</span>
                 </CardHeader>
                 <CardContent className="pt-4 text-xs space-y-3">
                   
@@ -114,11 +114,11 @@ export default function RoadmapSmartLivingVillagePage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-[11px] border-t pt-2.5">
                     <div className="p-2 bg-indigo-50/20 border border-indigo-100 rounded-lg">
                       <p className="font-bold text-indigo-900 uppercase text-[9px] flex items-center gap-0.5"><Layers size={10} /> DSS Recommendation</p>
-                      <p className="text-slate-650 font-semibold mt-0.5">{s.dss}</p>
+                      <p className="text-slate-700 font-semibold mt-0.5">{s.dss}</p>
                     </div>
                     <div className="p-2 bg-slate-50 border rounded-lg">
                       <p className="font-bold text-slate-500 uppercase text-[9px]">Perluasan Layanan</p>
-                      <p className="text-slate-650 font-medium mt-0.5">{s.perluasan}</p>
+                      <p className="text-slate-700 font-medium mt-0.5">{s.perluasan}</p>
                     </div>
                   </div>
 

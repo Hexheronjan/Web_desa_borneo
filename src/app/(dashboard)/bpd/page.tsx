@@ -539,8 +539,8 @@ export default function BPDDashboardPage() {
 
       {/* ── FOOTER ──────────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between text-[10px] text-gray-400 pt-2 border-t border-gray-100">
-        <span>APL-SLV Borneo © 2025 · Smart Living Village for Borneo</span>
-        <span>Desa Lung Anai, Kecamatan Loa Kuluu, Kabupaten Kutai Kartanegara, Kalimantan Timur</span>
+        <span>APL-SLV Borneo © 2026 · Smart Living Village for Borneo</span>
+        <span>Desa Lung Anai, Kecamatan Loa Kulu, Kabupaten Kutai Kartanegara, Kalimantan Timur</span>
       </div>
 
     </div>

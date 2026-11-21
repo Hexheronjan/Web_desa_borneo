@@ -11,54 +11,54 @@ import { useState } from 'react';
 
 const COLOR = '#283593';
 
-type StatusKeputusan = 'diterima' | 'diterima dengan perubahan' | 'ditanda' | 'ditolak';
+type StatusKeputusan = 'diterima' | 'diterima dengan perubahan' | 'ditunda' | 'ditolak';
 
-const STATUS_OPTIONS: StatusKeputusan[] = ['diterima', 'diterima dengan perubahan', 'ditanda', 'ditolak'];
+const STATUS_OPTIONS: StatusKeputusan[] = ['diterima', 'diterima dengan perubahan', 'ditunda', 'ditolak'];
 
 const STATUS_COLOR: Record<StatusKeputusan, string> = {
   'diterima': 'bg-green-100 text-green-700',
   'diterima dengan perubahan': 'bg-blue-100 text-blue-700',
-  'ditanda': 'bg-orange-100 text-orange-700', // Note: 'ditanda' is 'ditunda' in typo but matching the spec
+  'ditunda': 'bg-orange-100 text-orange-700',
   'ditolak': 'bg-red-100 text-red-700',
 };
 
 const MOCK_DSS = [
-  { id: 'PRG-01', name: 'Peningkatan Infrastruktur Internet Dusun C', score: 0.232 },
-  { id: 'PRG-02', name: 'Pengembangan Literasi & PAUD Digital', score: 0.198 },
-  { id: 'PRG-03', name: 'Digitalisasi Layanan BUMDes Adat', score: 0.175 },
+  { id: 'A08', name: 'A08 — Dasbor SDGs Desa 3, 4, dan 18 (Jonggon Jaya)', score: 0.9509 },
+  { id: 'A02-KI', name: 'A02 — Penguatan Konektivitas & Perangkat (Kedang Ipil)', score: 0.9200 },
+  { id: 'A02-LA', name: 'A02 — Penguatan Konektivitas & Perangkat Mode Luring (Lung Anai)', score: 0.9117 },
 ];
 
 const MOCK_AGENDA = [
   {
     id: 'MUD-001',
-    judul: 'Musyawarah Desa RKPDes 2026',
+    judul: 'Musyawarah Desa & Adat: Prioritas A02 Penguatan Konektivitas (Lung Anai)',
     tgl: '25 Juli 2026, 09:00 WITA',
-    lokasi: 'Balai Desa Lung Anai',
-    rekomendasiDss: ['Peningkatan Infrastruktur Internet Dusun C'],
-    dssTerpilih: 'Peningkatan Infrastruktur Internet Dusun C',
-    dssScore: 0.232,
-    bahan: ['Draf RKPDes 2026', 'Peta Jaringan Internet Dusun C'],
-    peserta: ['Kepala Desa', 'Ketua BPD', 'Ketua LPM', 'Tokoh Adat'],
-    masukan: ['Minta jangkauan diperluas ke RT 03 Dusun C'],
+    lokasi: 'Balai Desa Lung Anai, Kec. Loa Kulu',
+    rekomendasiDss: ['A02 — Penguatan Konektivitas & Perangkat Mode Luring (Lung Anai)'],
+    dssTerpilih: 'A02 — Penguatan Konektivitas & Perangkat Mode Luring (Lung Anai)',
+    dssScore: 0.9117,
+    bahan: ['Hasil DSS SAW Dataset SLV 2', 'Profil Kesiapan D2 (30,75) & D5 (89,73)'],
+    peserta: ['Pemerintah Desa', 'Lembaga Adat Dayak Kenyah', 'Tokoh Masyarakat', 'Guru', 'Tenaga Kesehatan'],
+    masukan: ['Utamakan mode luring-utama (offline-first), perangkat hemat daya, dan persetujuan adat untuk data budaya'],
     statusKeputusan: 'diterima dengan perubahan' as StatusKeputusan,
-    alasan: 'Jangkauan internet harus mencakup seluruh RT di Dusun C untuk keadilan akses belajar anak sekolah.',
-    penanggungJawab: 'Kasi Pemerintahan & Kominfo',
+    alasan: 'Menyesuaikan anggaran desa dan memastikan kendali Lembaga Adat atas klasifikasi data budaya.',
+    penanggungJawab: 'Pemerintah Desa & Lembaga Adat Lung Anai',
     diteruskanKeProgram: true,
   },
   {
     id: 'MUD-002',
-    judul: 'Rapat Koordinasi BUMDes Adat',
+    judul: 'Musyawarah Prioritas A08 Dasbor SDGs 3, 4, dan 18 (Jonggon Jaya)',
     tgl: '10 Agustus 2026, 10:00 WITA',
-    lokasi: 'Kantor BUMDes',
-    rekomendasiDss: ['Digitalisasi Layanan BUMDes Adat'],
-    dssTerpilih: 'Digitalisasi Layanan BUMDes Adat',
-    dssScore: 0.175,
-    bahan: ['Draf Rencana Bisnis BUMDes 2026'],
-    peserta: ['Kepala Desa', 'Direktur BUMDes', 'Sekdes'],
+    lokasi: 'Balai Desa Jonggon Jaya, Kec. Loa Kulu',
+    rekomendasiDss: ['A08 — Dasbor SDGs Desa 3, 4, dan 18 (Jonggon Jaya)'],
+    dssTerpilih: 'A08 — Dasbor SDGs Desa 3, 4, dan 18 (Jonggon Jaya)',
+    dssScore: 0.9509,
+    bahan: ['Hasil Perhitungan SAW A08 (0,9509)', 'Evaluasi Kesenjangan D6 (58,40)'],
+    peserta: ['Kepala Desa', 'Lembaga Adat', 'Puskesmas Jonggon Jaya', 'Guru/Tenaga Pendidikan'],
     masukan: [],
     statusKeputusan: 'diterima' as StatusKeputusan,
-    alasan: 'Sesuai dengan rekomendasi AHP untuk percepatan ekonomi pasca-pandemi.',
-    penanggungJawab: 'Direktur BUMDes',
+    alasan: 'Menjawab kesenjangan D6 (41,60) dengan stabilitas sensitivitas ±10% sebesar 13/13 skenario.',
+    penanggungJawab: 'Pemerintah Desa Jonggon Jaya',
     diteruskanKeProgram: false,
   }
 ];
@@ -223,7 +223,7 @@ export default function MusyawarahKeputusanPage() {
         {/* PANEL TENANGA & KANAN: DETAIL & PENCATATAN KEPUTUSAN */}
         <div className="lg:col-span-2 space-y-4">
           {selectedAgenda ? (
-            <Card className="border-indigo-250">
+            <Card className="border-indigo-300">
               <CardHeader className="border-b">
                 <CardTitle className="text-sm font-bold text-slate-800 leading-snug">{selectedAgenda.judul}</CardTitle>
                 <p className="text-xs text-slate-400">Jadwal: {selectedAgenda.tgl} | Lokasi: {selectedAgenda.lokasi}</p>
@@ -247,7 +247,7 @@ export default function MusyawarahKeputusanPage() {
                 </div>
 
                 {/* DSS TERHUBUNG */}
-                <div className="p-3 bg-indigo-50/50 border border-indigo-150 rounded-xl space-y-1">
+                <div className="p-3 bg-indigo-50/50 border border-indigo-200 rounded-xl space-y-1">
                   <p className="font-bold text-indigo-900">Rekomendasi DSS Terhubung:</p>
                   <p className="font-semibold text-slate-700">{selectedAgenda.dssTerpilih || 'Tidak ada rekomendasi DSS terhubung'}</p>
                   {selectedAgenda.dssScore > 0 && <p className="text-[10px] text-slate-400">Preferensi AHP: {selectedAgenda.dssScore}</p>}
@@ -353,7 +353,7 @@ export default function MusyawarahKeputusanPage() {
             </Card>
           ) : (
             <div className="h-[300px] border border-dashed rounded-2xl flex flex-col items-center justify-center text-slate-400 bg-white">
-              <Gavel size={28} className="mb-2 text-slate-350" />
+              <Gavel size={28} className="mb-2 text-slate-400" />
               <p className="font-bold text-sm text-slate-600">Pilih Agenda</p>
             </div>
           )}

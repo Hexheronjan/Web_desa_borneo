@@ -189,9 +189,9 @@ export default function JadwalKesehatanPage() {
                       Daftar
                     </button>
                   ) : j.status === 'Penuh' ? (
-                    <span className="text-[10px] text-slate-450 italic font-semibold">Kapasitas Penuh</span>
+                    <span className="text-[10px] text-slate-500 italic font-semibold">Kapasitas Penuh</span>
                   ) : (
-                    <span className="text-[10px] text-slate-450 italic font-semibold">Kegiatan Selesai</span>
+                    <span className="text-[10px] text-slate-500 italic font-semibold">Kegiatan Selesai</span>
                   )}
                 </div>
 
@@ -219,7 +219,7 @@ export default function JadwalKesehatanPage() {
               
               <div className="p-3 bg-slate-50 rounded-lg space-y-1 text-[11px] border">
                 <p className="font-bold text-indigo-700">{selectedJadwal.jenisLayanan} - {selectedJadwal.kelompokSasaran}</p>
-                <p className="font-bold text-slate-850">{selectedJadwal.nama}</p>
+                <p className="font-bold text-slate-900">{selectedJadwal.nama}</p>
                 <p className="text-slate-500">{selectedJadwal.waktu}</p>
                 <p className="text-slate-500">{selectedJadwal.lokasi}</p>
               </div>

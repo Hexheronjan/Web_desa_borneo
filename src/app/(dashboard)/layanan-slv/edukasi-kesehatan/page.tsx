@@ -69,7 +69,7 @@ export default function EdukasiKesehatanPage() {
           <button
             key={t}
             onClick={() => setFilterTopik(t)}
-            className={`px-3 py-1.5 rounded-lg text-[9px] font-bold transition-colors border ${filterTopik === t ? 'bg-indigo-700 border-indigo-700 text-white' : 'bg-white border-slate-200 text-slate-650 hover:bg-slate-100'}`}
+            className={`px-3 py-1.5 rounded-lg text-[9px] font-bold transition-colors border ${filterTopik === t ? 'bg-indigo-700 border-indigo-700 text-white' : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-100'}`}
           >
             {t}
           </button>
@@ -86,9 +86,9 @@ export default function EdukasiKesehatanPage() {
                 <div className="flex justify-between items-center flex-wrap gap-1">
                   <span className="text-[9px] font-bold text-slate-400">{m.topik}</span>
                   <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
-                    m.format === 'Artikel' ? 'bg-indigo-50 text-indigo-700 border border-indigo-150' :
-                    m.format === 'Video' ? 'bg-red-50 text-red-650 border border-red-150' :
-                    'bg-green-50 text-green-700 border border-green-150'
+                    m.format === 'Artikel' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' :
+                    m.format === 'Video' ? 'bg-red-50 text-red-700 border border-red-200' :
+                    'bg-green-50 text-green-700 border border-green-200'
                   }`}>
                     {m.format}
                   </span>
@@ -98,7 +98,7 @@ export default function EdukasiKesehatanPage() {
                 <p className="text-[10px] text-slate-500 leading-relaxed line-clamp-3">{m.deskripsi}</p>
               </div>
 
-              <div className="border-t pt-3 mt-3 flex justify-between items-center text-[9px] text-slate-450">
+              <div className="border-t pt-3 mt-3 flex justify-between items-center text-[9px] text-slate-500">
                 <span>Sumber: <strong>{m.sumber}</strong></span>
                 {m.sudahDibaca ? (
                   <span className="flex items-center gap-0.5 text-green-700 font-bold"><CheckCircle size={10} /> Sudah Dibaca</span>
@@ -123,7 +123,7 @@ export default function EdukasiKesehatanPage() {
         </CardHeader>
         <CardContent className="p-3.5 space-y-2 text-xs">
           {list.filter(m => m.sudahDibaca).map(m => (
-            <div key={m.id} className="flex justify-between items-center p-2 bg-slate-55/30 border border-slate-200 rounded-lg text-slate-650">
+            <div key={m.id} className="flex justify-between items-center p-2 bg-slate-55/30 border border-slate-200 rounded-lg text-slate-700">
               <div className="flex items-center gap-2">
                 <FileText size={13} className="text-slate-400" />
                 <div>

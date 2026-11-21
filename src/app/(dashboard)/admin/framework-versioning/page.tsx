@@ -20,9 +20,9 @@ interface FrameworkVersion {
 }
 
 const MOCK_VERSIONS: FrameworkVersion[] = [
-  { id: 'V-01', versi: 'v1.0 (Initial Framework)', tanggalRilis: '15 Januari 2024', deskripsiPerubahan: 'Versi perdana kerangka kesiapan dengan 5 dimensi dasar dan 15 indikator.', status: 'Diarsipkan' },
-  { id: 'V-02', versi: 'v2.0 (Artefak 6 Core)', tanggalRilis: '20 Juni 2025', deskripsiPerubahan: 'Integrasi penuh 6 dimensi, 24 indikator kesiapan, dan penambahan dimensi budaya adat.', status: 'Aktif' },
-  { id: 'V-03', versi: 'v2.1 (Penyempurnaan SDGs)', tanggalRilis: 'Mendatang (Juli 2026)', deskripsiPerubahan: 'Penyelarasan target SDGs Desa Sektoral & integrasi rekam riwayat terenkripsi.', status: 'Ditinjau Pakar' },
+  { id: 'V-01', versi: 'v1.0 (Kandidat SLR & Lapangan)', tanggalRilis: 'Agustus 2025', deskripsiPerubahan: 'Sintesis awal 30 artikel SLR, 72 unit observasi, 48 unit makna wawancara (12 informan), dan 3 sesi FGD (24 tema). S-CVI/Ave pra-revisi = 0,9167.', status: 'Diarsipkan' },
+  { id: 'V-02', versi: 'v1.1 (Revisi Validitas Isi 6 Indikator)', tanggalRilis: 'Januari 2026', deskripsiPerubahan: 'Revisi redaksional I07, I13, I14, I16, I21, dan I23 berdasarkan penilaian 3 pakar (I-CVI pasca = 1,00; S-CVI/Ave final = 1,000).', status: 'Disetujui' },
+  { id: 'V-03', versi: 'v1.2 (Final Terkunci — Dataset SLV 1–3)', tanggalRilis: 'Juli 2026', deskripsiPerubahan: 'Struktur final 6 dimensi (D1–D6) dan 24 indikator (I01–I24) dengan bobot global AHP (CR dimensi = 0,00144; CR maks indikator = 0,01738) dan integrasi DSS SAW.', status: 'Aktif' },
 ];
 
 export default function FrameworkVersioningPage() {
@@ -112,7 +112,7 @@ export default function FrameworkVersioningPage() {
           <CardTitle className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
             <GitBranch size={14} /> Riwayat &amp; Versioning Struktur Framework
           </CardTitle>
-          <Button onClick={handleAdd} size="sm" className="bg-indigo-650 hover:bg-indigo-755 h-8 font-bold text-xs">
+          <Button onClick={handleAdd} size="sm" className="bg-indigo-700 hover:bg-indigo-755 h-8 font-bold text-xs">
             <Plus size={14} className="mr-1" /> Tambah Catatan Versi
           </Button>
         </CardHeader>
@@ -132,7 +132,7 @@ export default function FrameworkVersioningPage() {
               <TableBody>
                 {versions.map((v) => (
                   <TableRow key={v.id} className="hover:bg-slate-50/50">
-                    <TableCell className="font-mono font-bold text-slate-450">{v.id}</TableCell>
+                    <TableCell className="font-mono font-bold text-slate-500">{v.id}</TableCell>
                     <TableCell className="font-bold text-slate-800">{v.versi}</TableCell>
                     <TableCell>{v.tanggalRilis}</TableCell>
                     <TableCell className="max-w-xs truncate leading-relaxed" title={v.deskripsiPerubahan}>{v.deskripsiPerubahan}</TableCell>
@@ -150,7 +150,7 @@ export default function FrameworkVersioningPage() {
                           <Pencil size={13} className="text-blue-600" />
                         </Button>
                         <Button onClick={() => handleDelete(v.id)} size="sm" variant="ghost" className="h-7 w-7 p-0 hover:bg-slate-100">
-                          <Trash2 size={13} className="text-red-650" />
+                          <Trash2 size={13} className="text-red-700" />
                         </Button>
                       </div>
                     </TableCell>
@@ -231,7 +231,7 @@ export default function FrameworkVersioningPage() {
                   <Button type="button" variant="outline" onClick={() => setIsModalOpen(false)} className="h-8 text-xs font-bold">
                     Batal
                   </Button>
-                  <Button type="submit" className="bg-indigo-650 hover:bg-indigo-755 h-8 text-xs font-bold text-white">
+                  <Button type="submit" className="bg-indigo-700 hover:bg-indigo-755 h-8 text-xs font-bold text-white">
                     Simpan Versi
                   </Button>
                 </div>

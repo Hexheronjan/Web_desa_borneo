@@ -124,7 +124,7 @@ export default function PengaturanNotifikasiPage() {
                       </span>
                     </TableCell>
                     <TableCell className="font-semibold text-slate-700 whitespace-nowrap">{n.target}</TableCell>
-                    <TableCell className="text-slate-650 max-w-xs truncate" title={n.isi}>{n.isi}</TableCell>
+                    <TableCell className="text-slate-700 max-w-xs truncate" title={n.isi}>{n.isi}</TableCell>
                     <TableCell className="font-mono">{n.tanggal}</TableCell>
                     <TableCell>
                       <span className={`px-2 py-0.5 rounded-full text-[9px] font-bold border ${
@@ -135,8 +135,8 @@ export default function PengaturanNotifikasiPage() {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
-                        <Button onClick={() => handleEdit(n)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Pencil size={13} className="text-blue-650" /></Button>
-                        <Button onClick={() => handleDelete(n.id)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Trash2 size={13} className="text-red-650" /></Button>
+                        <Button onClick={() => handleEdit(n)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Pencil size={13} className="text-blue-700" /></Button>
+                        <Button onClick={() => handleDelete(n.id)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Trash2 size={13} className="text-red-700" /></Button>
                       </div>
                     </TableCell>
                   </TableRow>

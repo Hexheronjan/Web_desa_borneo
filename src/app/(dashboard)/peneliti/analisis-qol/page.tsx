@@ -3,75 +3,44 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import {
-  PieChart, Pie, Cell, ResponsiveContainer, Tooltip,
-  RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
-  BarChart, Bar, XAxis, YAxis, CartesianGrid,
+  ResponsiveContainer, Tooltip, Legend,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Cell,
 } from 'recharts';
 import { Heart, Activity, TrendingUp, Award } from 'lucide-react';
+import { DESA_BAB4, PREPOST_6_KONSTRUK_BAB4 } from '@/lib/bab4-data';
 
 const COLOR = '#1a365d';
 
-const qolDimensions = [
-  { name: 'Kesehatan', nilai: 72.40, color: '#2b6cb0', sub: [
-    { indikator: 'Akses Layanan Kesehatan', nilai: 74.2 },
-    { indikator: 'Status Gizi Keluarga', nilai: 70.6 },
-    { indikator: 'Sanitasi & Air Bersih', nilai: 72.4 },
-  ]},
-  { name: 'Pendidikan', nilai: 70.80, color: '#276749', sub: [
-    { indikator: 'Angka Partisipasi Sekolah', nilai: 72.3 },
-    { indikator: 'Literasi Digital', nilai: 68.5 },
-    { indikator: 'Akses Buku & Perpustakaan', nilai: 71.6 },
-  ]},
-  { name: 'Ekonomi', nilai: 72.10, color: '#c05621', sub: [
-    { indikator: 'Pendapatan Keluarga', nilai: 68.9 },
-    { indikator: 'Akses Modal Usaha', nilai: 73.4 },
-    { indikator: 'UMKM Aktif', nilai: 74.0 },
-  ]},
-  { name: 'Lingkungan', nilai: 69.30, color: '#c53030', sub: [
-    { indikator: 'Kualitas Udara & Air', nilai: 71.2 },
-    { indikator: 'Pengelolaan Sampah', nilai: 67.8 },
-    { indikator: 'Ruang Terbuka Hijau', nilai: 69.0 },
-  ]},
-  { name: 'Sosial Budaya', nilai: 70.50, color: '#553c9a', sub: [
-    { indikator: 'Gotong Royong', nilai: 80.2 },
-    { indikator: 'Kearifan Lokal', nilai: 76.5 },
-    { indikator: 'Partisipasi Masyarakat', nilai: 64.8 },
-  ]},
-];
-
-const radarQoL = qolDimensions.map(d => ({ aspek: d.name, nilai: d.nilai }));
-
-const RADIAN = Math.PI / 180;
-const renderLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, name }: any) => {
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-  return null; // Labels managed via legend
-};
-
-function getKat(nilai: number) {
-  if (nilai >= 80) return { label: 'Sangat Baik', cls: 'bg-green-100 text-green-700' };
-  if (nilai >= 70) return { label: 'Baik', cls: 'bg-blue-100 text-blue-700' };
-  if (nilai >= 60) return { label: 'Cukup', cls: 'bg-yellow-100 text-yellow-700' };
-  return { label: 'Kurang', cls: 'bg-red-100 text-red-700' };
-}
-
 export default function AnalisisQoLPage() {
-  const rataRata = (qolDimensions.reduce((s, d) => s + d.nilai, 0) / qolDimensions.length).toFixed(2);
-  const tertinggi = qolDimensions.reduce((a, b) => a.nilai > b.nilai ? a : b);
-  const terendah = qolDimensions.reduce((a, b) => a.nilai < b.nilai ? a : b);
+  const qol = PREPOST_6_KONSTRUK_BAB4.find((c) => c.sasaran === 'Manfaat awal kualitas hidup')!;
+
+  const desaDeltaChart = DESA_BAB4.map((d, i) => ({
+    desa: d.nama.replace('Desa ', ''),
+    qol: d.prePostDelta.qol,
+    integrasi: d.prePostDelta.dataIntegration,
+    sdg: d.prePostDelta.sdgMonitoring,
+    keputusan: d.prePostDelta.decisionQuality,
+    color: ['#2b6cb0', '#276749', '#c05621'][i],
+  }));
+
+  const konstrukPersen = PREPOST_6_KONSTRUK_BAB4.filter((c) => c.sasaran !== 'Kematangan digital').map((c) => ({
+    nama: c.sasaran.replace('Manfaat awal ', ''),
+    Sebelum: c.sebelum,
+    Sesudah: c.sesudah,
+    delta: c.delta,
+  }));
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="QoL Dashboard" modul="Analisis Framework" color={COLOR} />
+      <PageTitle fitur="Manfaat Awal Kualitas Hidup (QoL) &amp; Dampak Proksimal" modul="Evaluasi Pra–Pasca RQ3" color={COLOR} />
 
       {/* KPI */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: 'QoL Rata-rata', value: rataRata, sub: 'Kategori: Baik', color: COLOR, icon: Award },
-          { label: 'Indikator QoL', value: '15', sub: '5 Dimensi Utama', color: '#276749', icon: Activity },
-          { label: 'Dimensi Tertinggi', value: tertinggi.name, sub: `${tertinggi.nilai.toFixed(2)}`, color: '#2b6cb0', icon: TrendingUp },
-          { label: 'Dimensi Terendah', value: terendah.name, sub: `${terendah.nilai.toFixed(2)}`, color: '#c53030', icon: Heart },
+          { label: 'QoL Pra → Pasca (N=126)', value: '68,43 → 69,97', sub: `Δ Rerata +${qol.delta.toFixed(2)} poin`, color: COLOR, icon: Award },
+          { label: 'Median Perubahan (Δ)', value: `+${qol.medianDelta.toFixed(2)}`, sub: 'Proporsi meningkat: 73,8%', color: '#276749', icon: TrendingUp },
+          { label: 'Signifikansi (Holm)', value: 'Signifikan', sub: `Exact Sign Test · p = ${qol.pHolm}`, color: '#2b6cb0', icon: Activity },
+          { label: 'Δ QoL per Desa', value: '+1,47 s.d. +1,68', sub: 'JJ +1,47 · KI +1,68 · LA +1,47', color: '#553c9a', icon: Heart },
         ].map((kpi, i) => {
           const Icon = kpi.icon;
           return (
@@ -90,112 +59,92 @@ export default function AnalisisQoLPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Donut QoL */}
+        {/* Perbandingan Pra vs Pasca 5 Konstruk Skala 0-100 */}
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <Heart size={16} /> QoL Dashboard — 5 Dimensi
+              <Activity size={16} /> Perbandingan Pra vs Pasca Konstruk RQ3 (Skala 0–100)
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center gap-4">
-              <div className="relative flex-shrink-0">
-                <ResponsiveContainer width={160} height={160}>
-                  <PieChart>
-                    <Pie data={qolDimensions} dataKey="nilai" cx="50%" cy="50%" innerRadius={45} outerRadius={72} stroke="none">
-                      {qolDimensions.map((d, i) => <Cell key={i} fill={d.color} />)}
-                    </Pie>
-                    <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}`, 'Skor QoL']} />
-                  </PieChart>
-                </ResponsiveContainer>
-                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <p className="text-[8px] text-gray-400">Rata-rata</p>
-                  <p className="text-lg font-black text-gray-900">{rataRata}</p>
-                  <p className="text-[9px] font-bold text-green-600">Baik</p>
-                </div>
-              </div>
-              <div className="flex-1 space-y-2">
-                {qolDimensions.map((d, i) => {
-                  const kat = getKat(d.nilai);
-                  return (
-                    <div key={i}>
-                      <div className="flex items-center justify-between mb-0.5">
-                        <div className="flex items-center gap-1.5">
-                          <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: d.color }} />
-                          <span className="text-[11px] font-semibold text-slate-700">{d.name}</span>
-                        </div>
-                        <span className="text-[11px] font-black" style={{ color: d.color }}>{d.nilai.toFixed(2)}</span>
-                      </div>
-                      <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                        <div className="h-full rounded-full" style={{ width: `${d.nilai}%`, backgroundColor: d.color }} />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            <ResponsiveContainer width="100%" height={240}>
+              <BarChart data={konstrukPersen} margin={{ top: 5, right: 15, left: -10, bottom: 25 }} barSize={18}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                <XAxis dataKey="nama" tick={{ fontSize: 9, fill: '#334155' }} axisLine={false} tickLine={false} angle={-12} textAnchor="end" interval={0} />
+                <YAxis domain={[40, 80]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Legend wrapperStyle={{ fontSize: 10 }} />
+                <Bar dataKey="Sebelum" name="Pra (Baseline)" fill="#94a3b8" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="Sesudah" name="Pasca (Minggu 4)" fill="#553c9a" radius={[3, 3, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        {/* Radar QoL */}
+        {/* Delta QoL per Desa */}
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <Activity size={16} /> Radar Chart Nilai QoL
+              <Heart size={16} /> Peningkatan Manfaat Awal QoL per Desa (Δ Poin)
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={230}>
-              <RadarChart data={radarQoL} margin={{ top: 10, right: 30, bottom: 10, left: 30 }}>
-                <PolarGrid stroke="#e2e8f0" />
-                <PolarAngleAxis dataKey="aspek" tick={{ fontSize: 11, fill: '#1a365d', fontWeight: 600 }} />
-                <PolarRadiusAxis angle={30} domain={[60, 80]} tick={{ fontSize: 8, fill: '#94a3b8' }} />
-                <Radar name="QoL" dataKey="nilai" stroke="#553c9a" fill="#553c9a" fillOpacity={0.2} strokeWidth={2} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}`, 'Nilai QoL']} />
-              </RadarChart>
+            <ResponsiveContainer width="100%" height={240}>
+              <BarChart data={desaDeltaChart} margin={{ top: 5, right: 15, left: -10, bottom: 5 }} barSize={36}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                <XAxis dataKey="desa" tick={{ fontSize: 11, fill: '#334155' }} axisLine={false} tickLine={false} />
+                <YAxis domain={[0, 2.5]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`+${v}`, 'Δ QoL']} />
+                <Bar dataKey="qol" radius={[4, 4, 0, 0]}>
+                  {desaDeltaChart.map((d, i) => <Cell key={i} fill={d.color} />)}
+                </Bar>
+              </BarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
       </div>
 
-      {/* Tabel Sub-Indikator */}
+      {/* Tabel Lengkap 6 Konstruk Pra-Pasca Bab IV */}
       <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-            <Activity size={16} /> Nilai QoL — Sub-Indikator per Dimensi
+            <TrendingUp size={16} /> Ringkasan Uji Berpasangan 6 Konstruk Evaluasi RQ3 (Koreksi Holm)
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {qolDimensions.map((dim, i) => {
-              const kat = getKat(dim.nilai);
-              return (
-                <div key={i} className="p-3 rounded-xl border" style={{ borderColor: dim.color + '40', backgroundColor: dim.color + '05' }}>
-                  <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: dim.color }} />
-                      <span className="text-[12px] font-black text-slate-800">{dim.name}</span>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-base font-black" style={{ color: dim.color }}>{dim.nilai.toFixed(2)}</span>
-                      <span className={`ml-1 px-1.5 py-0.5 rounded text-[9px] font-bold ${kat.cls}`}>{kat.label}</span>
-                    </div>
-                  </div>
-                  <div className="h-1.5 bg-gray-100 rounded-full mb-2 overflow-hidden">
-                    <div className="h-full rounded-full" style={{ width: `${dim.nilai}%`, backgroundColor: dim.color }} />
-                  </div>
-                  <div className="space-y-1">
-                    {dim.sub.map((s, j) => (
-                      <div key={j} className="flex items-center justify-between text-[11px]">
-                        <span className="text-slate-600">{s.indikator}</span>
-                        <span className="font-bold text-slate-800">{s.nilai.toFixed(1)}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="border-b-2 border-gray-200 bg-gray-50">
+                  {['Konstruk Sasaran', 'N', 'Pra', 'Pasca', 'Δ Rerata', 'Median Δ', 'Metode Uji', 'p-value (Holm)', 'Kesimpulan'].map((h, i) => (
+                    <th key={i} className="text-left py-2 px-2.5 text-[10px] font-bold text-gray-500 uppercase whitespace-nowrap">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {PREPOST_6_KONSTRUK_BAB4.map((c, i) => (
+                  <tr key={c.sasaran} className={`border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/40'}`}>
+                    <td className="py-2.5 px-2.5 font-bold text-slate-800">{c.sasaran}</td>
+                    <td className="py-2.5 px-2.5 font-mono">{c.n}</td>
+                    <td className="py-2.5 px-2.5 font-mono">{c.sebelum.toFixed(2)}</td>
+                    <td className="py-2.5 px-2.5 font-mono font-bold text-blue-700">{c.sesudah.toFixed(2)}</td>
+                    <td className="py-2.5 px-2.5 font-mono font-bold text-emerald-700">+{c.delta.toFixed(2)}</td>
+                    <td className="py-2.5 px-2.5 font-mono">+{c.medianDelta.toFixed(2)}</td>
+                    <td className="py-2.5 px-2.5 text-slate-600">{c.uji}</td>
+                    <td className="py-2.5 px-2.5 font-mono">{c.pHolm}</td>
+                    <td className="py-2.5 px-2.5">
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${c.signifikan ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+                        {c.signifikan ? 'Signifikan' : 'Belum Signifikan'}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
+          <p className="text-[11px] text-slate-500 mt-3 leading-relaxed">
+            <strong>Catatan Metodologis Bab IV:</strong> Perubahan skor kualitas hidup (+1,54; median +4,30) diinterpretasikan secara hati-hati sebagai <em>manfaat awal/proksimal</em> selama 4 minggu implementasi, bukan dampak jangka panjang penuh.
+          </p>
         </CardContent>
       </Card>
     </div>

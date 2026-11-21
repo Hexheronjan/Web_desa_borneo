@@ -18,6 +18,7 @@ export default async function RootPage() {
     warga: "/warga",
     dinas_pmd: "/dinas-pmd",
     peneliti: "/peneliti",
+    layanan_slv: "/layanan-slv",
   };
 
   redirect(roleRoutes[role] || "/warga");

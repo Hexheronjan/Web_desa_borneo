@@ -166,7 +166,7 @@ export default function TargetPeningkatanKualitasHidupPage() {
       <div className="p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-900 text-xs flex items-start gap-2">
         <Info size={14} className="text-blue-700 flex-shrink-0 mt-0.5" />
         <p className="font-semibold leading-relaxed">
-          <strong>Catatan:</strong> Area halaman yang tampak kosong pada tangkapan layar harus diisi atau menu dinonaktifkan sementara. Halaman kosong menunjukkan fungsi belum selesai. Target yang berstatus "Tertunda" perlu dibahas dalam Musyawarah Desa atau koordinasi lintas program.
+          <strong>Catatan (Bab IV — SDG Desa 3 &amp; Kualitas Hidup Proksimal):</strong> Capaian 18 unit KPI SDG Desa 3 meningkat dari 74,70% menjadi 82,24% (+7,55 pp), sementara Kualitas Hidup Proksimal meningkat dari 68,43 menjadi 69,97 (Δ +1,54; median +4,30; N = 126). Target yang berstatus &ldquo;Tertunda&rdquo; dibahas dalam Musyawarah Desa atau koordinasi lintas program.
         </p>
       </div>
 

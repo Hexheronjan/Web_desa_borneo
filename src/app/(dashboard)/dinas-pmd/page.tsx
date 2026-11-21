@@ -6,21 +6,12 @@ import {
   PieChart, Pie, Cell,
 } from 'recharts';
 import {
-  AlertTriangle, CheckCircle2, Info, ArrowUpRight, ChevronRight,
-  Activity, ShieldCheck, FileText, TrendingUp, RefreshCw, Award,
-  Target, Zap, Calendar, Users, MapPin, BarChart2, Globe,
-  ClipboardList, Camera, Search, Eye, Map, Compass,
-  Building2, Star, Layers,
+  CheckCircle2, ChevronRight,
+  Activity, ShieldCheck, TrendingUp, RefreshCw, Award,
+  Zap, BarChart2, Globe,
+  ClipboardList, Map,
+  Building2, Layers,
 } from 'lucide-react';
-
-// ─── Warna tema Dinas PMD ────────────────────────────────────────────────────
-const C = {
-  primary: '#312e81',
-  secondary: '#4338ca',
-  green: '#276749',
-  orange: '#c05621',
-  blue: '#2b6cb0',
-};
 
 // ─── DATA MOCK ───────────────────────────────────────────────────────────────
 
@@ -32,37 +23,28 @@ const pengumuman = [
   { id: 5, teks: 'Evaluasi Smart Living Village 2025', tgl: '15/06/2025' },
 ];
 
-// Monitoring Readiness Desa
+// Monitoring Readiness Desa (3 Desa Studi Bab IV — Dataset SLV 1)
 const readinessDesa = [
-  { no: 1, desa: 'Lung Anai', kecamatan: 'Loa Kulu', index: 74.30, kategori: 'Baik' },
-  { no: 2, desa: 'Muara Aloh', kecamatan: 'Tenggarong Seberang', index: 68.20, kategori: 'Baik' },
-  { no: 3, desa: 'Loa Duri Ilir', kecamatan: 'Loa Janan', index: 65.10, kategori: 'Cukup' },
-  { no: 4, desa: 'Long Beleh Modang', kecamatan: 'Kota Bangun', index: 62.40, kategori: 'Cukup' },
-  { no: 5, desa: 'Muara Kaman Ulu', kecamatan: 'Muara Kaman', index: 60.30, kategori: 'Cukup' },
+  { no: 1, desa: 'Jonggon Jaya', kecamatan: 'Loa Kulu', index: 68.04, kategori: 'Baik' },
+  { no: 2, desa: 'Kedang Ipil', kecamatan: 'Kota Bangun Darat', index: 58.11, kategori: 'Cukup' },
+  { no: 3, desa: 'Lung Anai', kecamatan: 'Loa Kulu', index: 48.39, kategori: 'Cukup' },
 ];
 
-// Benchmarking top 10
+// Benchmarking 3 Desa Studi & Capaian SDGs (Bab IV)
 const benchmarking = [
-  { rank: 1, desa: 'Lung Anai', readiness: 74.30 },
-  { rank: 2, desa: 'Muara Aloh', readiness: 68.20 },
-  { rank: 3, desa: 'Loa Duri Ilir', readiness: 65.10 },
-  { rank: 4, desa: 'Long Beleh Modang', readiness: 62.40 },
-  { rank: 5, desa: 'Muara Kaman Ulu', readiness: 60.30 },
-  { rank: 6, desa: 'Bukit Raya', readiness: 58.70 },
-  { rank: 7, desa: 'Sebulu Ulu', readiness: 54.10 },
-  { rank: 8, desa: 'Kota Bangun', readiness: 52.30 },
-  { rank: 9, desa: 'Loa Lepu', readiness: 49.60 },
-  { rank: 10, desa: 'Kutai Buana', readiness: 51.30 },
+  { rank: 1, desa: 'Jonggon Jaya (Loa Kulu)', readiness: 68.04 },
+  { rank: 2, desa: 'Kedang Ipil (Kota Bangun Darat)', readiness: 58.11 },
+  { rank: 3, desa: 'Lung Anai (Loa Kulu)', readiness: 48.39 },
 ];
 
-// Monitoring QoL Desa (Radar data as table)
+// Monitoring 6 Konstruk Pra–Pasca RQ3 (Bab IV Tabel 4.38)
 const qolDesa = [
-  { dimensi: 'Kesehatan', skor: 72.40 },
-  { dimensi: 'Pendidikan', skor: 70.80 },
-  { dimensi: 'Ekonomi', skor: 72.10 },
-  { dimensi: 'Lingkungan', skor: 69.30 },
-  { dimensi: 'Sosial Budaya', skor: 70.50 },
-  { dimensi: 'Kelembagaan', skor: 71.20 },
+  { dimensi: 'QoL Proksimal', skor: 69.97 },
+  { dimensi: 'Kualitas Keputusan', skor: 61.41 },
+  { dimensi: 'Kesiapan Pasca', skor: 60.45 },
+  { dimensi: 'Pemantauan SDGs', skor: 58.35 },
+  { dimensi: 'Integrasi Data', skor: 56.56 },
+  { dimensi: 'Kematangan (×20)', skor: 50.60 },
 ];
 
 // Monitoring Maturity Desa - donut
@@ -229,12 +211,12 @@ export default function DinasPMDDashboardPage() {
       {/* ── KARTU INDEKS ─────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         {[
-          { label: 'Total Desa Terdaftar', value: '193', sub: 'Desa', cat: '', icon: Building2, color: '#312e81', href: '/dinas-pmd/profil-wilayah-kabupaten' },
-          { label: 'Rata-rata Readiness Index', value: '69,42', sub: 'Kategori', cat: 'Baik', icon: BarChart2, color: '#4338ca', href: '/dinas-pmd/readiness-dashboard' },
-          { label: 'Rata-rata Maturity Index', value: '57,81', sub: 'Kategori', cat: '', icon: Award, color: '#6d28d9', href: '/dinas-pmd/maturity-dashboard' },
-          { label: 'Rata-rata Quality of Life Index', value: '71,28', sub: 'Kategori', cat: 'Baik', icon: TrendingUp, color: '#276749', href: '/dinas-pmd/monitoring-quality-of-life-desa' },
-          { label: 'Assessment Tervalidasi', value: '174', sub: 'Desa (90,2%)', cat: '', icon: ShieldCheck, color: '#2b6cb0', href: '/dinas-pmd/validasi-assessment-desa' },
-          { label: 'Program Aktif', value: '328', sub: 'Program', cat: '', icon: Layers, color: '#9333ea', href: '/dinas-pmd/monitoring-program-desa' },
+          { label: 'Desa Studi Bab IV', value: '3', sub: 'JJ, KI & Lung Anai', cat: 'Kukar', icon: Building2, color: '#312e81', href: '/dinas-pmd/profil-wilayah-kabupaten' },
+          { label: 'Rata-rata Readiness (Pasca)', value: '60,45', sub: 'Pra 58,18 (+2,27)', cat: 'Sedang–Tinggi', icon: BarChart2, color: '#4338ca', href: '/dinas-pmd/readiness-dashboard' },
+          { label: 'Rata-rata Maturity (N=121)', value: '2,53', sub: 'Pra 1,94 (+0,59)', cat: 'Berkembang', icon: Award, color: '#6d28d9', href: '/dinas-pmd/maturity-dashboard' },
+          { label: 'QoL Proksimal (N=126)', value: '69,97', sub: 'Pra 68,43 (+1,54)', cat: 'Median +4,30', icon: TrendingUp, color: '#276749', href: '/dinas-pmd/monitoring-quality-of-life-desa' },
+          { label: 'Capaian 54 KPI SDGs', value: '80,67%', sub: 'Awal 72,76% (+7,90)', cat: 'SDG 3/4/18', icon: ShieldCheck, color: '#2b6cb0', href: '/dinas-pmd/validasi-assessment-desa' },
+          { label: 'UAT & SUS (Bab IV)', value: '86,65%', sub: 'SUS 67,58 | Log 98,41%', cat: '7 Aktor', icon: Layers, color: '#9333ea', href: '/dinas-pmd/monitoring-program-desa' },
         ].map((card, i) => {
           const Icon = card.icon;
           return (
@@ -282,8 +264,8 @@ export default function DinasPMDDashboardPage() {
             </tbody>
           </table>
           <div className="mt-2 p-2 bg-indigo-50 rounded-lg text-center">
-            <span className="text-[10px] text-gray-500">Rata-rata Kabupaten: </span>
-            <span className="text-xs font-black text-indigo-700">69,42</span>
+            <span className="text-[10px] text-gray-500">Rata-rata 3 Desa (Bab IV): </span>
+            <span className="text-xs font-black text-indigo-700">58,18 → 60,45</span>
             <span className="ml-2"><SB status="Baik" /></span>
           </div>
         </div>
@@ -331,9 +313,9 @@ export default function DinasPMDDashboardPage() {
           <SH title="Monitoring Quality of Life Desa" href="/dinas-pmd/monitoring-quality-of-life-desa" label="Lihat Detail →" />
           <div className="flex items-center gap-3 mb-3">
             <div className="text-center p-2 bg-indigo-50 rounded-lg flex-shrink-0">
-              <p className="text-[9px] text-gray-400 uppercase">Rata-rata QoL</p>
-              <p className="text-xl font-black text-indigo-700">71,28</p>
-              <p className="text-[10px] font-bold text-green-600">Baik</p>
+              <p className="text-[9px] text-gray-400 uppercase">QoL Proksimal</p>
+              <p className="text-xl font-black text-indigo-700">69,97</p>
+              <p className="text-[10px] font-bold text-green-600">+1,54 (Pra 68,43)</p>
             </div>
             <div className="flex-1 space-y-1.5">
               {qolDesa.map((d, i) => (
@@ -633,7 +615,7 @@ export default function DinasPMDDashboardPage() {
 
       {/* ── FOOTER ──────────────────────────────────────────────────────── */}
       <div className="flex items-center justify-between text-[10px] text-gray-400 pt-2 border-t border-gray-100">
-        <span>© 2025 Dinas PMD Kabupaten Kutai Kartanegara</span>
+        <span>© 2026 Dinas PMD Kabupaten Kutai Kartanegara</span>
         <span>Smart Living Village for Borneo</span>
       </div>
 

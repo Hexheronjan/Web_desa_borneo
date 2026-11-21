@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
-import { Award, BarChart3, TrendingUp, Medal } from 'lucide-react';
+import { TrendingUp, Medal } from 'lucide-react';
 
 const COLOR = '#0d47a1';
 
@@ -39,7 +39,7 @@ export default function BenchmarkingDesaPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {benchmarkList.map((item, i) => (
+              {benchmarkList.map((item) => (
                 <div key={item.rank} className={`p-4 border rounded-xl ${
                   item.rank === 1 ? 'bg-amber-50/50 border-amber-300 shadow-sm' : 'bg-white border-slate-200'
                 }`}>

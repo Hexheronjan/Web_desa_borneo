@@ -90,7 +90,7 @@ export default function LayananPublikDesaPage() {
             <form onSubmit={handleAjukan} className="space-y-3.5">
               
               <div className="space-y-1">
-                <label className="font-bold text-slate-750">NAMA LENGKAP PEMOHON:</label>
+                <label className="font-bold text-slate-800">NAMA LENGKAP PEMOHON:</label>
                 <input
                   type="text"
                   required
@@ -102,7 +102,7 @@ export default function LayananPublikDesaPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-slate-750">NIK PEMOHON:</label>
+                <label className="font-bold text-slate-800">NIK PEMOHON:</label>
                 <input
                   type="text"
                   required
@@ -114,7 +114,7 @@ export default function LayananPublikDesaPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-slate-750">PILIH DOKUMEN LAYANAN:</label>
+                <label className="font-bold text-slate-800">PILIH DOKUMEN LAYANAN:</label>
                 <select
                   required
                   value={selectedLayanan}
@@ -165,7 +165,7 @@ export default function LayananPublikDesaPage() {
                     <p className="text-[10px] text-slate-500 mt-1">Persyaratan Dilampirkan: {p.persyaratan}</p>
                   </div>
 
-                  <div className="border-t pt-2.5 grid grid-cols-1 md:grid-cols-2 gap-2 text-[10px] text-slate-550 leading-relaxed font-semibold">
+                  <div className="border-t pt-2.5 grid grid-cols-1 md:grid-cols-2 gap-2 text-[10px] text-slate-600 leading-relaxed font-semibold">
                     <p className="flex items-center gap-1"><User size={12} /> Penanggung Jawab: {p.petugasPJ}</p>
                     <p className="flex items-center gap-1"><Phone size={12} /> Kontak Petugas: {p.kontakPJ}</p>
                   </div>
@@ -183,7 +183,7 @@ export default function LayananPublikDesaPage() {
             <CardContent className="p-3.5 space-y-2 text-[11px] text-slate-600 font-semibold leading-relaxed">
               <p>📍 <strong>Senin - Kamis:</strong> 08:00 - 15:00 WITA (Istirahat 12:00 - 13:00 WITA)</p>
               <p>📍 <strong>Jumat:</strong> 08:00 - 11:30 WITA</p>
-              <p className="text-slate-450 italic border-t pt-2 mt-1">Petugas Layanan: Rian (Operator SID) &amp; Pak Herman (Sekdes)</p>
+              <p className="text-slate-500 italic border-t pt-2 mt-1">Petugas Layanan: Rian (Operator SID) &amp; Pak Herman (Sekdes)</p>
             </CardContent>
           </Card>
 

@@ -60,8 +60,8 @@ const KPI_DATA = [
 ];
 
 const STATUS_COLOR: Record<string, string> = {
-  direncanakan: 'bg-slate-100 text-slate-650 border-slate-200',
-  berjalan: 'bg-blue-100 text-blue-750 border-blue-200',
+  direncanakan: 'bg-slate-100 text-slate-700 border-slate-200',
+  berjalan: 'bg-blue-100 text-blue-800 border-blue-200',
   selesai: 'bg-green-100 text-green-700 border-green-200',
   tertunda: 'bg-red-100 text-red-700 border-red-200',
 };
@@ -141,7 +141,7 @@ export default function KpiDashboardPage() {
               {/* EVALUATION SECTION */}
               <div className="p-3 bg-purple-50/50 border border-purple-100 rounded-xl space-y-1.5">
                 <p className="font-bold text-purple-900 text-[10px] uppercase tracking-wider">Hasil Evaluasi & Tindak Lanjut:</p>
-                <p className="text-slate-650 leading-relaxed italic">"{k.evaluasi}"</p>
+                <p className="text-slate-700 leading-relaxed italic">"{k.evaluasi}"</p>
               </div>
 
             </CardContent>

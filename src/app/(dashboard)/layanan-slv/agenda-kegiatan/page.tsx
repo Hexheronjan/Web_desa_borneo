@@ -36,7 +36,7 @@ export default function AgendaKegiatanPage() {
       <PageTitle fitur="Agenda dan Kegiatan" modul="Masyarakat Umum" color={COLOR} />
 
       {/* BANNER SIMULASI */}
-      <div className="p-3 rounded bg-slate-50 border border-slate-200 text-slate-650 text-xs">
+      <div className="p-3 rounded bg-slate-50 border border-slate-200 text-slate-700 text-xs">
         ℹ️ Jadwal kegiatan di bawah sinkron dengan sistem perencanaan (RKPDes) dan kalender adat desa.
       </div>
 
@@ -48,7 +48,7 @@ export default function AgendaKegiatanPage() {
         <StatCard label="Kategori Terbanyak" value="Budaya &amp; Adat" satuan="Prioritas Kelembagaan" barColor="blue" progress={90} />
       </div>
 
-      <h2 className="text-xs font-bold text-slate-650 uppercase tracking-wider">Jadwal Agenda Publik</h2>
+      <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Jadwal Agenda Publik</h2>
 
       <div className="space-y-3.5 text-xs">
         {agendas.map(a => (
@@ -59,7 +59,7 @@ export default function AgendaKegiatanPage() {
                 <div>
                   <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border mr-2 ${
                     a.kategori === 'Musyawarah' ? 'bg-purple-50 text-purple-700 border-purple-200' :
-                    a.kategori === 'Kesehatan' ? 'bg-red-50 text-red-750 border-red-200' :
+                    a.kategori === 'Kesehatan' ? 'bg-red-50 text-red-800 border-red-200' :
                     a.kategori === 'Budaya' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
                     'bg-blue-50 text-blue-700 border-blue-200'
                   }`}>{a.kategori}</span>

@@ -65,7 +65,7 @@ export default function RiwayatPelatihanPage() {
         <CardContent className="p-4 grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
           
           <div className="space-y-1">
-            <label className="font-bold text-slate-550 uppercase">Tahun:</label>
+            <label className="font-bold text-slate-600 uppercase">Tahun:</label>
             <select value={filterTahun} onChange={e => setFilterTahun(e.target.value)} className="w-full p-2 border rounded-lg bg-white">
               <option value="Semua">Semua Tahun</option>
               <option value="2026">2026</option>
@@ -74,7 +74,7 @@ export default function RiwayatPelatihanPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="font-bold text-slate-550 uppercase">Status Kelulusan:</label>
+            <label className="font-bold text-slate-600 uppercase">Status Kelulusan:</label>
             <select value={filterStatus} onChange={e => setFilterStatus(e.target.value)} className="w-full p-2 border rounded-lg bg-white">
               <option value="Semua">Semua Status</option>
               <option value="Selesai">Selesai</option>
@@ -84,7 +84,7 @@ export default function RiwayatPelatihanPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="font-bold text-slate-550 uppercase">Kategori Bidang:</label>
+            <label className="font-bold text-slate-600 uppercase">Kategori Bidang:</label>
             <select value={filterKategori} onChange={e => setFilterKategori(e.target.value)} className="w-full p-2 border rounded-lg bg-white">
               <option value="Semua">Semua Kategori</option>
               <option value="Teknologi">Teknologi</option>
@@ -100,7 +100,7 @@ export default function RiwayatPelatihanPage() {
         
         {/* LIST VERTIKAL RIWAYAT */}
         <div className="lg:col-span-2 space-y-4">
-          <h2 className="text-xs font-bold text-slate-650 uppercase tracking-wider">Berkas Riwayat Pelatihan Anda</h2>
+          <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Berkas Riwayat Pelatihan Anda</h2>
 
           <div className="space-y-3">
             {filtered.map(item => (
@@ -113,7 +113,7 @@ export default function RiwayatPelatihanPage() {
                       <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${
                         item.status === 'Selesai' ? 'bg-green-50 text-green-700 border border-green-200' :
                         item.status === 'Dalam Proses' ? 'bg-blue-50 text-blue-700 border border-blue-200' :
-                        'bg-red-50 text-red-750'
+                        'bg-red-50 text-red-800'
                       }`}>
                         {item.status}
                       </span>
@@ -126,7 +126,7 @@ export default function RiwayatPelatihanPage() {
                     <p className="text-[10px] text-slate-500 mt-1 font-semibold">Penyelenggara: {item.penyelenggara}</p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2 text-[10px] text-slate-450 border-t pt-2.5">
+                  <div className="grid grid-cols-2 gap-2 text-[10px] text-slate-500 border-t pt-2.5">
                     <p>Bidang: <strong>{item.kategori}</strong></p>
                     <p>Nilai Ujian Evaluasi: <strong>{item.nilaiEvaluasi !== null ? `${item.nilaiEvaluasi}/100` : 'N/A'}</strong></p>
                   </div>
@@ -140,7 +140,7 @@ export default function RiwayatPelatihanPage() {
                         <Award size={12} /> Lihat Sertifikat
                       </Link>
                     ) : (
-                      <span className="text-[10px] text-slate-450 italic">Sertifikat Belum Rilis</span>
+                      <span className="text-[10px] text-slate-500 italic">Sertifikat Belum Rilis</span>
                     )}
                   </div>
 
@@ -152,7 +152,7 @@ export default function RiwayatPelatihanPage() {
 
         {/* REKOMENDASI LANJUTAN */}
         <div className="space-y-4">
-          <h2 className="text-xs font-bold text-slate-650 uppercase tracking-wider">Rekomendasi Lanjutan</h2>
+          <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Rekomendasi Lanjutan</h2>
 
           <Card className="border-l-4 border-l-orange-500 bg-orange-50/10">
             <CardHeader className="py-2.5 px-3">
@@ -163,11 +163,11 @@ export default function RiwayatPelatihanPage() {
             <CardContent className="px-3 pb-3 space-y-2 leading-relaxed">
               <div className="p-2 bg-white border rounded">
                 <p className="font-bold text-slate-800">1. Digital Marketing untuk UMKM Desa</p>
-                <p className="text-[9px] text-slate-450">Tingkat: Menengah • Durasi: 14 Jam</p>
+                <p className="text-[9px] text-slate-500">Tingkat: Menengah • Durasi: 14 Jam</p>
               </div>
               <div className="p-2 bg-white border rounded">
                 <p className="font-bold text-slate-800">2. Irigasi Tetes Cerdas Lahan Gambut</p>
-                <p className="text-[9px] text-slate-450">Tingkat: Mahir • Durasi: 20 Jam</p>
+                <p className="text-[9px] text-slate-500">Tingkat: Mahir • Durasi: 20 Jam</p>
               </div>
             </CardContent>
           </Card>

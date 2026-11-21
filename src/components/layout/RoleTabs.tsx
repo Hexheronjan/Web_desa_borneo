@@ -11,15 +11,15 @@ export function RoleTabs() {
   const userRole = session?.user?.role || "guest";
 
   const roleLabels: Record<string, string> = {
-    warga: "Warga",
-    pemerintah_desa: "Pemdes / Kepala Desa",
+    warga: "Tokoh Masyarakat",
+    pemerintah_desa: "Pemerintah Desa",
     lembaga_adat: "Lembaga Adat",
-    nakes_posyandu: "Nakes",
-    guru_fasilitator: "Guru",
+    nakes_posyandu: "Tenaga Kesehatan",
+    guru_fasilitator: "Guru/Tenaga Pendidikan",
     admin_super: "Administrator Sistem",
     operator_sid: "Operator SID",
     bpd: "BPD",
-    dinas_pmd: "Dinas PMD Regional",
+    dinas_pmd: "Dinas PMD",
     peneliti: "Peneliti",
     layanan_slv: "Masyarakat Umum",
   };

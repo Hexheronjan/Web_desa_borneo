@@ -206,7 +206,7 @@ export default function TelekonsultasiPage() {
 
                   <div className="space-y-1">
                     <p className="font-bold text-slate-700">Pertanyaan Awal:</p>
-                    <p className="text-slate-650 italic bg-slate-50 p-2 rounded">"{r.pertanyaan}"</p>
+                    <p className="text-slate-700 italic bg-slate-50 p-2 rounded">"{r.pertanyaan}"</p>
                   </div>
 
                   <div className="space-y-1">

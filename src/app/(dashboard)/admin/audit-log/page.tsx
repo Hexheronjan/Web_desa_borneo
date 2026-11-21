@@ -103,11 +103,11 @@ export default function AuditLogPage() {
                   <TableRow key={l.id} className={`hover:bg-slate-50/50 ${l.status === 'Gagal' ? 'bg-red-50/40 hover:bg-red-50/60' : ''}`}>
                     <TableCell className="font-mono font-bold text-slate-500">{l.id}</TableCell>
                     <TableCell className="font-bold text-slate-800">{l.user}</TableCell>
-                    <TableCell className="font-semibold text-indigo-750">{l.role}</TableCell>
+                    <TableCell className="font-semibold text-indigo-800">{l.role}</TableCell>
                     <TableCell className="font-mono text-[10px] whitespace-nowrap">{l.waktu}</TableCell>
                     <TableCell className="whitespace-nowrap">{l.perangkat}</TableCell>
                     <TableCell className="font-mono text-[10px]">{l.ip}</TableCell>
-                    <TableCell className="font-bold text-indigo-650">{l.modul}</TableCell>
+                    <TableCell className="font-bold text-indigo-700">{l.modul}</TableCell>
                     <TableCell className="min-w-[150px] leading-normal">{l.tindakan}</TableCell>
                     <TableCell className="font-mono text-slate-500">{l.nilaiSebelum}</TableCell>
                     <TableCell className="font-mono text-indigo-700">{l.nilaiSesudah}</TableCell>

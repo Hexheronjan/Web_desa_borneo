@@ -26,9 +26,9 @@ export default function LayananSLVDashboard() {
 
   // ─── JADWAL & KEGIATAN MENDATANG ──────────────────────────────────────────
   const jadwalMendatang = [
-    { type: 'Kesehatan', color: 'bg-red-100 text-red-700 border-red-200', title: 'Posyandu Balita Bulan Juli', sub: 'Posyandu Manunggal • 08:00 WITA', tgl: '18 Jul' },
-    { type: 'Pendidikan', color: 'bg-blue-100 text-blue-700 border-blue-200', title: 'Pelatihan Komputer Dasar', sub: 'Balai Desa • 09:00 WITA', tgl: '20 Jul' },
-    { type: 'Budaya', color: 'bg-emerald-100 text-emerald-700 border-emerald-200', title: 'Rapat Adat Bersama', sub: 'Rumah Betang • 13:00 WITA', tgl: '25 Jul' },
+    { type: 'Kesehatan', color: 'bg-red-100 text-red-700 border-red-200', title: 'Posyandu Balita Bulan Juli', sub: 'Posyandu Desa Lung Anai • 08:00 WITA', tgl: '18 Jul' },
+    { type: 'Pendidikan', color: 'bg-blue-100 text-blue-700 border-blue-200', title: 'Pelatihan Literasi Digital Dasar', sub: 'Balai Desa • 09:00 WITA', tgl: '20 Jul' },
+    { type: 'Budaya', color: 'bg-emerald-100 text-emerald-700 border-emerald-200', title: 'Musyawarah & Rapat Adat Bersama', sub: 'Lamin / Balai Adat Desa • 13:00 WITA', tgl: '25 Jul' },
   ];
 
   // ─── LAYANAN POPULER ──────────────────────────────────────────────────────
@@ -40,8 +40,8 @@ export default function LayananSLVDashboard() {
 
   // ─── FORUM & MUSYAWARAH ───────────────────────────────────────────────────
   const forumMusyawarah = [
-    { title: 'Musyawarah Desa Bulan Juli 2026', tgl: '22 Jul 2026', badge: 'Terdaftar', color: 'bg-green-150 text-green-700 border-green-200' },
-    { title: 'Forum Aspirasi Masyarakat', tgl: '15 Jul 2026', badge: 'Ikut', color: 'bg-blue-150 text-blue-700 border-blue-200' },
+    { title: 'Musyawarah Desa Bulan Juli 2026', tgl: '22 Jul 2026', badge: 'Terdaftar', color: 'bg-green-200 text-green-700 border-green-200' },
+    { title: 'Forum Aspirasi Masyarakat', tgl: '15 Jul 2026', badge: 'Ikut', color: 'bg-blue-200 text-blue-700 border-blue-200' },
     { title: 'Pembahasan RKPDes 2026-2031', tgl: '10 Jul 2026', badge: 'Selesai', color: 'bg-slate-100 text-slate-600 border-slate-200' },
   ];
 
@@ -66,7 +66,7 @@ export default function LayananSLVDashboard() {
           <span className="w-1 h-1 bg-slate-300 rounded-full" />
           <span>Kamis, 16 Juli 2026</span>
           <span className="w-1 h-1 bg-slate-300 rounded-full" />
-          <span>10:23 WIB</span>
+          <span>10:23 WITA</span>
         </div>
       </div>
 
@@ -133,7 +133,7 @@ export default function LayananSLVDashboard() {
           { label: 'Ajukan Layanan', desc: 'Gunakan layanan desa', href: '/layanan-slv/layanan-publik', color: 'hover:bg-red-50 hover:border-red-200' },
           { label: 'Sampaikan Aspirasi', desc: 'Suarakan pendapat Anda', href: '/layanan-slv/aspirasi-pengaduan', color: 'hover:bg-blue-50 hover:border-blue-200' },
           { label: 'Lihat Status Usulan', desc: 'Pantau usulan Anda', href: '/layanan-slv/status-usulan', color: 'hover:bg-purple-50 hover:border-purple-200' },
-          { label: 'Lihat Jadwal Desa', desc: 'Agenda &amp; kegiatan desa', href: '/layanan-slv/agenda-kegiatan', color: 'hover:bg-emerald-50 hover:border-emerald-200' },
+          { label: 'Lihat Jadwal Desa', desc: 'Agenda & kegiatan desa', href: '/layanan-slv/agenda-kegiatan', color: 'hover:bg-emerald-50 hover:border-emerald-200' },
         ].map((act, i) => (
           <Link
             key={i}
@@ -170,7 +170,7 @@ export default function LayananSLVDashboard() {
                   <div className="flex-1 min-w-0">
                     <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded border ${j.color}`}>{j.type}</span>
                     <p className="font-bold text-slate-800 mt-1 leading-snug">{j.title}</p>
-                    <p className="text-[9px] text-slate-450 mt-0.5 font-semibold">{j.sub}</p>
+                    <p className="text-[9px] text-slate-500 mt-0.5 font-semibold">{j.sub}</p>
                   </div>
                   <span className="text-[9px] text-green-700 font-bold bg-green-50 px-2 py-0.5 rounded border border-green-200">Terdaftar</span>
                 </div>
@@ -203,7 +203,7 @@ export default function LayananSLVDashboard() {
               </div>
               <div className="flex justify-between items-center text-[9px] text-slate-400 font-semibold border-t pt-2.5">
                 <span>Total: 6 Usulan</span>
-                <span>Pembaruan terakhir: Hari ini, 10:20 WIB</span>
+                <span>Pembaruan terakhir: Hari ini, 10:20 WITA</span>
               </div>
             </CardContent>
           </Card>
@@ -226,7 +226,7 @@ export default function LayananSLVDashboard() {
                   className="flex justify-between items-center p-2.5 bg-slate-50 border rounded-xl hover:border-indigo-300 hover:bg-slate-100/50 transition-all group"
                 >
                   <span className="font-bold text-slate-800 group-hover:text-indigo-700">{lp.label}</span>
-                  <span className="text-[9px] text-slate-450 font-semibold">{lp.desc}</span>
+                  <span className="text-[9px] text-slate-500 font-semibold">{lp.desc}</span>
                 </Link>
               ))}
             </CardContent>
@@ -242,7 +242,7 @@ export default function LayananSLVDashboard() {
                 <div key={i} className="flex justify-between items-center gap-2">
                   <div>
                     <p className="font-bold text-slate-800 leading-snug">{f.title}</p>
-                    <p className="text-[9px] text-slate-450 mt-0.5">{f.tgl}</p>
+                    <p className="text-[9px] text-slate-500 mt-0.5">{f.tgl}</p>
                   </div>
                   <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded border flex-shrink-0 ${f.color}`}>{f.badge}</span>
                 </div>
@@ -259,7 +259,7 @@ export default function LayananSLVDashboard() {
               {informasi.map((info, i) => (
                 <div key={i} className="flex justify-between items-start gap-2 pb-2.5 border-b last:border-0 last:pb-0">
                   <p className="font-bold text-slate-800 leading-snug">{info.title}</p>
-                  <span className="text-[9px] text-slate-450 font-semibold flex-shrink-0">{info.tgl}</span>
+                  <span className="text-[9px] text-slate-500 font-semibold flex-shrink-0">{info.tgl}</span>
                 </div>
               ))}
             </CardContent>

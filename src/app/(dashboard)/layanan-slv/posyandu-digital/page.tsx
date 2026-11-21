@@ -104,14 +104,14 @@ export default function PosyanduDigitalPage() {
                   <CardContent className="p-4 space-y-3 text-xs">
                     <div className="flex justify-between items-start flex-wrap gap-2">
                       <div>
-                        <span className="text-[9px] font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-150 mr-2">{j.jenis}</span>
+                        <span className="text-[9px] font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-200 mr-2">{j.jenis}</span>
                         <h3 className="font-bold text-slate-800 text-sm mt-1">{j.nama}</h3>
                       </div>
                       
                       {isReg ? (
                         <span className="text-[10px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded border border-green-200">Terdaftar</span>
                       ) : j.status === 'Penuh' ? (
-                        <span className="text-[10px] font-bold text-red-650 bg-red-50 px-2 py-0.5 rounded">Penuh</span>
+                        <span className="text-[10px] font-bold text-red-700 bg-red-50 px-2 py-0.5 rounded">Penuh</span>
                       ) : (
                         <span className="text-[10px] font-bold text-slate-500 bg-slate-105 px-2 py-0.5 rounded">Tersedia</span>
                       )}
@@ -129,7 +129,7 @@ export default function PosyanduDigitalPage() {
                       </button>
 
                       {isReg ? (
-                        <button onClick={() => handleBatalPendaftaran(j.id)} className="px-2.5 py-1 bg-red-50 text-red-650 rounded border border-red-200 font-bold hover:bg-red-100 flex items-center gap-1">
+                        <button onClick={() => handleBatalPendaftaran(j.id)} className="px-2.5 py-1 bg-red-50 text-red-700 rounded border border-red-200 font-bold hover:bg-red-100 flex items-center gap-1">
                           <Trash2 size={11} /> Batalkan
                         </button>
                       ) : j.status === 'Tersedia' ? (

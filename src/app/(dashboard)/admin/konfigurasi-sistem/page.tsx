@@ -108,16 +108,16 @@ export default function KonfigurasiSistemPage() {
             <CardContent className="space-y-3">
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-1">
-                  <Label className="font-bold text-slate-750">Nama Aplikasi</Label>
+                  <Label className="font-bold text-slate-800">Nama Aplikasi</Label>
                   <Input value={config.namaSistem} onChange={e => setConfig({ ...config, namaSistem: e.target.value })} className="h-9 text-xs" />
                 </div>
                 <div className="space-y-1">
-                  <Label className="font-bold text-slate-750">Versi Aplikasi</Label>
+                  <Label className="font-bold text-slate-800">Versi Aplikasi</Label>
                   <Input value={config.versiSistem} onChange={e => setConfig({ ...config, versiSistem: e.target.value })} className="h-9 text-xs" />
                 </div>
               </div>
               <div className="space-y-1">
-                <Label className="font-bold text-slate-750">Deskripsi Aplikasi</Label>
+                <Label className="font-bold text-slate-800">Deskripsi Aplikasi</Label>
                 <Textarea value={config.deskripsiSistem} onChange={e => setConfig({ ...config, deskripsiSistem: e.target.value })} className="min-h-[60px] text-xs" />
               </div>
             </CardContent>
@@ -133,11 +133,11 @@ export default function KonfigurasiSistemPage() {
             <CardContent className="space-y-3">
               <div className="grid grid-cols-3 gap-3">
                 <div className="space-y-1">
-                  <Label className="font-bold text-slate-750">Periode Aktif</Label>
+                  <Label className="font-bold text-slate-800">Periode Aktif</Label>
                   <Input value={config.periodeAktif} onChange={e => setConfig({ ...config, periodeAktif: e.target.value })} className="h-9 text-xs" />
                 </div>
                 <div className="space-y-1">
-                  <Label className="font-bold text-slate-750">Zona Waktu Sistem</Label>
+                  <Label className="font-bold text-slate-800">Zona Waktu Sistem</Label>
                   <select value={config.zonaWaktu} onChange={e => setConfig({ ...config, zonaWaktu: e.target.value })} className="w-full h-9 rounded-md border bg-white px-2 text-xs">
                     <option value="WIB (Waktu Indonesia Barat)">WIB (Waktu Indonesia Barat)</option>
                     <option value="WITA (Waktu Indonesia Tengah)">WITA (Waktu Indonesia Tengah)</option>
@@ -145,7 +145,7 @@ export default function KonfigurasiSistemPage() {
                   </select>
                 </div>
                 <div className="space-y-1">
-                  <Label className="font-bold text-slate-750">Batas Sesi (Session Timeout - Menit)</Label>
+                  <Label className="font-bold text-slate-800">Batas Sesi (Session Timeout - Menit)</Label>
                   <Input type="number" value={config.sessionTimeout} onChange={e => setConfig({ ...config, sessionTimeout: e.target.value })} className="h-9 text-xs" />
                 </div>
               </div>
@@ -179,12 +179,12 @@ export default function KonfigurasiSistemPage() {
             </CardHeader>
             <CardContent className="grid grid-cols-2 gap-4">
               <div className="space-y-1">
-                <Label className="font-bold text-slate-750">Panjang Minimum Kata Sandi</Label>
+                <Label className="font-bold text-slate-800">Panjang Minimum Kata Sandi</Label>
                 <Input type="number" value={config.minPasswordLength} onChange={e => setConfig({ ...config, minPasswordLength: e.target.value })} className="h-9 text-xs" />
               </div>
               <div className="flex items-center justify-between p-3 border rounded-xl bg-slate-50 mt-4">
                 <div>
-                  <Label className="font-bold text-slate-750">Wajib Karakter Unik/Simbol</Label>
+                  <Label className="font-bold text-slate-800">Wajib Karakter Unik/Simbol</Label>
                   <p className="text-[10px] text-slate-500 font-semibold mt-0.5">Password harus mengandung minimal 1 karakter unik (!@#$%)</p>
                 </div>
                 <Switch checked={config.requireSpecialChar} onCheckedChange={checked => setConfig({ ...config, requireSpecialChar: checked })} />
@@ -215,7 +215,7 @@ export default function KonfigurasiSistemPage() {
                 { label: 'Modul 13: Repositori Riset', bind: 'modulRepo' },
                 { label: 'Modul 14: Manajemen User', bind: 'modulUser' },
               ].map((m, idx) => (
-                <label key={idx} className="flex items-center gap-2 cursor-pointer font-semibold text-slate-750">
+                <label key={idx} className="flex items-center gap-2 cursor-pointer font-semibold text-slate-800">
                   <input type="checkbox" defaultChecked className="rounded text-indigo-600 h-4 w-4" />
                   {m.label}
                 </label>
@@ -244,19 +244,19 @@ export default function KonfigurasiSistemPage() {
 
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1">
-                <Label className="font-bold text-slate-750">Nama Lengkap</Label>
+                <Label className="font-bold text-slate-800">Nama Lengkap</Label>
                 <Input value={profil.namaLengkap} onChange={e => setProfil({ ...profil, namaLengkap: e.target.value })} className="h-9 text-xs" />
               </div>
               <div className="space-y-1">
-                <Label className="font-bold text-slate-750">Username</Label>
+                <Label className="font-bold text-slate-800">Username</Label>
                 <Input value={profil.username} disabled className="h-9 text-xs bg-slate-100 cursor-not-allowed" />
               </div>
               <div className="space-y-1">
-                <Label className="font-bold text-slate-750">Email Kontak</Label>
+                <Label className="font-bold text-slate-800">Email Kontak</Label>
                 <Input type="email" value={profil.email} onChange={e => setProfil({ ...profil, email: e.target.value })} className="h-9 text-xs" />
               </div>
               <div className="space-y-1">
-                <Label className="font-bold text-slate-750">Jabatan Operasional</Label>
+                <Label className="font-bold text-slate-800">Jabatan Operasional</Label>
                 <Input value={profil.jabatan} disabled className="h-9 text-xs bg-slate-100 cursor-not-allowed" />
               </div>
             </div>

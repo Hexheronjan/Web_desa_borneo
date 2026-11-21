@@ -23,9 +23,9 @@ const emptyForm = {
   id: '',
   kodeDesa: '',
   nama: '',
-  kecamatan: '',
-  kabupaten: '',
-  provinsi: 'Kalimantan Tengah',
+  kecamatan: 'Loa Kulu',
+  kabupaten: 'Kutai Kartanegara',
+  provinsi: 'Kalimantan Timur',
   status: 'Berkembang',
 };
 

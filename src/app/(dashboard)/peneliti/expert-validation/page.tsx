@@ -2,83 +2,56 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
-import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, ReferenceLine,
-} from 'recharts';
-import { User, Award, Star, CheckCircle2, FileText } from 'lucide-react';
+import { User, Award, CheckCircle2, AlertTriangle, FileText } from 'lucide-react';
 
 const COLOR = '#1a365d';
 
-const expertData = [
+const panelPakar = [
   {
-    validator: 'Validator 1',
-    nama: 'Prof. Dr. Ahmad Fauzi, M.Kom',
-    institusi: 'Universitas Mulawarman',
-    bidang: 'Smart Village & IoT',
-    pengalaman: '20 Tahun',
-    aspek: [
-      { nama: 'Kelengkapan Framework', nilai: 94 },
-      { nama: 'Relevansi Indikator', nilai: 92 },
-      { nama: 'Validitas Konten', nilai: 91 },
-      { nama: 'Keterbacaan Instrumen', nilai: 93 },
-      { nama: 'Kesesuaian Konteks', nilai: 90 },
-    ],
-    rataRata: 92.00,
-    status: 'Valid',
-    catatan: 'Framework sudah komprehensif dan relevan untuk desa adat Kalimantan Timur.',
+    kode: 'Pakar P1',
+    peran: 'Pakar Sistem Informasi & Smart Village',
+    cakupan: 'Validitas isi 6 dimensi & 24 indikator (RQ1), perbandingan berpasangan AHP, serta paket evaluasi A2–A6',
+    buktiRQ1: 'I-CVI & S-CVI/Ave pasca-revisi = 1,000; berkontribusi pada CR AHP dimensi = 0,001436',
+    statusFormalA2A6: 'Instrumen Siap Verifikasi Formal (Tabel 4.27A)',
+    color: '#2b6cb0',
   },
   {
-    validator: 'Validator 2',
-    nama: 'Dr. Bambang Setiawan, M.T',
-    institusi: 'Institut Teknologi Sepuluh Nopember',
-    bidang: 'DSS & Kecerdasan Buatan',
-    pengalaman: '15 Tahun',
-    aspek: [
-      { nama: 'Logika DSS', nilai: 92 },
-      { nama: 'Konsistensi AHP', nilai: 91 },
-      { nama: 'Akurasi Bobot', nilai: 89 },
-      { nama: 'Interpretasi Output', nilai: 90 },
-      { nama: 'Kemudahan Operasi', nilai: 88 },
-    ],
-    rataRata: 90.00,
-    status: 'Valid',
-    catatan: 'Metode AHP sudah diterapkan dengan benar, CR dalam batas yang dapat diterima.',
+    kode: 'Pakar P2',
+    peran: 'Pakar Tata Kelola Desa & Kebijakan Pembangunan',
+    cakupan: 'Validitas relevansi tata kelola pemerintahan desa, SDGs Desa 3, 4, 18, dan mekanisme musyawarah (DSS SAW)',
+    buktiRQ1: 'I-CVI & S-CVI/Ave pasca-revisi = 1,000; revisi redaksi 6 indikator kandidat v1.0 → v1.2',
+    statusFormalA2A6: 'Instrumen Siap Verifikasi Formal (Tabel 4.27A)',
+    color: '#276749',
   },
   {
-    validator: 'Validator 3',
-    nama: 'Dr. Siti Rahayu, M.Sc',
-    institusi: 'Universitas Gadjah Mada',
-    bidang: 'Sistem Informasi & e-Government',
-    pengalaman: '18 Tahun',
-    aspek: [
-      { nama: 'Desain Sistem', nilai: 96 },
-      { nama: 'Kegunaan (Usability)', nilai: 95 },
-      { nama: 'Keandalan Sistem', nilai: 94 },
-      { nama: 'Keamanan Data', nilai: 96 },
-      { nama: 'Integrasi Modul', nilai: 94 },
-    ],
-    rataRata: 95.00,
-    status: 'Valid',
-    catatan: 'Sistem terintegrasi dengan baik dan memenuhi standar e-government Indonesia.',
+    kode: 'Pakar P3',
+    peran: 'Pakar Sosial Budaya, Partisipasi & Tata Kelola Adat',
+    cakupan: 'Validitas etika, persetujuan, klasifikasi data budaya (D5: I17–I20), dan keterlibatan multiaktor',
+    buktiRQ1: 'I-CVI & S-CVI/Ave pasca-revisi = 1,000; penguatan indikator klasifikasi publik/terbatas/rahasia',
+    statusFormalA2A6: 'Instrumen Siap Verifikasi Formal (Tabel 4.27A)',
+    color: '#553c9a',
   },
 ];
 
-const validatorColors = ['#2b6cb0', '#276749', '#553c9a'];
+const ringkasanValidasi = [
+  { tahap: 'Validitas Isi Kerangka Kesiapan (RQ1 — Pra Revisi)', metrik: 'S-CVI/Ave = 0,9167', catatan: '18 indikator I-CVI 1,00; 6 indikator I-CVI 0,67 direvisi redaksi & definisinya', status: 'Direvisi' },
+  { tahap: 'Validitas Isi Kerangka Kesiapan (RQ1 — Pasca Revisi v1.2)', metrik: 'S-CVI/Ave = 1,000', catatan: 'Seluruh 24 indikator mencapai I-CVI = 1,00 dari 3 pakar (P1–P3)', status: 'Terverifikasi' },
+  { tahap: 'Konsistensi Pembobotan AHP (7 Matriks)', metrik: 'CR Dimensi = 0,00144', catatan: 'Seluruh 7 matriks (1 dimensi + 6 indikator) memiliki CR jauh di bawah 0,10 (maks 0,01739)', status: 'Terverifikasi' },
+  { tahap: 'Validasi Formal Artefak A2–A6 (Tabel 4.27A)', metrik: 'Formulir Siap', catatan: 'Instrumen evaluasi pakar A2–A6 tersedia; pengesahan formal pakar belum diklaim selesai sampai lembar terautentikasi', status: 'Menunggu Pengesahan' },
+];
 
 export default function ExpertValidationPage() {
-  const rataRataTotal = (expertData.reduce((s, e) => s + e.rataRata, 0) / expertData.length).toFixed(2);
-
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Nilai Expert — Penilaian Pakar" modul="Validasi & Evaluasi" color={COLOR} />
+      <PageTitle fitur="Panel Validasi Pakar (P1–P3)" modul="Validasi &amp; Evaluasi Bab IV" color={COLOR} />
 
       {/* KPI */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: 'Total Validator', value: '3', sub: 'Ahli & Pakar', color: COLOR, icon: User },
-          { label: 'Rata-rata Skor', value: rataRataTotal, sub: 'Expert Review', color: '#276749', icon: Award },
-          { label: 'Validasi Selesai', value: '3 / 3', sub: '100% Valid', color: '#2b6cb0', icon: CheckCircle2 },
-          { label: 'Nilai Tertinggi', value: '95.00', sub: 'Validator 3 — UGM', color: '#553c9a', icon: Star },
+          { label: 'Panel Pakar', value: '3 Pakar', sub: 'P1, P2, dan P3', color: COLOR, icon: User },
+          { label: 'S-CVI/Ave RQ1', value: '1,000', sub: 'Pra 0,9167 → Pasca 1,000', color: '#276749', icon: CheckCircle2 },
+          { label: 'CR Dimensi AHP', value: '0,00144', sub: '7/7 Matriks Konsisten (< 0,10)', color: '#2b6cb0', icon: Award },
+          { label: 'Status A2–A6', value: 'Instrumen Siap', sub: 'Menunggu lembar sah (Tabel 4.27A)', color: '#c05621', icon: AlertTriangle },
         ].map((kpi, i) => {
           const Icon = kpi.icon;
           return (
@@ -96,97 +69,69 @@ export default function ExpertValidationPage() {
         })}
       </div>
 
-      {/* Card per Validator */}
+      {/* Card per Pakar */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {expertData.map((exp, i) => (
-          <Card key={i} className="shadow-sm">
+        {panelPakar.map((exp) => (
+          <Card key={exp.kode} className="shadow-sm">
             <CardHeader>
-              <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: validatorColors[i] }}>
-                <User size={16} /> {exp.validator}
+              <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: exp.color }}>
+                <User size={16} /> {exp.kode}
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              {/* Info pakar */}
-              <div className="p-3 rounded-xl mb-3" style={{ backgroundColor: validatorColors[i] + '10' }}>
-                <p className="text-[12px] font-black text-slate-800">{exp.nama}</p>
-                <p className="text-[11px] text-slate-500 mt-0.5">{exp.institusi}</p>
-                <div className="flex gap-3 mt-1.5">
-                  <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full text-white" style={{ backgroundColor: validatorColors[i] }}>{exp.bidang}</span>
-                  <span className="text-[10px] text-slate-500">Exp: {exp.pengalaman}</span>
-                </div>
+            <CardContent className="space-y-3 text-xs">
+              <div className="p-3 rounded-xl" style={{ backgroundColor: exp.color + '10' }}>
+                <p className="font-black text-slate-800">{exp.peran}</p>
+                <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">{exp.cakupan}</p>
               </div>
-
-              {/* Skor besar */}
-              <div className="text-center mb-3">
-                <p className="text-4xl font-black" style={{ color: validatorColors[i] }}>{exp.rataRata.toFixed(2)}</p>
-                <div className="flex items-center justify-center gap-1 mt-1">
-                  <CheckCircle2 size={14} className="text-green-600" />
-                  <span className="text-[11px] font-bold text-green-700">{exp.status}</span>
-                </div>
+              <div className="p-2.5 rounded-lg bg-green-50 border border-green-200">
+                <p className="text-[10px] font-bold text-green-800 uppercase mb-0.5">Kontribusi RQ1 Terverifikasi</p>
+                <p className="text-[11px] text-green-900">{exp.buktiRQ1}</p>
               </div>
-
-              {/* Aspek penilaian */}
-              <div className="space-y-1.5 mb-3">
-                {exp.aspek.map((a, j) => (
-                  <div key={j}>
-                    <div className="flex justify-between mb-0.5">
-                      <span className="text-[11px] text-slate-600">{a.nama}</span>
-                      <span className="text-[11px] font-bold" style={{ color: validatorColors[i] }}>{a.nilai}</span>
-                    </div>
-                    <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full rounded-full" style={{ width: `${a.nilai}%`, backgroundColor: validatorColors[i] }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Catatan */}
-              <div className="p-2 rounded-lg bg-gray-50 border border-gray-200">
-                <p className="text-[10px] text-gray-400 font-bold uppercase mb-0.5">Catatan Expert</p>
-                <p className="text-[11px] text-slate-600 leading-snug italic">"{exp.catatan}"</p>
+              <div className="p-2.5 rounded-lg bg-amber-50 border border-amber-200">
+                <p className="text-[10px] font-bold text-amber-800 uppercase mb-0.5">Status Artefak A2–A6</p>
+                <p className="text-[11px] text-amber-900">{exp.statusFormalA2A6}</p>
               </div>
             </CardContent>
           </Card>
         ))}
       </div>
 
-      {/* Perbandingan Bar Chart */}
+      {/* Ringkasan Status Validasi */}
       <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-            <Award size={16} /> Perbandingan Nilai Expert Review — Per Aspek
+            <FileText size={16} /> Ringkasan Hasil &amp; Gerbang Bukti Validasi Pakar
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={220}>
-            <BarChart
-              data={expertData[0].aspek.map((a, i) => ({
-                aspek: a.nama,
-                V1: expertData[0].aspek[i].nilai,
-                V2: expertData[1].aspek[i].nilai,
-                V3: expertData[2].aspek[i].nilai,
-              }))}
-              margin={{ top: 0, right: 10, left: -10, bottom: 55 }}
-              barGap={2}
-              barSize={14}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-              <XAxis dataKey="aspek" tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} angle={-20} textAnchor="end" height={60} interval={0} />
-              <YAxis domain={[80, 100]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
-              <ReferenceLine y={90} stroke="#e53e3e" strokeDasharray="4 4" label={{ value: 'Min Valid (90)', fill: '#e53e3e', fontSize: 9 }} />
-              <Bar dataKey="V1" name="Validator 1" fill={validatorColors[0]} radius={[3, 3, 0, 0]} />
-              <Bar dataKey="V2" name="Validator 2" fill={validatorColors[1]} radius={[3, 3, 0, 0]} />
-              <Bar dataKey="V3" name="Validator 3" fill={validatorColors[2]} radius={[3, 3, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-          <div className="flex gap-4 justify-center mt-1">
-            {expertData.map((e, i) => (
-              <div key={i} className="flex items-center gap-1">
-                <div className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: validatorColors[i] }} />
-                <span className="text-[10px] text-gray-500">{e.validator}</span>
-              </div>
-            ))}
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="border-b-2 border-gray-200 bg-gray-50">
+                  <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-500 uppercase">Tahap Validasi</th>
+                  <th className="text-left py-2.5 px-3 text-[10px] font-bold text-blue-700 uppercase">Capaian / Metrik</th>
+                  <th className="text-left py-2.5 px-3 text-[10px] font-bold text-gray-500 uppercase">Keterangan Bab IV</th>
+                  <th className="text-center py-2.5 px-3 text-[10px] font-bold text-gray-500 uppercase">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ringkasanValidasi.map((r, i) => (
+                  <tr key={i} className={`border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/40'}`}>
+                    <td className="py-2.5 px-3 font-bold text-slate-800">{r.tahap}</td>
+                    <td className="py-2.5 px-3 font-mono font-bold text-blue-700">{r.metrik}</td>
+                    <td className="py-2.5 px-3 text-slate-600">{r.catatan}</td>
+                    <td className="py-2.5 px-3 text-center">
+                      <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                        r.status === 'Terverifikasi' ? 'bg-green-100 text-green-700' :
+                        r.status === 'Direvisi' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'
+                      }`}>
+                        {r.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </CardContent>
       </Card>

@@ -21,7 +21,7 @@ const STATUS_COLOR: Record<StatusAspirasi, string> = {
   'Dibahas': 'bg-orange-100 text-orange-700',
   'Diproses': 'bg-blue-100 text-blue-700',
   'Selesai': 'bg-green-100 text-green-700',
-  'Ditutup': 'bg-slate-100 text-slate-650',
+  'Ditutup': 'bg-slate-100 text-slate-700',
 };
 
 const DUMMY_ASPIRASI = [
@@ -131,7 +131,7 @@ export default function AspirasiPartisipasiPage() {
           {ALUR_STATUS.map((s, i) => (
             <div key={s} className="flex items-center gap-1">
               <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${STATUS_COLOR[s]}`}>{s}</span>
-              {i < ALUR_STATUS.length - 1 && <ChevronRight size={12} className="text-slate-350" />}
+              {i < ALUR_STATUS.length - 1 && <ChevronRight size={12} className="text-slate-400" />}
             </div>
           ))}
         </div>
@@ -169,14 +169,14 @@ export default function AspirasiPartisipasiPage() {
         {/* DETAIL & TINDAK LANJUT PEMDES */}
         <div className="lg:col-span-2">
           {selectedAsp ? (
-            <Card className="border-indigo-250">
+            <Card className="border-indigo-300">
               <CardHeader className="pb-2 border-b">
                 <div className="flex items-center justify-between flex-wrap gap-2">
                   <span className="text-[10px] font-mono font-bold text-slate-400">{selectedAsp.id}</span>
                   <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded ${STATUS_COLOR[selectedAsp.status]}`}>{selectedAsp.status}</span>
                 </div>
-                <CardTitle className="text-sm font-bold text-slate-850 mt-1">{selectedAsp.judul}</CardTitle>
-                <p className="text-xs text-slate-450 font-medium">Diajukan oleh: {selectedAsp.warga} pada {selectedAsp.tgl}</p>
+                <CardTitle className="text-sm font-bold text-slate-900 mt-1">{selectedAsp.judul}</CardTitle>
+                <p className="text-xs text-slate-500 font-medium">Diajukan oleh: {selectedAsp.warga} pada {selectedAsp.tgl}</p>
               </CardHeader>
               <CardContent className="pt-4 text-xs space-y-4">
                 
@@ -188,36 +188,36 @@ export default function AspirasiPartisipasiPage() {
 
                 {/* EDIT/RESPONSE FORM */}
                 <div className="space-y-3 border-t pt-3.5">
-                  <p className="font-bold text-slate-850 text-xs">Penanganan & Tindak Lanjut Pemdes:</p>
+                  <p className="font-bold text-slate-900 text-xs">Penanganan & Tindak Lanjut Pemdes:</p>
                   
                   <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1">
-                      <label className="font-bold text-slate-650">PENGELOMPOKAN KATEGORI:</label>
+                      <label className="font-bold text-slate-700">PENGELOMPOKAN KATEGORI:</label>
                       <input type="text" value={kategori} onChange={e => setKategori(e.target.value)} placeholder="Infrastruktur / Ekonomi..." className="w-full p-2 border rounded-lg focus:ring-1 focus:ring-indigo-300" />
                     </div>
                     <div className="space-y-1">
-                      <label className="font-bold text-slate-650">TETAPKAN PETUGAS PJ:</label>
+                      <label className="font-bold text-slate-700">TETAPKAN PETUGAS PJ:</label>
                       <input type="text" value={petugas} onChange={e => setPetugas(e.target.value)} placeholder="Nama petugas pelaksana..." className="w-full p-2 border rounded-lg focus:ring-1 focus:ring-indigo-300" />
                     </div>
                     <div className="space-y-1">
-                      <label className="font-bold text-slate-650">STATUS PENANGANAN:</label>
+                      <label className="font-bold text-slate-700">STATUS PENANGANAN:</label>
                       <select value={status} onChange={e => setStatus(e.target.value as StatusAspirasi)} className="w-full p-2 border rounded-lg bg-white">
                         {ALUR_STATUS.map(s => <option key={s} value={s}>{s}</option>)}
                       </select>
                     </div>
                     <div className="space-y-1">
-                      <label className="font-bold text-slate-650">BUKTI PENYELESAIAN:</label>
+                      <label className="font-bold text-slate-700">BUKTI PENYELESAIAN:</label>
                       <input type="text" value={bukti} onChange={e => setBukti(e.target.value)} placeholder="Nama file bukti penyelesaian..." className="w-full p-2 border rounded-lg focus:ring-1 focus:ring-indigo-300" />
                     </div>
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-bold text-slate-650">TANGGAPAN / CATATAN PROGRES:</label>
+                    <label className="font-bold text-slate-700">TANGGAPAN / CATATAN PROGRES:</label>
                     <textarea rows={2} value={tanggapan} onChange={e => setTanggapan(e.target.value)} placeholder="Tuliskan respons resmi desa..." className="w-full p-2 border rounded-lg focus:ring-1 focus:ring-indigo-300" />
                   </div>
 
                   <div className="space-y-1">
-                    <label className="font-bold text-slate-650">ALASAN KEPUTUSAN / CATATAN ADAT:</label>
+                    <label className="font-bold text-slate-700">ALASAN KEPUTUSAN / CATATAN ADAT:</label>
                     <textarea rows={1} value={alasan} onChange={e => setAlasan(e.target.value)} placeholder="Alasan penetapan status..." className="w-full p-2 border rounded-lg focus:ring-1 focus:ring-indigo-300" />
                   </div>
 
@@ -231,7 +231,7 @@ export default function AspirasiPartisipasiPage() {
                     {!selectedAsp.dibawaKeMusdes && (
                       <button
                         onClick={() => handleBawaKeMusdes(selectedAsp.id)}
-                        className="flex-1 py-2 bg-orange-700 hover:bg-orange-850 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-1"
+                        className="flex-1 py-2 bg-orange-700 hover:bg-orange-900 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-1"
                       >
                         <Gavel size={12} /> Bawa ke Musdes
                       </button>
@@ -243,7 +243,7 @@ export default function AspirasiPartisipasiPage() {
             </Card>
           ) : (
             <div className="h-[300px] border border-dashed rounded-2xl flex flex-col items-center justify-center text-slate-400 bg-white">
-              <MessageSquare size={28} className="mb-2 text-slate-350" />
+              <MessageSquare size={28} className="mb-2 text-slate-400" />
               <p className="font-bold text-sm text-slate-600">Pilih Aspirasi</p>
             </div>
           )}

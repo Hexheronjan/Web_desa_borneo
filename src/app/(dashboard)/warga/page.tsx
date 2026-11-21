@@ -20,32 +20,31 @@ const C = { primary: '#276749', secondary: '#2f855a', orange: '#c05621' };
 // ─── DATA MOCK ───────────────────────────────────────────────────────────────
 
 const notifikasiDesa = [
-  { id: 1, teks: 'Musrenbangdes 2025 akan dilaksanakan pada 25 Mei 2025', badge: 'Baru', color: 'bg-green-600' },
-  { id: 2, teks: 'Survei Quality of Life Triwulan II sudah tersedia. Yuk berpartisipasi!', badge: 'Baru', color: 'bg-green-600' },
-  { id: 3, teks: 'Pelatihan Literasi Digital untuk Masyarakat 22 Mei 2025', badge: null, color: '' },
-  { id: 4, teks: 'Posyandu Balita: 27 Mei 2025 | 1 jam lalu', badge: null, color: '' },
-  { id: 5, teks: 'Festival Adat Lung Anai 2025 7 Juni 2025 | 2 jam lalu', badge: null, color: '' },
+  { id: 1, teks: 'Musrenbangdes 2026 akan dilaksanakan pada 25 Juli 2026', badge: 'Baru', color: 'bg-green-600' },
+  { id: 2, teks: 'Survei Manfaat Awal Kualitas Hidup Triwulan II 2026 sudah tersedia. Yuk berpartisipasi!', badge: 'Baru', color: 'bg-green-600' },
+  { id: 3, teks: 'Pelatihan Literasi Digital & Pendampingan Peran di Desa Lung Anai 22 Juli 2026', badge: null, color: '' },
+  { id: 4, teks: 'Posyandu Balita (SDG Desa 3): 27 Juli 2026 | 1 jam lalu', badge: null, color: '' },
+  { id: 5, teks: 'Festival Adat Desa Budaya Lung Anai 2026 (SDG Desa 18) | 2 jam lalu', badge: null, color: '' },
 ];
 
-// Radar SLV Desa
+// Radar 6 Dimensi Kerangka Kesiapan Bab IV (Desa Lung Anai — Tabel 4.17)
 const radarDesa = [
-  { aspek: 'SDM & Literasi Digital', nilai: 68 },
-  { aspek: 'Infrastruktur Digital', nilai: 72 },
-  { aspek: 'Kesehatan', nilai: 75 },
-  { aspek: 'Ekonomi', nilai: 70 },
-  { aspek: 'Lingkungan', nilai: 69 },
-  { aspek: 'Sosial Budaya', nilai: 73 },
-  { aspek: 'Kelembagaan', nilai: 71 },
+  { aspek: 'D1 Tata Kelola', nilai: 48.51 },
+  { aspek: 'D2 Infrastruktur', nilai: 30.75 },
+  { aspek: 'D3 SDM & Literasi', nilai: 43.39 },
+  { aspek: 'D4 Data & Layanan', nilai: 34.71 },
+  { aspek: 'D5 Tata Kelola Adat', nilai: 89.73 },
+  { aspek: 'D6 SDGs & DSS', nilai: 43.60 },
 ];
 
-// Stat cards
+// Stat cards (Ringkasan kondisi desa sesuai Bab IV)
 const statCards = [
-  { label: 'Ringkasan Skor Kesiapan Desa', value: '74,30', sub: 'Indeks Kesiapan', cat: 'Kategori: Baik', icon: TrendingUp, color: '#276749', href: '/warga/hasil-readiness-desa' },
-  { label: 'Skor Kualitas Hidup Masyarakat', value: '71,28', sub: 'Indeks Kualitas', cat: 'Kategori: Baik', icon: Heart, color: '#2b6cb0', href: '/warga/hasil-quality-of-life-desa' },
-  { label: 'Program Desa Berjalan', value: '16', sub: 'Program', cat: '', icon: ClipboardList, color: '#c05621', href: '/warga/program-desa', link: 'Lihat Program' },
-  { label: 'Aspirasi dalam Tindak Lanjut', value: '23', sub: '5 Baru · 8 Belum Ditanggapi', cat: '', icon: MessageSquare, color: '#6a1b9a', href: '/warga/aspirasi-masyarakat', link: 'Lihat Aspirasi' },
-  { label: 'Agenda dan Musyawarah Mendatang', value: '7', sub: 'Kegiatan', cat: '', icon: Calendar, color: '#c05621', href: '/warga/agenda-desa', link: 'Lihat Agenda' },
-  { label: 'Partisipasi Survei Masyarakat', value: '85%', sub: '85% Partisipasi (320 Warga)', cat: '', icon: Users, color: '#276749', href: '/warga/survei-quality-of-life', link: 'Isi Survei' },
+  { label: 'Skor Kesiapan Desa (Lung Anai)', value: '48,39', sub: '6 Dimensi · 24 Indikator', cat: 'Kategori: Sedang (D5: 89,73)', icon: TrendingUp, color: '#276749', href: '/warga/hasil-readiness-desa' },
+  { label: 'Skor Manfaat Awal Kualitas Hidup', value: '69,97', sub: 'Naik +1,54 dari 68,43', cat: 'Kategori: Baik (N=126)', icon: Heart, color: '#2b6cb0', href: '/warga/hasil-quality-of-life-desa' },
+  { label: 'Program Desa Berjalan', value: '10', sub: 'Alternatif Program DSS', cat: '', icon: ClipboardList, color: '#c05621', href: '/warga/pemantauan-program-desa', link: 'Lihat Program' },
+  { label: 'Aspirasi dalam Tindak Lanjut', value: '23', sub: '5 Baru · 8 Dibahas', cat: '', icon: MessageSquare, color: '#6a1b9a', href: '/warga/aspirasi', link: 'Lihat Aspirasi' },
+  { label: 'Agenda & Musyawarah Mendatang', value: '7', sub: 'Musdes & Musyawarah Adat', cat: '', icon: Calendar, color: '#c05621', href: '/warga/agenda-musyawarah', link: 'Lihat Agenda' },
+  { label: 'Partisipasi Evaluasi (RQ3)', value: '126', sub: '42 Responden/Desa (7 Peran)', cat: '', icon: Users, color: '#276749', href: '/warga/survey-qol', link: 'Isi Survei' },
 ];
 
 // Program Desa Berjalan
@@ -59,42 +58,41 @@ const programBerjalan = [
 
 // Aspirasi Masyarakat
 const aspirasiData = [
-  { judul: 'Perbaikan Jalan Poros Dusun', kategori: 'Infrastruktur', status: 'Diproses', tgl: '20 Mei 2025', statusColor: 'bg-blue-100 text-blue-700' },
-  { judul: 'Penambahan Lampu Jalan', kategori: 'Infrastruktur', status: 'Diterima', tgl: '18 Mei 2025', statusColor: 'bg-green-100 text-green-700' },
-  { judul: 'Pengadaan Tempat Sampah', kategori: 'Lingkungan', status: 'Diproses', tgl: '17 Mei 2025', statusColor: 'bg-blue-100 text-blue-700' },
-  { judul: 'Pelatihan Komputer untuk Pemula', kategori: 'Pendidikan', status: 'Selesai', tgl: '16 Mei 2025', statusColor: 'bg-gray-100 text-gray-600' },
-  { judul: 'Perbaikan Jaringan Internet', kategori: 'Infrastruktur', status: 'Diterima', tgl: '15 Mei 2025', statusColor: 'bg-green-100 text-green-700' },
+  { judul: 'Penguatan Konektivitas & Mode Luring Dusun', kategori: 'Infrastruktur Digital', status: 'Diproses', tgl: '20 Jul 2026', statusColor: 'bg-blue-100 text-blue-700' },
+  { judul: 'Pelatihan Literasi Digital Guru & Warga', kategori: 'Pendidikan (SDG 4)', status: 'Diterima', tgl: '18 Jul 2026', statusColor: 'bg-green-100 text-green-700' },
+  { judul: 'Peningkatan Layanan Posyandu Digital', kategori: 'Kesehatan (SDG 3)', status: 'Diproses', tgl: '17 Jul 2026', statusColor: 'bg-blue-100 text-blue-700' },
+  { judul: 'Pelatihan Komputer untuk Pemula', kategori: 'Pendidikan (SDG 4)', status: 'Selesai', tgl: '16 Jul 2026', statusColor: 'bg-gray-100 text-gray-600' },
+  { judul: 'Klasifikasi & Perlindungan Arsip Budaya', kategori: 'Budaya (SDG 18)', status: 'Diterima', tgl: '15 Jul 2026', statusColor: 'bg-green-100 text-green-700' },
 ];
 
-// QoL Survei
+// Ringkasan Evaluasi Pra-Pasca Bab IV (Tabel 4.40 — 6 Konstruk RQ3)
 const qolDimensi = [
-  { dimensi: 'Kesehatan', skor: 72.40, kategori: 'Baik' },
-  { dimensi: 'Pendidikan', skor: 70.80, kategori: 'Baik' },
-  { dimensi: 'Ekonomi', skor: 72.10, kategori: 'Baik' },
-  { dimensi: 'Lingkungan', skor: 69.30, kategori: 'Cukup' },
-  { dimensi: 'Sosial Budaya', skor: 70.50, kategori: 'Baik' },
-  { dimensi: 'Kelembagaan', skor: 71.20, kategori: 'Baik' },
-  { dimensi: 'Kepuasan Pelayanan', skor: 74.50, kategori: 'Baik' },
+  { dimensi: 'Manfaat Awal QoL (N=126)', skor: 69.97, kategori: 'Signifikan' },
+  { dimensi: 'Kualitas Keputusan (N=126)', skor: 61.41, kategori: 'Signifikan' },
+  { dimensi: 'Kesiapan Digital (N=126)', skor: 60.45, kategori: 'Naik (NS)' },
+  { dimensi: 'Pemantauan SDGs (N=126)', skor: 58.35, kategori: 'Signifikan' },
+  { dimensi: 'Integrasi Data (N=126)', skor: 56.56, kategori: 'Signifikan' },
+  { dimensi: 'SDGs Desa 3, 4, 18 (54 KPI)', skor: 80.67, kategori: 'Baik' },
 ];
 
 // Pelaporan masalah
 const pelaporanMasalah = [
-  { judul: 'Jalan Rusak di Dusun Loa Kulu', kategori: 'Infrastruktur (Prioritas Utama)', status: 'Diproses', tgl: '20 Mei 2025', img: '🛣️', statusColor: 'bg-red-100 text-red-700' },
-  { judul: 'Sampah Menumpuk di TPS', kategori: 'Lingkungan', status: 'Diterima', tgl: '19 Mei 2025', img: '🗑️', statusColor: 'bg-green-100 text-green-700' },
-  { judul: 'Lampu Jalan Mati', kategori: 'Infrastruktur', status: 'Diproses', tgl: '18 Mei 2025', img: '💡', statusColor: 'bg-blue-100 text-blue-700' },
+  { judul: 'Kestabilan Sinyal Internet di RT Terluar', kategori: 'D2 Infrastruktur (Prioritas)', status: 'Diproses', tgl: '20 Jul 2026', img: '📡', statusColor: 'bg-red-100 text-red-700' },
+  { judul: 'Pembaruan Data Posyandu & Ibu Hamil', kategori: 'SDG 3 Kesehatan', status: 'Diterima', tgl: '19 Jul 2026', img: '🏥', statusColor: 'bg-green-100 text-green-700' },
+  { judul: 'Pendampingan Penggunaan Portal Warga', kategori: 'D3 Literasi Digital', status: 'Diproses', tgl: '18 Jul 2026', img: '💻', statusColor: 'bg-blue-100 text-blue-700' },
 ];
 
 // Agenda Desa
 const agendaDesa = [
-  { nama: 'Musrenbangdes 2025 (Pembahasan RPJMDes & Usulan)', sub: 'Balai Desa', tgl: '25', bln: 'MEI' },
-  { nama: 'Posyandu Balita (Layanan Kesehatan KIA)', sub: 'Posyandu Desa', tgl: '27', bln: 'MEI', waktu: '08.00 - 11.00 WITA' },
-  { nama: 'Pelatihan Literasi Digital (Peningkatan Skill Warga)', sub: 'Balai Desa', tgl: '17', bln: 'JUL', waktu: '09.00 - 12.00 WITA' },
-  { nama: 'Kerja Bakti Desa (Gotong Royong Lingkungan)', sub: 'Lingkungan Desa', tgl: '31', bln: 'MEI', waktu: '07.00 - 10.00 WITA' },
+  { nama: 'Musrenbangdes 2026 (Pembahasan Prioritas DSS & RKPDes)', sub: 'Balai Desa Lung Anai', tgl: '25', bln: 'JUL' },
+  { nama: 'Posyandu Balita (Layanan Kesehatan KIA — SDG 3)', sub: 'Posyandu Desa', tgl: '27', bln: 'JUL', waktu: '08.00 - 11.00 WITA' },
+  { nama: 'Pelatihan Literasi Digital (Peningkatan Skill Warga — SDG 4)', sub: 'Balai Desa', tgl: '29', bln: 'JUL', waktu: '09.00 - 12.00 WITA' },
+  { nama: 'Musyawarah Adat Dayak Kenyah (Perlindungan Budaya — SDG 18)', sub: 'Balai Adat Lung Anai', tgl: '31', bln: 'JUL', waktu: '09.00 - 12.00 WITA' },
 ];
 
 // Informasi Desa
 const infoDesa = [
-  { judul: 'Informasi Adat & Budaya', sub: 'Mengenal adat dan budaya Lung Anai untuk generasi mendatang.', emoji: '🏠', href: '/warga/informasi-adat-budaya' },
+  { judul: 'Informasi Adat & Budaya', sub: 'Mengenal adat dan budaya Lung Anai untuk generasi mendatang.', emoji: '🏠', href: '/warga/informasi-budaya' },
   { judul: 'Informasi Pendidikan', sub: 'Informasi sekolah, beasiswa, dan kegiatan pendidikan desa.', emoji: '📚', href: '/warga/informasi-pendidikan' },
   { judul: 'Informasi Kesehatan', sub: 'Layanan kesehatan, posyandu dan pola hidup sehat.', emoji: '🏥', href: '/warga/informasi-kesehatan' },
   { judul: 'Informasi Pembangunan', sub: 'Informasi rencana pembangunan fisik, sarana prasarana, dan infrastruktur desa.', emoji: '🏗️', href: '/warga/profil-desa' },
@@ -174,14 +172,14 @@ export default function WargaDashboardPage() {
             <RadarChart data={radarDesa} margin={{ top: 5, right: 20, bottom: 5, left: 20 }}>
               <PolarGrid stroke="#c6f6d5" />
               <PolarAngleAxis dataKey="aspek" tick={{ fontSize: 8, fill: '#276749' }} />
-              <PolarRadiusAxis angle={30} domain={[60, 80]} tick={false} />
+              <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} />
               <Radar name="Nilai" dataKey="nilai" stroke="#276749" fill="#276749" fillOpacity={0.2} strokeWidth={2} />
               <Tooltip contentStyle={{ fontSize: 10, borderRadius: 6 }} formatter={(v: any) => [`${v}`, 'Skor']} />
             </RadarChart>
           </ResponsiveContainer>
           <div className="mt-2 p-2 bg-green-50 rounded-lg border border-green-200">
             <p className="text-[10px] text-gray-600">
-              Desa Lung Anai telah mencapai kategori <span className="font-bold text-green-700">BAIK</span> dalam kesopanan Smart Living Village.
+              Desa Lung Anai mencatat kekuatan utama pada <span className="font-bold text-green-700">D5 Tata Kelola Adat (89,73)</span> dalam kesiapan Smart Living Village (Skor total 48,39 — Sedang).
             </p>
             <Link href="/warga/roadmap-desa" className="mt-1 inline-flex items-center gap-1 text-[10px] font-bold text-green-700 hover:underline">
               Selengkapnya <ArrowUpRight size={10} />
@@ -193,7 +191,7 @@ export default function WargaDashboardPage() {
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Program Desa Berjalan</h3>
-            <Link href="/warga/program-desa" className="text-[11px] font-semibold text-green-700 hover:text-green-900">Lihat Semua →</Link>
+            <Link href="/warga/pemantauan-program-desa" className="text-[11px] font-semibold text-green-700 hover:text-green-900">Lihat Semua →</Link>
           </div>
           <div className="space-y-2.5">
             {programBerjalan.map((p, i) => (
@@ -220,7 +218,7 @@ export default function WargaDashboardPage() {
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Notifikasi Desa</h3>
-            <Link href="/warga/notifikasi-desa" className="text-[11px] font-semibold text-green-700 hover:text-green-900">Lihat Semua →</Link>
+            <Link href="/warga/notifikasi" className="text-[11px] font-semibold text-green-700 hover:text-green-900">Lihat Semua →</Link>
           </div>
           <div className="space-y-2">
             {notifikasiDesa.map((n) => (
@@ -243,7 +241,7 @@ export default function WargaDashboardPage() {
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
           <div className="flex items-center justify-between mb-2">
             <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Aspirasi Masyarakat</h3>
-            <Link href="/warga/aspirasi-masyarakat" className="text-[11px] font-semibold text-green-700 hover:text-green-900">Lihat Semua →</Link>
+            <Link href="/warga/aspirasi" className="text-[11px] font-semibold text-green-700 hover:text-green-900">Lihat Semua →</Link>
           </div>
           {/* Tab */}
           <div className="flex gap-1 mb-2">
@@ -271,27 +269,27 @@ export default function WargaDashboardPage() {
       {/* ── SURVEI QoL + PELAPORAN + AGENDA ──────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-        {/* Survei Quality of Life */}
+        {/* Survei Manfaat Awal Quality of Life (Bab IV) */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Survei Quality of Life</h3>
-            <Link href="/warga/survei-readiness" className="text-[11px] font-semibold text-green-700 hover:text-green-900">Lihat Hasil Lengkap →</Link>
+            <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Manfaat Awal Kualitas Hidup (Bab IV)</h3>
+            <Link href="/warga/hasil-quality-of-life-desa" className="text-[11px] font-semibold text-green-700 hover:text-green-900">Lihat Hasil Lengkap →</Link>
           </div>
           <div className="flex items-center gap-4">
             {/* Donut */}
             <div className="relative flex-shrink-0">
               <ResponsiveContainer width={90} height={90}>
                 <PieChart>
-                  <Pie data={[{ value: 71.28 }, { value: 28.72 }]} dataKey="value" cx="50%" cy="50%" innerRadius={28} outerRadius={42} stroke="none" startAngle={90} endAngle={-270}>
+                  <Pie data={[{ value: 69.97 }, { value: 30.03 }]} dataKey="value" cx="50%" cy="50%" innerRadius={28} outerRadius={42} stroke="none" startAngle={90} endAngle={-270}>
                     <Cell fill="#276749" />
                     <Cell fill="#e2e8f0" />
                   </Pie>
                 </PieChart>
               </ResponsiveContainer>
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <p className="text-[9px] text-gray-400">Rata-rata QoL</p>
-                <p className="text-base font-black text-gray-900">71,28</p>
-                <p className="text-[9px] font-bold text-green-600">Baik</p>
+                <p className="text-[8px] text-gray-400">Pasca QoL</p>
+                <p className="text-base font-black text-gray-900">69,97</p>
+                <p className="text-[8px] font-bold text-green-600">+1,54 sig</p>
               </div>
             </div>
             {/* Table */}
@@ -299,18 +297,18 @@ export default function WargaDashboardPage() {
               <table className="w-full text-xs">
                 <thead>
                   <tr className="border-b border-gray-100">
-                    <th className="text-left py-1 text-[9px] font-bold text-gray-400">Dimensi</th>
-                    <th className="text-center py-1 text-[9px] font-bold text-gray-400">Skor</th>
-                    <th className="text-center py-1 text-[9px] font-bold text-gray-400">Kategori</th>
+                    <th className="text-left py-1 text-[9px] font-bold text-gray-400">Konstruk RQ3</th>
+                    <th className="text-center py-1 text-[9px] font-bold text-gray-400">Pasca</th>
+                    <th className="text-center py-1 text-[9px] font-bold text-gray-400">Status</th>
                   </tr>
                 </thead>
                 <tbody>
                   {qolDimensi.map((d, i) => (
                     <tr key={i} className="border-b border-gray-50">
-                      <td className="py-1 text-gray-700 font-medium">{d.dimensi}</td>
-                      <td className="py-1 text-center font-bold text-green-700">{d.skor.toFixed(2)}</td>
+                      <td className="py-1 text-gray-700 font-medium text-[10px]">{d.dimensi}</td>
+                      <td className="py-1 text-center font-bold text-green-700 text-[10px]">{d.skor.toFixed(2)}</td>
                       <td className="py-1 text-center">
-                        <span className={`px-1 py-0.5 rounded text-[9px] font-bold ${d.kategori === 'Baik' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>{d.kategori}</span>
+                        <span className={`px-1 py-0.5 rounded text-[9px] font-bold ${d.kategori === 'Signifikan' || d.kategori === 'Baik' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'}`}>{d.kategori}</span>
                       </td>
                     </tr>
                   ))}
@@ -318,7 +316,7 @@ export default function WargaDashboardPage() {
               </table>
             </div>
           </div>
-          <Link href="/warga/survei-quality-of-life" className="mt-3 w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white text-xs font-bold transition-colors">
+          <Link href="/warga/survey-qol" className="mt-3 w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white text-xs font-bold transition-colors">
             Isi Survei Sekarang
           </Link>
         </div>
@@ -327,7 +325,7 @@ export default function WargaDashboardPage() {
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Pelaporan Masalah Desa</h3>
-            <Link href="/warga/pelaporan-masalah-desa" className="text-[11px] font-semibold text-green-700 hover:text-green-900">Lihat Semua →</Link>
+            <Link href="/warga/pemantauan-masalah" className="text-[11px] font-semibold text-green-700 hover:text-green-900">Lihat Semua →</Link>
           </div>
           <div className="space-y-2.5">
             {pelaporanMasalah.map((p, i) => (
@@ -350,11 +348,11 @@ export default function WargaDashboardPage() {
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-4">
           <div className="flex items-center justify-between mb-3">
             <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Agenda Desa</h3>
-            <Link href="/warga/agenda-desa" className="text-[11px] font-semibold text-green-700 hover:text-green-900">Lihat Semua →</Link>
+            <Link href="/warga/agenda-musyawarah" className="text-[11px] font-semibold text-green-700 hover:text-green-900">Lihat Semua →</Link>
           </div>
           {/* Mini calendar */}
           <div className="bg-gray-50 rounded-lg p-2 mb-3 text-center">
-            <p className="text-[10px] font-bold text-gray-600 mb-1">Mei 2025</p>
+            <p className="text-[10px] font-bold text-gray-600 mb-1">Juli 2026</p>
             <div className="grid grid-cols-7 gap-0.5 text-[9px] text-gray-400 mb-1">
               {['Min','Sen','Sel','Rab','Kam','Jum','Sab'].map(d => <div key={d} className="text-center font-bold">{d}</div>)}
             </div>
@@ -415,7 +413,7 @@ export default function WargaDashboardPage() {
           </div>
           <div className="flex items-center gap-3">
             <div className="text-4xl">👨‍👩‍👧‍👦</div>
-            <Link href="/warga/aspirasi-masyarakat" className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white text-green-700 font-black text-sm hover:bg-green-50 transition-colors">
+            <Link href="/warga/aspirasi" className="flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white text-green-700 font-black text-sm hover:bg-green-50 transition-colors">
               <Send size={14} /> Sampaikan Aspirasi Anda
             </Link>
           </div>
@@ -424,7 +422,7 @@ export default function WargaDashboardPage() {
 
       {/* ── FOOTER ──────────────────────────────────────────────────────── */}
       <div className="flex flex-col sm:flex-row items-center justify-between text-[10px] text-gray-400 pt-2 border-t border-gray-100 gap-1">
-        <span>© 2025 Pemerintah Desa Lung Anai. All rights reserved.</span>
+        <span>© 2026 Pemerintah Desa Lung Anai, Kec. Loa Kulu, Kab. Kutai Kartanegara.</span>
         <div className="flex gap-3">
           {['Smart Living Village', 'Partisipasi Warga', 'Transparansi', 'Kolaborasi', 'Keberlanjutan'].map((t, i) => (
             <span key={i} className="hover:text-gray-600 cursor-pointer">{t}</span>

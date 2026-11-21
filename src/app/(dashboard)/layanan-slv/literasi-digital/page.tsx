@@ -100,7 +100,7 @@ export default function LiterasiDigitalPage() {
 
                   <div>
                     <h3 className="font-bold text-slate-805 text-[13px]">{m.judul}</h3>
-                    <p className="text-slate-550 leading-relaxed mt-1 text-[11px]">{m.deskripsi}</p>
+                    <p className="text-slate-600 leading-relaxed mt-1 text-[11px]">{m.deskripsi}</p>
                   </div>
 
                   <div className="border-t pt-2.5 flex justify-between items-center text-[10px] text-slate-400">
@@ -147,7 +147,7 @@ export default function LiterasiDigitalPage() {
                 <div className="p-4 bg-slate-50 rounded-lg space-y-3.5 text-center">
                   <Award size={28} className="text-indigo-700 mx-auto" />
                   <div>
-                    <p className="font-bold text-slate-850">Evaluasi Mandiri Selesai</p>
+                    <p className="font-bold text-slate-900">Evaluasi Mandiri Selesai</p>
                     <p className="text-xs text-slate-500 mt-1">Anda menjawab <strong>{score} dari {quizQuestions.length}</strong> pertanyaan dengan benar.</p>
                   </div>
                   <button onClick={() => { setQuizSubmitted(false); setQuizAnswers({}); }} className="w-full py-1.5 bg-indigo-700 text-white rounded font-bold hover:bg-indigo-800">

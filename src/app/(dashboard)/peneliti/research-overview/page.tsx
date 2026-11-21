@@ -3,52 +3,52 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import {
-  MapPin, Users, Database, FileText, Calendar, Target,
-  CheckCircle2, Clock, FlaskConical, BookOpen, Microscope
+  MapPin, Users, Database, Calendar,
+  CheckCircle2, BookOpen, Microscope,
 } from 'lucide-react';
+import { DESA_BAB4 } from '@/lib/bab4-data';
 
 const COLOR = '#1a365d';
 
 const timeline = [
-  { fase: 'Fase 1: Studi Literatur & Desain Framework', periode: 'Jan – Mar 2025', status: 'Selesai' },
-  { fase: 'Fase 2: Pengumpulan Data & Assessment Lapangan', periode: 'Apr – Jun 2025', status: 'Selesai' },
-  { fase: 'Fase 3: Analisis & Validasi Ahli', periode: 'Jul – Sep 2025', status: 'Selesai' },
-  { fase: 'Fase 4: Evaluasi Sistem & Penyusunan Laporan', periode: 'Okt – Des 2025', status: 'Selesai' },
+  { fase: 'Tahap RQ1: SLR, Validasi Isi Pakar (P1–P3) & Survei Kesiapan 3 Desa', periode: 'Dataset SLV 1 (v1.2)', status: 'Selesai' },
+  { fase: 'Tahap RQ2: Model Konseptual, Arsitektur 8 Lapisan, DSS SAW & Dasbor 7 Peran', periode: 'Dataset SLV 2 (v1.2)', status: 'Selesai' },
+  { fase: 'Tahap RQ2–RQ3: Prototipe Web Final (35 Kelompok Fitur) & 4 Diagram UML', periode: 'Artefak A6', status: 'Selesai' },
+  { fase: 'Tahap RQ3: Uji 4 Minggu (126 Partisipan), UAT, SUS, Kematangan & 54 KPI SDGs', periode: 'Dataset SLV 3 (v1.2)', status: 'Selesai' },
 ];
 
 const lokasiSampel = [
-  { label: 'Nama Desa', nilai: 'Desa Lung Anai' },
-  { label: 'Kecamatan', nilai: 'Loa Kulu' },
-  { label: 'Kabupaten / Kota', nilai: 'Kutai Kartanegara' },
-  { label: 'Provinsi', nilai: 'Kalimantan Timur' },
-  { label: 'Jumlah Penduduk', nilai: '±1.200 jiwa' },
-  { label: 'Jumlah Responden', nilai: '146 orang' },
-  { label: 'Teknik Sampling', nilai: 'Purposive Sampling' },
-  { label: 'Tingkat Respons', nilai: '100%' },
+  { label: 'Lokus 3 Desa Penelitian', nilai: 'Jonggon Jaya, Kedang Ipil, Lung Anai' },
+  { label: 'Kecamatan', nilai: 'Loa Kulu & Kota Bangun Darat' },
+  { label: 'Kabupaten / Provinsi', nilai: 'Kutai Kartanegara, Kalimantan Timur' },
+  { label: 'Total Penduduk 3 Desa (BPS 2025)', nilai: '4.538 jiwa (2.553 + 1.505 + 480)' },
+  { label: 'Jumlah Partisipan Evaluasi', nilai: '126 orang (42 partisipan / desa)' },
+  { label: 'Komposisi 7 Peran Utama UML', nilai: '7 peran × 18 partisipan (6/peran/desa)' },
+  { label: 'Panel Pakar Validasi', nilai: '3 Pakar (P1–P3)' },
+  { label: 'Kematangan Complete-Case', nilai: 'N = 121 (5 responden missing parsial)' },
 ];
 
 const informasiPenelitian = [
-  { label: 'Judul Penelitian', nilai: 'Pengembangan Framework Smart Living Village Readiness berbasis DSR untuk Desa Adat Borneo', fullRow: true },
-  { label: 'Peneliti Utama', nilai: 'Joy Nashar' },
-  { label: 'Institusi', nilai: 'Binus University' },
-  { label: 'Metode Penelitian', nilai: 'Design Science Research (DSR)' },
-  { label: 'Pendekatan', nilai: 'Mixed Method (Kuantitatif & Kualitatif)' },
-  { label: 'Periode Penelitian', nilai: 'Januari – Desember 2025' },
-  { label: 'Status', nilai: 'Selesai' },
+  { label: 'Fokus Penelitian', nilai: 'Pengembangan Kerangka Kesiapan, Model Konseptual, Arsitektur, DSS SAW, Dasbor 7 Peran, dan Prototipe Web Smart Living Village (Bab IV)' },
+  { label: 'Metode Penelitian', nilai: 'Design Science Research Methodology (DSRM) + Kerangka Input–Process–Output (IPO)' },
+  { label: 'Pendekatan', nilai: 'Mixed Method (Kuantitatif: AHP, SAW, Uji Berpasangan + Kualitatif: Validasi Pakar & Musyawarah)' },
+  { label: 'Struktur Kerangka', nilai: '6 Dimensi (D1–D6), 24 Indikator (I01–I24), 6 Artefak (A1–A6), 35 Kelompok Fitur (F-001–F-035)' },
+  { label: 'Paket Dataset Resmi', nilai: 'Dataset SLV 1, Dataset SLV 2, dan Dataset SLV 3 (Versi Final Terkunci v1.2)' },
+  { label: 'Periode Penelitian', nilai: '2025 – 2026 (Evaluasi Lapangan Siklus 4 Minggu)' },
 ];
 
 export default function ResearchOverviewPage() {
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Profil Penelitian" modul="Research Overview" color={COLOR} />
+      <PageTitle fitur="Profil Penelitian (Bab IV)" modul="Research Overview" color={COLOR} />
 
       {/* KPI Row */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { icon: MapPin, label: 'Lokasi', value: '1 Desa', sub: 'Desa Lung Anai', color: COLOR },
-          { icon: Users, label: 'Sampel', value: '146', sub: 'Responden', color: '#276749' },
-          { icon: Database, label: 'Dataset', value: '4', sub: 'Kategori Lengkap', color: '#553c9a' },
-          { icon: CheckCircle2, label: 'Status', value: '100%', sub: 'Terkumpul', color: '#c05621' },
+          { icon: MapPin, label: 'Lokus Penelitian', value: '3 Desa', sub: 'Kab. Kutai Kartanegara', color: COLOR },
+          { icon: Users, label: 'Partisipan', value: '126', sub: '42/desa · 7 peran × 18', color: '#276749' },
+          { icon: Database, label: 'Dataset Resmi', value: '3 Paket', sub: 'SLV 1, SLV 2, SLV 3 v1.2', color: '#553c9a' },
+          { icon: CheckCircle2, label: 'Artefak DSRM', value: '6 Artefak', sub: 'A1–A6 · 35 Fitur UML', color: '#c05621' },
         ].map((kpi, i) => {
           const Icon = kpi.icon;
           return (
@@ -67,7 +67,6 @@ export default function ResearchOverviewPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Informasi Penelitian */}
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
@@ -77,7 +76,7 @@ export default function ResearchOverviewPage() {
           <CardContent>
             <div className="space-y-2">
               {informasiPenelitian.map((item, i) => (
-                <div key={i} className={`p-2.5 rounded-lg bg-slate-50 border border-slate-100 ${item.fullRow ? '' : ''}`}>
+                <div key={i} className="p-2.5 rounded-lg bg-slate-50 border border-slate-100">
                   <p className="text-[10px] text-gray-400 font-semibold uppercase">{item.label}</p>
                   <p className="text-sm font-semibold text-slate-800 mt-0.5 leading-snug">{item.nilai}</p>
                 </div>
@@ -86,19 +85,18 @@ export default function ResearchOverviewPage() {
           </CardContent>
         </Card>
 
-        {/* Lokasi & Sampel */}
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <MapPin size={16} /> Lokasi & Karakteristik Sampel
+              <MapPin size={16} /> Lokasi &amp; Karakteristik Sampel (Tabel 4.3)
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 gap-2">
               {lokasiSampel.map((item, i) => (
-                <div key={i} className="flex items-center justify-between p-2.5 rounded-lg border border-gray-100 bg-gray-50">
-                  <span className="text-sm text-slate-600">{item.label}</span>
-                  <span className="text-sm font-bold text-slate-800">{item.nilai}</span>
+                <div key={i} className="flex items-center justify-between gap-2 p-2.5 rounded-lg border border-gray-100 bg-gray-50">
+                  <span className="text-xs text-slate-600">{item.label}</span>
+                  <span className="text-xs font-bold text-slate-800 text-right">{item.nilai}</span>
                 </div>
               ))}
             </div>
@@ -106,11 +104,34 @@ export default function ResearchOverviewPage() {
         </Card>
       </div>
 
+      {/* Ringkasan 3 Desa */}
+      <Card className="shadow-sm">
+        <CardHeader>
+          <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
+            <MapPin size={16} /> Profil Singkat 3 Desa Penelitian (BPS Kutai Kartanegara 2025 &amp; RQ1)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {DESA_BAB4.map((d) => (
+              <div key={d.id} className="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 space-y-1.5 text-xs">
+                <div className="flex justify-between items-center">
+                  <p className="font-black text-slate-800">{d.nama}</p>
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700">{d.skorKesiapan.toFixed(2)} ({d.kategoriKesiapan})</span>
+                </div>
+                <p className="text-[11px] text-slate-500">Kec. {d.kecamatan} · {d.luasKm2.toFixed(2)} km² · {d.penduduk.toLocaleString('id-ID')} jiwa · {d.rt} RT</p>
+                <p className="text-[11px] text-slate-600 leading-relaxed">{d.konteks}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Timeline Penelitian */}
       <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-            <Calendar size={16} /> Timeline Penelitian
+            <Calendar size={16} /> Alur Tahapan RQ1 – RQ3
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -132,22 +153,22 @@ export default function ResearchOverviewPage() {
         </CardContent>
       </Card>
 
-      {/* Metode DSR */}
+      {/* Metode DSRM */}
       <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-            <Microscope size={16} /> Metode Design Science Research (DSR)
+            <Microscope size={16} /> Metode Design Science Research Methodology (DSRM + IPO)
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             {[
-              { no: '1', nama: 'Identifikasi Masalah', color: '#2b6cb0' },
-              { no: '2', nama: 'Desain Framework', color: '#276749' },
-              { no: '3', nama: 'Pengembangan Artefak', color: '#553c9a' },
-              { no: '4', nama: 'Demonstrasi', color: '#c05621' },
-              { no: '5', nama: 'Evaluasi', color: '#c53030' },
-              { no: '6', nama: 'Komunikasi', color: '#d69e2e' },
+              { no: '1', nama: 'Identifikasi Masalah & Motivasi', color: '#2b6cb0' },
+              { no: '2', nama: 'Tujuan Solusi (RQ1–RQ3)', color: '#276749' },
+              { no: '3', nama: 'Desain & Pengembangan (A1–A6)', color: '#553c9a' },
+              { no: '4', nama: 'Demonstrasi Prototipe (3 Desa)', color: '#c05621' },
+              { no: '5', nama: 'Evaluasi 4 Minggu (N=126)', color: '#c53030' },
+              { no: '6', nama: 'Komunikasi & Dokumentasi', color: '#d69e2e' },
             ].map((step, i) => (
               <div key={i} className="flex flex-col items-center text-center p-3 rounded-xl border" style={{ borderColor: step.color + '40', backgroundColor: step.color + '08' }}>
                 <div className="w-8 h-8 rounded-full flex items-center justify-center mb-2 text-white text-sm font-black" style={{ backgroundColor: step.color }}>

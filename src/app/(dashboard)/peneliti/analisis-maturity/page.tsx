@@ -3,58 +3,41 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import {
-  PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend,
+  ResponsiveContainer, Tooltip, Legend,
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
 } from 'recharts';
 import { Layers, TrendingUp, CheckCircle2, AlertCircle } from 'lucide-react';
+import { DESA_BAB4, RUBRIK_KEMATANGAN_DIMENSI } from '@/lib/bab4-data';
 
 const COLOR = '#1a365d';
 
-const maturityLevels = [
-  { level: 'Level 1 (Pemula)', value: 0, persen: 0, color: '#e53e3e', desc: 'Tidak ada dimensi pada level ini' },
-  { level: 'Level 2 (Dasar)', value: 10, persen: 10, color: '#ecc94b', desc: 'Kelembagaan dan Ekonomi digital' },
-  { level: 'Level 3 (Berkembang)', value: 60, persen: 60, color: '#4299e1', desc: 'Mayoritas dimensi sudah berkembang' },
-  { level: 'Level 4 (Maju)', value: 30, persen: 30, color: '#48bb78', desc: 'Kesehatan & Sosial Budaya maju' },
-  { level: 'Level 5 (Unggul)', value: 0, persen: 0, color: '#9f7aea', desc: 'Belum ada dimensi unggul' },
+const maturityScale = [
+  { level: 'Level 1 (Rintisan)', range: '1,00–1,79', color: '#e53e3e', desc: 'Proses ad-hoc, data terisolasi, belum ada standar operasional.' },
+  { level: 'Level 2 (Berkembang)', range: '1,80–2,79', color: '#4299e1', desc: 'Tahap aktual ketiga desa penelitian pasca uji 4 minggu (2,40–2,68).' },
+  { level: 'Level 3 (Terdefinisi)', range: '2,80–3,59', color: '#276749', desc: 'SOP digital, integrasi lintas sektor, dan klasifikasi adat terdokumentasi konsisten.' },
+  { level: 'Level 4 (Terkelola)', range: '3,60–4,39', color: '#553c9a', desc: 'Pemantauan KPI SDGs dan keputusan musyawarah dikelola secara kuantitatif.' },
+  { level: 'Level 5 (Optimum)', range: '4,40–5,00', color: '#d69e2e', desc: 'Inovasi berkelanjutan, inklusif, dan pelestarian adat terintegrasi penuh.' },
 ];
 
-const maturityDimensi = [
-  { dimensi: 'Smart Governance', level: 3.2, color: '#2b6cb0' },
-  { dimensi: 'Smart Living', level: 3.8, color: '#276749' },
-  { dimensi: 'Smart Economy', level: 2.9, color: '#c05621' },
-  { dimensi: 'Smart Environment', level: 3.4, color: '#c53030' },
-  { dimensi: 'Smart Culture', level: 4.0, color: '#553c9a' },
-  { dimensi: 'Smart Infrastructure', value: 3.1, color: '#d69e2e' },
-  { dimensi: 'Smart Dafurea', level: 2.8, color: '#0694a2' },
-].map(d => ({ ...d, level: d.level ?? 3.0 }));
-
-const RADIAN = Math.PI / 180;
-const renderCustomLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, persen }: any) => {
-  if (persen === 0) return null;
-  const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-  const x = cx + radius * Math.cos(-midAngle * RADIAN);
-  const y = cy + radius * Math.sin(-midAngle * RADIAN);
-  return (
-    <text x={x} y={y} fill="white" textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight="bold">
-      {`${persen}%`}
-    </text>
-  );
-};
-
 export default function AnalisisMaturityPage() {
-  const rataRata = (maturityDimensi.reduce((s, d) => s + d.level, 0) / maturityDimensi.length).toFixed(2);
+  const prePostDesa = DESA_BAB4.map((d) => ({
+    desa: d.nama.replace('Desa ', ''),
+    Pra: d.kematanganPra,
+    Pasca: d.kematanganPasca,
+    delta: d.kematanganDelta,
+  }));
 
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Analisis Maturity" modul="Analisis Framework" color={COLOR} />
+      <PageTitle fitur="Analisis Kematangan Digital (Rubrik M1–M6)" modul="Evaluasi RQ3 — Dataset SLV 3" color={COLOR} />
 
       {/* KPI */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: 'Maturity Rata-rata', value: rataRata, sub: 'Level: Berkembang', color: COLOR, icon: Layers },
-          { label: 'Level Dominan', value: 'Level 3', sub: '60% — Berkembang', color: '#4299e1', icon: TrendingUp },
-          { label: 'Level Tertinggi', value: 'Level 4', sub: 'Smart Culture (4.0)', color: '#48bb78', icon: CheckCircle2 },
-          { label: 'Level Terendah', value: 'Level 2.8', sub: 'Smart Dafurea', color: '#c53030', icon: AlertCircle },
+          { label: 'Kematangan Individu (N=121)', value: '2,53', sub: 'Pra 1,94 → Δ +0,59 (p=2,56×10⁻¹⁶)', color: COLOR, icon: Layers },
+          { label: 'Jonggon Jaya (Rubrik)', value: '2,68', sub: 'Pra 2,21 (+0,47) · Berkembang', color: '#2b6cb0', icon: TrendingUp },
+          { label: 'Kedang Ipil (Rubrik)', value: '2,40', sub: 'Pra 1,90 (+0,51) · Berkembang', color: '#276749', icon: CheckCircle2 },
+          { label: 'Lung Anai (Rubrik)', value: '2,43', sub: 'Pra 1,80 (+0,63) · Berkembang', color: '#c05621', icon: AlertCircle },
         ].map((kpi, i) => {
           const Icon = kpi.icon;
           return (
@@ -73,114 +56,80 @@ export default function AnalisisMaturityPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Donut Chart */}
+        {/* Pra vs Pasca per Desa */}
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <Layers size={16} /> Maturity Chart — Distribusi Level
+              <Layers size={16} /> Perbandingan Kematangan Rubrik Desa (Pra vs Pasca Uji 4 Minggu)
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex items-center gap-4">
-              <div className="relative flex-shrink-0">
-                <ResponsiveContainer width={180} height={180}>
-                  <PieChart>
-                    <Pie
-                      data={maturityLevels.filter(m => m.persen > 0)}
-                      dataKey="persen"
-                      cx="50%" cy="50%"
-                      innerRadius={50} outerRadius={82}
-                      labelLine={false}
-                      label={renderCustomLabel}
-                      stroke="none"
-                    >
-                      {maturityLevels.filter(m => m.persen > 0).map((m, i) => (
-                        <Cell key={i} fill={m.color} />
-                      ))}
-                    </Pie>
-                    <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}%`, 'Proporsi']} />
-                  </PieChart>
-                </ResponsiveContainer>
-                <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                  <p className="text-[9px] text-gray-400">Rata-rata</p>
-                  <p className="text-xl font-black text-gray-900">{rataRata}</p>
-                  <p className="text-[9px] font-bold text-blue-600">Berkembang</p>
-                </div>
-              </div>
-              <div className="flex-1 space-y-2">
-                {maturityLevels.map((m, i) => (
-                  <div key={i}>
-                    <div className="flex items-center justify-between mb-0.5">
-                      <div className="flex items-center gap-1.5">
-                        <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ backgroundColor: m.color }} />
-                        <span className="text-[11px] font-semibold text-slate-700">{m.level}</span>
-                      </div>
-                      <span className="text-[11px] font-black" style={{ color: m.color }}>{m.persen}%</span>
-                    </div>
-                    <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                      <div className="h-full rounded-full transition-all" style={{ width: `${m.persen}%`, backgroundColor: m.color }} />
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <ResponsiveContainer width="100%" height={230}>
+              <BarChart data={prePostDesa} margin={{ top: 10, right: 15, left: -10, bottom: 5 }} barSize={26}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                <XAxis dataKey="desa" tick={{ fontSize: 11, fill: '#334155' }} axisLine={false} tickLine={false} />
+                <YAxis domain={[0, 5]} ticks={[0, 1, 2, 3, 4, 5]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Legend wrapperStyle={{ fontSize: 10 }} />
+                <Bar dataKey="Pra" name="Skor Pra (Baseline)" fill="#94a3b8" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="Pasca" name="Skor Pasca (Minggu 4)" fill="#2b6cb0" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+            <div className="mt-2 p-2.5 bg-blue-50 border border-blue-200 rounded-lg text-[11px] text-blue-900">
+              Peningkatan tertinggi terjadi di <strong>Desa Lung Anai (+0,63)</strong>, diikuti Kedang Ipil (+0,51) dan Jonggon Jaya (+0,47).
             </div>
           </CardContent>
         </Card>
 
-        {/* Bar per dimensi */}
+        {/* Rubrik 6 Dimensi M1-M6 */}
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <TrendingUp size={16} /> Level Maturity per Dimensi
+              <TrendingUp size={16} /> Skor Rubrik Pasca per Dimensi (M1–M6)
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={220}>
-              <BarChart data={maturityDimensi} layout="vertical" margin={{ top: 0, right: 30, left: 60, bottom: 0 }} barSize={14}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" horizontal={false} />
-                <XAxis type="number" domain={[0, 5]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} ticks={[0,1,2,3,4,5]} />
-                <YAxis type="category" dataKey="dimensi" tick={{ fontSize: 10, fill: '#374151' }} axisLine={false} tickLine={false} width={70} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`Level ${v}`, 'Maturity']} />
-                <Bar dataKey="level" radius={[0, 4, 4, 0]}>
-                  {maturityDimensi.map((d, i) => <Cell key={i} fill={d.color} />)}
-                </Bar>
+            <ResponsiveContainer width="100%" height={230}>
+              <BarChart data={[...RUBRIK_KEMATANGAN_DIMENSI]} margin={{ top: 10, right: 10, left: -15, bottom: 5 }} barSize={12}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                <XAxis dataKey="kode" tick={{ fontSize: 10, fill: '#334155', fontWeight: 700 }} axisLine={false} tickLine={false} />
+                <YAxis domain={[0, 4]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Legend wrapperStyle={{ fontSize: 10 }} />
+                <Bar dataKey="jonggonJaya" name="Jonggon Jaya" fill="#2b6cb0" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="kedangIpil" name="Kedang Ipil" fill="#276749" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="lungAnai" name="Lung Anai" fill="#c05621" radius={[3, 3, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
-            {/* Garis referensi level */}
-            <div className="mt-3 flex flex-wrap gap-2">
-              {[
-                { label: 'Level 1: Pemula', color: '#e53e3e' },
-                { label: 'Level 2: Dasar', color: '#ecc94b' },
-                { label: 'Level 3: Berkembang', color: '#4299e1' },
-                { label: 'Level 4: Maju', color: '#48bb78' },
-                { label: 'Level 5: Unggul', color: '#9f7aea' },
-              ].map((l, i) => (
-                <div key={i} className="flex items-center gap-1">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: l.color }} />
-                  <span className="text-[10px] text-gray-500">{l.label}</span>
-                </div>
+            <div className="mt-2 grid grid-cols-2 sm:grid-cols-3 gap-1.5 text-[10px] text-slate-600">
+              {RUBRIK_KEMATANGAN_DIMENSI.map((m) => (
+                <div key={m.kode} className="truncate"><strong>{m.kode}:</strong> {m.nama}</div>
               ))}
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Detail per level */}
+      {/* Skala Kematangan 1-5 */}
       <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-            <Layers size={16} /> Deskripsi Nilai Maturity — Level 1 s/d 5
+            <Layers size={16} /> Interpretasi Skala Kematangan (Level 1 s.d. 5)
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-5 gap-3">
-            {maturityLevels.map((m, i) => (
-              <div key={i} className="p-3 rounded-xl border-2 text-center" style={{ borderColor: m.color + '50', backgroundColor: m.color + '08' }}>
+            {maturityScale.map((m, i) => (
+              <div
+                key={i}
+                className={`p-3 rounded-xl border-2 text-center ${i === 1 ? 'ring-2 ring-blue-300' : ''}`}
+                style={{ borderColor: m.color + '50', backgroundColor: m.color + '08' }}
+              >
                 <div className="w-8 h-8 rounded-full mx-auto flex items-center justify-center mb-2 text-white text-sm font-black" style={{ backgroundColor: m.color }}>
                   {i + 1}
                 </div>
-                <p className="text-[11px] font-black text-slate-800 mb-1">{m.level.replace('Level ' + (i+1) + ' ', '')}</p>
-                <p className="text-2xl font-black mb-1" style={{ color: m.color }}>{m.persen}%</p>
+                <p className="text-[11px] font-black text-slate-800">{m.level}</p>
+                <p className="text-[10px] font-mono font-bold mb-1" style={{ color: m.color }}>{m.range}</p>
                 <p className="text-[10px] text-slate-500 leading-snug">{m.desc}</p>
               </div>
             ))}

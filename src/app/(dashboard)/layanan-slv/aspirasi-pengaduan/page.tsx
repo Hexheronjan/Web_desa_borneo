@@ -89,7 +89,7 @@ export default function AspirasiPengaduanPage() {
             <form onSubmit={handleAjukan} className="space-y-3.5">
               
               <div className="space-y-1">
-                <label className="font-bold text-slate-750">BIDANG KATEGORI:</label>
+                <label className="font-bold text-slate-800">BIDANG KATEGORI:</label>
                 <select value={kategori} onChange={e => setKategori(e.target.value)} className="w-full p-2 border rounded-lg bg-white focus:outline-none">
                   <option value="Infrastruktur">Infrastruktur &amp; Jalan</option>
                   <option value="Kesehatan">Kesehatan &amp; Posyandu</option>
@@ -100,7 +100,7 @@ export default function AspirasiPengaduanPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-slate-750">JUDUL LAPORAN / KELUHAN:</label>
+                <label className="font-bold text-slate-800">JUDUL LAPORAN / KELUHAN:</label>
                 <input
                   type="text"
                   required
@@ -112,7 +112,7 @@ export default function AspirasiPengaduanPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="font-bold text-slate-750">DESKRIPSI PERMASALAHAN:</label>
+                <label className="font-bold text-slate-800">DESKRIPSI PERMASALAHAN:</label>
                 <textarea
                   required
                   value={deskripsi}
@@ -133,7 +133,7 @@ export default function AspirasiPengaduanPage() {
 
         {/* LIST RIWAYAT LAPORAN SAYA */}
         <div className="lg:col-span-2 space-y-4">
-          <h2 className="text-xs font-bold text-slate-650 uppercase tracking-wider">Laporan Aspirasi Anda</h2>
+          <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Laporan Aspirasi Anda</h2>
 
           <div className="space-y-3.5">
             {data.map(a => (
@@ -141,7 +141,7 @@ export default function AspirasiPengaduanPage() {
                 <CardContent className="p-4 space-y-3">
                   
                   <div className="flex justify-between items-start gap-2 flex-wrap border-b pb-2 text-[10px]">
-                    <span className="font-mono text-slate-450 font-bold mr-2">{a.id} • Kategori: {a.kategori}</span>
+                    <span className="font-mono text-slate-500 font-bold mr-2">{a.id} • Kategori: {a.kategori}</span>
                     <div className="flex items-center gap-2">
                       <span className="text-slate-400 font-semibold">{a.tanggalInput}</span>
                       <span className={`font-bold px-1.5 py-0.5 rounded border ${
@@ -153,7 +153,7 @@ export default function AspirasiPengaduanPage() {
 
                   <div>
                     <h3 className="font-bold text-slate-805 text-sm">{a.judul}</h3>
-                    <p className="text-slate-550 leading-relaxed mt-1 text-[11px]">{a.deskripsi}</p>
+                    <p className="text-slate-600 leading-relaxed mt-1 text-[11px]">{a.deskripsi}</p>
                   </div>
 
                   {/* Tanggapan */}

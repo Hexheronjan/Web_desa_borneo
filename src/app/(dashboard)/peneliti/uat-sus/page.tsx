@@ -3,67 +3,25 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
 } from 'recharts';
-import { CheckCircle2, Award, ListOrdered, Users, ClipboardList } from 'lucide-react';
+import { CheckCircle2, Award, Users, ClipboardList, AlertTriangle, Calendar } from 'lucide-react';
+import { DESA_BAB4, EVALUASI_PER_PERAN_BAB4, LOG_4_MINGGU_BAB4 } from '@/lib/bab4-data';
 
 const COLOR = '#1a365d';
 
-const susQuestions = [
-  { q: 'Q1', text: 'Saya rasa saya akan sering menggunakan sistem smart village ini.', positif: true, rerata: 4.50 },
-  { q: 'Q2', text: 'Saya rasa sistem ini terlalu rumit untuk digunakan.', positif: false, rerata: 1.80 },
-  { q: 'Q3', text: 'Saya rasa sistem ini sangat mudah untuk dioperasikan.', positif: true, rerata: 4.20 },
-  { q: 'Q4', text: 'Saya butuh bantuan orang lain / teknisi untuk menggunakan sistem.', positif: false, rerata: 1.90 },
-  { q: 'Q5', text: 'Saya rasa fitur-fitur dalam sistem terintegrasi dengan baik.', positif: true, rerata: 4.40 },
-  { q: 'Q6', text: 'Saya rasa terlalu banyak hal yang tidak konsisten pada sistem.', positif: false, rerata: 1.50 },
-  { q: 'Q7', text: 'Saya rasa mayoritas warga akan cepat belajar menggunakan sistem.', positif: true, rerata: 4.15 },
-  { q: 'Q8', text: 'Saya rasa pengoperasian sistem ini membingungkan.', positif: false, rerata: 1.60 },
-  { q: 'Q9', text: 'Saya merasa percaya diri menggunakan sistem ini.', positif: true, rerata: 4.30 },
-  { q: 'Q10', text: 'Saya butuh belajar banyak hal sebelum dapat menggunakan sistem.', positif: false, rerata: 2.00 },
-];
-
-// Formula SUS: (positif - 1) + (5 - negatif) × 2.5
-const susScore = susQuestions.reduce((sum, q) => {
-  const kontribusi = q.positif ? (q.rerata - 1) : (5 - q.rerata);
-  return sum + kontribusi;
-}, 0) * 2.5;
-
-const uatTestCases = [
-  { modul: 'Login & Autentikasi', cases: 3, lulus: 3, persen: 100 },
-  { modul: 'Dashboard Peneliti', cases: 4, lulus: 4, persen: 100 },
-  { modul: 'Analisis Readiness', cases: 3, lulus: 3, persen: 100 },
-  { modul: 'Analisis Maturity', cases: 2, lulus: 2, persen: 100 },
-  { modul: 'Analisis QoL', cases: 2, lulus: 2, persen: 100 },
-  { modul: 'Analisis DSS', cases: 2, lulus: 2, persen: 100 },
-  { modul: 'Validasi Artefak', cases: 2, lulus: 2, persen: 100 },
-  { modul: 'Repository & Publikasi', cases: 2, lulus: 2, persen: 100 },
-];
-
-const susScaleColors = (score: number) => {
-  if (score >= 90) return { label: 'Grade A+', color: '#276749', bg: '#f0fff4' };
-  if (score >= 80) return { label: 'Grade A (Excellent)', color: '#276749', bg: '#f0fff4' };
-  if (score >= 70) return { label: 'Grade B (Good)', color: '#2b6cb0', bg: '#ebf8ff' };
-  if (score >= 60) return { label: 'Grade C (OK)', color: '#d69e2e', bg: '#fffff0' };
-  return { label: 'Grade D/F', color: '#e53e3e', bg: '#fff5f5' };
-};
-
-const susInfo = susScaleColors(susScore);
-
 export default function UATSUSPage() {
-  const totalCases = uatTestCases.reduce((s, t) => s + t.cases, 0);
-  const totalLulus = uatTestCases.reduce((s, t) => s + t.lulus, 0);
-
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Nilai SUS — UAT & SUS Evaluation" modul="Validasi & Evaluasi" color={COLOR} />
+      <PageTitle fitur="Evaluasi UAT, SUS, Kualitas &amp; Log 4 Minggu (N=126)" modul="Validasi &amp; Evaluasi RQ3 (Dataset SLV 3)" color={COLOR} />
 
       {/* KPI */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: 'SUS Score', value: susScore.toFixed(2), sub: susInfo.label, color: susInfo.color, icon: Award },
-          { label: 'Responden UAT', value: '15', sub: 'Pengguna Sistem', color: '#2b6cb0', icon: Users },
-          { label: 'UAT Test Cases', value: `${totalLulus} / ${totalCases}`, sub: '100% Lulus', color: '#276749', icon: ClipboardList },
-          { label: 'Acceptability', value: 'Accept', sub: 'Diterima Warga', color: '#553c9a', icon: CheckCircle2 },
+          { label: 'Skor SUS Gabungan', value: '67,58', sub: 'Cronbach α = 0,955 (N=126)', color: '#c05621', icon: Award },
+          { label: 'Tingkat Lulus UAT', value: '86,65%', sub: '837 / 966 tugas relevan (1.008 baris)', color: '#276749', icon: ClipboardList },
+          { label: 'Kualitas Total (1–5)', value: '3,39 / 5', sub: 'Cronbach α = 0,984', color: '#2b6cb0', icon: CheckCircle2 },
+          { label: 'Partisipan 7 Peran', value: '126', sub: '3 desa × 42 · 7 peran × 18', color: '#553c9a', icon: Users },
         ].map((kpi, i) => {
           const Icon = kpi.icon;
           return (
@@ -81,129 +39,119 @@ export default function UATSUSPage() {
         })}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {/* Tabel SUS */}
-        <Card className="lg:col-span-2 shadow-sm">
+      {/* Warning F-029 */}
+      <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-amber-950 text-xs flex items-start gap-2.5">
+        <AlertTriangle size={16} className="text-amber-700 flex-shrink-0 mt-0.5" />
+        <p className="leading-relaxed">
+          <strong>Temuan Kritis Bab IV:</strong> Dari 35 kelompok fitur (F-001 s.d. F-035), fitur <strong>F-029 (Tenaga Kesehatan)</strong> masih berstatus <em>memerlukan perbaikan dan pengujian ulang (retest)</em>, sementara peran <strong>Guru/Tenaga Pendidikan</strong> (UAT 79,86%) dan <strong>Masyarakat Umum</strong> (SUS 62,22) memerlukan panduan tugas yang lebih sederhana dan pendampingan.
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        {/* Evaluasi per Desa */}
+        <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <ListOrdered size={16} /> Kuesioner SUS — Feedback User (Skala Likert 1–5)
+              <Users size={16} /> Perbandingan UAT &amp; SUS Antar 3 Desa (N=42 / Desa)
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart
+                data={DESA_BAB4.map((d) => ({
+                  desa: d.nama.replace('Desa ', ''),
+                  UAT: d.evaluasiRQ3.uat,
+                  SUS: d.evaluasiRQ3.sus,
+                }))}
+                margin={{ top: 5, right: 15, left: -10, bottom: 5 }}
+                barSize={24}
+              >
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                <XAxis dataKey="desa" tick={{ fontSize: 11, fill: '#334155' }} axisLine={false} tickLine={false} />
+                <YAxis domain={[50, 100]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Legend wrapperStyle={{ fontSize: 10 }} />
+                <Bar dataKey="UAT" name="UAT (%)" fill="#276749" radius={[4, 4, 0, 0]} />
+                <Bar dataKey="SUS" name="Skor SUS" fill="#2b6cb0" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+            <p className="text-[10px] text-slate-500 mt-2">
+              Waktu luring tercatat: Jonggon Jaya 915 menit · Kedang Ipil 918 menit · Lung Anai <strong>2.928 menit</strong> (memperkuat urgensi mode offline-first).
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Log 4 Minggu */}
+        <Card className="shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
+              <Calendar size={16} /> Perkembangan Log Penggunaan 4 Minggu (504 Entri Log)
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs">
                 <thead>
-                  <tr className="border-b-2 border-gray-200">
-                    <th className="text-center py-2.5 px-2 text-[10px] font-bold text-gray-400 uppercase w-12">No</th>
-                    <th className="text-left py-2.5 px-2 text-[10px] font-bold text-gray-400 uppercase">Pertanyaan Kuesioner SUS (System Usability Scale)</th>
-                    <th className="text-right py-2.5 px-2 text-[10px] font-bold text-blue-600 uppercase w-20">Rerata</th>
+                  <tr className="border-b bg-slate-50 text-[10px] text-slate-500 uppercase">
+                    <th className="py-2 px-2 text-left">Periode</th>
+                    <th className="py-2 px-2 text-right">Selesai</th>
+                    <th className="py-2 px-2 text-right">Tingkat</th>
+                    <th className="py-2 px-2 text-right">Kesalahan</th>
+                    <th className="py-2 px-2 text-right">Bantuan</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {susQuestions.map((q, i) => (
-                    <tr key={i} className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/40'}`}>
-                      <td className="py-2.5 px-2 text-center">
-                        <div className={`w-6 h-6 rounded-full mx-auto flex items-center justify-center ${q.positif ? 'bg-blue-100' : 'bg-orange-100'}`}>
-                          <span className={`text-[10px] font-black ${q.positif ? 'text-blue-700' : 'text-orange-700'}`}>{q.q}</span>
-                        </div>
-                      </td>
-                      <td className="py-2.5 px-2 text-[12px] text-slate-700 leading-snug">
-                        {q.text}
-                        <span className={`ml-2 text-[9px] font-bold px-1 py-0.5 rounded ${q.positif ? 'bg-blue-100 text-blue-600' : 'bg-orange-100 text-orange-600'}`}>
-                          {q.positif ? '+' : '−'}
-                        </span>
-                      </td>
-                      <td className="py-2.5 px-2 text-right font-black font-mono text-[13px]" style={{ color: q.positif ? '#2b6cb0' : '#c05621' }}>
-                        {q.rerata.toFixed(2)}
-                      </td>
+                  {LOG_4_MINGGU_BAB4.map((l) => (
+                    <tr key={l.periode} className="border-b last:border-0">
+                      <td className="py-2.5 px-2 font-bold text-slate-800">{l.periode}</td>
+                      <td className="py-2.5 px-2 text-right font-mono">{l.selesai}/{l.direncanakan}</td>
+                      <td className="py-2.5 px-2 text-right font-mono font-bold text-emerald-700">{l.tingkat.toFixed(2)}%</td>
+                      <td className="py-2.5 px-2 text-right font-mono text-red-600">{l.kesalahan}</td>
+                      <td className="py-2.5 px-2 text-right font-mono text-amber-700">{l.bantuan}</td>
                     </tr>
                   ))}
                 </tbody>
-                <tfoot>
-                  <tr className="bg-blue-50 border-t-2 border-blue-200">
-                    <td colSpan={2} className="py-2.5 px-2 text-[11px] font-bold text-blue-800">
-                      SUS Score = Σ [(Positif − 1) + (5 − Negatif)] × 2.5
-                    </td>
-                    <td className="py-2.5 px-2 text-right text-lg font-black text-blue-800">{susScore.toFixed(2)}</td>
-                  </tr>
-                </tfoot>
               </table>
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Interpretasi & Skala */}
-        <Card className="shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <Award size={16} /> Interpretasi Hasil SUS
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {/* Hasil */}
-            <div className="p-4 rounded-xl border-2 text-center" style={{ borderColor: susInfo.color, backgroundColor: susInfo.bg }}>
-              <CheckCircle2 size={28} className="mx-auto mb-2" style={{ color: susInfo.color }} />
-              <p className="text-4xl font-black" style={{ color: susInfo.color }}>{susScore.toFixed(2)}</p>
-              <p className="text-sm font-black mt-1" style={{ color: susInfo.color }}>{susInfo.label}</p>
-              <p className="text-[11px] text-gray-600 mt-1">Sistem diterima dan usable</p>
-            </div>
-
-            {/* Skala SUS */}
-            <div className="space-y-1.5">
-              <p className="text-[11px] font-bold text-gray-500 uppercase">Skala Penilaian SUS</p>
-              {[
-                { range: '90 – 100', grade: 'Grade A+ (Best)', color: '#276749' },
-                { range: '78 – 89', grade: 'Grade A (Excellent)', color: '#2b6cb0' },
-                { range: '68 – 77', grade: 'Grade B (Good)', color: '#d69e2e' },
-                { range: '51 – 67', grade: 'Grade C (OK)', color: '#c05621' },
-                { range: '0 – 50', grade: 'Grade D/F (Poor)', color: '#e53e3e' },
-              ].map((s, i) => (
-                <div key={i} className={`flex justify-between items-center p-2 rounded-lg ${susScore >= parseInt(s.range) ? 'border-2' : 'bg-gray-50'}`}
-                  style={susScore >= parseInt(s.range.split('–')[0]) && susScore <= parseInt(s.range.split('–')[1] || '100')
-                    ? { borderColor: s.color, backgroundColor: s.color + '10' } : {}}>
-                  <span className="text-[11px] text-slate-600">{s.range}</span>
-                  <span className="text-[11px] font-bold" style={{ color: s.color }}>{s.grade}</span>
-                </div>
-              ))}
-            </div>
+            <p className="text-[10px] text-slate-500 mt-2">
+              Tingkat penyelesaian meningkat dari <strong>82,14%</strong> (Minggu 1) menjadi <strong>98,41%</strong> (Minggu 4), dengan kesalahan turun dari 93 menjadi <strong>0</strong>.
+            </p>
           </CardContent>
         </Card>
       </div>
 
-      {/* UAT Test Cases */}
+      {/* Tabel 7 Peran Utama UML */}
       <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-            <ClipboardList size={16} /> UAT Test Cases — Hasil Pengujian per Modul
+            <ClipboardList size={16} /> Hasil Evaluasi UAT, SUS &amp; Kualitas per 7 Peran Utama UML (N = 18 / Peran)
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            {uatTestCases.map((tc, i) => (
-              <div key={i} className="p-3 rounded-xl border border-green-200 bg-green-50">
-                <div className="flex items-center justify-between mb-2">
-                  <p className="text-[11px] font-bold text-slate-700">{tc.modul}</p>
-                  <CheckCircle2 size={14} className="text-green-600 flex-shrink-0" />
-                </div>
-                <div className="flex items-center justify-between text-[11px]">
-                  <span className="text-slate-500">{tc.lulus}/{tc.cases} cases</span>
-                  <span className="font-black text-green-700">{tc.persen}%</span>
-                </div>
-                <div className="h-1.5 bg-green-200 rounded-full mt-1.5 overflow-hidden">
-                  <div className="h-full bg-green-600 rounded-full" style={{ width: `${tc.persen}%` }} />
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="mt-4 p-3 bg-blue-50 rounded-xl border border-blue-200 flex items-center justify-between">
-            <div>
-              <p className="text-[11px] font-bold text-blue-800">Total UAT Test Cases: {totalLulus} / {totalCases} Lulus</p>
-              <p className="text-[10px] text-blue-600 mt-0.5">Semua modul berhasil diuji dan diterima oleh pengguna</p>
-            </div>
-            <div className="text-right">
-              <p className="text-2xl font-black text-blue-800">100%</p>
-              <p className="text-[10px] text-blue-600">Pass Rate</p>
-            </div>
+          <div className="overflow-x-auto">
+            <table className="w-full text-xs">
+              <thead>
+                <tr className="border-b-2 border-gray-200 bg-gray-50">
+                  {['Peran Utama UML', 'Komponen', 'Fitur', 'N', 'Kualitas (1–5)', 'Skor SUS', 'Lulus UAT (%)', 'Catatan Bab IV'].map((h, i) => (
+                    <th key={i} className="text-left py-2.5 px-2.5 text-[10px] font-bold text-gray-500 uppercase whitespace-nowrap">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {EVALUASI_PER_PERAN_BAB4.map((r, i) => (
+                  <tr key={r.peran} className={`border-b border-gray-100 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/40'}`}>
+                    <td className="py-2.5 px-2.5 font-bold text-slate-800 whitespace-nowrap">{r.peran}</td>
+                    <td className="py-2.5 px-2.5 font-mono text-[10px] text-slate-500">{r.kodeKomponen}</td>
+                    <td className="py-2.5 px-2.5 font-mono text-[10px] text-indigo-700 font-bold">{r.kodeFitur}</td>
+                    <td className="py-2.5 px-2.5 font-mono">{r.n}</td>
+                    <td className="py-2.5 px-2.5 font-mono font-bold text-blue-700">{r.kualitasTotal.toFixed(2)}</td>
+                    <td className="py-2.5 px-2.5 font-mono font-bold text-purple-700">{r.sus.toFixed(2)}</td>
+                    <td className="py-2.5 px-2.5 font-mono font-bold text-emerald-700">{r.uat.toFixed(2)}%</td>
+                    <td className="py-2.5 px-2.5 text-[11px] text-slate-600">{r.catatan}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </CardContent>
       </Card>

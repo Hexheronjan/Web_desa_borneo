@@ -26,25 +26,27 @@ const STATS_CONFIG: Record<StatType, {
   data: { name: string; value: number }[];
 }> = {
   penduduk: {
-    label: 'Statistik Penduduk',
-    sumber: 'Dukcapil Kab. Pulang Pisau',
-    periode: 'Semester I 2026',
+    label: 'Statistik Penduduk (3 Desa Bab IV)',
+    sumber: 'BPS Kab. Kutai Kartanegara (2025)',
+    periode: 'Data Rujukan 2024 / Evaluasi 2026',
     status: 'Terverifikasi',
     icon: <Users size={16} />,
     data: [
-      { name: 'Laki-laki', value: 1450 },
-      { name: 'Perempuan', value: 1397 },
+      { name: 'Jonggon Jaya (Loa Kulu)', value: 2553 },
+      { name: 'Kedang Ipil (Kota Bangun Darat)', value: 1505 },
+      { name: 'Lung Anai (Loa Kulu)', value: 480 },
     ]
   },
   keluarga: {
-    label: 'Statistik Keluarga',
-    sumber: 'Regsosek 2026',
-    periode: 'Semester I 2026',
+    label: 'Statistik Kepala Keluarga & RT',
+    sumber: 'BPS Kab. Kutai Kartanegara (2025)',
+    periode: 'Data Rujukan 2024 / Evaluasi 2026',
     status: 'Terverifikasi',
     icon: <Landmark size={16} />,
     data: [
-      { name: 'Keluarga Sejahtera', value: 450 },
-      { name: 'Keluarga Pra-Sejahtera', value: 292 },
+      { name: 'KK Jonggon Jaya (17 RT)', value: 825 },
+      { name: 'KK Lung Anai (4 RT)', value: 152 },
+      { name: 'RT Kedang Ipil (2 Dusun)', value: 12 },
     ]
   },
   usia: {
@@ -158,10 +160,10 @@ export default function StatistikDesaPage() {
       <PageTitle fitur="Statistik Desa" modul="Pemerintah Desa" color={COLOR} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Total Kategori" value="10" satuan="Bidang Statistik" barColor="purple" progress={100} />
-        <StatCard label="Total Penduduk" value="2,847" satuan="Jiwa" barColor="blue" progress={100} />
-        <StatCard label="Total Keluarga" value="742" satuan="Kepala Keluarga" barColor="green" progress={100} />
-        <StatCard label="Status Validasi" value="98%" satuan="Terverifikasi Pemda" barColor="orange" progress={98} />
+        <StatCard label="Desa Penelitian" value="3 Desa" satuan="Kab. Kutai Kartanegara" barColor="purple" progress={100} />
+        <StatCard label="Total Penduduk (3 Desa)" value="4.538" satuan="2.553 + 1.505 + 480 Jiwa" barColor="blue" progress={100} />
+        <StatCard label="Total RT (3 Desa)" value="33 RT" satuan="17 + 12 + 4 RT" barColor="green" progress={100} />
+        <StatCard label="Responden Evaluasi" value="126" satuan="42 Responden/Desa" barColor="orange" progress={100} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-5">
@@ -197,7 +199,7 @@ export default function StatistikDesaPage() {
             <div className="flex gap-2 flex-wrap text-[10px]">
               <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-semibold">Periode: {activeData.periode}</span>
               <span className="bg-slate-100 text-slate-600 px-2 py-0.5 rounded font-semibold">Sumber: {activeData.sumber}</span>
-              <span className="bg-green-150 text-green-700 px-2 py-0.5 rounded font-bold">{activeData.status}</span>
+              <span className="bg-green-200 text-green-700 px-2 py-0.5 rounded font-bold">{activeData.status}</span>
             </div>
           </CardHeader>
 
@@ -223,7 +225,7 @@ export default function StatistikDesaPage() {
             {/* TABEL DATA */}
             <div>
               <p className="font-bold text-slate-700 text-xs mb-2">Tabel Rincian Data:</p>
-              <div className="overflow-x-auto rounded-lg border border-slate-150">
+              <div className="overflow-x-auto rounded-lg border border-slate-200">
                 <table className="w-full text-xs">
                   <thead className="bg-slate-50 text-slate-500 font-bold text-left">
                     <tr>

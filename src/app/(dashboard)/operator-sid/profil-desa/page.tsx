@@ -11,24 +11,24 @@ const COLOR = '#00695c';
 export default function ProfilDesaPage() {
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
-    namaDesa: 'Desa Adat Borneo',
-    kodeDesa: '6201010001',
-    kodePos: '74311',
-    kecamatan: 'Kecamatan Tumbang Samba',
-    kabupaten: 'Kabupaten Pulang Pisau',
-    provinsi: 'Provinsi Kalimantan Tengah',
-    luasWilayah: '125.5',
-    jumlahPenduduk: '2847',
-    jumlahKepalaKeluarga: '712',
-    jumlahRT: '12',
-    jumlahRW: '4',
-    tahunBentuk: '1985',
-    nipPerangkatDesa: '198501012005001',
-    telepon: '(0536) 234567',
-    email: 'admin@desaborneo.id',
-    website: 'www.desaborneo.id',
-    latitude: '-1.2345',
-    longitude: '113.6789',
+    namaDesa: 'Desa Lung Anai',
+    kodeDesa: '6402032014',
+    kodePos: '75571',
+    kecamatan: 'Kecamatan Loa Kulu',
+    kabupaten: 'Kabupaten Kutai Kartanegara',
+    provinsi: 'Provinsi Kalimantan Timur',
+    luasWilayah: '1.85',
+    jumlahPenduduk: '480',
+    jumlahKepalaKeluarga: '152',
+    jumlahRT: '4',
+    jumlahRW: '1',
+    tahunBentuk: '2007',
+    nipPerangkatDesa: '198501012007001',
+    telepon: '(0541) 661234',
+    email: 'operator@borneo.id',
+    website: 'www.lunganai.kutai.id',
+    latitude: '-0.5412',
+    longitude: '116.8245',
   });
 
   const handleSave = () => {
@@ -41,10 +41,10 @@ export default function ProfilDesaPage() {
       <PageTitle fitur="Profil Desa" modul="Operator SID" color={COLOR} />
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Luas Wilayah" value="125.5" satuan="km²" barColor="green" progress={80} />
-        <StatCard label="Kepadatan" value="22.7" satuan="jiwa/km²" barColor="blue" progress={65} />
-        <StatCard label="Jumlah RT" value={12} satuan="RT" barColor="purple" progress={100} />
-        <StatCard label="Jumlah RW" value={4} satuan="RW" barColor="orange" progress={100} />
+        <StatCard label="Luas Wilayah" value="1,85" satuan="km² (Lung Anai)" barColor="green" progress={80} />
+        <StatCard label="Jumlah Penduduk" value="480" satuan="jiwa (152 KK)" barColor="blue" progress={65} />
+        <StatCard label="Jumlah RT" value={4} satuan="RT (Desa Budaya)" barColor="purple" progress={100} />
+        <StatCard label="Lokus Penelitian" value="3 Desa" satuan="Kab. Kutai Kartanegara" barColor="orange" progress={100} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">

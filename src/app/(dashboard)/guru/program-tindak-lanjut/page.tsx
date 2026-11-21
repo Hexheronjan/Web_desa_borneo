@@ -98,7 +98,7 @@ export default function ProgramTindakLanjutPage() {
                 </div>
               </div>
 
-              <div className="p-2 rounded bg-slate-50 border text-[9px] italic text-slate-550">
+              <div className="p-2 rounded bg-slate-50 border text-[9px] italic text-slate-600">
                 <strong>Evaluasi Terkini:</strong> {item.evaluasi}
               </div>
             </div>

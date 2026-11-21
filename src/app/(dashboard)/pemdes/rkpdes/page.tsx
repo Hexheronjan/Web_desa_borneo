@@ -78,7 +78,7 @@ export default function RencanaTindakLanjutPage() {
 
       {/* FILTER DASAR TINDAKAN */}
       <div className="flex items-center justify-between flex-wrap gap-2 p-3 bg-slate-50 border rounded-xl">
-        <span className="text-xs font-bold text-slate-705">Saring Berdasarkan Dasar Tindakan:</span>
+        <span className="text-xs font-bold text-slate-700">Saring Berdasarkan Dasar Tindakan:</span>
         <div className="flex gap-1">
           {['Semua', 'Kesenjangan', 'Rekomendasi DSS', 'Keputusan Musdes'].map(d => (
             <button
@@ -138,7 +138,7 @@ export default function RencanaTindakLanjutPage() {
               <div className="p-2.5 bg-slate-50 border rounded-lg flex items-center justify-between gap-4 text-[11px]">
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-slate-500">Bukti Perubahan:</span>
-                  <span className="font-semibold text-indigo-750 flex items-center gap-0.5"><FileText size={12} /> {r.buktiPerubahan}</span>
+                  <span className="font-semibold text-indigo-800 flex items-center gap-0.5"><FileText size={12} /> {r.buktiPerubahan}</span>
                 </div>
                 <span className="text-[10px] text-slate-400">Verifikasi Dokumen: OK</span>
               </div>

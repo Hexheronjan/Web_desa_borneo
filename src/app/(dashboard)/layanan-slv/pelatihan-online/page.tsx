@@ -90,7 +90,7 @@ export default function PelatihanOnlinePage() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             <div className="space-y-1">
-              <label className="font-bold text-slate-550 uppercase">Filter Bidang Kategori:</label>
+              <label className="font-bold text-slate-600 uppercase">Filter Bidang Kategori:</label>
               <select value={kategori} onChange={e => setKategori(e.target.value)} className="w-full p-2 border rounded-lg bg-white">
                 <option value="Semua">Semua Kategori</option>
                 <option value="Kesehatan">Kesehatan</option>
@@ -102,7 +102,7 @@ export default function PelatihanOnlinePage() {
             </div>
 
             <div className="space-y-1">
-              <label className="font-bold text-slate-550 uppercase">Filter Tingkat Kesulitan:</label>
+              <label className="font-bold text-slate-600 uppercase">Filter Tingkat Kesulitan:</label>
               <select value={tingkat} onChange={e => setTingkat(e.target.value)} className="w-full p-2 border rounded-lg bg-white">
                 <option value="Semua">Semua Tingkat</option>
                 <option value="Pemula">Pemula</option>
@@ -116,7 +116,7 @@ export default function PelatihanOnlinePage() {
       </Card>
 
       {/* SECTION 1: PELATIHAN SAYA (AKTIF / SELESAI) */}
-      <h2 className="text-xs font-bold text-slate-650 uppercase tracking-wider">Pelatihan Saya</h2>
+      <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Pelatihan Saya</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {list.filter(p => p.status !== 'Belum').map(p => (
           <Card key={p.id} className="border border-green-500 bg-green-50/10">
@@ -174,7 +174,7 @@ export default function PelatihanOnlinePage() {
       </div>
 
       {/* SECTION 2: PELATIHAN TERSEDIA */}
-      <h2 className="text-xs font-bold text-slate-650 uppercase tracking-wider">Rekomendasi Pelatihan Baru</h2>
+      <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Rekomendasi Pelatihan Baru</h2>
       <div className="space-y-3">
         {filteredPelatihan.filter(p => p.status === 'Belum').map(p => (
           <Card key={p.id} className="border border-slate-200">
@@ -182,9 +182,9 @@ export default function PelatihanOnlinePage() {
               
               <div className="flex justify-between items-start gap-2 flex-wrap">
                 <div>
-                  <span className="text-[9px] font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-150 mr-2">{p.kategori}</span>
+                  <span className="text-[9px] font-bold text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-200 mr-2">{p.kategori}</span>
                   <span className="text-[9px] font-bold text-slate-400 mr-2">{p.tingkat}</span>
-                  <span className="text-[9px] text-slate-450">⏱️ {p.durasi} Jam • {p.jumlahModul} Modul</span>
+                  <span className="text-[9px] text-slate-500">⏱️ {p.durasi} Jam • {p.jumlahModul} Modul</span>
                   <h3 className="font-bold text-slate-805 text-sm mt-1">{p.nama}</h3>
                 </div>
                 
@@ -193,7 +193,7 @@ export default function PelatihanOnlinePage() {
                 </button>
               </div>
 
-              <p className="text-slate-550 leading-relaxed">{p.deskripsi}</p>
+              <p className="text-slate-600 leading-relaxed">{p.deskripsi}</p>
 
             </CardContent>
           </Card>

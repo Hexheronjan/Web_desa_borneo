@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
@@ -29,7 +29,7 @@ export function AppHeader() {
       day: "2-digit",
       month: "short",
       year: "numeric",
-      timeZone: "Asia/Jakarta",
+      timeZone: "Asia/Makassar",
     }).format(date);
   }, [now]);
 
@@ -39,8 +39,8 @@ export function AppHeader() {
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
-      timeZone: "Asia/Jakarta",
-    }).format(date)} WIB`;
+      timeZone: "Asia/Makassar",
+    }).format(date)} WITA`;
   }, [now]);
 
   const displayFitur = (roleInfo.key === "warga" && fitur === "Dashboard") ? "Dasbor Partisipasi" : fitur;
@@ -91,8 +91,8 @@ export function AppHeader() {
                 pemerintah_desa: 'Pemerintah Desa',
                 bpd: 'BPD',
                 lembaga_adat: 'Lembaga Adat',
-                guru_fasilitator: 'Guru Fasilitator',
-                nakes_posyandu: 'Nakes Posyandu',
+                guru_fasilitator: 'Guru/Tenaga Pendidikan',
+                nakes_posyandu: 'Tenaga Kesehatan',
                 warga: 'Tokoh Masyarakat',
                 dinas_pmd: 'Dinas PMD',
                 peneliti: 'Peneliti',

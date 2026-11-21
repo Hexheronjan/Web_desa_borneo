@@ -9,15 +9,15 @@ export async function GET() {
       return NextResponse.json({ success: false, error: "Data desa tidak ditemukan" }, { status: 400 });
     }
 
-    // Get real counts from database
+    // Get real counts from databasea
     const totalUsers = await prisma.user.count({ where: { desaId: desa.id } });
     const totalWarga = await prisma.warga.count({ where: { desaId: desa.id } });
     const totalKelas = await prisma.kelas.count({ where: { desaId: desa.id } });
     const totalRekamMedis = await prisma.rekamMedis.count();
-    const totalPosyandu = await prisma.posyandu.count({ where: { desaId: desa.id }});
-    const totalPengurus = await prisma.pengurus.count({ where: { desaId: desa.id }});
-    const totalArsipAdat = await prisma.arsipAdat.count({ where: { desaId: desa.id }});
-    const totalAspirasi = await prisma.aspirasi.count({ where: { desaId: desa.id }});
+    const totalPosyandu = await prisma.posyandu.count({ where: { desaId: desa.id } });
+    const totalPengurus = await prisma.pengurus.count({ where: { desaId: desa.id } });
+    const totalArsipAdat = await prisma.arsipAdat.count({ where: { desaId: desa.id } });
+    const totalAspirasi = await prisma.aspirasi.count({ where: { desaId: desa.id } });
 
     // Monthly trend data (mock with real base numbers)
     const trendBulanan = [

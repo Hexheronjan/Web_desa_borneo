@@ -65,7 +65,7 @@ export default function APKPage() {
             <p>APK di atas 100% (pada jenjang SD & SMP) menunjukkan adanya siswa luar usia sekolah atau siswa pindahan luar desa yang tertampung di fasilitas belajar desa adat.</p>
             <div className="p-3 bg-blue-50 border border-blue-100 rounded-lg">
               <p className="font-bold text-blue-800 mb-1">Catatan Analitis</p>
-              <p>Daya tampung sekolah dasar tergolong sangat mencukupi, namun perlu diimbangi dengan kualitas guru dan buku ajar budaya Kalimantan Tengah.</p>
+              <p>Daya tampung sekolah dasar tergolong sangat mencukupi, namun perlu diimbangi dengan kualitas guru, literasi digital, dan buku ajar budaya lokal Kabupaten Kutai Kartanegara, Kalimantan Timur.</p>
             </div>
           </CardContent>
         </Card>

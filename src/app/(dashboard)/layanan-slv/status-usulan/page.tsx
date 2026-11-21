@@ -82,7 +82,7 @@ export default function StatusUsulanPage() {
         </CardContent>
       </Card>
 
-      <h2 className="text-xs font-bold text-slate-650 uppercase tracking-wider">Daftar Usulan Terdaftar</h2>
+      <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Daftar Usulan Terdaftar</h2>
 
       <div className="space-y-3.5 text-xs">
         {data.map(u => (
@@ -104,10 +104,10 @@ export default function StatusUsulanPage() {
 
               <div>
                 <h3 className="font-bold text-slate-805 text-sm">{u.namaUsulan}</h3>
-                <p className="text-slate-550 leading-relaxed mt-1 text-[11px] font-medium">{u.keterangan}</p>
+                <p className="text-slate-600 leading-relaxed mt-1 text-[11px] font-medium">{u.keterangan}</p>
               </div>
 
-              <div className="border-t pt-2 flex justify-between items-center text-[9px] text-slate-450">
+              <div className="border-t pt-2 flex justify-between items-center text-[9px] text-slate-500">
                 <span>Tanggal Terdaftar: {u.tanggal}</span>
                 <span className="flex items-center gap-0.5">Status: <strong>{u.status}</strong></span>
               </div>

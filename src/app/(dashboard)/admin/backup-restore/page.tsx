@@ -138,7 +138,7 @@ export default function BackupRestorePage() {
                       <TableCell className="font-mono">{b.ukuran}</TableCell>
                       <TableCell>
                         <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold border ${
-                          b.tipe === 'Manual' ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-50 text-slate-650'
+                          b.tipe === 'Manual' ? 'bg-indigo-50 text-indigo-700 border-indigo-200' : 'bg-slate-50 text-slate-700'
                         }`}>
                           {b.tipe}
                         </span>
@@ -191,7 +191,7 @@ export default function BackupRestorePage() {
               </div>
 
               <div className="p-3 border rounded-lg bg-slate-50 space-y-2">
-                <p className="font-bold text-[10px] text-indigo-850 uppercase">Simulasi Pemulihan:</p>
+                <p className="font-bold text-[10px] text-indigo-900 uppercase">Simulasi Pemulihan:</p>
                 <p className="text-[10px] text-slate-500 font-semibold leading-normal">
                   Sistem mendeteksi arsitektur PostgreSQL valid, file kompresi utuh, dan siap didekripsi tanpa downtime database cadangan.
                 </p>

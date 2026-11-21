@@ -5,81 +5,53 @@ import { PageTitle } from '@/components/shared/PageTitle';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   LineChart, Line, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
-  ScatterChart, Scatter, ZAxis, PieChart, Pie, Cell,
+  PieChart, Pie, Cell, Legend,
 } from 'recharts';
 import { BarChart3, TrendingUp, Activity, PieChart as PieIcon } from 'lucide-react';
+import {
+  DESA_BAB4,
+  DIMENSI_BAB4,
+  LOG_4_MINGGU_BAB4,
+  PREPOST_6_KONSTRUK_BAB4,
+  RUBRIK_KEMATANGAN_DIMENSI,
+} from '@/lib/bab4-data';
 
 const COLOR = '#1a365d';
+const DIM_COLORS = ['#1a365d', '#2b6cb0', '#276749', '#0694a2', '#553c9a', '#c05621'];
 
-const trenReadiness = [
-  { tahun: '2022', nilai: 48.20 },
-  { tahun: '2023', nilai: 55.30 },
-  { tahun: '2024', nilai: 63.10 },
-  { tahun: '2025', nilai: 74.30 },
-];
+const radar6Dimensi = DIMENSI_BAB4.map((d) => ({
+  aspek: d.singkat,
+  JonggonJaya: DESA_BAB4[0].dimensi[d.kode],
+  KedangIpil: DESA_BAB4[1].dimensi[d.kode],
+  LungAnai: DESA_BAB4[2].dimensi[d.kode],
+}));
 
-const trenQoL = [
-  { tahun: '2022', nilai: 52.10 },
-  { tahun: '2023', nilai: 58.40 },
-  { tahun: '2024', nilai: 64.80 },
-  { tahun: '2025', nilai: 71.28 },
-];
+const bobotAHPPie = DIMENSI_BAB4.map((d, i) => ({
+  name: `${d.kode} (${(d.bobot * 100).toFixed(2)}%)`,
+  value: Number((d.bobot * 100).toFixed(2)),
+  color: DIM_COLORS[i],
+}));
 
-const trenMaturity = [
-  { tahun: '2022', nilai: 1.8 },
-  { tahun: '2023', nilai: 2.3 },
-  { tahun: '2024', nilai: 2.8 },
-  { tahun: '2025', nilai: 3.15 },
-];
-
-const scatterData = [
-  { readiness: 58, qol: 52, z: 10 }, { readiness: 63, qol: 58, z: 10 },
-  { readiness: 68, qol: 62, z: 10 }, { readiness: 70, qol: 65, z: 10 },
-  { readiness: 72, qol: 68, z: 10 }, { readiness: 74, qol: 71, z: 10 },
-  { readiness: 76, qol: 73, z: 10 }, { readiness: 80, qol: 77, z: 10 },
-  { readiness: 84, qol: 80, z: 10 },
-];
-
-const distribusiDimensi = [
-  { name: 'SDM & Literasi (21%)', value: 21, color: '#2b6cb0' },
-  { name: 'Infrastruktur (16%)', value: 16, color: '#276749' },
-  { name: 'Kesehatan (15%)', value: 15, color: '#c05621' },
-  { name: 'Ekonomi (17%)', value: 17, color: '#c53030' },
-  { name: 'Lingkungan (9%)', value: 9, color: '#553c9a' },
-  { name: 'Sosial Budaya (13%)', value: 13, color: '#d69e2e' },
-  { name: 'Kelembagaan (9%)', value: 9, color: '#0694a2' },
-];
-
-const radarDimensi = [
-  { aspek: 'SDM & Literasi', nilai: 68.8 },
-  { aspek: 'Infrastruktur', nilai: 72.6 },
-  { aspek: 'Kesehatan', nilai: 75.7 },
-  { aspek: 'Ekonomi', nilai: 62.9 },
-  { aspek: 'Lingkungan', nilai: 71.7 },
-  { aspek: 'Sosial Budaya', nilai: 80.5 },
-  { aspek: 'Kelembagaan', nilai: 70.8 },
-];
-
-const grafik = [
-  { jenis: 'Bar Chart', jumlah: 8, warna: '#2b6cb0' },
-  { jenis: 'Line Chart', jumlah: 5, warna: '#276749' },
-  { jenis: 'Pie/Donut', jumlah: 4, warna: '#553c9a' },
-  { jenis: 'Radar Chart', jumlah: 3, warna: '#c05621' },
-  { jenis: 'Scatter Plot', jumlah: 2, warna: '#d69e2e' },
-];
+const perbandinganDesa = DESA_BAB4.map((d) => ({
+  desa: d.nama.replace('Desa ', ''),
+  Kesiapan: d.skorKesiapan,
+  SDGsAkhir: d.sdgKPI.akhir,
+  UAT: d.evaluasiRQ3.uat,
+  SUS: d.evaluasiRQ3.sus,
+}));
 
 export default function VisualisasiDataPage() {
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Grafik Visualisasi Data" modul="Analitik Penelitian" color={COLOR} />
+      <PageTitle fitur="Visualisasi Data Penelitian Bab IV" modul="Analitik Penelitian (Dataset SLV 1–3 v1.2)" color={COLOR} />
 
       {/* KPI */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: 'Total Grafik', value: '22', sub: '5 Jenis Visualisasi', color: COLOR, icon: BarChart3 },
-          { label: 'Dataset', value: '4', sub: 'Kategori Dataset', color: '#276749', icon: Activity },
-          { label: 'Tren Readiness', value: '+19.0', sub: '2022–2025', color: '#2b6cb0', icon: TrendingUp },
-          { label: 'R² Korelasi', value: '0.756', sub: 'Readiness vs QoL', color: '#553c9a', icon: PieIcon },
+          { label: 'Dimensi & Indikator', value: '6 / 24', sub: 'CR AHP Dimensi 0,00144', color: COLOR, icon: BarChart3 },
+          { label: 'Lokus Penelitian', value: '3 Desa', sub: 'N = 126 (7 peran × 18)', color: '#276749', icon: Activity },
+          { label: 'Log 4 Minggu', value: '82,1% → 98,4%', sub: 'Kesalahan 93 → 0', color: '#2b6cb0', icon: TrendingUp },
+          { label: 'Konstruk Signifikan', value: '5 dari 6', sub: 'Uji Berpasangan (Holm)', color: '#553c9a', icon: PieIcon },
         ].map((kpi, i) => {
           const Icon = kpi.icon;
           return (
@@ -97,171 +69,146 @@ export default function VisualisasiDataPage() {
         })}
       </div>
 
-      {/* Tren Readiness & QoL */}
+      {/* Perbandingan 3 Desa & Log 4 Minggu */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <TrendingUp size={16} /> Tren Readiness Index (2022–2025)
+              <BarChart3 size={16} /> Perbandingan Kesiapan, SDGs KPI, UAT &amp; SUS (3 Desa)
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={180}>
-              <LineChart data={trenReadiness} margin={{ top: 5, right: 15, left: -10, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="tahun" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <YAxis domain={[40, 80]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}`, 'Readiness']} />
-                <Line type="monotone" dataKey="nilai" stroke="#2b6cb0" strokeWidth={3} dot={{ r: 5, fill: '#2b6cb0' }} activeDot={{ r: 7 }} />
-              </LineChart>
+            <ResponsiveContainer width="100%" height={220}>
+              <BarChart data={perbandinganDesa} margin={{ top: 5, right: 10, left: -10, bottom: 5 }} barSize={16}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                <XAxis dataKey="desa" tick={{ fontSize: 10, fill: '#334155' }} axisLine={false} tickLine={false} />
+                <YAxis domain={[30, 100]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Legend wrapperStyle={{ fontSize: 10 }} />
+                <Bar dataKey="Kesiapan" fill="#1a365d" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="SDGsAkhir" name="SDGs Akhir (%)" fill="#276749" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="UAT" name="UAT (%)" fill="#2b6cb0" radius={[3, 3, 0, 0]} />
+                <Bar dataKey="SUS" fill="#c05621" radius={[3, 3, 0, 0]} />
+              </BarChart>
             </ResponsiveContainer>
-            <div className="mt-2 grid grid-cols-4 gap-2">
-              {trenReadiness.map((t, i) => (
-                <div key={i} className="text-center p-1.5 rounded-lg bg-blue-50">
-                  <p className="text-[9px] text-blue-600 font-bold">{t.tahun}</p>
-                  <p className="text-sm font-black text-blue-800">{t.nilai}</p>
-                </div>
-              ))}
-            </div>
           </CardContent>
         </Card>
 
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <TrendingUp size={16} /> Tren Quality of Life Index (2022–2025)
+              <TrendingUp size={16} /> Tren Penyelesaian Tugas &amp; Penurunan Kesalahan (Minggu 1–4)
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={180}>
-              <LineChart data={trenQoL} margin={{ top: 5, right: 15, left: -10, bottom: 5 }}>
+            <ResponsiveContainer width="100%" height={220}>
+              <LineChart data={[...LOG_4_MINGGU_BAB4]} margin={{ top: 5, right: 15, left: -10, bottom: 5 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="tahun" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <YAxis domain={[40, 80]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}`, 'QoL']} />
-                <Line type="monotone" dataKey="nilai" stroke="#276749" strokeWidth={3} dot={{ r: 5, fill: '#276749' }} activeDot={{ r: 7 }} />
+                <XAxis dataKey="periode" tick={{ fontSize: 10, fill: '#334155' }} axisLine={false} tickLine={false} />
+                <YAxis domain={[0, 110]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
+                <Legend wrapperStyle={{ fontSize: 10 }} />
+                <Line type="monotone" dataKey="tingkat" name="Tingkat Selesai (%)" stroke="#276749" strokeWidth={2.5} dot={{ r: 4 }} />
+                <Line type="monotone" dataKey="kesalahan" name="Jumlah Kesalahan" stroke="#e53e3e" strokeWidth={2.5} dot={{ r: 4 }} />
+                <Line type="monotone" dataKey="bantuan" name="Permintaan Bantuan" stroke="#c05621" strokeWidth={2} strokeDasharray="4 4" dot={{ r: 3 }} />
               </LineChart>
             </ResponsiveContainer>
-            <div className="mt-2 grid grid-cols-4 gap-2">
-              {trenQoL.map((t, i) => (
-                <div key={i} className="text-center p-1.5 rounded-lg bg-green-50">
-                  <p className="text-[9px] text-green-600 font-bold">{t.tahun}</p>
-                  <p className="text-sm font-black text-green-800">{t.nilai}</p>
-                </div>
-              ))}
-            </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Scatter + Radar + Pie */}
+      {/* Radar 6 Dimensi + Pie Bobot AHP + Rubrik Kematangan */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        {/* Scatter Readiness vs QoL */}
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <Activity size={16} /> Korelasi Readiness vs QoL
+              <Activity size={16} /> Radar 6 Dimensi Kesiapan (D1–D6)
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <ResponsiveContainer width="100%" height={180}>
-              <ScatterChart margin={{ top: 5, right: 10, left: -10, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                <XAxis dataKey="readiness" type="number" domain={[55, 90]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} name="Readiness" label={{ value: 'Readiness', position: 'bottom', fontSize: 10, fill: '#94a3b8' }} />
-                <YAxis dataKey="qol" type="number" domain={[50, 85]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} name="QoL" />
-                <ZAxis range={[30, 30]} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any, name: any) => [v, name === 'readiness' ? 'Readiness' : 'QoL']} />
-                <Scatter data={scatterData} fill="#553c9a" />
-              </ScatterChart>
-            </ResponsiveContainer>
-            <p className="text-center text-[11px] text-purple-700 font-black mt-1">R² = 0.756 (Korelasi Kuat)</p>
-          </CardContent>
-        </Card>
-
-        {/* Radar dimensi */}
-        <Card className="shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <Activity size={16} /> Radar Chart 7 Dimensi
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ResponsiveContainer width="100%" height={200}>
-              <RadarChart data={radarDimensi} margin={{ top: 10, right: 25, bottom: 10, left: 25 }}>
+            <ResponsiveContainer width="100%" height={210}>
+              <RadarChart data={radar6Dimensi} margin={{ top: 10, right: 20, bottom: 10, left: 20 }}>
                 <PolarGrid stroke="#bee3f8" />
                 <PolarAngleAxis dataKey="aspek" tick={{ fontSize: 9, fill: '#1a365d', fontWeight: 600 }} />
-                <PolarRadiusAxis angle={30} domain={[55, 90]} tick={false} />
-                <Radar dataKey="nilai" stroke="#2b6cb0" fill="#2b6cb0" fillOpacity={0.2} strokeWidth={2} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}`, 'Nilai']} />
+                <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} />
+                <Radar name="Jonggon Jaya" dataKey="JonggonJaya" stroke="#2b6cb0" fill="#2b6cb0" fillOpacity={0.18} strokeWidth={2} />
+                <Radar name="Kedang Ipil" dataKey="KedangIpil" stroke="#276749" fill="#276749" fillOpacity={0.12} strokeWidth={2} />
+                <Radar name="Lung Anai" dataKey="LungAnai" stroke="#c05621" fill="#c05621" fillOpacity={0.12} strokeWidth={2} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} />
               </RadarChart>
             </ResponsiveContainer>
           </CardContent>
         </Card>
 
-        {/* Pie distribusi bobot dimensi */}
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <PieIcon size={16} /> Distribusi Bobot Dimensi Readiness
+              <PieIcon size={16} /> Distribusi Bobot AHP 6 Dimensi
             </CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={140}>
               <PieChart>
-                <Pie data={distribusiDimensi} dataKey="value" cx="50%" cy="50%" outerRadius={60} stroke="none">
-                  {distribusiDimensi.map((d, i) => <Cell key={i} fill={d.color} />)}
+                <Pie data={bobotAHPPie} dataKey="value" cx="50%" cy="50%" outerRadius={58} stroke="none">
+                  {bobotAHPPie.map((d, i) => <Cell key={i} fill={d.color} />)}
                 </Pie>
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}%`, 'Bobot']} />
+                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}%`, 'Bobot AHP']} />
               </PieChart>
             </ResponsiveContainer>
             <div className="grid grid-cols-2 gap-1 mt-2">
-              {distribusiDimensi.map((d, i) => (
+              {bobotAHPPie.map((d, i) => (
                 <div key={i} className="flex items-center gap-1">
                   <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: d.color }} />
-                  <span className="text-[9px] text-gray-500 truncate">{d.name}</span>
+                  <span className="text-[10px] text-gray-600 truncate">{d.name}</span>
                 </div>
               ))}
             </div>
           </CardContent>
         </Card>
+
+        <Card className="shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
+              <BarChart3 size={16} /> Rubrik Kematangan M1–M6 (Pasca)
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={[...RUBRIK_KEMATANGAN_DIMENSI]} margin={{ top: 5, right: 5, left: -20, bottom: 5 }} barSize={8}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
+                <XAxis dataKey="kode" tick={{ fontSize: 9, fill: '#334155' }} axisLine={false} tickLine={false} />
+                <YAxis domain={[0, 3.5]} tick={{ fontSize: 8, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+                <Tooltip contentStyle={{ fontSize: 10, borderRadius: 8 }} />
+                <Bar dataKey="jonggonJaya" name="Jonggon Jaya" fill="#2b6cb0" radius={[2, 2, 0, 0]} />
+                <Bar dataKey="kedangIpil" name="Kedang Ipil" fill="#276749" radius={[2, 2, 0, 0]} />
+                <Bar dataKey="lungAnai" name="Lung Anai" fill="#c05621" radius={[2, 2, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* Tren Maturity */}
+      {/* Ringkasan Pra-Pasca 6 Konstruk */}
       <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-            <BarChart3 size={16} /> Tren Maturity Level (2022–2025) & Ringkasan Grafik
+            <Activity size={16} /> Delta Perubahan Pra–Pasca 6 Konstruk Evaluasi RQ3
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-            <ResponsiveContainer width="100%" height={150}>
-              <BarChart data={trenMaturity} margin={{ top: 5, right: 5, left: -20, bottom: 5 }} barSize={36}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-                <XAxis dataKey="tahun" tick={{ fontSize: 10, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-                <YAxis domain={[0, 5]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} ticks={[0,1,2,3,4,5]} />
-                <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`Level ${v}`, 'Maturity']} />
-                <Bar dataKey="nilai" fill="#c05621" radius={[4, 4, 0, 0]}>
-                  {trenMaturity.map((_, i) => <Cell key={i} fill={['#e53e3e','#d69e2e','#2b6cb0','#276749'][i]} />)}
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
-            <div className="space-y-2">
-              <p className="text-[11px] font-bold text-gray-500 uppercase">Ringkasan Jenis Grafik</p>
-              {grafik.map((g, i) => (
-                <div key={i} className="flex items-center justify-between p-2 rounded-lg bg-gray-50">
-                  <div className="flex items-center gap-2">
-                    <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: g.warna }} />
-                    <span className="text-[12px] font-semibold text-slate-700">{g.jenis}</span>
-                  </div>
-                  <span className="font-black text-[13px]" style={{ color: g.warna }}>{g.jumlah} grafik</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            {PREPOST_6_KONSTRUK_BAB4.map((c) => (
+              <div key={c.sasaran} className="p-3 rounded-xl border border-slate-200 bg-slate-50/70">
+                <div className="flex items-center justify-between mb-1">
+                  <p className="text-xs font-bold text-slate-800">{c.sasaran}</p>
+                  <span className={`px-1.5 py-0.5 rounded text-[9px] font-bold ${c.signifikan ? 'bg-green-100 text-green-700' : 'bg-amber-100 text-amber-700'}`}>
+                    {c.signifikan ? 'Signifikan' : 'NS'}
+                  </span>
                 </div>
-              ))}
-              <div className="p-2 rounded-lg bg-blue-50 border border-blue-200 flex justify-between">
-                <span className="text-[11px] font-bold text-blue-700">Total</span>
-                <span className="font-black text-[14px] text-blue-800">{grafik.reduce((s,g) => s+g.jumlah, 0)} grafik</span>
+                <p className="text-sm font-black text-blue-800">{c.sebelum.toFixed(2)} → {c.sesudah.toFixed(2)} <span className="text-emerald-700">(+{c.delta.toFixed(2)})</span></p>
+                <p className="text-[10px] text-slate-500 mt-0.5">N={c.n} · {c.uji} · p Holm = {c.pHolm}</p>
               </div>
-            </div>
+            ))}
           </div>
         </CardContent>
       </Card>

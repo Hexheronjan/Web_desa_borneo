@@ -9,14 +9,14 @@ import { useState } from 'react';
 const COLOR = '#00695c';
 
 const initialSiswa = [
-  { nisn: '0081234567', nama: 'Andi Saputra', sekolah: 'SDN 01 Borneo', jenjang: 'SD', status: 'Aktif' },
-  { nisn: '0072345678', nama: 'Siti Nurhaliza', sekolah: 'SDN 01 Borneo', jenjang: 'SD', status: 'Aktif' },
-  { nisn: '0063456789', nama: 'Rian Hidayat', sekolah: 'SMPN 02 Kahayan', jenjang: 'SMP', status: 'Aktif' },
-  { nisn: '0054567890', nama: 'Dewi Lestari', sekolah: 'SMPN 02 Kahayan', jenjang: 'SMP', status: 'Aktif' },
-  { nisn: '0045678901', nama: 'Budi Hartono', sekolah: 'SMAN 01 Pulang Pisau', jenjang: 'SMA', status: 'Aktif' },
-  { nisn: '0036789012', nama: 'Putri Dayak', sekolah: 'SMAN 01 Pulang Pisau', jenjang: 'SMA', status: 'Aktif' },
-  { nisn: '0097890123', nama: 'Rudi Hartono', sekolah: 'SDN 02 Rungan', jenjang: 'SD', status: 'Lulus' },
-  { nisn: '0088901234', nama: 'Kartini Sari', sekolah: 'SMPN 02 Kahayan', jenjang: 'SMP', status: 'Lulus' }
+  { nisn: '0081234567', nama: 'Andi Saputra', sekolah: 'SDN Lung Anai', jenjang: 'SD', status: 'Aktif' },
+  { nisn: '0072345678', nama: 'Siti Nurhaliza', sekolah: 'SDN Jonggon Jaya', jenjang: 'SD', status: 'Aktif' },
+  { nisn: '0063456789', nama: 'Rian Hidayat', sekolah: 'SMPN Loa Kulu', jenjang: 'SMP', status: 'Aktif' },
+  { nisn: '0054567890', nama: 'Dewi Lestari', sekolah: 'SMPN Kota Bangun Darat', jenjang: 'SMP', status: 'Aktif' },
+  { nisn: '0045678901', nama: 'Budi Hartono', sekolah: 'SMAN 01 Loa Kulu', jenjang: 'SMA', status: 'Aktif' },
+  { nisn: '0036789012', nama: 'Putri Dayak', sekolah: 'SMAN 01 Kutai Kartanegara', jenjang: 'SMA', status: 'Aktif' },
+  { nisn: '0097890123', nama: 'Rudi Hartono', sekolah: 'SDN Kedang Ipil', jenjang: 'SD', status: 'Lulus' },
+  { nisn: '0088901234', nama: 'Kartini Sari', sekolah: 'SMPN Loa Kulu', jenjang: 'SMP', status: 'Lulus' }
 ];
 
 export default function DataPendidikanPage() {

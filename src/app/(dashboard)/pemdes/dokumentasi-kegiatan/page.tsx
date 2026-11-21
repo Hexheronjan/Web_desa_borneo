@@ -4,8 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { PageTitle } from '@/components/shared/PageTitle';
 import { StatCard } from '@/components/shared/StatCard';
 import {
-  FileText, Landmark, Calendar, Clock, Image, ArrowRight,
-  ShieldCheck, CheckCircle2, User, RefreshCw, Layers, Plus
+  FileText, Image as ImageIcon,
+  ShieldCheck, RefreshCw, Plus
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -41,7 +41,7 @@ const MOCK_DOKUMENTASI = [
   {
     id: 'DOK-003',
     kegiatan: 'Penyusunan Kamus Bahasa Dayak Kenyah v1.0',
-    program: 'Digitalisasi Huma Betang & Sastra Adat',
+    program: 'Dokumentasi Balai Adat & Bahasa Dayak Kenyah',
     foto: 'Foto_Penyusunan_Kamus_Adat.jpg',
     beritaAcara: 'BA_Penyusunan_Kamus_LembagaAdat.pdf',
     laporan: 'Laporan_Progres_Kamus_Digital.pdf',
@@ -194,7 +194,7 @@ export default function DokumentasiKegiatanPage() {
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-[10px] text-slate-500 border-t pt-2">
-                  <p className="flex items-center gap-0.5"><Image size={11} className="text-indigo-700" /> Foto: <strong>{d.foto}</strong></p>
+                  <p className="flex items-center gap-0.5"><ImageIcon size={11} className="text-indigo-700" /> Foto: <strong>{d.foto}</strong></p>
                   <p className="flex items-center gap-0.5"><FileText size={11} className="text-indigo-700" /> Berita Acara: <strong>{d.beritaAcara}</strong></p>
                   <p className="flex items-center gap-0.5"><FileText size={11} className="text-indigo-700" /> Laporan: <strong>{d.laporan}</strong></p>
                   <p className="flex items-center gap-0.5"><ShieldCheck size={11} className="text-indigo-700" /> Bukti: <strong>{d.bukti}</strong></p>

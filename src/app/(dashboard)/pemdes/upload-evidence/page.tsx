@@ -12,33 +12,33 @@ import { useState } from 'react';
 const COLOR = '#283593';
 
 const PROGRAM_OPTIONS = [
-  { id: 'PRG-01', name: 'Peningkatan Infrastruktur Internet Dusun C', kategori: 'Infrastruktur TIK' },
-  { id: 'PRG-02', name: 'Pengembangan Literasi & PAUD Digital', kategori: 'Pendidikan' },
-  { id: 'PRG-03', name: 'Digitalisasi Layanan BUMDes Adat', kategori: 'Ekonomi' },
+  { id: 'A08', name: 'A08 — Dasbor SDGs Desa 3, 4, dan 18 (Jonggon Jaya)', kategori: 'Pemantauan SDGs & DSS (D6)' },
+  { id: 'A02-KI', name: 'A02 — Penguatan Konektivitas & Perangkat (Kedang Ipil)', kategori: 'Infrastruktur & Data (D2/D4)' },
+  { id: 'A02-LA', name: 'A02 — Penguatan Konektivitas & Mode Luring (Lung Anai)', kategori: 'Infrastruktur TIK (D2)' },
 ];
 
-const JENIS_BUKTI_OPTIONS = ['Foto Dokumentasi Kegiatan', 'Surat Keputusan (SK) / Perdes', 'Berita Acara Rapat', 'Laporan Realisasi Fisik / Keuangan'];
+const JENIS_BUKTI_OPTIONS = ['Foto Dokumentasi Kegiatan', 'Surat Keputusan (SK) / Perdes', 'Berita Acara Musyawarah', 'Persetujuan Klasifikasi Data Budaya'];
 
 const MOCK_BUKTI = [
   {
     id: 'EVID-01',
-    program: 'Peningkatan Infrastruktur Internet Dusun C',
-    kategori: 'Infrastruktur TIK',
-    jenisBukti: 'Foto Dokumentasi Kegiatan',
-    file: 'Foto_Pemasangan_Tiang_Internet.jpg',
+    program: 'A02 — Penguatan Konektivitas & Mode Luring (Lung Anai)',
+    kategori: 'Infrastruktur TIK (D2)',
+    jenisBukti: 'Berita Acara Musyawarah',
+    file: 'BA_Musyawarah_Konektivitas_LungAnai_2026.pdf',
     tgl: '15 Juli 2026',
-    sumber: 'Kasi Pemerintahan',
+    sumber: 'Pemerintah Desa & Lembaga Adat Lung Anai',
     status: 'Terverifikasi',
     riwayatVersi: ['v1: Upload awal (15 Jul 2026)']
   },
   {
     id: 'EVID-02',
-    program: 'Pengembangan Literasi & PAUD Digital',
-    kategori: 'Pendidikan',
+    program: 'A08 — Dasbor SDGs Desa 3, 4, dan 18 (Jonggon Jaya)',
+    kategori: 'Pemantauan SDGs & DSS (D6)',
     jenisBukti: 'Surat Keputusan (SK) / Perdes',
-    file: 'SK_Pembentukan_TBM_Digital.pdf',
+    file: 'SK_Tim_Pemantauan_SDGs_JonggonJaya_2026.pdf',
     tgl: '10 Juli 2026',
-    sumber: 'Sekretaris Desa',
+    sumber: 'Sekretaris Desa Jonggon Jaya',
     status: 'Pending',
     riwayatVersi: ['v1: Upload draf (08 Jul 2026)', 'v2: Upload revisi tanda tangan (10 Jul 2026)']
   }
@@ -46,7 +46,7 @@ const MOCK_BUKTI = [
 
 export default function UnggahBuktiPage() {
   const [buktiList, setBuktiList] = useState(MOCK_BUKTI);
-  const [selectedProg, setSelectedProg] = useState('Peningkatan Infrastruktur Internet Dusun C');
+  const [selectedProg, setSelectedProg] = useState(PROGRAM_OPTIONS[0].name);
   const [jenisBukti, setJenisBukti] = useState('Foto Dokumentasi Kegiatan');
   const [fileName, setFileName] = useState('');
   const [sumber, setSumber] = useState('');
@@ -163,11 +163,11 @@ export default function UnggahBuktiPage() {
                   <div className="space-y-1">
                     <div className="flex items-center gap-2 flex-wrap">
                       <span className="text-[9px] font-mono font-bold text-slate-400">{b.id}</span>
-                      <span className="text-[9px] font-bold bg-slate-100 text-slate-650 px-1.5 py-0.5 rounded">{b.kategori}</span>
-                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${b.status === 'Terverifikasi' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-750'}`}>{b.status}</span>
+                      <span className="text-[9px] font-bold bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded">{b.kategori}</span>
+                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${b.status === 'Terverifikasi' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-800'}`}>{b.status}</span>
                     </div>
                     <h3 className="font-bold text-slate-800 text-xs leading-snug">{b.program}</h3>
-                    <p className="text-[10px] text-slate-450 font-semibold">Jenis: {b.jenisBukti} • File: <strong className="text-indigo-700">{b.file}</strong></p>
+                    <p className="text-[10px] text-slate-500 font-semibold">Jenis: {b.jenisBukti} • File: <strong className="text-indigo-700">{b.file}</strong></p>
                   </div>
                 </div>
 

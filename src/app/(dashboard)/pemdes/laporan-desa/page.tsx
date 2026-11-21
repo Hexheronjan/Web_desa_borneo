@@ -86,13 +86,13 @@ export default function LaporanDesaPage() {
             </p>
             
             <div className="p-3 bg-slate-50 border rounded-xl space-y-2">
-              <p className="font-bold text-slate-650 flex items-center gap-1"><ShieldCheck size={12} className="text-indigo-700" /> TTE Kepala Desa: <strong>Terverifikasi</strong></p>
+              <p className="font-bold text-slate-700 flex items-center gap-1"><ShieldCheck size={12} className="text-indigo-700" /> TTE Kepala Desa: <strong>Terverifikasi</strong></p>
               <p className="text-[10px] text-slate-500">Sertifikat BSrE Balai Sertifikasi Elektronik Kemendagri aktif hingga 2028.</p>
             </div>
 
             <button
               onClick={() => alert('🔄 Menghubungkan ke server Dinas PMD untuk pembaruan format template laporan terbaru...')}
-              className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-350 text-slate-700 font-bold rounded-lg text-xs flex items-center justify-center gap-1"
+              className="w-full py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-400 text-slate-700 font-bold rounded-lg text-xs flex items-center justify-center gap-1"
             >
               <RefreshCw size={12} /> Sinkronisasi Template Kabupaten
             </button>

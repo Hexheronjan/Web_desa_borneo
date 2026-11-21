@@ -46,7 +46,7 @@ export default function KompetensiSDMPage() {
               <CardTitle className="text-sm font-bold text-slate-700 uppercase">Kebutuhan Peningkatan Kompetensi</CardTitle>
             </CardHeader>
             <CardContent className="p-4 space-y-2">
-              <ul className="list-disc pl-4 space-y-2 text-slate-650 font-medium">
+              <ul className="list-disc pl-4 space-y-2 text-slate-700 font-medium">
                 <li><strong>Kurikulum Merdeka Mandiri:</strong> 4 guru kelas rendah SDN 006 memerlukan modul pendampingan lanjutan.</li>
                 <li><strong>Keamanan Informasi &amp; Password:</strong> Pelatihan pengenalan sandi aman bagi seluruh pengelola tata usaha SMP Filial.</li>
                 <li><strong>Keterampilan Coding Anak:</strong> Guru pembimbing memerlukan training basic scratch &amp; python.</li>

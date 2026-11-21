@@ -15,11 +15,9 @@ type DesaRecord = {
 };
 
 const seedDesa = [
-  ["DESA001", "Desa Borneo Adat", "Kec. Kahayan Tengah", "Kab. Pulang Pisau", "Kalimantan Tengah", "Mandiri"],
-  ["DESA002", "Desa Betang Jaya", "Kec. Tewah", "Kab. Gunung Mas", "Kalimantan Tengah", "Maju"],
-  ["DESA003", "Desa Rungan Sari", "Kec. Rungan", "Kab. Gunung Mas", "Kalimantan Tengah", "Maju"],
-  ["DESA004", "Desa Mentaya Hulu", "Kec. Mentaya Hulu", "Kab. Kotawaringin Timur", "Kalimantan Tengah", "Berkembang"],
-  ["DESA005", "Desa Loksado Adat", "Kec. Loksado", "Kab. Hulu Sungai Selatan", "Kalimantan Selatan", "Mandiri"],
+  ["DESA001", "Desa Jonggon Jaya", "Kec. Loa Kulu", "Kab. Kutai Kartanegara", "Kalimantan Timur", "Maju"],
+  ["DESA002", "Desa Kedang Ipil", "Kec. Kota Bangun Darat", "Kab. Kutai Kartanegara", "Kalimantan Timur", "Berkembang"],
+  ["DESA003", "Desa Lung Anai", "Kec. Loa Kulu", "Kab. Kutai Kartanegara", "Kalimantan Timur", "Berkembang"],
 ];
 
 async function ensureTable() {
@@ -46,8 +44,8 @@ async function seedIfEmpty() {
 
   for (const [kodeDesa, nama, kecamatan, kabupaten, provinsi, status] of seedDesa) {
     await prisma.$executeRaw`
-      INSERT INTO MasterDesaRecord (id, kodeDesa, nama, kecamatan, kabupaten, provinsi, status)
-      VALUES (${makeId()}, ${kodeDesa}, ${nama}, ${kecamatan}, ${kabupaten}, ${provinsi}, ${status})
+      INSERT INTO MasterDesaRecord (id, kodeDesa, nama, kecamatan, kabupaten, provinsi, status, createdAt, updatedAt)
+      VALUES (${makeId()}, ${kodeDesa}, ${nama}, ${kecamatan}, ${kabupaten}, ${provinsi}, ${status}, NOW(3), NOW(3))
     `;
   }
 }
@@ -104,8 +102,8 @@ export async function POST(req: NextRequest) {
 
   try {
     await prisma.$executeRaw`
-      INSERT INTO MasterDesaRecord (id, kodeDesa, nama, kecamatan, kabupaten, provinsi, status)
-      VALUES (${makeId()}, ${kodeDesa}, ${nama}, ${kecamatan}, ${kabupaten}, ${provinsi}, ${status})
+      INSERT INTO MasterDesaRecord (id, kodeDesa, nama, kecamatan, kabupaten, provinsi, status, createdAt, updatedAt)
+      VALUES (${makeId()}, ${kodeDesa}, ${nama}, ${kecamatan}, ${kabupaten}, ${provinsi}, ${status}, NOW(3), NOW(3))
     `;
     return NextResponse.json({ ok: true });
   } catch {
@@ -139,7 +137,8 @@ export async function PATCH(req: NextRequest) {
           kecamatan = ${kecamatan},
           kabupaten = ${kabupaten},
           provinsi = ${provinsi},
-          status = ${status}
+          status = ${status},
+          updatedAt = NOW(3)
       WHERE id = ${id}
     `;
     return NextResponse.json({ ok: true });

@@ -54,7 +54,7 @@ export default function ArsipBudayaPublikPage() {
         <StatCard label="Bandwidth Unduhan" value="Aman" satuan="Server Lokal SID" barColor="blue" progress={90} />
       </div>
 
-      <h2 className="text-xs font-bold text-slate-650 uppercase tracking-wider">Koleksi Arsip Kebudayaan Terbuka</h2>
+      <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Koleksi Arsip Kebudayaan Terbuka</h2>
 
       <div className="space-y-3 text-xs">
         {data.map(a => (
@@ -66,7 +66,7 @@ export default function ArsipBudayaPublikPage() {
                   <span className="font-mono text-slate-400 font-bold mr-2">{a.id}</span>
                   <span className={`font-bold px-1.5 py-0.5 rounded border ${
                     a.tipe === 'Dokumen' ? 'bg-blue-50 text-blue-700 border-blue-200' :
-                    a.tipe === 'Video' ? 'bg-red-50 text-red-650 border-red-200' :
+                    a.tipe === 'Video' ? 'bg-red-50 text-red-700 border-red-200' :
                     'bg-green-50 text-green-700 border-green-200'
                   }`}>{a.tipe}</span>
                 </div>
@@ -80,12 +80,12 @@ export default function ArsipBudayaPublikPage() {
                 
                 <div>
                   <h3 className="font-bold text-slate-805 text-sm">{a.nama}</h3>
-                  <p className="text-slate-550 leading-relaxed mt-1 text-[11px]">{a.deskripsi}</p>
+                  <p className="text-slate-600 leading-relaxed mt-1 text-[11px]">{a.deskripsi}</p>
                 </div>
               </div>
 
               <div className="border-t pt-2.5 flex justify-between items-center text-[10px]">
-                <span className="text-slate-450">Sumber Kontributor: <strong>{a.sumber}</strong> ({a.ukuran})</span>
+                <span className="text-slate-500">Sumber Kontributor: <strong>{a.sumber}</strong> ({a.ukuran})</span>
                 <button
                   onClick={() => handleDownload(a.fileName)}
                   className="px-2.5 py-1 bg-indigo-700 text-white rounded font-bold hover:bg-indigo-800 flex items-center gap-1"

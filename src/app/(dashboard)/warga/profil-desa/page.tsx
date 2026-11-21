@@ -12,11 +12,11 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 const COLOR = '#6a1b9a';
 
 const demographicData = [
-  { kelompok: 'Balita (0-5 th)', jumlah: 145 },
-  { kelompok: 'Anak (6-12 th)', jumlah: 198 },
-  { kelompok: 'Remaja (13-18 th)', jumlah: 167 },
-  { kelompok: 'Dewasa (19-59 th)', jumlah: 512 },
-  { kelompok: 'Lansia (60+ th)', jumlah: 94 },
+  { kelompok: 'Balita (0-5 th)', jumlah: 48 },
+  { kelompok: 'Anak (6-12 th)', jumlah: 76 },
+  { kelompok: 'Remaja (13-18 th)', jumlah: 68 },
+  { kelompok: 'Dewasa (19-59 th)', jumlah: 242 },
+  { kelompok: 'Lansia (60+ th)', jumlah: 46 },
 ];
 
 const facilities = [
@@ -44,10 +44,10 @@ export default function ProfilDesaPage() {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard label="Luas Wilayah" value="4.820" satuan="Hektar" barColor="purple" progress={100} />
-        <StatCard label="Total Penduduk" value="1.116" satuan="Jiwa (Agregat)" barColor="blue" progress={100} />
-        <StatCard label="Jumlah Keluarga" value="342" satuan="KK" barColor="orange" progress={100} />
-        <StatCard label="Kerapatan Adat" value="100%" satuan="Sangat Kuat" barColor="green" progress={100} />
+        <StatCard label="Luas Wilayah (Lung Anai)" value="1,85" satuan="km² (4 RT · Loa Kulu)" barColor="purple" progress={100} />
+        <StatCard label="Total Penduduk" value="480" satuan="Jiwa (BPS Kukar 2025)" barColor="blue" progress={100} />
+        <StatCard label="Jumlah Keluarga" value="152" satuan="KK (Desa Budaya 2007)" barColor="orange" progress={100} />
+        <StatCard label="Tata Kelola Adat (D5)" value="89,73" satuan="Tertinggi (Dayak Kenyah)" barColor="green" progress={90} />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">

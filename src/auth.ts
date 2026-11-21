@@ -19,9 +19,25 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
         }
 
         try {
-          const user = await prisma.user.findUnique({
-            where: { email: credentials.email as string }
+          const emailInput = (credentials.email as string).trim().toLowerCase();
+          const emailAliases: Record<string, string> = {
+            "operator@borneo.id": "operator.sid@borneo.id",
+            "operator.sid@borneo.id": "operator@borneo.id",
+            "dinas@borneo.id": "dinas.pmd@borneo.id",
+            "dinas.pmd@borneo.id": "dinas@borneo.id",
+            "tokoh.masyarakat@contoh.id": "warga@borneo.id",
+            "warga@borneo.id": "tokoh.masyarakat@contoh.id",
+          };
+
+          let user = await prisma.user.findUnique({
+            where: { email: emailInput }
           });
+
+          if (!user && emailAliases[emailInput]) {
+            user = await prisma.user.findUnique({
+              where: { email: emailAliases[emailInput] }
+            });
+          }
 
           if (!user) {
             throw new Error("EMAIL_SALAH");
@@ -32,7 +48,7 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
 
           try {
             isPasswordValid = await bcrypt.compare(inputPassword, user.password);
-          } catch (e) {
+          } catch {
             // fallback
           }
 
@@ -55,8 +71,9 @@ export const { auth, signIn, signOut, handlers: { GET, POST } } = NextAuth({
             role: user.role,
             wargaId: user.wargaId,
           };
-        } catch (error: any) {
-          console.error("[AUTH] Auth Error:", error.message);
+        } catch (error: unknown) {
+          const message = error instanceof Error ? error.message : String(error);
+          console.error("[AUTH] Auth Error:", message);
           return null;
         }
       }

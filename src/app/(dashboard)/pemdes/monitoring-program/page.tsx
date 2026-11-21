@@ -13,46 +13,46 @@ const COLOR = '#283593';
 
 const PROGRAM_DATA = [
   {
-    id: 'PRG-01',
-    nama: 'Peningkatan Infrastruktur Internet Dusun C',
-    bidang: 'Infrastruktur TIK',
-    target: 'Jangkauan sinyal 100% di Dusun C',
-    progres: 45,
-    pj: 'Kasi Pemerintahan & Kominfo',
-    keterlambatan: 'Terlambat 2 minggu (kendala pasokan komponen tower)',
-    bukti: 'Foto_Pondasi_Tower_Dusun_C.jpg',
-    tindakLanjut: 'Koordinasi dengan vendor pengadaan komponen lokal',
-    rekomendasiAwal: 'Prioritas P1 AHP (Skor 0.232)',
-    anggaran: 'Rp 80.000.000',
+    id: 'A08',
+    nama: 'Dasbor SDGs Desa 3, 4, dan 18 (Jonggon Jaya)',
+    bidang: 'Pemantauan SDGs & DSS (D6)',
+    target: 'Integrasi 18 KPI SDGs Desa 3, 4, dan 18 pada 17 RT',
+    progres: 82,
+    pj: 'Pemerintah Desa Jonggon Jaya',
+    keterlambatan: 'Tidak ada',
+    bukti: 'Laporan_KPI_SDGs_JonggonJaya_2026.pdf',
+    tindakLanjut: 'Sinkronisasi rutin data Puskesmas & satuan pendidikan',
+    rekomendasiAwal: 'Prioritas #1 SAW Jonggon Jaya (Skor 0,9509)',
+    anggaran: 'Rp 220.000.000',
     status: 'Berjalan',
   },
   {
-    id: 'PRG-02',
-    nama: 'Pengembangan Literasi & PAUD Digital',
-    bidang: 'Pendidikan',
-    target: 'Pelatihan dasar TIK untuk 15 guru PAUD',
-    progres: 80,
-    pj: 'Guru Fasilitator (Bapak Ahmadi)',
+    id: 'A02-KI',
+    nama: 'Penguatan Konektivitas & Integrasi Data (Kedang Ipil)',
+    bidang: 'Infrastruktur & Data (D2/D4)',
+    target: 'Standar kode referensi & konektivitas 2 Dusun (12 RT)',
+    progres: 68,
+    pj: 'Pemerintah Desa & Kutai Adat Lawas Kedang Ipil',
     keterlambatan: 'Tidak ada',
-    bukti: 'Modul_Pelatihan_Guru_PAUD.pdf',
-    tindakLanjut: 'Sosialisasi aplikasi pembelajaran interaktif',
-    rekomendasiAwal: 'Prioritas P2 AHP (Skor 0.198)',
-    anggaran: 'Rp 15.000.000',
+    bukti: 'SOP_Integrasi_Persetujuan_Adat_KedangIpil.pdf',
+    tindakLanjut: 'Pendampingan verifikasi data lintas Pustu, Polindes & sekolah',
+    rekomendasiAwal: 'Prioritas #1 SAW Kedang Ipil (Skor 0,9200)',
+    anggaran: 'Rp 195.000.000',
     status: 'Berjalan',
   },
   {
-    id: 'PRG-03',
-    nama: 'Digitalisasi Layanan BUMDes Adat',
-    bidang: 'Ekonomi',
-    target: 'Sistem POS dan e-commerce BUMDes online',
-    progres: 100,
-    pj: 'Direktur BUMDes',
-    keterlambatan: 'Tidak ada',
-    bukti: 'Screenshot_Aplikasi_BUMDes_LungAnai.png',
-    tindakLanjut: 'Serah terima sistem dan go-live',
-    rekomendasiAwal: 'Prioritas P3 AHP (Skor 0.175)',
-    anggaran: 'Rp 25.000.000',
-    status: 'Selesai',
+    id: 'A02-LA',
+    nama: 'Penguatan Konektivitas, Perangkat & Mode Luring (Lung Anai)',
+    bidang: 'Infrastruktur TIK (D2)',
+    target: 'Mode luring-utama, perangkat hemat daya & sinkronisasi 4 RT',
+    progres: 55,
+    pj: 'Pemerintah Desa & Lembaga Adat Dayak Kenyah Lung Anai',
+    keterlambatan: 'Tantangan jaringan (2.928 menit luring selama 4 minggu)',
+    bukti: 'Log_Sinkronisasi_Luring_LungAnai.pdf',
+    tindakLanjut: 'Optimalisasi antrean sinkronisasi luring & cadangan listrik',
+    rekomendasiAwal: 'Prioritas #1 SAW Lung Anai (Skor 0,9117)',
+    anggaran: 'Rp 185.000.000',
+    status: 'Berjalan',
   },
 ];
 
@@ -92,8 +92,8 @@ export default function PemantauanProgramPage() {
       {/* FILTER & CARI */}
       <div className="flex flex-wrap items-center justify-between gap-3 p-3.5 bg-slate-50 border rounded-xl">
         <div className="flex items-center gap-2 flex-wrap">
-          <span className="text-xs font-bold text-slate-650 flex items-center gap-1"><Filter size={13} /> Saring Bidang:</span>
-          {['Semua', 'Infrastruktur TIK', 'Pendidikan', 'Ekonomi'].map(b => (
+          <span className="text-xs font-bold text-slate-700 flex items-center gap-1"><Filter size={13} /> Saring Bidang:</span>
+          {['Semua', 'Pemantauan SDGs & DSS (D6)', 'Infrastruktur & Data (D2/D4)', 'Infrastruktur TIK (D2)'].map(b => (
             <button
               key={b}
               onClick={() => setFilterBidang(b)}
@@ -125,7 +125,7 @@ export default function PemantauanProgramPage() {
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="text-[9px] font-mono font-bold text-slate-400">{p.id}</span>
                     <span className="text-[9px] font-bold bg-slate-100 text-slate-600 px-1.5 py-0.5 rounded">{p.bidang}</span>
-                    <span className={`text-[9px] font-bold px-2 py-0.5 rounded ${p.status === 'Selesai' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-750'}`}>{p.status}</span>
+                    <span className={`text-[9px] font-bold px-2 py-0.5 rounded ${p.status === 'Selesai' ? 'bg-green-100 text-green-700' : 'bg-blue-100 text-blue-800'}`}>{p.status}</span>
                   </div>
                   <h3 className="font-bold text-slate-800 text-sm leading-snug">{p.nama}</h3>
                   <p className="text-[10px] text-slate-400 font-semibold">PJ: {p.pj} • Anggaran: {p.anggaran}</p>
@@ -154,7 +154,7 @@ export default function PemantauanProgramPage() {
                 </div>
                 <div className="p-2.5 bg-slate-50 border rounded-lg">
                   <p className="font-bold text-slate-500 uppercase tracking-wider text-[9px]">Keterlambatan / Kendala</p>
-                  <p className={`font-bold leading-snug mt-0.5 ${p.keterlambatan !== 'Tidak ada' ? 'text-red-650' : 'text-slate-600'}`}>
+                  <p className={`font-bold leading-snug mt-0.5 ${p.keterlambatan !== 'Tidak ada' ? 'text-red-700' : 'text-slate-600'}`}>
                     {p.keterlambatan}
                   </p>
                 </div>
@@ -165,7 +165,7 @@ export default function PemantauanProgramPage() {
                 <div className="flex items-center gap-2">
                   <span className="font-bold text-slate-500">Bukti Fisik:</span>
                   <span className="font-semibold text-indigo-700">{p.bukti}</span>
-                  <button onClick={() => setShowEvidence(showEvidence === p.id ? null : p.id)} className="text-[10px] text-slate-450 hover:underline flex items-center gap-0.5">
+                  <button onClick={() => setShowEvidence(showEvidence === p.id ? null : p.id)} className="text-[10px] text-slate-500 hover:underline flex items-center gap-0.5">
                     <Eye size={11} /> Lihat Bukti
                   </button>
                 </div>

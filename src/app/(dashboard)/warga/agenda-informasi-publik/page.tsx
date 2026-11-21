@@ -21,7 +21,7 @@ const INFO_PUBLIK = [
   { id: 'IP-01', judul: 'Laporan Realisasi APBDes Semester I 2026 Dipublikasikan', kategori: 'Keuangan Desa', tanggal: '1 Juli 2026', ringkasan: 'Realisasi belanja mencapai 62% dari total APBDes 2026. Dokumen lengkap tersedia di papan informasi Balai Desa.' },
   { id: 'IP-02', judul: 'Pengumuman Penerimaan Beasiswa Kuliah Desa 2026', kategori: 'Pendidikan', tanggal: '20 Juni 2026', ringkasan: 'Desa Lung Anai membuka 5 slot beasiswa kuliah bagi putra/putri kurang mampu. Pendaftaran 1–15 Agustus 2026.' },
   { id: 'IP-03', judul: 'Pembangunan Jembatan Dusun C Resmi Dimulai', kategori: 'Infrastruktur', tanggal: '5 Juli 2026', ringkasan: 'Peletakan batu pertama pembangunan jembatan gantung Dusun C dilakukan pada 5 Juli 2026 bersama Kepala Desa dan BPD.' },
-  { id: 'IP-04', judul: 'Hasil Survei Kualitas Hidup Semester I 2026', kategori: 'Data Desa', tanggal: '30 Juni 2026', ringkasan: 'Indeks QoL Desa Lung Anai meningkat menjadi 71.28 (Baik), naik 2.50% dari semester sebelumnya.' },
+  { id: 'IP-04', judul: 'Hasil Evaluasi Kualitas Hidup Proksimal (Bab IV)', kategori: 'Data Desa', tanggal: '30 Juni 2026', ringkasan: 'Rata-rata kualitas hidup proksimal 3 desa studi (N = 126) meningkat dari 68,43 menjadi 69,97 (+1,54 poin; median +4,30; 73,8% peserta naik).' },
   { id: 'IP-05', judul: 'Jadwal Vaksinasi Rutin Balita Bulan Juli', kategori: 'Kesehatan', tanggal: '1 Juli 2026', ringkasan: 'Vaksinasi BCG, DPT, dan Campak digelar tanggal 7 Juli 2026 di semua posyandu dusun.' },
 ];
 

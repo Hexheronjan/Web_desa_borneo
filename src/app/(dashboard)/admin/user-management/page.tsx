@@ -336,7 +336,7 @@ export default function UserManagementPage() {
                     {RIWAYAT_AKSES.map((log) => (
                       <TableRow key={log.id}>
                         <TableCell className="font-mono text-[10px] text-slate-500">{log.waktu}</TableCell>
-                        <TableCell className="text-slate-650">{log.perangkat}</TableCell>
+                        <TableCell className="text-slate-700">{log.perangkat}</TableCell>
                         <TableCell className="font-mono text-[10px]">{log.ip}</TableCell>
                         <TableCell className="font-bold text-indigo-700">{log.modul}</TableCell>
                         <TableCell>

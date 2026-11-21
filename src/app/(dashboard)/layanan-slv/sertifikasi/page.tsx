@@ -73,7 +73,7 @@ export default function SertifikatSayaPage() {
         
         {/* LIST SERTIFIKAT */}
         <div className="lg:col-span-2 space-y-4">
-          <h2 className="text-xs font-bold text-slate-650 uppercase tracking-wider">Daftar Sertifikat Terbit</h2>
+          <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider">Daftar Sertifikat Terbit</h2>
 
           <div className="space-y-3.5">
             {list.map(s => (
@@ -122,7 +122,7 @@ export default function SertifikatSayaPage() {
 
         {/* VERIFIKASI KEASLIAN PANEL */}
         <div>
-          <h2 className="text-xs font-bold text-slate-650 uppercase tracking-wider mb-4">Verifikasi Keaslian Berkas</h2>
+          <h2 className="text-xs font-bold text-slate-700 uppercase tracking-wider mb-4">Verifikasi Keaslian Berkas</h2>
           
           <Card>
             <CardHeader className="py-3">
@@ -145,7 +145,7 @@ export default function SertifikatSayaPage() {
               </form>
 
               {verifikasiHasil && (
-                <div className="p-3 bg-slate-50 border rounded-lg text-[11px] text-slate-750 font-semibold whitespace-pre-line leading-relaxed">
+                <div className="p-3 bg-slate-50 border rounded-lg text-[11px] text-slate-800 font-semibold whitespace-pre-line leading-relaxed">
                   {verifikasiHasil}
                 </div>
               )}

@@ -87,7 +87,7 @@ export default function LiterasiDigitalPage() {
                   <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
                     <div className="h-full bg-blue-600 rounded-full" style={{ width: `${p.progres}%` }} />
                   </div>
-                  <div className="flex justify-between text-[9px] text-slate-450 mt-0.5">
+                  <div className="flex justify-between text-[9px] text-slate-500 mt-0.5">
                     <span>Evaluasi Terkini: <strong>{p.hasil}</strong></span>
                   </div>
                 </div>

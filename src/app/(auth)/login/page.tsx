@@ -7,19 +7,23 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { ShieldCheck, Leaf, Users, Map, Eye, EyeOff } from "lucide-react";
 
-// Demo accounts
-const DEMO_ACCOUNTS = [
-  { label: 'ADMIN',       email: 'admin@borneo.id',    border: 'border-blue-100 hover:border-blue-400',     badge: 'bg-blue-100 text-blue-700' },
-  { label: 'OPERATOR',    email: 'operator@borneo.id', border: 'border-teal-100 hover:border-teal-400',     badge: 'bg-teal-100 text-teal-700' },
-  { label: 'PEMERINTAH DESA', email: 'pemdes@borneo.id',   border: 'border-indigo-100 hover:border-indigo-400', badge: 'bg-indigo-100 text-indigo-700' },
-  { label: 'BPD',         email: 'bpd@borneo.id',      border: 'border-violet-100 hover:border-violet-400', badge: 'bg-violet-100 text-violet-700' },
-  { label: 'ADAT',        email: 'adat@borneo.id',      border: 'border-emerald-100 hover:border-emerald-400', badge: 'bg-emerald-100 text-emerald-700' },
-  { label: 'GURU',        email: 'guru@borneo.id',      border: 'border-purple-100 hover:border-purple-400', badge: 'bg-purple-100 text-purple-700' },
-  { label: 'NAKES',       email: 'nakes@borneo.id',     border: 'border-orange-100 hover:border-orange-400', badge: 'bg-orange-100 text-orange-700' },
-  { label: 'TOKOH MASYARAKAT', email: 'tokoh.masyarakat@contoh.id', border: 'border-pink-100 hover:border-pink-400', badge: 'bg-pink-100 text-pink-700' },
-  { label: 'DINAS PMD',   email: 'dinas@borneo.id',     border: 'border-sky-100 hover:border-sky-400',      badge: 'bg-sky-100 text-sky-700' },
-  { label: 'PENELITI',    email: 'peneliti@borneo.id',  border: 'border-slate-200 hover:border-slate-400',  badge: 'bg-slate-100 text-slate-700' },
-  { label: 'MASYARAKAT UMUM', email: 'layanan@borneo.id',   border: 'border-green-100 hover:border-green-500',  badge: 'bg-green-100 text-green-700', full: true },
+// 7 Aktor Utama sesuai Use Case Diagram UML & Bab IV
+const PRIMARY_UML_ACCOUNTS = [
+  { label: 'ADMIN',            sublabel: 'Administrator Sistem',    email: 'admin@borneo.id',            border: 'border-blue-200 hover:border-blue-500',       badge: 'bg-blue-100 text-blue-800' },
+  { label: 'TENAGA PENGAJAR',  sublabel: 'Guru/Tenaga Pendidikan',  email: 'guru@borneo.id',             border: 'border-purple-200 hover:border-purple-500',   badge: 'bg-purple-100 text-purple-800' },
+  { label: 'TENAGA KESEHATAN', sublabel: 'Nakes Posyandu & SDG 3',  email: 'nakes@borneo.id',            border: 'border-orange-200 hover:border-orange-500',   badge: 'bg-orange-100 text-orange-800' },
+  { label: 'LEMBAGA ADAT',     sublabel: 'Tata Kelola Adat & SDG 18', email: 'adat@borneo.id',           border: 'border-amber-200 hover:border-amber-500',     badge: 'bg-amber-100 text-amber-800' },
+  { label: 'TOKOH MASYARAKAT', sublabel: 'Partisipasi & Pengawasan', email: 'tokoh.masyarakat@contoh.id', border: 'border-pink-200 hover:border-pink-500',       badge: 'bg-pink-100 text-pink-800' },
+  { label: 'PEMERINTAH DESA',  sublabel: 'Musyawarah & DSS SAW',    email: 'pemdes@borneo.id',           border: 'border-indigo-200 hover:border-indigo-500',   badge: 'bg-indigo-100 text-indigo-800' },
+  { label: 'MASYARAKAT UMUM',  sublabel: 'Portal Layanan Publik',   email: 'layanan@borneo.id',          border: 'border-emerald-200 hover:border-emerald-500', badge: 'bg-emerald-100 text-emerald-800', full: true },
+];
+
+// Peran Tambahan (Pendukung di luar 7 aktor utama UML)
+const ADDITIONAL_ACCOUNTS = [
+  { label: 'OPERATOR SID', sublabel: 'Pengelola Data SID',  email: 'operator.sid@borneo.id', border: 'border-teal-100 hover:border-teal-400',     badge: 'bg-teal-50 text-teal-700' },
+  { label: 'PENELITI',     sublabel: 'Analitik & Evaluasi', email: 'peneliti@borneo.id',     border: 'border-slate-200 hover:border-slate-400',   badge: 'bg-slate-100 text-slate-700' },
+  { label: 'BPD',          sublabel: 'Pengawasan Desa',     email: 'bpd@borneo.id',          border: 'border-violet-100 hover:border-violet-400', badge: 'bg-violet-50 text-violet-700' },
+  { label: 'DINAS PMD',    sublabel: 'Pemantau Regional',   email: 'dinas.pmd@borneo.id',    border: 'border-sky-100 hover:border-sky-400',       badge: 'bg-sky-50 text-sky-700' },
 ];
 
 export default function LoginPage() {
@@ -64,26 +68,31 @@ export default function LoginPage() {
     setEmailError(false);
     setPassError(false);
 
-    const result = await signIn("credentials", {
-      email,
-      password,
-      redirect: false,
-    });
+    try {
+      const result = await signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      });
 
-    if (result?.ok) {
-      router.push("/");
-      router.refresh();
-    } else {
-      setIsLoading(false);
-      if (result?.error?.includes("EMAIL_SALAH")) {
-        setErrorMsg("Email ini tidak terdaftar di sistem kami.");
-        setEmailError(true);
-      } else if (result?.error?.includes("KATA_SANDI_SALAH")) {
-        setErrorMsg("Kata sandi yang Anda masukkan salah.");
-        setPassError(true);
+      if (result?.ok && !result?.error) {
+        router.push("/");
+        router.refresh();
       } else {
-        setErrorMsg("Terjadi kesalahan. Cek kembali email & kata sandi.");
+        setIsLoading(false);
+        if (result?.error?.includes("EMAIL_SALAH")) {
+          setErrorMsg("Email ini tidak terdaftar di sistem kami.");
+          setEmailError(true);
+        } else if (result?.error?.includes("KATA_SANDI_SALAH")) {
+          setErrorMsg("Kata sandi yang Anda masukkan salah.");
+          setPassError(true);
+        } else {
+          setErrorMsg("Gagal masuk. Pastikan MySQL (Laragon) sudah berjalan serta email & kata sandi benar.");
+        }
       }
+    } catch {
+      setIsLoading(false);
+      setErrorMsg("Tidak dapat terhubung ke server autentikasi. Coba lagi.");
     }
   };
 
@@ -191,36 +200,73 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          {/* ── DEMO ACCOUNTS ── */}
-          <div className="rounded-3xl border-2 border-emerald-100 bg-emerald-50/30 p-6 shadow-sm">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <h3 className="text-sm font-bold text-emerald-900 uppercase tracking-widest">Akses Akun Demo (Live Data)</h3>
-            </div>
-            <p className="text-[10px] text-slate-500 mb-3">Klik kartu untuk mengisi form login otomatis ↓</p>
+          {/* ── DEMO ACCOUNTS: 7 AKTOR UTAMA UML + PERAN TAMBAHAN ── */}
+          <div className="rounded-3xl border-2 border-emerald-100 bg-emerald-50/30 p-5 shadow-sm space-y-4">
+            {/* Bagian Atas: 7 Aktor Utama UML & Bab IV */}
+            <div>
+              <div className="flex items-center justify-between gap-2 mb-1.5">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                  <h3 className="text-xs font-black text-emerald-950 uppercase tracking-wider">7 Aktor Utama (Sesuai UML &amp; Bab IV)</h3>
+                </div>
+                <span className="text-[9px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">Use Case</span>
+              </div>
+              <p className="text-[10px] text-slate-500 mb-3">Klik kartu untuk mengisi form login otomatis ↓</p>
 
-            <div className="grid grid-cols-2 gap-2">
-              {DEMO_ACCOUNTS.map((demo) => (
-                <button
-                  key={demo.email}
-                  type="button"
-                  onClick={() => fillDemo(demo.email)}
-                  className={`flex flex-col p-2 bg-white rounded-lg border shadow-sm transition-all
-                    text-[10px] cursor-pointer text-left active:scale-95
-                    ${demo.border} ${demo.full ? 'col-span-2' : ''}`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <span className={`px-1.5 py-0.5 rounded font-black text-[9px] ${demo.badge}`}>
-                      {demo.label}
-                    </span>
-                    <span className="text-[8px] text-emerald-600 font-bold">▶ Klik isi</span>
-                  </div>
-                  <span className="font-mono text-slate-600 font-bold truncate">{demo.email}</span>
-                </button>
-              ))}
+              <div className="grid grid-cols-2 gap-2">
+                {PRIMARY_UML_ACCOUNTS.map((demo) => (
+                  <button
+                    key={demo.email}
+                    type="button"
+                    onClick={() => fillDemo(demo.email)}
+                    className={`flex flex-col p-2.5 bg-white rounded-xl border shadow-sm transition-all
+                      text-[10px] cursor-pointer text-left active:scale-95
+                      ${demo.border} ${demo.full ? 'col-span-2' : ''}`}
+                  >
+                    <div className="flex items-center justify-between gap-1 mb-0.5">
+                      <span className={`px-1.5 py-0.5 rounded font-black text-[9px] leading-tight ${demo.badge}`}>
+                        {demo.label}
+                      </span>
+                      <span className="text-[8px] text-emerald-600 font-bold flex-shrink-0">▶ Isi</span>
+                    </div>
+                    <span className="text-[9px] text-slate-500 font-medium truncate">{demo.sublabel}</span>
+                    <span className="font-mono text-slate-700 font-bold truncate mt-0.5">{demo.email}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="mt-4 flex items-center gap-2 text-[10px] text-slate-400 italic bg-white/50 p-2 rounded-lg border border-dashed border-slate-200">
+            {/* Pemisah Bagian Bawah: Peran Tambahan */}
+            <div className="pt-3 border-t border-dashed border-emerald-200">
+              <div className="flex items-center justify-between gap-2 mb-2">
+                <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                  Peran Tambahan (Pendukung)
+                </h4>
+                <span className="text-[9px] text-slate-400 font-semibold">Opsional</span>
+              </div>
+
+              <div className="grid grid-cols-2 gap-1.5">
+                {ADDITIONAL_ACCOUNTS.map((demo) => (
+                  <button
+                    key={demo.email}
+                    type="button"
+                    onClick={() => fillDemo(demo.email)}
+                    className={`flex flex-col p-2 bg-white/80 hover:bg-white rounded-lg border transition-all
+                      text-[10px] cursor-pointer text-left active:scale-95 ${demo.border}`}
+                  >
+                    <div className="flex items-center justify-between gap-1 mb-0.5">
+                      <span className={`px-1.5 py-0.5 rounded font-bold text-[8.5px] ${demo.badge}`}>
+                        {demo.label}
+                      </span>
+                      <span className="text-[8px] text-slate-400 font-semibold">▶ Isi</span>
+                    </div>
+                    <span className="font-mono text-[9.5px] text-slate-600 font-semibold truncate">{demo.email}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 text-[10px] text-slate-400 italic bg-white/60 p-2 rounded-lg border border-dashed border-slate-200">
               <div className="w-1 h-1 rounded-full bg-slate-300" />
               <span>Semua akun menggunakan Password <b>password123</b></span>
             </div>

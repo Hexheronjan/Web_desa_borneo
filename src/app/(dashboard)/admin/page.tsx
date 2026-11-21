@@ -2,27 +2,22 @@
 
 import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { PageTitle } from '@/components/shared/PageTitle';
-import { StatCard } from '@/components/shared/StatCard';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
 } from 'recharts';
 import {
-  Users, Layers, Database, ShieldCheck, Server, AlertTriangle, Activity,
-  Settings, Clock, ChevronRight, BarChart3, TrendingUp, Info, ShieldAlert,
-  FolderOpen, GitBranch, ArrowUp, ArrowDown, Award, Globe, FileText, CheckCircle2
+  Users, Layers, Database, Server, Activity,
+  Settings, Clock, BarChart3, TrendingUp, Info, ShieldAlert,
+  Globe, FileText
 } from 'lucide-react';
 import Link from 'next/link';
 
-const COLOR = '#1a237e';
-
 const TREN_DATA = [
-  { bulan: 'Jan', kesiapan: 54.2, qol: 68.5 },
-  { bulan: 'Feb', kesiapan: 55.0, qol: 69.0 },
-  { bulan: 'Mar', kesiapan: 55.8, qol: 69.8 },
-  { bulan: 'Apr', kesiapan: 56.5, qol: 70.3 },
-  { bulan: 'Mei', kesiapan: 57.0, qol: 70.9 },
-  { bulan: 'Jun', kesiapan: 57.33, qol: 71.20 },
+  { bulan: 'Pra (Baseline)', kesiapan: 58.18, qol: 68.43 },
+  { bulan: 'Minggu 1', kesiapan: 58.65, qol: 68.80 },
+  { bulan: 'Minggu 2', kesiapan: 59.20, qol: 69.18 },
+  { bulan: 'Minggu 3', kesiapan: 59.85, qol: 69.56 },
+  { bulan: 'Minggu 4 (Pasca)', kesiapan: 60.45, qol: 69.97 },
 ];
 
 export default function AdminDashboardPage() {
@@ -56,12 +51,12 @@ export default function AdminDashboardPage() {
       {/* ── BARIS 1: METRIKS TEKNIS OPERASIONAL (6 KARTU) ── */}
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-3">
         {[
-          { label: 'Pengguna Uji Aktif', val: '42', detail: '+ 1 dari bulan lalu', icon: Users, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' },
-          { label: 'Modul Utama Aktif', val: '9 dari 9', detail: 'Semua modul aktif', icon: Layers, color: 'text-green-600', bg: 'bg-green-50 border-green-100' },
-          { label: 'Data Menunggu Validasi', val: '128', detail: '0 dari bulan lalu', icon: FileText, color: 'text-amber-600', bg: 'bg-amber-50 border-amber-100' },
-          { label: 'Sinkronisasi Berhasil', val: '96,8%', detail: '+ 1,2% dari bulan lalu', icon: Database, color: 'text-cyan-600', bg: 'bg-cyan-50 border-cyan-100' },
-          { label: 'Pencadangan Terakhir', val: '16 Jul 2026', detail: '00:00 WITA', icon: Server, color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100' },
-          { label: 'Notifikasi Keamanan', val: '5', detail: 'Perlu perhatian', icon: ShieldAlert, color: 'text-red-650', bg: 'bg-red-50 border-red-150' },
+          { label: 'Partisipan Uji 3 Desa', val: '126', detail: '42/desa · 7 peran × 18', icon: Users, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-100' },
+          { label: 'Kelompok Fitur Inti', val: '35 Fitur', detail: 'F-001 s.d. F-035 (UML)', icon: Layers, color: 'text-green-600', bg: 'bg-green-50 border-green-100' },
+          { label: 'Tugas UAT Relevan', val: '837 / 966', detail: '86,65% lulus · F-029 retest', icon: FileText, color: 'text-amber-600', bg: 'bg-amber-50 border-amber-100' },
+          { label: 'Selesai Minggu 4', val: '98,41%', detail: '248/252 tugas · 0 kesalahan', icon: Database, color: 'text-cyan-600', bg: 'bg-cyan-50 border-cyan-100' },
+          { label: 'Skor SUS / Kualitas', val: '67,58', detail: 'α=0,955 · Kualitas 3,39/5', icon: Server, color: 'text-purple-600', bg: 'bg-purple-50 border-purple-100' },
+          { label: 'Tindak Lanjut Kritis', val: '1 Fitur', detail: 'F-029 Nakes perlu retest', icon: ShieldAlert, color: 'text-red-700', bg: 'bg-red-50 border-red-200' },
         ].map((k, i) => {
           const Icon = k.icon;
           return (
@@ -72,7 +67,7 @@ export default function AdminDashboardPage() {
               </div>
               <div>
                 <p className="text-xl font-black text-slate-800 leading-none">{k.val}</p>
-                <p className="text-[9px] text-slate-450 font-semibold mt-1">{k.detail}</p>
+                <p className="text-[9px] text-slate-500 font-semibold mt-1">{k.detail}</p>
               </div>
             </div>
           );
@@ -82,10 +77,10 @@ export default function AdminDashboardPage() {
       {/* ── BARIS 2: INDEKS RATA-RATA TIGA DESA IMPLEMENTASI (4 KARTU) ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {[
-          { label: 'Skor Kesiapan Rata-rata Tiga Desa', val: '57,33', sub: '- 2,11 dari bulan lalu', color: '#1e88e5', progress: 57.3 },
-          { label: 'Tingkat Kematangan Rata-rata', val: '2,85', sub: '+ 0,24 dari bulan lalu', color: '#2e7d32', progress: 57.0 }, // (2.85 dari skala 5) = ~57%
-          { label: 'Skor Kualitas Hidup Rata-rata', val: '71,20', sub: '- 1,05 dari bulan lalu', color: '#f57c00', progress: 71.2 },
-          { label: 'Capaian SDGs Desa Rata-rata', val: '78,6%', sub: '+ 2,55 dari bulan lalu', color: '#7b1fa2', progress: 78.6 }
+          { label: 'Skor Kesiapan Rata-rata (N=126)', val: '60,45', sub: 'Pra 58,18 (+2,27 · p=0,0900 NS)', color: '#1e88e5', progress: 60.5 },
+          { label: 'Tingkat Kematangan (N=121)', val: '2,53', sub: 'Pra 1,94 (+0,59 · Berkembang)', color: '#2e7d32', progress: 50.6 },
+          { label: 'Manfaat Awal QoL (N=126)', val: '69,97', sub: 'Pra 68,43 (+1,54 · Signifikan)', color: '#f57c00', progress: 70.0 },
+          { label: 'Capaian SDGs 3, 4, 18 (54 KPI)', val: '80,67%', sub: 'Awal 72,76% (+7,90 poin)', color: '#7b1fa2', progress: 80.7 }
         ].map((ind, i) => (
           <Card key={i} className="border border-slate-200">
             <CardContent className="p-3.5 space-y-2">
@@ -111,7 +106,7 @@ export default function AdminDashboardPage() {
       {/* ── METADATA SIMULASI BANNER ── */}
       <div className="p-2.5 rounded-lg bg-indigo-50 border border-indigo-200 text-indigo-950 font-semibold text-center flex items-center justify-center gap-1">
         <Info size={14} className="text-indigo-700" />
-        <span>Catatan: seluruh angka dan parameter visual pada dasbor ini merupakan <strong>data simulasi terkendali</strong> untuk memisahkan kewenangan operasional.</span>
+        <span>Ringkasan selaras Bab IV (Dataset SLV 1, SLV 2, SLV 3 v1.2) — Lokus <strong>Desa Jonggon Jaya, Desa Kedang Ipil, dan Desa Lung Anai</strong> (Kab. Kutai Kartanegara).</span>
       </div>
 
       {/* ── METADATA OPERASIONAL GRID ── */}
@@ -131,12 +126,12 @@ export default function AdminDashboardPage() {
               </CardHeader>
               <CardContent className="p-4 grid grid-cols-2 gap-3.5">
                 {[
-                  { label: 'Desa Implementasi', val: '3 Desa' },
-                  { label: 'Jumlah Assessment', val: '247 Kali' },
-                  { label: 'Pakar Validator', val: '36 Pakar' },
-                  { label: 'Laporan FGD', val: '1.124 Berkas' },
-                  { label: 'Versi Kerangka', val: '3 Rilis' },
-                  { label: 'Arsip Repositori', val: '6 Dokumen' },
+                  { label: 'Desa Penelitian', val: '3 Desa' },
+                  { label: 'Dimensi / Indikator', val: '6 / 24' },
+                  { label: 'Panel Pakar', val: '3 Pakar (P1–P3)' },
+                  { label: 'CR Dimensi AHP', val: '0,00144' },
+                  { label: 'Versi Kerangka', val: 'v1.2 Final' },
+                  { label: 'Artefak DSRM', val: '6 Artefak (A1–A6)' },
                 ].map((a, idx) => (
                   <div key={idx} className="border-b pb-1.5">
                     <p className="text-[10px] text-slate-400 font-bold uppercase">{a.label}</p>
@@ -150,15 +145,15 @@ export default function AdminDashboardPage() {
             <Card>
               <CardHeader className="py-2.5 px-4 bg-slate-50/50 border-b">
                 <CardTitle className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-                  <TrendingUp size={14} /> Status Rekomendasi DSS
+                  <TrendingUp size={14} /> Status Rekomendasi DSS (SAW)
                 </CardTitle>
               </CardHeader>
               <CardContent className="p-4 grid grid-cols-2 gap-3.5">
                 {[
-                  { label: 'Program Prioritas', val: '245 Program' },
-                  { label: 'Rekomendasi Dievaluasi', val: '512 Item' },
-                  { label: 'Menunggu Tinjauan', val: '186 Berkas' },
-                  { label: 'Ditunda / Evaluasi', val: '31 Program' },
+                  { label: 'Kriteria SAW', val: '6 (C1–C6)' },
+                  { label: 'Alternatif Dinilai', val: '30 Baris (3×10)' },
+                  { label: 'Jonggon Jaya #1', val: 'A08 (0,9509)' },
+                  { label: 'Kedang Ipil / Lung Anai', val: 'A02 (0,92 / 0,91)' },
                 ].map((d, idx) => (
                   <div key={idx} className="border-b pb-1.5">
                     <p className="text-[10px] text-slate-400 font-bold uppercase">{d.label}</p>

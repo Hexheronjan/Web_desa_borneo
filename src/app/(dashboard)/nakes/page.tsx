@@ -94,12 +94,12 @@ export default function NakesDashboardPage() {
       {/* ── BARIS 1: 6 KARTU INDEKS UTAMA ── */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
         {[
-          { label: 'Skor Kesiapan Bidang Kesehatan', val: '71,80', sub: 'Kategori: Baik', prog: 71.8, color: '#166534', icon: BarChart2 },
-          { label: 'Capaian SDG Desa 3', val: '61%', sub: 'Kategori: Sedang', prog: 61, color: '#15803d', icon: Award },
-          { label: 'Kualitas Data Kesehatan', val: '82%', sub: 'Kategori: Baik', prog: 82, color: '#166534', icon: ShieldCheck },
-          { label: 'Cakupan Pelayanan', val: '73%', sub: 'Kategori: Sedang', prog: 73, color: '#d97706', icon: HeartPulse },
-          { label: 'Status Ibu & Anak (Agregat)', val: '74%', sub: 'Kategori: Sedang', prog: 74, color: '#d97706', icon: Baby },
-          { label: 'Program Kesehatan Aktif', val: '15', sub: 'Program Kesehatan', prog: 100, color: '#166534', icon: ClipboardList },
+          { label: 'Capaian SDG Desa 3 (Bab IV)', val: '82,24%', sub: 'Awal 74,70% (+7,55 poin)', prog: 82.2, color: '#15803d', icon: Award },
+          { label: 'SDG 3 Jonggon Jaya', val: '85,5%', sub: 'Puskesmas Jonggon Jaya', prog: 85.5, color: '#166534', icon: BarChart2 },
+          { label: 'SDG 3 Kedang Ipil & Lung Anai', val: '80,9% / 80,4%', sub: 'Pustu/Polindes & Posyandu', prog: 80.7, color: '#166534', icon: ShieldCheck },
+          { label: 'Lulus UAT Peran Nakes', val: '91,30%', sub: 'Kualitas 3,66/5 · SUS 69,72', prog: 91.3, color: '#166534', icon: HeartPulse },
+          { label: 'Tindak Lanjut Kritis (F-029)', val: 'Retest', sub: 'Perlu perbaikan & uji ulang', prog: 70, color: '#d97706', icon: Baby },
+          { label: 'Unit KPI Kesehatan', val: '18 KPI', sub: '3 Desa Penelitian (SLV 3)', prog: 100, color: '#166534', icon: ClipboardList },
         ].map((k, i) => {
           const Icon = k.icon;
           return (
@@ -130,7 +130,7 @@ export default function NakesDashboardPage() {
           <Card>
             <CardHeader className="py-2.5 border-b flex flex-row items-center justify-between">
               <CardTitle className="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
-                <AlertTriangle size={13} className="text-red-750" /> Kesenjangan Kesehatan Prioritas
+                <AlertTriangle size={13} className="text-red-800" /> Kesenjangan Kesehatan Prioritas
               </CardTitle>
               <Link href="/nakes/health-gap-analysis" className="text-[10px] font-bold text-emerald-700 hover:underline">Lihat Detail →</Link>
             </CardHeader>
@@ -147,7 +147,7 @@ export default function NakesDashboardPage() {
                     <span className="text-[9px] font-bold px-2 py-0.5 rounded border bg-red-50 text-red-700 border-red-200">Prioritas Tinggi</span>
                   </div>
                   <div className="w-full h-2 bg-slate-100 rounded-full overflow-hidden relative">
-                    <div className="h-full bg-emerald-750" style={{ width: `${k.realisasi}%` }} />
+                    <div className="h-full bg-emerald-800" style={{ width: `${k.realisasi}%` }} />
                     <div className="absolute top-0 h-full border-r-2 border-dashed border-red-400" style={{ left: `${k.target}%` }} />
                   </div>
                 </div>
@@ -248,7 +248,7 @@ export default function NakesDashboardPage() {
               {PERINGATAN.map((p, i) => (
                 <div key={i} className="flex gap-2 p-2 rounded-lg border bg-red-50/50 border-red-100">
                   <span className="flex-shrink-0 mt-0.5">⚠️</span>
-                  <p className="font-semibold text-slate-850 leading-tight">{p.teks}</p>
+                  <p className="font-semibold text-slate-900 leading-tight">{p.teks}</p>
                 </div>
               ))}
             </CardContent>
@@ -304,7 +304,7 @@ export default function NakesDashboardPage() {
       </div>
 
       {/* ── CATATAN SIMULASI ── */}
-      <div className="p-3 rounded-xl bg-yellow-50 border border-yellow-250 text-yellow-900 text-xs flex items-start gap-2">
+      <div className="p-3 rounded-xl bg-yellow-50 border border-yellow-300 text-yellow-900 text-xs flex items-start gap-2">
         <span className="flex-shrink-0 mt-0.5">📊</span>
         <p className="font-semibold leading-relaxed">
           <strong>Catatan Data Simulasi Terkendali:</strong> Seluruh angka yang ditampilkan pada dasbor ini merupakan data simulasi terkendali yang digunakan untuk keperluan penelitian dan pengujian sistem. Data aktual lapangan mungkin berbeda.

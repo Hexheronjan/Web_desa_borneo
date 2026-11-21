@@ -143,7 +143,7 @@ export default function KualitasDataPage() {
 
                 {/* ALERTS & ACTIONS */}
                 {!item.konsisten && (
-                  <div className="p-2 bg-red-50 border border-red-150 rounded-lg text-red-800 text-[10px] flex items-start gap-1">
+                  <div className="p-2 bg-red-50 border border-red-200 rounded-lg text-red-800 text-[10px] flex items-start gap-1">
                     <AlertTriangle size={12} className="flex-shrink-0 mt-0.5" />
                     <span>Perhatian: Ada perbedaan jumlah balita aktif dengan data puskesmas kecamatan. Segera lakukan rekonsiliasi data.</span>
                   </div>

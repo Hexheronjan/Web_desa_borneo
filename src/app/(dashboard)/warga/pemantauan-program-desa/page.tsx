@@ -11,10 +11,10 @@ import { useState } from 'react';
 
 const COLOR = '#6a1b9a';
 
-const BIDANG = ['Semua', 'Infrastruktur', 'Kesehatan', 'Pendidikan', 'Budaya & Adat', 'Ekonomi', 'Lingkungan'];
-const WILAYAH = ['Semua', 'Dusun A (Pusat)', 'Dusun B (Tengah)', 'Dusun C (Hilir)', 'Dusun D (Ulu)'];
+const BIDANG = ['Semua', 'Infrastruktur', 'Kesehatan', 'Pendidikan', 'Budaya & Adat'];
+const WILAYAH = ['Semua', 'RT 01–04 Lung Anai', '17 RT Jonggon Jaya', '2 Dusun (12 RT)', '3 Desa Penelitian'];
 const STATUS_LIST = ['Semua', 'Berjalan', 'Selesai', 'Persiapan', 'Ditunda'];
-const PERIODE = ['Semua', 'Semester I 2025', 'Semester II 2025', 'Semester I 2026'];
+const PERIODE = ['Semua', 'Semester I 2026'];
 
 type Status = 'Berjalan' | 'Selesai' | 'Persiapan' | 'Ditunda';
 
@@ -26,11 +26,11 @@ const STATUS_COLOR: Record<Status, string> = {
 };
 
 const PROGRAMS = [
-  { id: 'PRG-01', nama: 'Internet Desa & Booster Sinyal', bidang: 'Infrastruktur', wilayah: 'Dusun B (Tengah)', tujuan: 'Konektivitas 100% 3 Dusun', pj: 'Kasi Pembangunan', lokasi: 'Menara RT 04 Dusun B', target: 'Sept 2025', progres: 65, status: 'Berjalan' as Status, sumberAspirasi: 'Aspirasi Warga 2024', jadwal: 'Mei–Sept 2025', hasilSementara: 'Pemasangan Balai Desa selesai', periode: 'Semester I 2025', prioritas: true, dariAspirasi: true },
-  { id: 'PRG-02', nama: 'Posyandu Digital & Poskesdes Pintar', bidang: 'Kesehatan', wilayah: 'Dusun A (Pusat)', tujuan: 'Digitalisasi rekam medis KIA', pj: 'Nakes & Kader', lokasi: 'Gedung Posyandu RT 02', target: 'Des 2025', progres: 40, status: 'Berjalan' as Status, sumberAspirasi: 'RKPDes 2024', jadwal: 'Jun–Des 2025', hasilSementara: 'Pelatihan kader batch 1 selesai', periode: 'Semester I 2025', prioritas: true, dariAspirasi: false },
-  { id: 'PRG-03', nama: 'LMS Pendidikan & Literasi Budaya', bidang: 'Pendidikan', wilayah: 'Dusun A (Pusat)', tujuan: 'Sertifikasi 200 pemuda', pj: 'Guru Fasilitator & Adat', lokasi: 'Balai Adat & SDN 01', target: 'Jun 2026', progres: 10, status: 'Persiapan' as Status, sumberAspirasi: 'Musyawarah Desa 2025', jadwal: 'Jan–Jun 2026', hasilSementara: 'Draft kurikulum sedang dikaji', periode: 'Semester I 2026', prioritas: false, dariAspirasi: true },
-  { id: 'PRG-04', nama: 'Pengelolaan Sampah Terpadu', bidang: 'Lingkungan', wilayah: 'Dusun C (Hilir)', tujuan: 'Reduksi sampah organik 50%', pj: 'LPM & Karang Taruna', lokasi: 'TPS Dusun C', target: 'Sept 2025', progres: 0, status: 'Ditunda' as Status, sumberAspirasi: 'Aspirasi Warga 2025', jadwal: 'Mar–Sept 2025', hasilSementara: 'Menunggu pencairan ADD Tahap II', periode: 'Semester I 2025', prioritas: false, dariAspirasi: true },
-  { id: 'PRG-05', nama: 'Pembangunan Balai Adat Permanen', bidang: 'Budaya & Adat', wilayah: 'Dusun A (Pusat)', tujuan: 'Pusat kebudayaan adat Dayak Kenyah', pj: 'Lembaga Adat & Pemdes', lokasi: 'Pusat Desa RT 01', target: 'Okt 2025', progres: 100, status: 'Selesai' as Status, sumberAspirasi: 'RKPDes 2023', jadwal: 'Jan–Okt 2025', hasilSementara: 'Rampung dan diresmikan 10 Okt 2025', periode: 'Semester II 2025', prioritas: true, dariAspirasi: false },
+  { id: 'A02-LA', nama: 'Penguatan Konektivitas, Perangkat & Mode Luring (Lung Anai)', bidang: 'Infrastruktur', wilayah: 'RT 01–04 Lung Anai', tujuan: 'Konektivitas & sinkronisasi luring (D2: 30,75)', pj: 'Pemdes & Admin Sistem', lokasi: 'Desa Lung Anai, Kec. Loa Kulu', target: 'Des 2026', progres: 65, status: 'Berjalan' as Status, sumberAspirasi: 'DSS SAW #1 (0,9117) & Musdes', jadwal: 'Mei–Des 2026', hasilSementara: 'Perangkat hemat daya & mode luring diuji', periode: 'Semester I 2026', prioritas: true, dariAspirasi: true },
+  { id: 'A08-JJ', nama: 'Dasbor SDGs Desa 3, 4, dan 18 (Jonggon Jaya)', bidang: 'Kesehatan', wilayah: '17 RT Jonggon Jaya', tujuan: 'Pemantauan SDGs 3, 4, 18 terpadu (D6: 58,40)', pj: 'Pemdes, Nakes & Guru', lokasi: 'Desa Jonggon Jaya, Kec. Loa Kulu', target: 'Des 2026', progres: 80, status: 'Berjalan' as Status, sumberAspirasi: 'DSS SAW #1 (0,9509)', jadwal: 'Jan–Des 2026', hasilSementara: 'KPI SDGs naik 73,81% → 81,78%', periode: 'Semester I 2026', prioritas: true, dariAspirasi: false },
+  { id: 'A02-KI', nama: 'Integrasi Data & Penguatan Perangkat (Kedang Ipil)', bidang: 'Pendidikan', wilayah: '2 Dusun (12 RT)', tujuan: 'Integrasi data & standar kode (D4: 47,44)', pj: 'Pemdes & Lembaga Adat', lokasi: 'Desa Kedang Ipil, Kota Bangun Darat', target: 'Des 2026', progres: 68, status: 'Berjalan' as Status, sumberAspirasi: 'DSS SAW #1 (0,9200) & Musyawarah', jadwal: 'Jan–Des 2026', hasilSementara: 'SOP verifikasi data & persetujuan adat aktif', periode: 'Semester I 2026', prioritas: true, dariAspirasi: true },
+  { id: 'PRG-04', nama: 'Penguatan Literasi Digital & Pendampingan Guru (SDG 4)', bidang: 'Pendidikan', wilayah: '3 Desa Penelitian', tujuan: 'Meningkatkan capaian KPI SDG 4 (74,90%) & UAT Guru', pj: 'Guru/Tenaga Pendidikan', lokasi: 'Sekolah & Balai Desa', target: 'Okt 2026', progres: 55, status: 'Persiapan' as Status, sumberAspirasi: 'Hasil Evaluasi RQ3', jadwal: 'Jul–Okt 2026', hasilSementara: 'Panduan tugas sederhana sedang diterapkan', periode: 'Semester I 2026', prioritas: true, dariAspirasi: true },
+  { id: 'PRG-05', nama: 'Perlindungan & Klasifikasi Data Budaya (SDG 18)', bidang: 'Budaya & Adat', wilayah: '3 Desa Penelitian', tujuan: 'Klasifikasi publik/terbatas/rahasia & audit adat', pj: 'Lembaga Adat & Pemdes', lokasi: 'Balai Adat Lung Anai & Kedang Ipil', target: 'Okt 2026', progres: 87, status: 'Selesai' as Status, sumberAspirasi: 'Musyawarah Adat 2026', jadwal: 'Jan–Jul 2026', hasilSementara: 'Capaian SDG 18 mencapai 84,86% (Lung Anai 87,4%)', periode: 'Semester I 2026', prioritas: true, dariAspirasi: false },
 ];
 
 export default function PemantauanProgramDesaPage() {

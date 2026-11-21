@@ -117,7 +117,7 @@ export default function MonitoringKesehatanPage() {
               <div key={idx} className="p-3 border rounded-lg bg-slate-50/50 space-y-2">
                 <div className="flex justify-between items-start gap-2 flex-wrap">
                   <p className="font-bold text-slate-800">{p.nama}</p>
-                  <span className="text-[10px] font-black text-indigo-750">{p.progres}% Selesai</span>
+                  <span className="text-[10px] font-black text-indigo-800">{p.progres}% Selesai</span>
                 </div>
                 <div className="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
                   <div className="bg-indigo-700 h-full rounded-full" style={{ width: `${p.progres}%` }} />
@@ -142,7 +142,7 @@ export default function MonitoringKesehatanPage() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-2">
-              <div className="p-2.5 bg-orange-50 border border-orange-200 rounded-lg text-orange-850">
+              <div className="p-2.5 bg-orange-50 border border-orange-200 rounded-lg text-orange-900">
                 <p className="font-bold">⚠️ Waspada DBD & Malaria</p>
                 <p className="text-[10px] mt-0.5 leading-relaxed">Menjelang musim pancaroba, masyarakat dihimbau melakukan 3M Plus. Kerja bakti desa dijadwalkan Minggu ini.</p>
               </div>

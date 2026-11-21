@@ -7,47 +7,56 @@ import {
   PieChart, Pie,
 } from 'recharts';
 import { Brain, Target, TrendingUp, Award, ListOrdered } from 'lucide-react';
+import { DESA_BAB4, DSS_KRITERIA_SAW } from '@/lib/bab4-data';
 
 const COLOR = '#1a365d';
+const PIE_COLORS = ['#1a365d', '#2b6cb0', '#276749', '#0694a2', '#553c9a', '#c05621'];
 
-// Bobot AHP (Rule DSS)
-const kriteria = [
-  { kode: 'C1', nama: 'Kesiapan Infrastruktur', bobot: 0.320, cr: 0.196, ri: 1.632, cr_ratio: 0.120, status: 'Konsisten' },
-  { kode: 'C2', nama: 'Kesiapan Layanan Digital', bobot: 0.218, cr: 0.218, ri: 1.632, cr_ratio: 0.133, status: 'Konsisten' },
-  { kode: 'C3', nama: 'Kesiapan SDM & Organisasi', bobot: 0.198, cr: 0.218, ri: 1.632, cr_ratio: 0.133, status: 'Konsisten' },
-  { kode: 'C4', nama: 'Dampak Kualitas Hidup', bobot: 0.264, cr: 0.218, ri: 1.632, cr_ratio: 0.133, status: 'Konsisten' },
-];
-
-// Ranking Program
-const rankingProgram = [
-  { rank: 1, program: 'Infrastruktur Jaringan Internet Desa', bobot: 0.312, skor: 88.5, prioritas: 'Sangat Tinggi', color: '#e53e3e' },
-  { rank: 2, program: 'Pelatihan Literasi Digital Masyarakat', bobot: 0.248, skor: 82.3, prioritas: 'Tinggi', color: '#c05621' },
-  { rank: 3, program: 'Digitalisasi Layanan Administrasi Desa', bobot: 0.186, skor: 76.8, prioritas: 'Tinggi', color: '#d69e2e' },
-  { rank: 4, program: 'Program Kesehatan Digital (Posyandu)', bobot: 0.142, skor: 72.4, prioritas: 'Sedang', color: '#276749' },
-  { rank: 5, program: 'E-Commerce & UMKM Digital', bobot: 0.112, skor: 68.9, prioritas: 'Sedang', color: '#2b6cb0' },
-];
-
-// Status rekomendasi
-const statusRekDSS = [
-  { label: 'Rekomendasi Tereksekusi', value: 512, persen: 45.6, color: '#276749' },
-  { label: 'Rekomendasi Pending', value: 612, persen: 54.4, color: '#e53e3e' },
+const topRecommendations = [
+  {
+    rank: 1,
+    desa: 'Desa Jonggon Jaya',
+    kode: 'A08',
+    program: 'Dasbor SDGs Desa 3, 4, dan 18',
+    skor: 0.950907,
+    biaya: 'Rp 220 Juta',
+    stabilitas: '13/13 skenario stabil',
+    color: '#2b6cb0',
+  },
+  {
+    rank: 1,
+    desa: 'Desa Kedang Ipil',
+    kode: 'A02',
+    program: 'Penguatan Konektivitas dan Perangkat',
+    skor: 0.920042,
+    biaya: 'Rp 195 Juta',
+    stabilitas: '13/13 skenario stabil',
+    color: '#276749',
+  },
+  {
+    rank: 1,
+    desa: 'Desa Lung Anai',
+    kode: 'A02',
+    program: 'Penguatan Konektivitas dan Perangkat (Luring-Utama)',
+    skor: 0.911694,
+    biaya: 'Rp 185 Juta',
+    stabilitas: '13/13 skenario stabil',
+    color: '#c05621',
+  },
 ];
 
 export default function AnalisisDSSPage() {
-  const totalBobot = kriteria.reduce((s, k) => s + k.bobot, 0).toFixed(3);
-  const avgCR = (kriteria.reduce((s, k) => s + k.cr_ratio, 0) / kriteria.length).toFixed(3);
-
   return (
     <div className="flex flex-col gap-5">
-      <PageTitle fitur="Ranking Program" modul="Analisis Framework" color={COLOR} />
+      <PageTitle fitur="Analisis DSS SAW (6 Kriteria · 30 Alternatif)" modul="Artefak 4 — Dataset SLV 2" color={COLOR} />
 
       {/* KPI */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { label: 'Total Kriteria AHP', value: '4', sub: 'Bobot Total = 1.000', color: COLOR, icon: Target },
-          { label: 'Consistency Ratio', value: `${avgCR}`, sub: 'CR < 0.10 — Konsisten', color: '#276749', icon: Award },
-          { label: 'Ranking Program', value: '5', sub: 'Program Prioritas', color: '#c05621', icon: ListOrdered },
-          { label: 'Total Rekomendasi', value: '1.124', sub: '512 Tereksekusi', color: '#553c9a', icon: Brain },
+          { label: 'Kriteria SAW', value: '6 (C1–C6)', sub: '5 Benefit · 1 Cost · Σw = 1,00', color: COLOR, icon: Target },
+          { label: 'Alternatif Dinilai', value: '30 Baris', sub: '3 desa × 10 alternatif program', color: '#276749', icon: ListOrdered },
+          { label: 'Uji Sensitivitas ±10%', value: '39 / 39', sub: '100% stabil di semua skenario', color: '#c05621', icon: Award },
+          { label: 'Evaluasi Formatif DSS', value: '4,09 / 5', sub: '24 penilai (8/desa)', color: '#553c9a', icon: Brain },
         ].map((kpi, i) => {
           const Icon = kpi.icon;
           return (
@@ -66,69 +75,62 @@ export default function AnalisisDSSPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {/* Tabel Bobot AHP */}
+        {/* Tabel 6 Kriteria SAW */}
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <Brain size={16} /> Bobot AHP — Rule DSS (Consistency Ratio)
+              <Brain size={16} /> 6 Kriteria Pembobotan DSS SAW (Tabel 4.19)
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="overflow-x-auto">
-              <table className="w-full text-sm">
+              <table className="w-full text-xs">
                 <thead>
                   <tr className="border-b border-gray-200">
-                    {['Kriteria', 'CI', 'RI', 'CR (CI/RI)', 'Keterangan'].map((h, i) => (
+                    {['Kode', 'Nama Kriteria', 'Atribut', 'Bobot', 'Sumber Data'].map((h, i) => (
                       <th key={i} className="text-left py-2 px-2 text-[10px] font-bold text-gray-400 uppercase">{h}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
-                  {kriteria.map((k, i) => (
-                    <tr key={i} className={`border-b border-gray-50 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}>
-                      <td className="py-2.5 px-2 text-[12px] font-semibold text-slate-800">{k.kode} — {k.nama}</td>
-                      <td className="py-2.5 px-2 font-mono text-[11px] text-blue-700 font-bold">{k.cr.toFixed(3)}</td>
-                      <td className="py-2.5 px-2 font-mono text-[11px] text-slate-600">{k.ri.toFixed(3)}</td>
-                      <td className="py-2.5 px-2 font-mono text-[11px] font-bold text-green-700">{k.cr_ratio.toFixed(3)}</td>
+                  {DSS_KRITERIA_SAW.map((k, i) => (
+                    <tr key={k.kode} className={`border-b border-gray-50 ${i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'}`}>
+                      <td className="py-2.5 px-2 font-mono font-bold text-indigo-700">{k.kode}</td>
+                      <td className="py-2.5 px-2 font-semibold text-slate-800">{k.nama}</td>
                       <td className="py-2.5 px-2">
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-100 text-green-700">{k.status}</span>
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${k.atribut.startsWith('Cost') ? 'bg-orange-100 text-orange-700' : 'bg-green-100 text-green-700'}`}>
+                          {k.atribut.startsWith('Cost') ? 'Cost' : 'Benefit'}
+                        </span>
                       </td>
+                      <td className="py-2.5 px-2 font-mono font-bold text-blue-700">{(k.bobot * 100).toFixed(0)}%</td>
+                      <td className="py-2.5 px-2 text-[10px] text-slate-500">{k.sumber}</td>
                     </tr>
                   ))}
                 </tbody>
-                <tfoot>
-                  <tr className="bg-blue-50 border-t-2 border-blue-200">
-                    <td colSpan={4} className="py-2 px-2 text-[11px] font-bold text-blue-800">CR = 0.08 &lt; 0.10 → Konsistensi dapat diterima (Good Consistency)</td>
-                    <td className="py-2 px-2">
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-green-600 text-white">✓ Valid</span>
-                    </td>
-                  </tr>
-                </tfoot>
               </table>
             </div>
 
-            {/* Pie bobot */}
             <div className="mt-4">
-              <p className="text-[11px] font-bold text-gray-500 uppercase mb-2">Distribusi Bobot Kriteria AHP</p>
+              <p className="text-[11px] font-bold text-gray-500 uppercase mb-2">Distribusi Bobot Kriteria SAW (CR AHP Dimensi = 0,00144)</p>
               <div className="flex items-center gap-3">
                 <ResponsiveContainer width={120} height={120}>
                   <PieChart>
-                    <Pie data={kriteria} dataKey="bobot" cx="50%" cy="50%" outerRadius={52} stroke="none">
-                      {kriteria.map((_, i) => (
-                        <Cell key={i} fill={['#2b6cb0','#276749','#c05621','#553c9a'][i]} />
+                    <Pie data={[...DSS_KRITERIA_SAW]} dataKey="bobot" cx="50%" cy="50%" outerRadius={52} stroke="none">
+                      {DSS_KRITERIA_SAW.map((_, i) => (
+                        <Cell key={i} fill={PIE_COLORS[i]} />
                       ))}
                     </Pie>
-                    <Tooltip contentStyle={{ fontSize: 10, borderRadius: 6 }} formatter={(v: any) => [`${(v * 100).toFixed(1)}%`, 'Bobot']} />
+                    <Tooltip contentStyle={{ fontSize: 10, borderRadius: 6 }} formatter={(v: any) => [`${(v * 100).toFixed(0)}%`, 'Bobot']} />
                   </PieChart>
                 </ResponsiveContainer>
-                <div className="flex-1 space-y-1.5">
-                  {kriteria.map((k, i) => (
-                    <div key={i} className="flex items-center justify-between">
+                <div className="flex-1 grid grid-cols-2 gap-1.5">
+                  {DSS_KRITERIA_SAW.map((k, i) => (
+                    <div key={k.kode} className="flex items-center justify-between text-[10px]">
                       <div className="flex items-center gap-1.5">
-                        <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: ['#2b6cb0','#276749','#c05621','#553c9a'][i] }} />
-                        <span className="text-[10px] text-gray-600">{k.kode}</span>
+                        <div className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: PIE_COLORS[i] }} />
+                        <span className="text-gray-600">{k.kode}</span>
                       </div>
-                      <span className="font-mono text-[11px] font-bold text-gray-800">{(k.bobot * 100).toFixed(1)}%</span>
+                      <span className="font-mono font-bold text-gray-800">{(k.bobot * 100).toFixed(0)}%</span>
                     </div>
                   ))}
                 </div>
@@ -137,73 +139,67 @@ export default function AnalisisDSSPage() {
           </CardContent>
         </Card>
 
-        {/* Ranking Program */}
+        {/* Prioritas #1 per Desa */}
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-              <ListOrdered size={16} /> Ranking Program Prioritas DSS
+              <ListOrdered size={16} /> Rekomendasi Prioritas #1 per Desa Penelitian
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-3 mb-4">
-              {rankingProgram.map((p, i) => (
-                <div key={i} className="flex items-start gap-3 p-3 rounded-xl border" style={{ borderColor: p.color + '40', backgroundColor: p.color + '08' }}>
-                  <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-white text-sm font-black" style={{ backgroundColor: p.color }}>
-                    {p.rank}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-[12px] font-bold text-slate-800 leading-snug">{p.program}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-[10px] text-gray-500">Bobot: <strong>{(p.bobot * 100).toFixed(1)}%</strong></span>
-                      <span className="text-[10px] text-gray-500">Skor: <strong>{p.skor}</strong></span>
-                    </div>
-                    <div className="h-1.5 bg-gray-100 rounded-full mt-1.5 overflow-hidden">
-                      <div className="h-full rounded-full" style={{ width: `${p.skor}%`, backgroundColor: p.color }} />
-                    </div>
-                  </div>
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full flex-shrink-0"
-                    style={{ backgroundColor: p.color + '20', color: p.color }}>
-                    {p.prioritas}
-                  </span>
+          <CardContent className="space-y-3">
+            {topRecommendations.map((p, i) => (
+              <div key={i} className="flex items-start gap-3 p-3 rounded-xl border" style={{ borderColor: p.color + '40', backgroundColor: p.color + '08' }}>
+                <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 text-white text-xs font-black" style={{ backgroundColor: p.color }}>
+                  {p.kode}
                 </div>
-              ))}
-            </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] font-bold text-slate-500 uppercase">{p.desa}</p>
+                  <p className="text-[12px] font-bold text-slate-800 leading-snug">{p.program}</p>
+                  <div className="flex flex-wrap items-center gap-2 mt-1 text-[10px] text-gray-600">
+                    <span>Skor SAW: <strong style={{ color: p.color }}>{p.skor.toFixed(6)}</strong></span>
+                    <span>·</span>
+                    <span>Estimasi: <strong>{p.biaya}</strong></span>
+                    <span>·</span>
+                    <span><strong>{p.stabilitas}</strong></span>
+                  </div>
+                  <div className="h-1.5 bg-gray-100 rounded-full mt-1.5 overflow-hidden">
+                    <div className="h-full rounded-full" style={{ width: `${p.skor * 100}%`, backgroundColor: p.color }} />
+                  </div>
+                </div>
+              </div>
+            ))}
 
-            {/* Status eksekusi */}
-            <div className="p-3 bg-gray-50 rounded-xl border border-gray-200">
-              <p className="text-[11px] font-bold text-gray-500 uppercase mb-2">Status Rekomendasi DSS</p>
-              {statusRekDSS.map((s, i) => (
-                <div key={i} className="mb-2">
-                  <div className="flex justify-between text-[11px] mb-1">
-                    <span className="font-semibold text-slate-700">{s.label}</span>
-                    <span className="font-black" style={{ color: s.color }}>{s.value} ({s.persen}%)</span>
-                  </div>
-                  <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div className="h-full rounded-full" style={{ width: `${s.persen}%`, backgroundColor: s.color }} />
-                  </div>
-                </div>
-              ))}
+            <div className="p-3 bg-amber-50 rounded-xl border border-amber-200 text-[11px] text-amber-950 leading-relaxed">
+              <strong>Prinsip Human-in-the-Loop Bab IV:</strong> Keluaran DSS SAW bersifat <em>pendukung keputusan</em> yang transparan beserta penjelasan alasan; penetapan akhir tetap melalui musyawarah desa dan lembaga adat.
             </div>
           </CardContent>
         </Card>
       </div>
 
-      {/* Bar Chart Skor Program */}
+      {/* Bar Chart Skor Preferensi Top #1 3 Desa */}
       <Card className="shadow-sm">
         <CardHeader>
           <CardTitle className="text-sm font-bold flex items-center gap-2" style={{ color: COLOR }}>
-            <TrendingUp size={16} /> Skor Akhir Program Prioritas (DSS Output)
+            <TrendingUp size={16} /> Perbandingan Skor Preferensi SAW Peringkat #1 Antar Desa
           </CardTitle>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={rankingProgram} margin={{ top: 5, right: 20, left: -10, bottom: 60 }} barSize={36}>
+            <BarChart
+              data={DESA_BAB4.map((d, i) => ({
+                label: `${d.nama.replace('Desa ', '')} (${d.dssPrioritas.kode})`,
+                skor: Number((d.dssPrioritas.skorSAW * 100).toFixed(2)),
+                color: ['#2b6cb0', '#276749', '#c05621'][i],
+              }))}
+              margin={{ top: 5, right: 20, left: -10, bottom: 5 }}
+              barSize={44}
+            >
               <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" vertical={false} />
-              <XAxis dataKey="program" tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} angle={-25} textAnchor="end" height={70} interval={0} />
-              <YAxis domain={[60, 95]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-              <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${v}`, 'Skor']} />
+              <XAxis dataKey="label" tick={{ fontSize: 11, fill: '#334155' }} axisLine={false} tickLine={false} />
+              <YAxis domain={[80, 100]} tick={{ fontSize: 9, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
+              <Tooltip contentStyle={{ fontSize: 11, borderRadius: 8 }} formatter={(v: any) => [`${(v / 100).toFixed(4)}`, 'Skor SAW']} />
               <Bar dataKey="skor" radius={[4, 4, 0, 0]}>
-                {rankingProgram.map((p, i) => <Cell key={i} fill={p.color} />)}
+                {DESA_BAB4.map((_, i) => <Cell key={i} fill={['#2b6cb0', '#276749', '#c05621'][i]} />)}
               </Bar>
             </BarChart>
           </ResponsiveContainer>

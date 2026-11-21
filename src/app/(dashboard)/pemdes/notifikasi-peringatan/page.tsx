@@ -19,10 +19,10 @@ const TYPE_CONFIG: Record<NotifType, { label: string; icon: React.ReactNode; col
   keputusan_baru:          { label: 'Keputusan Baru', icon: <CheckCircle2 size={13} />, color: 'bg-emerald-100 text-emerald-700 border-emerald-200' },
   program_terlambat:       { label: 'Program Terlambat', icon: <Clock size={13} />, color: 'bg-red-100 text-red-700 border-red-200' },
   data_belum_diperbarui:   { label: 'Data Belum Diperbarui', icon: <AlertTriangle size={13} />, color: 'bg-orange-100 text-orange-700 border-orange-200' },
-  bukti_belum_diverifikasi: { label: 'Bukti Belum Diverifikasi', icon: <ShieldCheck size={13} />, color: 'bg-yellow-100 text-yellow-750 border-yellow-250' },
+  bukti_belum_diverifikasi: { label: 'Bukti Belum Diverifikasi', icon: <ShieldCheck size={13} />, color: 'bg-yellow-100 text-yellow-800 border-yellow-300' },
   aspirasi_baru:           { label: 'Aspirasi Baru', icon: <Info size={13} />, color: 'bg-sky-100 text-sky-755 border-sky-200' },
   capaian_menurun:         { label: 'Capaian Menurun', icon: <AlertTriangle size={13} />, color: 'bg-rose-100 text-rose-700 border-rose-200' },
-  laporan_belum_disampaikan: { label: 'Laporan Belum Disampaikan', icon: <FileTextIcon size={13} />, color: 'bg-slate-100 text-slate-650 border-slate-200' },
+  laporan_belum_disampaikan: { label: 'Laporan Belum Disampaikan', icon: <FileTextIcon size={13} />, color: 'bg-slate-100 text-slate-700 border-slate-200' },
 };
 
 function FileTextIcon({ size }: { size: number }) {
@@ -77,13 +77,13 @@ export default function NotifikasiPeringatanPage() {
           <button
             key={t}
             onClick={() => setFilterType(t)}
-            className={`px-2.5 py-1.5 rounded-lg text-[9px] font-bold transition-colors ${filterType === t ? 'bg-indigo-700 text-white' : 'bg-white border text-slate-650 hover:bg-slate-100'}`}
+            className={`px-2.5 py-1.5 rounded-lg text-[9px] font-bold transition-colors ${filterType === t ? 'bg-indigo-700 text-white' : 'bg-white border text-slate-700 hover:bg-slate-100'}`}
           >
             {TYPE_CONFIG[t].label} ({list.filter(n => n.type === t).length})
           </button>
         ))}
         {unreadCount > 0 && (
-          <button onClick={handleReadAll} className="ml-auto px-3 py-1.5 bg-white border border-slate-350 text-slate-700 font-bold hover:bg-slate-50 rounded-lg text-[9px]">
+          <button onClick={handleReadAll} className="ml-auto px-3 py-1.5 bg-white border border-slate-400 text-slate-700 font-bold hover:bg-slate-50 rounded-lg text-[9px]">
             Tandai Semua Dibaca
           </button>
         )}
@@ -108,7 +108,7 @@ export default function NotifikasiPeringatanPage() {
                     <span className="text-[10px] text-slate-400 font-medium">{n.tgl}</span>
                   </div>
                   <h3 className="font-bold text-slate-800 text-xs mt-1.5 leading-snug">{n.judul}</h3>
-                  <p className="text-[11px] text-slate-550 mt-1 leading-relaxed">{n.isi}</p>
+                  <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">{n.isi}</p>
                   
                   {!n.dibaca && (
                     <div className="flex gap-2 mt-2.5">

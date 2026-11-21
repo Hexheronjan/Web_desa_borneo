@@ -55,19 +55,19 @@ export default function ProfilPendidikanDesaPage() {
                 <h4 className="font-bold text-slate-800 text-xs mb-2">Kondisi Sarana &amp; Prasarana</h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
                   <div className="p-2.5 bg-slate-50 rounded-lg border">
-                    <p className="text-slate-450 font-bold">Ruang Belajar</p>
+                    <p className="text-slate-500 font-bold">Ruang Belajar</p>
                     <p className="text-slate-800 font-bold mt-0.5">8 Kelas (Baik)</p>
                   </div>
                   <div className="p-2.5 bg-slate-50 rounded-lg border">
-                    <p className="text-slate-450 font-bold">Perangkat Komputer</p>
+                    <p className="text-slate-500 font-bold">Perangkat Komputer</p>
                     <p className="text-slate-800 font-bold mt-0.5">15 Unit (Aktif)</p>
                   </div>
                   <div className="p-2.5 bg-slate-50 rounded-lg border">
-                    <p className="text-slate-450 font-bold">Akses Internet</p>
-                    <p className="text-slate-850 font-bold mt-0.5">VSAT 20 Mbps</p>
+                    <p className="text-slate-500 font-bold">Akses Internet</p>
+                    <p className="text-slate-900 font-bold mt-0.5">VSAT 20 Mbps</p>
                   </div>
                   <div className="p-2.5 bg-slate-50 rounded-lg border">
-                    <p className="text-slate-450 font-bold">Perpustakaan</p>
+                    <p className="text-slate-500 font-bold">Perpustakaan</p>
                     <p className="text-slate-800 font-bold mt-0.5">1 Unit (Cukup)</p>
                   </div>
                 </div>
@@ -95,7 +95,7 @@ export default function ProfilPendidikanDesaPage() {
               <button className="w-full flex items-center justify-center gap-1.5 bg-green-700 text-white py-2 rounded-lg font-bold hover:bg-green-800 transition-colors">
                 <Upload size={13} /> Unggah Bukti Sarpras
               </button>
-              <button className="w-full flex items-center justify-center gap-1.5 border text-slate-750 py-2 rounded-lg font-bold hover:bg-slate-50 transition-colors">
+              <button className="w-full flex items-center justify-center gap-1.5 border text-slate-800 py-2 rounded-lg font-bold hover:bg-slate-50 transition-colors">
                 <CheckCircle2 size={13} /> Ajukan Verifikasi Profil
               </button>
 

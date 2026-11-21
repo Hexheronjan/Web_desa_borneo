@@ -132,13 +132,13 @@ export default function TelaahPersetujuanAdatPage() {
                         {item.kesimpulan}
                       </span>
                     </TableCell>
-                    <TableCell className="max-w-[200px] truncate text-slate-550" title={item.alasanKeputusan}>{item.alasanKeputusan}</TableCell>
+                    <TableCell className="max-w-[200px] truncate text-slate-600" title={item.alasanKeputusan}>{item.alasanKeputusan}</TableCell>
                     <TableCell className="max-w-[150px] truncate text-slate-600 font-semibold" title={item.tindakLanjut}>{item.tindakLanjut}</TableCell>
                     <TableCell className="font-mono">{item.tanggalTelaah}</TableCell>
                     <TableCell>
                       <div className="flex gap-1">
                         <Button onClick={() => openEdit(item)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Pencil size={13} className="text-blue-600" /></Button>
-                        <Button onClick={() => handleDelete(item.id)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Trash2 size={13} className="text-red-650" /></Button>
+                        <Button onClick={() => handleDelete(item.id)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Trash2 size={13} className="text-red-700" /></Button>
                       </div>
                     </TableCell>
                   </TableRow>

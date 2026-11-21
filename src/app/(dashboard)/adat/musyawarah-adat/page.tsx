@@ -146,7 +146,7 @@ export default function MusyawarahKeputusanAdatPage() {
                     <TableCell>
                       <div className="flex gap-1">
                         <Button onClick={() => openEdit(item)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Pencil size={13} className="text-blue-600" /></Button>
-                        <Button onClick={() => handleDelete(item.id)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Trash2 size={13} className="text-red-650" /></Button>
+                        <Button onClick={() => handleDelete(item.id)} size="sm" variant="ghost" className="h-7 w-7 p-0"><Trash2 size={13} className="text-red-700" /></Button>
                       </div>
                     </TableCell>
                   </TableRow>
