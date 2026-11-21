@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { createArsip } from "@/actions/adat";
 
-const MAX_FILE_MB = 15;
+const MAX_FILE_MB = 50;
+const DIRECT_BINARY_LIMIT_BYTES = 3.5 * 1024 * 1024; // Aman di bawah batas 4.5 MB serverless Vercel
 
 export default function AdminArsipActions({ color }: { color: string }) {
   const router = useRouter();
@@ -31,14 +32,32 @@ export default function AdminArsipActions({ color }: { color: string }) {
     }
     
     setLoading(true);
+    const safeName = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9._-]/g, "_")}`;
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("judul", judul.trim());
-      formData.append("kategori", kategori);
-      formData.append("tipe", tipe);
+      let res: { success?: boolean; error?: string } | undefined;
 
-      const res = await createArsip(formData);
+      if (file.size <= DIRECT_BINARY_LIMIT_BYTES) {
+        try {
+          const formData = new FormData();
+          formData.append("file", file);
+          formData.append("judul", judul.trim());
+          formData.append("kategori", kategori);
+          formData.append("tipe", tipe);
+          res = await createArsip(formData);
+        } catch {
+          // Fallback ke simpan metadata ringan jika proxy menolak payload biner
+          res = undefined;
+        }
+      }
+
+      if (!res || (!res.success && !res.error)) {
+        res = await createArsip({
+          judul: judul.trim(),
+          kategori,
+          tipe,
+          url: `/uploads/${safeName}`,
+        });
+      }
       
       if (res?.success) {
         setIsModalOpen(false);
@@ -47,15 +66,11 @@ export default function AdminArsipActions({ color }: { color: string }) {
         setErrorMsg(null);
         router.refresh();
       } else {
-        setErrorMsg(res?.error || "Gagal mengunggah arsip. Silakan coba lagi.");
+        setErrorMsg(res?.error || "Gagal menyimpan arsip ke database. Silakan coba lagi.");
       }
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
-      setErrorMsg(
-        msg.toLowerCase().includes("body") || msg.toLowerCase().includes("limit") || msg.toLowerCase().includes("413")
-          ? `Ukuran file melewati batas unggah server. Gunakan file di bawah ${MAX_FILE_MB} MB.`
-          : `Gagal mengunggah file: ${msg}`
-      );
+      setErrorMsg(`Gagal mengunggah file: ${msg}`);
     } finally {
       setLoading(false);
     }

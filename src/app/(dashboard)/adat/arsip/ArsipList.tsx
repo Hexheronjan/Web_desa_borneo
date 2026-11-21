@@ -13,7 +13,7 @@ export function ArsipList({ initialArsip, color }: { initialArsip: any[], color:
 
   return (
     <>
-      <Card>
+      <Card data-crud-form="true">
         <CardHeader>
           <CardTitle className="text-sm font-semibold" style={{ color: color }}>
             📂 Daftar Arsip Digital Desa (Live DB)
